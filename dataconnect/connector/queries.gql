@@ -1,0 +1,402 @@
+# # Example queries for a simple movie app.
+
+# # @auth() directives control who can call each operation.
+# # Anyone should be able to list all movies, so the auth level is set to PUBLIC
+# query ListMovies @auth(level: PUBLIC) {
+#   movies {
+#     id
+#     title
+#     imageUrl
+#     genre
+#   }
+# }
+
+# # List all users, only admins should be able to list all users, so we use NO_ACCESS
+# query ListUsers @auth(level: NO_ACCESS) {
+#   users {
+#     id
+#     username
+#   }
+# }
+
+# # Logged in users can list all their reviews and movie titles associated with the review
+# # Since the query uses the uid of the current authenticated user, we set auth level to USER
+# query ListUserReviews @auth(level: USER) {
+#   user(key: { id_expr: "auth.uid" }) {
+#     id
+#     username
+#     # <field>_on_<foreign_key_field> makes it easy to grab info from another table
+#     # Here, we use it to grab all the reviews written by the user.
+#     reviews: reviews_on_user {
+#       rating
+#       reviewDate
+#       reviewText
+#       movie {
+#         id
+#         title
+#       }
+#     }
+#   }
+# }
+
+# # Get movie by id
+# query GetMovieById($id: UUID!) @auth(level: PUBLIC) {
+#   movie(id: $id) {
+#     id
+#     title
+#     imageUrl
+#     genre
+#     metadata: movieMetadata_on_movie {
+#       rating
+#       releaseYear
+#       description
+#     }
+#     reviews: reviews_on_movie {
+#       reviewText
+#       reviewDate
+#       rating
+#       user {
+#         id
+#         username
+#       }
+#     }
+#   }
+# }
+
+# # Search for movies, actors, and reviews
+# query SearchMovie($titleInput: String, $genre: String) @auth(level: PUBLIC) {
+#   movies(
+#     where: {
+#       _and: [{ genre: { eq: $genre } }, { title: { contains: $titleInput } }]
+#     }
+#   ) {
+#     id
+#     title
+#     genre
+#     imageUrl
+#   }
+# }
+
+# Property Rental Platform Queries
+
+# User queries
+query GetUser($userId: String!) {
+  user(id: $userId) {
+    id
+    email
+    displayName
+    phoneNumber
+    profileImageUrl
+    role
+    isActive
+    createdAt
+    updatedAt
+  }
+}
+
+query ListUsers {
+  users {
+    id
+    email
+    displayName
+    role
+    isActive
+    createdAt
+  }
+}
+
+# Property queries
+query GetProperty($propertyId: UUID!) {
+  property(id: $propertyId) {
+    id
+    title
+    description
+    slug
+    owner {
+      id
+      displayName
+      email
+    }
+    locationCity
+    locationState
+    locationCountry
+    locationAddress
+    locationLatitude
+    locationLongitude
+    capacityMaxGuests
+    capacityBedrooms
+    capacityBathrooms
+    capacityBeds
+    basePrice
+    cleaningFee
+    serviceFee
+    amenities
+    images
+    propertyType
+    availabilityIsActive
+    availabilityMinStay
+    availabilityMaxStay
+    isVerified
+    rating
+    reviewCount
+    createdAt
+    updatedAt
+  }
+}
+
+query GetPropertyBySlug($slug: String!) {
+  properties(where: { slug: { eq: $slug } }) {
+    id
+    title
+    description
+    slug
+    owner {
+      id
+      displayName
+      email
+    }
+    locationCity
+    locationState
+    locationCountry
+    locationAddress
+    locationLatitude
+    locationLongitude
+    capacityMaxGuests
+    capacityBedrooms
+    capacityBathrooms
+    capacityBeds
+    basePrice
+    cleaningFee
+    serviceFee
+    amenities
+    images
+    propertyType
+    availabilityIsActive
+    availabilityMinStay
+    availabilityMaxStay
+    isVerified
+    rating
+    reviewCount
+    createdAt
+    updatedAt
+  }
+}
+
+query ListProperties($limit: Int = 20, $offset: Int = 0) {
+  properties(
+    where: { availabilityIsActive: { eq: true } }
+    orderBy: { createdAt: DESC }
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+    title
+    description
+    slug
+    locationCity
+    locationCountry
+    capacityMaxGuests
+    capacityBedrooms
+    capacityBathrooms
+    basePrice
+    images
+    propertyType
+    rating
+    reviewCount
+    isVerified
+  }
+}
+
+query SearchProperties(
+  $city: String
+  $maxGuests: Int
+  $limit: Int = 20
+  $offset: Int = 0
+) {
+  properties(
+    where: {
+      and: [
+        { availabilityIsActive: { eq: true } }
+        { locationCity: { eq: $city } }
+        { capacityMaxGuests: { gte: $maxGuests } }
+      ]
+    }
+    orderBy: { rating: DESC }
+    limit: $limit
+    offset: $offset
+  ) {
+    id
+    title
+    description
+    slug
+    locationCity
+    locationCountry
+    capacityMaxGuests
+    capacityBedrooms
+    capacityBathrooms
+    basePrice
+    images
+    propertyType
+    rating
+    reviewCount
+    isVerified
+  }
+}
+
+# Booking queries
+query GetBooking($bookingId: UUID!) {
+  booking(id: $bookingId) {
+    id
+    user {
+      id
+      displayName
+      email
+    }
+    property {
+      id
+      title
+      slug
+      locationCity
+      locationCountry
+    }
+    checkInDate
+    checkOutDate
+    guestCount
+    guestName
+    guestEmail
+    guestPhone
+    baseAmount
+    cleaningFee
+    serviceFee
+    totalAmount
+    status
+    paymentStatus
+    paymentIntentId
+    specialRequests
+    createdAt
+    updatedAt
+    confirmedAt
+    cancelledAt
+  }
+}
+
+query ListUserBookings($userId: String!, $limit: Int = 10) {
+  bookings(
+    where: { userId: { eq: $userId } }
+    orderBy: { createdAt: DESC }
+    limit: $limit
+  ) {
+    id
+    property {
+      id
+      title
+      slug
+      locationCity
+      locationCountry
+      images
+    }
+    checkInDate
+    checkOutDate
+    guestCount
+    totalAmount
+    status
+    paymentStatus
+    createdAt
+  }
+}
+
+query ListPropertyBookings($propertyId: UUID!, $status: BookingStatus) {
+  bookings(
+    where: {
+      and: [{ propertyId: { eq: $propertyId } }, { status: { eq: $status } }]
+    }
+    orderBy: { createdAt: DESC }
+  ) {
+    id
+    user {
+      id
+      displayName
+      email
+    }
+    checkInDate
+    checkOutDate
+    guestCount
+    guestName
+    guestEmail
+    totalAmount
+    status
+    paymentStatus
+    createdAt
+  }
+}
+
+# Availability queries
+query GetPropertyAvailability(
+  $propertyId: UUID!
+  $startDate: Date!
+  $endDate: Date!
+) {
+  availability(
+    where: {
+      and: [
+        { propertyId: { eq: $propertyId } }
+        { date: { gte: $startDate } }
+        { date: { lte: $endDate } }
+      ]
+    }
+    orderBy: { date: ASC }
+  ) {
+    id
+    date
+    isBlocked
+    isBooked
+    priceOverride
+    blockReason
+  }
+}
+
+# Pricing rules queries
+query GetPropertyPricingRules($propertyId: UUID!) {
+  pricing_rules(
+    where: {
+      and: [{ propertyId: { eq: $propertyId } }, { isActive: { eq: true } }]
+    }
+    orderBy: { startDate: ASC }
+  ) {
+    id
+    startDate
+    endDate
+    priceMultiplier
+    fixedPrice
+    ruleName
+    ruleType
+    isActive
+  }
+}
+
+# Admin notification queries
+query ListAdminNotifications($limit: Int = 20, $isRead: Boolean) {
+  admin_notifications(
+    where: { isRead: { eq: $isRead } }
+    orderBy: { createdAt: DESC }
+    limit: $limit
+  ) {
+    id
+    type
+    title
+    message
+    userId
+    bookingId
+    propertyId
+    isRead
+    priority
+    createdAt
+    readAt
+  }
+}
+
+query GetUnreadNotificationCount {
+  admin_notifications(where: { isRead: { eq: false } }) {
+    id
+  }
+}

@@ -1,0 +1,202 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+             (request.auth.token.email_verified == true) &&
+             (request.auth.token.email in [
+               'admin@expat-stays.com',
+               'super@expat-stays.com',
+               'xmgdkydgdjdb@gmail.com',
+               'hammadllk@gmail.com',
+               // Add your admin emails here
+               request.auth.token.email // Allow any authenticated user in dev mode
+             ] ||
+             (exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+              get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role in ['ADMIN', 'SUPER_ADMIN']));
+    }
+    
+    function isPropertyOwner(propertyId) {
+      return isAuthenticated() && 
+             exists(/databases/$(database)/documents/properties/$(propertyId)) &&
+             get(/databases/$(database)/documents/properties/$(propertyId)).data.owner.uid == request.auth.uid;
+    }
+    
+    function isValidBookingUser(booking) {
+      return isAuthenticated() && (
+        request.auth.uid == booking.guest.uid ||
+        isPropertyOwner(booking.propertyId) ||
+        isAdmin()
+      );
+    }
+
+    // Users collection
+    match /users/{userId} {
+      // Users can read their own profile, admins can read all
+      allow read: if isOwner(userId) || isAdmin();
+      
+      // Users can create their own profile on signup
+      allow create: if isOwner(userId) && 
+                       request.resource.data.id == request.auth.uid;
+      
+      // Users can update their own profile (but not role), admins can update any
+      allow update: if (isOwner(userId) && !('role' in request.resource.data.diff(resource.data).affectedKeys())) ||
+                       isAdmin();
+      
+      // Only admins can delete users
+      allow delete: if isAdmin();
+    }
+
+    // Properties collection
+    match /properties/{propertyId} {
+      // Anyone can read active properties (public access for browsing)
+      // Admins can read all properties
+      allow read: if resource.data.availability.isActive == true || 
+                     isPropertyOwner(propertyId) || 
+                     isAdmin();
+      
+      // Allow list/query operations for admins
+      allow list: if isAdmin();
+      
+      // Only authenticated users can create properties, or admins can create any
+      allow create: if (isAuthenticated() && request.resource.data.owner.uid == request.auth.uid) || isAdmin();
+      
+      // Only property owners and admins can update properties
+      allow update: if isPropertyOwner(propertyId) || isAdmin();
+      
+      // Only property owners and admins can delete properties
+      allow delete: if isPropertyOwner(propertyId) || isAdmin();
+    }
+
+    // Bookings collection
+    match /bookings/{bookingId} {
+      // Users can read their own bookings, property owners can read bookings for their properties
+      allow read: if isValidBookingUser(resource.data);
+      
+      // Allow admins to list all bookings
+      allow list: if isAdmin();
+      
+      // Authenticated users can create bookings
+      allow create: if isAuthenticated() && 
+                       request.resource.data.guest.uid == request.auth.uid &&
+                       request.resource.data.status == 'pending';
+      
+      // Users can update their own bookings (limited fields), property owners and admins can update more
+      allow update: if (isOwner(resource.data.guest.uid) && 
+                          request.resource.data.diff(resource.data).affectedKeys().hasOnly(['specialRequests', 'updatedAt'])) ||
+                       isPropertyOwner(resource.data.propertyId) ||
+                       isAdmin();
+      
+      // Only admins can delete bookings
+      allow delete: if isAdmin();
+    }
+
+    // Availability collection
+    match /availability/{availabilityId} {
+      // Anyone can read availability for date checking
+      allow read: if true;
+      
+      // Allow admins to list all availability
+      allow list: if isAdmin();
+      
+      // Only property owners and admins can create/update availability
+      allow create, update: if isPropertyOwner(request.resource.data.propertyId) || isAdmin();
+      
+      // Only property owners and admins can delete availability
+      allow delete: if isPropertyOwner(resource.data.propertyId) || isAdmin();
+    }
+
+    // Pricing rules collection
+    match /pricing_rules/{ruleId} {
+      // Property owners and admins can read pricing rules
+      allow read: if isPropertyOwner(resource.data.propertyId) || isAdmin();
+      
+      // Allow admins to list all pricing rules
+      allow list: if isAdmin();
+      
+      // Only property owners and admins can create/update pricing rules
+      allow create, update: if isPropertyOwner(request.resource.data.propertyId) || isAdmin();
+      
+      // Only property owners and admins can delete pricing rules
+      allow delete: if isPropertyOwner(resource.data.propertyId) || isAdmin();
+    }
+
+    // Admin notifications collection
+    match /admin_notifications/{notificationId} {
+      // Only admins can access notifications
+      allow read, write: if isAdmin();
+    }
+
+    // Admin analytics collection
+    match /analytics/{analyticsId} {
+      // Only admins can access analytics
+      allow read, write: if isAdmin();
+    }
+
+    // Admin dashboard data
+    match /dashboard_stats/{statId} {
+      // Only admins can access dashboard stats
+      allow read, write: if isAdmin();
+    }
+
+    // Reviews collection
+    match /reviews/{reviewId} {
+      // Anyone can read published reviews
+      allow read: if resource.data.isPublished == true || 
+                     isOwner(resource.data.userId) || 
+                     isPropertyOwner(resource.data.propertyId) ||
+                     isAdmin();
+      
+      // Allow admins to list all reviews
+      allow list: if isAdmin();
+      
+      // Only booking users can create reviews (after checkout)
+      allow create: if isAuthenticated() && 
+                       request.resource.data.userId == request.auth.uid;
+      
+      // Users can update their own reviews, property owners can respond, admins can moderate
+      allow update: if isOwner(resource.data.userId) || 
+                       isPropertyOwner(resource.data.propertyId) || 
+                       isAdmin();
+      
+      // Only admins can delete reviews
+      allow delete: if isAdmin();
+    }
+
+    // Images/Media collection
+    match /media/{mediaId} {
+      // Anyone can read published media
+      allow read: if true;
+      
+      // Property owners can upload media for their properties
+      allow create, update: if isAuthenticated() && (
+        isPropertyOwner(request.resource.data.propertyId) ||
+        request.resource.data.uploadedBy == request.auth.uid ||
+        isAdmin()
+      );
+      
+      // Only uploaders and admins can delete media
+      allow delete: if isAuthenticated() && (
+        resource.data.uploadedBy == request.auth.uid ||
+        isAdmin()
+      );
+    }
+
+    // Development/Testing Rules (Remove in production)
+    match /{document=**} {
+      // Allow read access for authenticated users (for debugging)
+      // Remove this in production!
+      allow read: if isAuthenticated();
+    }
+  }
+}

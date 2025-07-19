@@ -1,0 +1,57 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // DEVELOPMENT RULES - More permissive for testing
+    // DO NOT USE IN PRODUCTION
+    
+    // Properties collection - Allow public read access for testing
+    match /properties/{propertyId} {
+      // Anyone can read properties (for testing real data functionality)
+      allow read: if true;
+      
+      // Authenticated users can create/update properties
+      allow create, update: if request.auth != null;
+      
+      // Authenticated users can delete properties (for testing)
+      allow delete: if request.auth != null;
+    }
+
+    // Bookings collection - Allow authenticated access
+    match /bookings/{bookingId} {
+      // Authenticated users can read bookings
+      allow read: if request.auth != null;
+      
+      // Authenticated users can create bookings
+      allow create: if request.auth != null;
+      
+      // Authenticated users can update bookings
+      allow update: if request.auth != null;
+      
+      // Authenticated users can delete bookings
+      allow delete: if request.auth != null;
+    }
+
+    // Users collection - Allow users to manage their own data
+    match /users/{userId} {
+      // Users can read/write their own data
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Availability collection - Allow public read, authenticated write
+    match /availability/{availabilityId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+    // Admin notifications - Allow authenticated access for testing
+    match /admin_notifications/{notificationId} {
+      allow read, write: if request.auth != null;
+    }
+
+    // All other collections - Basic authenticated access
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+} 

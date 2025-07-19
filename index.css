@@ -1,0 +1,531 @@
+:root {
+    /* Bright and Clean Light Theme */
+    --background: oklch(0.99 0.001 264);
+    --foreground: oklch(0.10 0.005 264);
+    
+    /* Bright glass morphism card backgrounds */
+    --card: oklch(1.0 0.001 264 / 0.98);
+    --card-foreground: oklch(0.05 0.005 264);
+    --card-glass: oklch(1.0 0.001 264 / 0.98);
+    --card-glass-border: oklch(0.96 0.003 264 / 0.8);
+    
+    /* Bright glass popover effects */
+    --popover: oklch(1.0 0.001 264 / 0.98);
+    --popover-foreground: oklch(0.05 0.005 264);
+    --popover-glass: oklch(1.0 0.001 264 / 0.98);
+    
+    /* Bright green primary colors */
+    --primary: oklch(0.68 0.20 162);
+    --primary-foreground: oklch(1.0 0.001 162);
+    --primary-glass: oklch(0.68 0.20 162 / 0.12);
+    
+    /* Bright secondary colors */
+    --secondary: oklch(0.97 0.005 162 / 0.8);
+    --secondary-foreground: oklch(0.05 0.005 162);
+    --secondary-glass: oklch(0.97 0.003 162 / 0.3);
+    
+    /* Bright muted tones */
+    --muted: oklch(0.96 0.003 162 / 0.7);
+    --muted-foreground: oklch(0.25 0.005 162);
+    --muted-glass: oklch(0.96 0.002 162 / 0.2);
+    
+    /* Bright green accent colors */
+    --accent: oklch(0.72 0.18 155);
+    --accent-foreground: oklch(0.05 0.001 155);
+    --accent-glass: oklch(0.72 0.18 155 / 0.12);
+    
+    /* Bright destructive colors */
+    --destructive: oklch(0.70 0.18 15);
+    --destructive-foreground: oklch(1.0 0.002 15);
+    
+    /* Bright glass morphism borders and inputs */
+    --border: oklch(0.80 0.003 264 / 0.8);
+    --border-glass: oklch(0.75 0.005 264 / 0.6);
+    --input: oklch(1.0 0.002 264 / 0.98);
+    --input-glass: oklch(1.0 0.001 264 / 0.95);
+    
+    /* Bright green ring effects */
+    --ring: oklch(0.68 0.20 162 / 0.3);
+    --ring-glass: oklch(0.68 0.20 162 / 0.12);
+    
+    /* Bright green chart colors */
+    --chart-1: oklch(0.68 0.20 162);
+    --chart-2: oklch(0.65 0.18 155);
+    --chart-3: oklch(0.60 0.16 148);
+    --chart-4: oklch(0.70 0.22 175);
+    --chart-5: oklch(0.58 0.14 140);
+    
+    /* Bright sidebar with glass effects */
+    --sidebar: oklch(0.99 0.002 162 / 0.8);
+    --sidebar-foreground: oklch(0.40 0.005 162);
+    --sidebar-primary: oklch(0.68 0.20 162);
+    --sidebar-primary-foreground: oklch(1.0 0.001 162);
+    --sidebar-accent: oklch(0.96 0.005 162 / 0.5);
+    --sidebar-accent-foreground: oklch(0.35 0.005 162);
+    --sidebar-border: oklch(0.94 0.003 162 / 0.2);
+    --sidebar-ring: oklch(0.68 0.20 162 / 0.2);
+    --sidebar-glass: oklch(0.99 0.002 162 / 0.3);
+    
+    /* Typography - Only Nunito Sans */
+    --font-sans: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* Enhanced border radius */
+    --radius: 1.5rem;
+    --radius-glass: 4rem;
+    
+    /* Subtle green glass morphism shadows */
+    --shadow-glass-sm: 0 2px 12px 0 oklch(0.68 0.20 162 / 0.06), 
+                       0 1px 3px -1px oklch(0.68 0.20 162 / 0.08),
+                       inset 0 1px 0 oklch(1 0 0 / 0.05);
+    --shadow-glass: 0 4px 24px 0 oklch(0.68 0.20 162 / 0.08), 
+                    0 2px 6px -2px oklch(0.68 0.20 162 / 0.1),
+                    inset 0 1px 0 oklch(1 0 0 / 0.06);
+    --shadow-glass-lg: 0 8px 48px 0 oklch(0.68 0.20 162 / 0.1), 
+                       0 4px 12px -4px oklch(0.68 0.20 162 / 0.12),
+                       inset 0 1px 0 oklch(1 0 0 / 0.08);
+    --shadow-glass-xl: 0 16px 72px 0 oklch(0.68 0.20 162 / 0.12), 
+                       0 8px 24px -8px oklch(0.68 0.20 162 / 0.15),
+                       inset 0 2px 0 oklch(1 0 0 / 0.1);
+    
+    /* Traditional green shadows enhanced */
+    --shadow-2xs: 0px 1px 3px 0px oklch(0.68 0.20 162 / 0.06);
+    --shadow-xs: 0px 1px 3px 0px oklch(0.68 0.20 162 / 0.07);
+    --shadow-sm: 0px 1px 3px 0px oklch(0.68 0.20 162 / 0.08), 0px 1px 2px -1px oklch(0.68 0.20 162 / 0.08);
+    --shadow: 0px 1px 3px 0px oklch(0.68 0.20 162 / 0.1), 0px 1px 2px -1px oklch(0.68 0.20 162 / 0.1);
+    --shadow-md: 0px 4px 6px -1px oklch(0.68 0.20 162 / 0.08), 0px 2px 4px -1px oklch(0.68 0.20 162 / 0.05);
+    --shadow-lg: 0px 10px 15px -3px oklch(0.68 0.20 162 / 0.08), 0px 4px 6px -2px oklch(0.68 0.20 162 / 0.04);
+    --shadow-xl: 0px 20px 25px -5px oklch(0.68 0.20 162 / 0.08), 0px 10px 10px -5px oklch(0.68 0.20 162 / 0.03);
+    --shadow-2xl: 0px 25px 50px -12px oklch(0.68 0.20 162 / 0.15);
+    
+    /* Glass morphism blur effects */
+    --blur-glass-sm: 8px;
+    --blur-glass: 12px;
+    --blur-glass-lg: 16px;
+    --blur-glass-xl: 20px;
+    
+    /* Typography enhancements */
+    --tracking-normal: 0.01em;
+    
+    /* Bright green glass morphism gradients */
+    --gradient-glass: linear-gradient(135deg, 
+                      oklch(1.0 0.002 162 / 0.98) 0%, 
+                      oklch(0.98 0.003 162 / 0.95) 100%);
+    --gradient-glass-hover: linear-gradient(135deg, 
+                            oklch(1.0 0.002 162 / 1.0) 0%, 
+                            oklch(0.99 0.003 162 / 0.98) 100%);
+}
+
+.dark {
+    /* Enhanced Glass Morphism Dark Theme - Refined */
+    --background: oklch(0.09 0.002 264);
+    --foreground: oklch(0.95 0.001 264);
+    
+    /* Dark glass morphism cards */
+    --card: oklch(0.90 0.003 264 / 0.98);
+    --card-foreground: oklch(0.05 0.001 264);
+    --card-glass: oklch(0.90 0.004 264 / 0.98);
+    --card-glass-border: oklch(0.80 0.003 264 / 0.8);
+    
+    /* Dark glass popover effects */
+    --popover: oklch(0.90 0.003 264 / 0.98);
+    --popover-foreground: oklch(0.05 0.001 264);
+    --popover-glass: oklch(0.90 0.004 264 / 0.98);
+    
+    /* Enhanced dark primary colors */
+    --primary: oklch(0.65 0.12 264);
+    --primary-foreground: oklch(0.09 0.002 264);
+    --primary-glass: oklch(0.65 0.12 264 / 0.12);
+    
+    /* Dark secondary colors */
+    --secondary: oklch(0.20 0.004 264 / 0.8);
+    --secondary-foreground: oklch(0.05 0.001 264);
+    --secondary-glass: oklch(0.22 0.004 264 / 0.3);
+    
+    /* Dark muted tones */
+    --muted: oklch(0.18 0.003 264 / 0.7);
+    --muted-foreground: oklch(0.10 0.002 264);
+    --muted-glass: oklch(0.20 0.003 264 / 0.25);
+    
+    /* Dark subtle accent */
+    --accent: oklch(0.70 0.10 240);
+    --accent-foreground: oklch(0.05 0.002 240);
+    --accent-glass: oklch(0.70 0.10 240 / 0.12);
+    
+    /* Dark destructive colors */
+    --destructive: oklch(0.70 0.18 15);
+    --destructive-foreground: oklch(0.95 0.002 15);
+    
+    /* Dark glass borders and inputs */
+    --border: oklch(0.70 0.003 264 / 0.8);
+    --border-glass: oklch(0.75 0.004 264 / 0.7);
+    --input: oklch(0.85 0.003 264 / 0.98);
+    --input-glass: oklch(0.90 0.004 264 / 0.95);
+    
+    /* Dark refined ring effects */
+    --ring: oklch(0.65 0.12 264 / 0.3);
+    --ring-glass: oklch(0.65 0.12 264 / 0.15);
+    
+    /* Dark refined chart colors */
+    --chart-1: oklch(0.65 0.12 264);
+    --chart-2: oklch(0.70 0.14 300);
+    --chart-3: oklch(0.68 0.12 180);
+    --chart-4: oklch(0.75 0.14 60);
+    --chart-5: oklch(0.66 0.13 210);
+    
+    /* Dark enhanced sidebar */
+    --sidebar: oklch(0.12 0.002 264 / 0.9);
+    --sidebar-foreground: oklch(0.80 0.002 264);
+    --sidebar-primary: oklch(0.65 0.12 264);
+    --sidebar-primary-foreground: oklch(0.09 0.002 264);
+    --sidebar-accent: oklch(0.18 0.003 264 / 0.5);
+    --sidebar-accent-foreground: oklch(0.90 0.001 264);
+    --sidebar-border: oklch(0.25 0.003 264 / 0.2);
+    --sidebar-ring: oklch(0.65 0.12 264 / 0.2);
+    --sidebar-glass: oklch(0.14 0.003 264 / 0.3);
+    
+    /* Typography - Only Nunito Sans */
+    --font-sans: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-serif: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    
+    /* Enhanced border radius */
+    --radius: 1.5rem;
+    --radius-glass: 4rem;
+    
+    /* Subtle dark glass morphism shadows */
+    --shadow-glass-sm: 0 2px 12px 0 oklch(0.65 0.12 264 / 0.12), 
+                       0 1px 3px -1px oklch(0.65 0.12 264 / 0.1),
+                       inset 0 1px 0 oklch(1 0 0 / 0.03);
+    --shadow-glass: 0 4px 24px 0 oklch(0.65 0.12 264 / 0.15), 
+                    0 2px 6px -2px oklch(0.65 0.12 264 / 0.12),
+                    inset 0 1px 0 oklch(1 0 0 / 0.04);
+    --shadow-glass-lg: 0 8px 48px 0 oklch(0.65 0.12 264 / 0.18), 
+                       0 4px 12px -4px oklch(0.65 0.12 264 / 0.15),
+                       inset 0 1px 0 oklch(1 0 0 / 0.06);
+    --shadow-glass-xl: 0 16px 72px 0 oklch(0.65 0.12 264 / 0.22), 
+                       0 8px 24px -8px oklch(0.65 0.12 264 / 0.18),
+                       inset 0 2px 0 oklch(1 0 0 / 0.08);
+    
+    /* Dark traditional shadows enhanced */
+    --shadow-2xs: 0px 1px 3px 0px oklch(0 0 0 / 0.25);
+    --shadow-xs: 0px 1px 3px 0px oklch(0 0 0 / 0.3);
+    --shadow-sm: 0px 1px 3px 0px oklch(0 0 0 / 0.35), 0px 1px 2px -1px oklch(0 0 0 / 0.35);
+    --shadow: 0px 1px 3px 0px oklch(0 0 0 / 0.4), 0px 1px 2px -1px oklch(0 0 0 / 0.4);
+    --shadow-md: 0px 4px 6px -1px oklch(0 0 0 / 0.25), 0px 2px 4px -1px oklch(0 0 0 / 0.15);
+    --shadow-lg: 0px 10px 15px -3px oklch(0 0 0 / 0.25), 0px 4px 6px -2px oklch(0 0 0 / 0.12);
+    --shadow-xl: 0px 20px 25px -5px oklch(0 0 0 / 0.25), 0px 10px 10px -5px oklch(0 0 0 / 0.08);
+    --shadow-2xl: 0px 25px 50px -12px oklch(0 0 0 / 0.5);
+    
+    /* Glass morphism blur effects */
+    --blur-glass-sm: 8px;
+    --blur-glass: 12px;
+    --blur-glass-lg: 16px;
+    --blur-glass-xl: 20px;
+    
+    /* Typography enhancements */
+    --tracking-normal: 0.01em;
+    
+    /* Dark refined glass morphism gradients */
+    --gradient-glass: linear-gradient(135deg, 
+                      oklch(0.90 0.003 264 / 0.98) 0%, 
+                      oklch(0.85 0.004 264 / 0.95) 100%);
+    --gradient-glass-hover: linear-gradient(135deg, 
+                            oklch(0.95 0.004 264 / 1.0) 0%, 
+                            oklch(0.90 0.005 264 / 0.98) 100%);
+}
+
+@theme inline {
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-card-glass: var(--card-glass);
+    --color-card-glass-border: var(--card-glass-border);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover-glass: var(--popover-glass);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary-glass: var(--primary-glass);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary-glass: var(--secondary-glass);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted-glass: var(--muted-glass);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent-glass: var(--accent-glass);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-border-glass: var(--border-glass);
+    --color-input: var(--input);
+    --color-input-glass: var(--input-glass);
+    --color-ring: var(--ring);
+    --color-ring-glass: var(--ring-glass);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-glass: var(--sidebar-glass);
+
+    --font-sans: var(--font-sans);
+    --font-mono: var(--font-mono);
+    --font-serif: var(--font-serif);
+
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
+    --radius-glass-sm: calc(var(--radius-glass) - 6px);
+    --radius-glass-md: calc(var(--radius-glass) - 3px);
+    --radius-glass-lg: var(--radius-glass);
+    --radius-glass-xl: calc(var(--radius-glass) + 6px);
+
+    --shadow-2xs: var(--shadow-2xs);
+    --shadow-xs: var(--shadow-xs);
+    --shadow-sm: var(--shadow-sm);
+    --shadow: var(--shadow);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-xl: var(--shadow-xl);
+    --shadow-2xl: var(--shadow-2xl);
+    --shadow-glass-sm: var(--shadow-glass-sm);
+    --shadow-glass: var(--shadow-glass);
+    --shadow-glass-lg: var(--shadow-glass-lg);
+    --shadow-glass-xl: var(--shadow-glass-xl);
+
+    --blur-glass-sm: var(--blur-glass-sm);
+    --blur-glass: var(--blur-glass);
+    --blur-glass-lg: var(--blur-glass-lg);
+    --blur-glass-xl: var(--blur-glass-xl);
+
+    --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
+    --tracking-tight: calc(var(--tracking-normal) - 0.025em);
+    --tracking-normal: var(--tracking-normal);
+    --tracking-wide: calc(var(--tracking-normal) + 0.025em);
+    --tracking-wider: calc(var(--tracking-normal) + 0.05em);
+    --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+
+    --gradient-glass: var(--gradient-glass);
+    --gradient-glass-hover: var(--gradient-glass-hover);
+}
+
+/* Enhanced body with glass morphism background */
+body {
+    letter-spacing: var(--tracking-normal);
+    background: linear-gradient(135deg, 
+                var(--background) 0%, 
+                oklch(from var(--background) calc(l + 0.02) c h) 100%);
+    min-height: 100vh;
+    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-optical-sizing: auto;
+    font-variation-settings:
+        "wdth" 100,
+        "YTLC" 500;
+}
+
+/* Nunito Sans Font Styles */
+.nunito-sans-light {
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100,
+        "YTLC" 500;
+}
+
+.nunito-sans-regular {
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100,
+        "YTLC" 500;
+}
+
+.nunito-sans-medium {
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100,
+        "YTLC" 500;
+}
+
+.nunito-sans-semibold {
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100,
+        "YTLC" 500;
+}
+
+.nunito-sans-bold {
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100,
+        "YTLC" 500;
+}
+
+.nunito-sans-extrabold {
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 800;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100,
+        "YTLC" 500;
+}
+
+.nunito-sans-black {
+    font-family: "Nunito Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 900;
+    font-style: normal;
+    font-variation-settings:
+        "wdth" 100,
+        "YTLC" 500;
+}
+
+/* Glass morphism utility classes */
+.glass {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(var(--blur-glass));
+    -webkit-backdrop-filter: blur(var(--blur-glass));
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-glass);
+}
+
+.glass-sm {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(var(--blur-glass-sm));
+    -webkit-backdrop-filter: blur(var(--blur-glass-sm));
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-glass-sm);
+}
+
+.glass-lg {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(var(--blur-glass-lg));
+    -webkit-backdrop-filter: blur(var(--blur-glass-lg));
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-glass-lg);
+}
+
+.glass-xl {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(var(--blur-glass-xl));
+    -webkit-backdrop-filter: blur(var(--blur-glass-xl));
+    border: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-glass-xl);
+}
+
+.glass-hover:hover {
+    background: var(--gradient-glass-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-glass-lg);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Glass morphism card enhancements */
+.glass-card {
+    background: var(--card-glass);
+    backdrop-filter: blur(var(--blur-glass));
+    -webkit-backdrop-filter: blur(var(--blur-glass));
+    border: 1px solid var(--card-glass-border);
+    border-radius: var(--radius-glass);
+    box-shadow: var(--shadow-glass);
+}
+
+.glass-nav {
+    background: var(--gradient-glass);
+    backdrop-filter: blur(var(--blur-glass-lg));
+    -webkit-backdrop-filter: blur(var(--blur-glass-lg));
+    border-bottom: 1px solid var(--border-glass);
+    box-shadow: var(--shadow-glass-sm);
+}
+
+/* Enhanced animations - more subtle */
+@keyframes glass-shimmer {
+    0% { 
+        background-position: -200% 0;
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.3;
+    }
+    100% { 
+        background-position: 200% 0;
+        opacity: 0;
+    }
+}
+
+.glass-shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        oklch(1 0 0 / 0.05),
+        transparent
+    );
+    background-size: 200% 100%;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.glass-shimmer:hover::before {
+    animation: glass-shimmer 2s ease-in-out;
+    opacity: 1;
+}
+
+/* Glass morphism focus states */
+.glass-focus:focus-visible {
+    outline: 2px solid var(--ring-glass);
+    outline-offset: 2px;
+    box-shadow: var(--shadow-glass), 0 0 0 4px var(--ring-glass);
+}
+
+/* Refined glass morphism text effects */
+.glass-text {
+    background: linear-gradient(135deg, 
+                oklch(0.45 0.08 264), 
+                oklch(0.55 0.06 240));
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: glass-gradient 4s ease infinite;
+}
+
+@keyframes glass-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
