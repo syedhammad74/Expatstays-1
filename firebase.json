@@ -1,34 +1,54 @@
 {
   "hosting": {
-    "public": "punlic",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+    "public": "out",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
     ]
   },
   "apphosting": [
     {
       "backendId": "backend",
-      "rootDir": "y",
+      "rootDir": "functions",
       "ignore": [
         "node_modules",
         ".git",
         "firebase-debug.log",
-        "firebase-debug.*.log",
-        "functions"
-      ]
-    },
-    {
-      "backendId": "expatbackend",
-      "rootDir": "n",
-      "ignore": [
-        "node_modules",
-        ".git",
-        "firebase-debug.log",
-        "firebase-debug.*.log",
-        "functions"
+        "firebase-debug.*.log"
       ]
     }
-  ]
+  ],
+  "firestore": {
+    "database": "(default)",
+    "location": "asia-south2",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "emulators": {
+    "apphosting": {
+      "port": 5003,
+      "rootDirectory": ".",
+      "startCommand": "npm run dev"
+    },
+    "firestore": {
+      "port": 8088
+    },
+    "database": {
+      "port": 9090
+    },
+    "hosting": {
+      "port": 5033
+    },
+    "ui": {
+      "enabled": true,
+      "port": 3002
+    },
+    "singleProjectMode": true
+  }
 }

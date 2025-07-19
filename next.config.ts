@@ -1,7 +1,8 @@
+// next.config.ts
+import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // Enable experimental features for better performance
-
 
   // Image optimization
   images: {
