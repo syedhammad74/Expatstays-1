@@ -115,7 +115,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
     priority: "medium" as "low" | "medium" | "high",
     status: "active" as "active" | "inactive" | "archived",
     tags: "",
+    image: "" as string, // new field for image URL or base64
   });
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   // Statistics
   const [statistics, setStatistics] = useState({
@@ -219,6 +221,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
           .split(",")
           .map((tag) => tag.trim())
           .filter(Boolean),
+        image: formData.image, // Include image in the data
         createdBy: "admin", // In a real app, this would be the current user
       };
 
@@ -259,6 +262,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
           .split(",")
           .map((tag) => tag.trim())
           .filter(Boolean),
+        image: formData.image, // Include image in the updates
         createdBy: "admin",
       };
 
@@ -399,7 +403,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
       priority: "medium",
       status: "active",
       tags: "",
+      image: "",
     });
+    setImagePreview(null);
   };
 
   const openEditDialog = (item: AdminDataItem) => {
@@ -412,6 +418,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
       priority: item.priority,
       status: item.status,
       tags: item.tags.join(", "),
+      image: item.image || "", // Set image preview
     });
     setIsEditDialogOpen(true);
   };
@@ -899,6 +906,35 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                               storage
                             </p>
                           </div>
+                        </div>
+                      </div>
+
+                      {/* Image Upload Section */}
+                      <div className="bg-gradient-to-r from-[#DAF1DE]/15 to-white/20 rounded-xl p-6 border border-[#8EB69B]/20">
+                        <h3 className="text-lg font-semibold text-[#235347] mb-4 flex items-center gap-2">
+                          <Cloud className="h-5 w-5 text-[#8EB69B]" />
+                          Image Upload
+                        </h3>
+                        <div className="space-y-2">
+                          <Label className="text-[#235347] font-medium">
+                            Image (optional)
+                          </Label>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                          />
+                          {imagePreview && (
+                            <img
+                              src={imagePreview}
+                              alt="Preview"
+                              className="mt-2 rounded-lg w-32 h-32 object-cover border"
+                            />
+                          )}
+                          <p className="text-xs text-[#235347]/70">
+                            Upload an image to visually represent this data
+                            entry.
+                          </p>
                         </div>
                       </div>
 
@@ -1541,6 +1577,34 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                       Enter valid JSON data for structured information storage
                     </p>
                   </div>
+                </div>
+              </div>
+
+              {/* Image Upload Section */}
+              <div className="bg-gradient-to-r from-[#DAF1DE]/15 to-white/20 rounded-xl p-6 border border-[#8EB69B]/20">
+                <h3 className="text-lg font-semibold text-[#235347] mb-4 flex items-center gap-2">
+                  <Cloud className="h-5 w-5 text-[#8EB69B]" />
+                  Image Upload
+                </h3>
+                <div className="space-y-2">
+                  <Label className="text-[#235347] font-medium">
+                    Image (optional)
+                  </Label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                  />
+                  {imagePreview && (
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="mt-2 rounded-lg w-32 h-32 object-cover border"
+                    />
+                  )}
+                  <p className="text-xs text-[#235347]/70">
+                    Upload an image to visually represent this data entry.
+                  </p>
                 </div>
               </div>
 
