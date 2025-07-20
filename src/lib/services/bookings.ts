@@ -1,3 +1,4 @@
+"use client";
 import {
   collection,
   doc,
@@ -21,6 +22,7 @@ import { availabilityService } from "./availability";
 import { emailService } from "./email";
 import { propertyService } from "./properties";
 import { mockBookingService, USE_MOCK_DATA } from "./mock-data";
+import { motion } from "framer-motion";
 
 export class BookingService {
   private static instance: BookingService;
