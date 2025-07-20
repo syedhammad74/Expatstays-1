@@ -41,7 +41,7 @@ const blogPost = {
 };
 
 export default function BlogPostDetailPage(props: any) {
-  const params = props?.params || { slug: "" };
+  const params = props?.params || { slug: " " };
   const post = blogPost;
 
   return (
