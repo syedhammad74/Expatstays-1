@@ -1,0 +1,346 @@
+# # Example mutations for a simple movie app
+
+# # Create a movie based on user input
+# mutation CreateMovie($title: String!, $genre: String!, $imageUrl: String!)
+# @auth(level: USER_EMAIL_VERIFIED) {
+#   movie_insert(data: { title: $title, genre: $genre, imageUrl: $imageUrl })
+# }
+
+# # Upsert (update or insert) a user's username based on their auth.uid
+# mutation UpsertUser($username: String!) @auth(level: USER) {
+#   # The "auth.uid" server value ensures that users can only register their own user.
+#   user_upsert(data: { id_expr: "auth.uid", username: $username })
+# }
+
+# # Add a review for a movie
+# mutation AddReview($movieId: UUID!, $rating: Int!, $reviewText: String!)
+# @auth(level: USER) {
+#   review_upsert(
+#     data: {
+#       userId_expr: "auth.uid"
+#       movieId: $movieId
+#       rating: $rating
+#       reviewText: $reviewText
+#       # reviewDate defaults to today in the schema. No need to set it manually.
+#     }
+#   )
+# }
+
+# # Logged in user can delete their review for a movie
+# mutation DeleteReview($movieId: UUID!) @auth(level: USER) {
+#   # The "auth.uid" server value ensures that users can only delete their own reviews.
+#   review_delete(key: { userId_expr: "auth.uid", movieId: $movieId })
+# }
+
+# Property Rental Platform Mutations
+
+# User mutations
+mutation CreateUser($data: User_Data!) {
+  user_insert(data: $data) {
+    id
+    email
+    displayName
+    role
+    isActive
+    createdAt
+  }
+}
+
+mutation UpdateUser($userId: String!, $data: User_Data!) {
+  user_update(id: $userId, data: $data) {
+    id
+    email
+    displayName
+    phoneNumber
+    profileImageUrl
+    role
+    isActive
+    updatedAt
+  }
+}
+
+mutation DeleteUser($userId: String!) {
+  user_delete(id: $userId) {
+    id
+  }
+}
+
+# Property mutations
+mutation CreateProperty($data: Property_Data!) {
+  property_insert(data: $data) {
+    id
+    title
+    description
+    slug
+    ownerId
+    locationCity
+    locationCountry
+    capacityMaxGuests
+    basePrice
+    propertyType
+    availabilityIsActive
+    createdAt
+  }
+}
+
+mutation UpdateProperty($propertyId: UUID!, $data: Property_Data!) {
+  property_update(id: $propertyId, data: $data) {
+    id
+    title
+    description
+    slug
+    locationCity
+    locationCountry
+    capacityMaxGuests
+    capacityBedrooms
+    capacityBathrooms
+    basePrice
+    cleaningFee
+    serviceFee
+    amenities
+    images
+    propertyType
+    availabilityIsActive
+    availabilityMinStay
+    availabilityMaxStay
+    isVerified
+    rating
+    reviewCount
+    updatedAt
+  }
+}
+
+mutation DeleteProperty($propertyId: UUID!) {
+  property_delete(id: $propertyId) {
+    id
+  }
+}
+
+# Booking mutations
+mutation CreateBooking($data: Booking_Data!) {
+  booking_insert(data: $data) {
+    id
+    userId
+    propertyId
+    checkInDate
+    checkOutDate
+    guestCount
+    guestName
+    guestEmail
+    guestPhone
+    baseAmount
+    cleaningFee
+    serviceFee
+    totalAmount
+    status
+    paymentStatus
+    paymentIntentId
+    specialRequests
+    createdAt
+  }
+}
+
+mutation UpdateBooking($bookingId: UUID!, $data: Booking_Data!) {
+  booking_update(id: $bookingId, data: $data) {
+    id
+    status
+    paymentStatus
+    paymentIntentId
+    updatedAt
+    confirmedAt
+    cancelledAt
+  }
+}
+
+mutation ConfirmBooking($bookingId: UUID!) {
+  booking_update(
+    id: $bookingId
+    data: {
+      status: CONFIRMED
+      confirmedAt: { expr: "request.time" }
+      updatedAt: { expr: "request.time" }
+    }
+  ) {
+    id
+    status
+    confirmedAt
+    updatedAt
+  }
+}
+
+mutation CancelBooking($bookingId: UUID!) {
+  booking_update(
+    id: $bookingId
+    data: {
+      status: CANCELLED
+      cancelledAt: { expr: "request.time" }
+      updatedAt: { expr: "request.time" }
+    }
+  ) {
+    id
+    status
+    cancelledAt
+    updatedAt
+  }
+}
+
+mutation UpdateBookingPaymentStatus(
+  $bookingId: UUID!
+  $paymentStatus: PaymentStatus!
+  $paymentIntentId: String
+) {
+  booking_update(
+    id: $bookingId
+    data: {
+      paymentStatus: $paymentStatus
+      paymentIntentId: $paymentIntentId
+      updatedAt: { expr: "request.time" }
+    }
+  ) {
+    id
+    paymentStatus
+    paymentIntentId
+    updatedAt
+  }
+}
+
+mutation DeleteBooking($bookingId: UUID!) {
+  booking_delete(id: $bookingId) {
+    id
+  }
+}
+
+# Availability mutations
+mutation CreateAvailability($data: Availability_Data!) {
+  availability_insert(data: $data) {
+    id
+    propertyId
+    date
+    isBlocked
+    isBooked
+    priceOverride
+    blockReason
+    createdAt
+  }
+}
+
+mutation UpdateAvailability($availabilityId: UUID!, $data: Availability_Data!) {
+  availability_update(id: $availabilityId, data: $data) {
+    id
+    date
+    isBlocked
+    isBooked
+    priceOverride
+    blockReason
+    updatedAt
+  }
+}
+
+mutation BlockDates(
+  $propertyId: UUID!
+  $startDate: Date!
+  $endDate: Date!
+  $reason: String
+) {
+  availability_upsertMany(
+    data: [
+      {
+        propertyId: $propertyId
+        date: $startDate
+        isBlocked: true
+        blockReason: $reason
+      }
+    ]
+  ) {
+    id
+    date
+    isBlocked
+    blockReason
+  }
+}
+
+mutation DeleteAvailability($availabilityId: UUID!) {
+  availability_delete(id: $availabilityId) {
+    id
+  }
+}
+
+# Pricing rule mutations
+mutation CreatePricingRule($data: PricingRule_Data!) {
+  pricing_rule_insert(data: $data) {
+    id
+    propertyId
+    startDate
+    endDate
+    priceMultiplier
+    fixedPrice
+    ruleName
+    ruleType
+    isActive
+    createdAt
+  }
+}
+
+mutation UpdatePricingRule($ruleId: UUID!, $data: PricingRule_Data!) {
+  pricing_rule_update(id: $ruleId, data: $data) {
+    id
+    startDate
+    endDate
+    priceMultiplier
+    fixedPrice
+    ruleName
+    ruleType
+    isActive
+    updatedAt
+  }
+}
+
+mutation DeletePricingRule($ruleId: UUID!) {
+  pricing_rule_delete(id: $ruleId) {
+    id
+  }
+}
+
+# Admin notification mutations
+mutation CreateAdminNotification($data: AdminNotification_Data!) {
+  admin_notification_insert(data: $data) {
+    id
+    type
+    title
+    message
+    userId
+    bookingId
+    propertyId
+    isRead
+    priority
+    createdAt
+  }
+}
+
+mutation MarkNotificationAsRead($notificationId: UUID!) {
+  admin_notification_update(
+    id: $notificationId
+    data: { isRead: true, readAt: { expr: "request.time" } }
+  ) {
+    id
+    isRead
+    readAt
+  }
+}
+
+mutation MarkAllNotificationsAsRead {
+  admin_notification_updateMany(
+    where: { isRead: { eq: false } }
+    data: { isRead: true, readAt: { expr: "request.time" } }
+  ) {
+    id
+    isRead
+    readAt
+  }
+}
+
+mutation DeleteNotification($notificationId: UUID!) {
+  admin_notification_delete(id: $notificationId) {
+    id
+  }
+}

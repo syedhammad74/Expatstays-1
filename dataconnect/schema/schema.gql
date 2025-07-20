@@ -1,0 +1,250 @@
+# Property Rental Platform Schema for Studio
+
+# User table is keyed by Firebase Auth UID
+type User @table {
+  # Firebase Auth UID as primary key
+  id: String! @default(expr: "auth.uid") @col(dataType: "varchar(255)")
+  email: String! @col(dataType: "varchar(255)")
+  displayName: String @col(dataType: "varchar(255)")
+  phoneNumber: String @col(dataType: "varchar(50)")
+  profileImageUrl: String @col(dataType: "text")
+  role: UserRole! @default(value: "GUEST")
+  isActive: Boolean! @default(value: true)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+
+  # Generated relationships
+  bookings_on_user: [Booking!]!
+  properties_on_owner: [Property!]!
+  notifications_on_user: [AdminNotification!]!
+}
+
+# Property represents a rental property
+type Property @table {
+  id: UUID! @default(expr: "uuidV4()")
+  title: String! @col(dataType: "varchar(255)")
+  description: String! @col(dataType: "text")
+  slug: String! @unique @col(dataType: "varchar(255)")
+
+  # Owner relationship
+  owner: User!
+  ownerId: String! @col(dataType: "varchar(255)")
+
+  # Location details
+  locationCity: String! @col(dataType: "varchar(100)")
+  locationState: String @col(dataType: "varchar(100)")
+  locationCountry: String! @col(dataType: "varchar(100)")
+  locationAddress: String! @col(dataType: "text")
+  locationLatitude: Float
+  locationLongitude: Float
+
+  # Capacity details
+  capacityMaxGuests: Int! @default(value: 1)
+  capacityBedrooms: Int! @default(value: 1)
+  capacityBathrooms: Int! @default(value: 1)
+  capacityBeds: Int! @default(value: 1)
+
+  # Pricing
+  basePrice: Float! # Price per night
+  cleaningFee: Float @default(value: 0)
+  serviceFee: Float @default(value: 0)
+
+  # Property features
+  amenities: [String!]! @col(dataType: "jsonb")
+  images: [String!]! @col(dataType: "jsonb")
+  propertyType: PropertyType!
+
+  # Availability
+  availabilityIsActive: Boolean! @default(value: true)
+  availabilityMinStay: Int! @default(value: 1)
+  availabilityMaxStay: Int @default(value: 365)
+
+  # Metadata
+  isVerified: Boolean! @default(value: false)
+  rating: Float @default(value: 0)
+  reviewCount: Int! @default(value: 0)
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+
+  # Generated relationships
+  bookings_on_property: [Booking!]!
+  availability_on_property: [Availability!]!
+  pricing_rules_on_property: [PricingRule!]!
+}
+
+# Booking represents a property reservation
+type Booking @table {
+  id: UUID! @default(expr: "uuidV4()")
+
+  # Relationships
+  user: User!
+  userId: String! @col(dataType: "varchar(255)")
+  property: Property!
+  propertyId: UUID!
+
+  # Booking dates
+  checkInDate: Date!
+  checkOutDate: Date!
+
+  # Guest details
+  guestCount: Int! @default(value: 1)
+  guestName: String! @col(dataType: "varchar(255)")
+  guestEmail: String! @col(dataType: "varchar(255)")
+  guestPhone: String @col(dataType: "varchar(50)")
+
+  # Pricing breakdown
+  baseAmount: Float! # Total base price for stay
+  cleaningFee: Float! @default(value: 0)
+  serviceFee: Float! @default(value: 0)
+  totalAmount: Float! # Total amount charged
+  # Booking status and details
+  status: BookingStatus! @default(value: "PENDING")
+  paymentStatus: PaymentStatus! @default(value: "PENDING")
+  paymentIntentId: String @col(dataType: "varchar(255)")
+
+  # Special requests
+  specialRequests: String @col(dataType: "text")
+
+  # Timestamps
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+  confirmedAt: Timestamp
+  cancelledAt: Timestamp
+}
+
+# Availability tracks property availability by date
+type Availability @table {
+  id: UUID! @default(expr: "uuidV4()")
+
+  # Relationships
+  property: Property!
+  propertyId: UUID!
+
+  # Availability details
+  date: Date!
+  isBlocked: Boolean! @default(value: false)
+  isBooked: Boolean! @default(value: false)
+  priceOverride: Float # Override base price for this date
+  # Metadata
+  blockReason: String @col(dataType: "varchar(255)")
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+# PricingRule for dynamic pricing
+type PricingRule @table {
+  id: UUID! @default(expr: "uuidV4()")
+
+  # Relationships
+  property: Property!
+  propertyId: UUID!
+
+  # Date range
+  startDate: Date!
+  endDate: Date!
+
+  # Pricing details
+  priceMultiplier: Float! @default(value: 1.0) # Multiply base price by this
+  fixedPrice: Float # Override with fixed price
+  # Rule details
+  ruleName: String! @col(dataType: "varchar(255)")
+  ruleType: PricingRuleType!
+  isActive: Boolean! @default(value: true)
+
+  # Metadata
+  createdAt: Timestamp! @default(expr: "request.time")
+  updatedAt: Timestamp! @default(expr: "request.time")
+}
+
+# AdminNotification for admin dashboard alerts
+type AdminNotification @table {
+  id: UUID! @default(expr: "uuidV4()")
+
+  # Notification details
+  type: NotificationType!
+  title: String! @col(dataType: "varchar(255)")
+  message: String! @col(dataType: "text")
+
+  # Related entities
+  userId: String @col(dataType: "varchar(255)")
+  bookingId: UUID
+  propertyId: UUID
+
+  # Status
+  isRead: Boolean! @default(value: false)
+  priority: NotificationPriority! @default(value: "MEDIUM")
+
+  # Metadata
+  createdAt: Timestamp! @default(expr: "request.time")
+  readAt: Timestamp
+
+  # Generated relationships
+  user: User
+  booking: Booking
+  property: Property
+}
+
+# Enums for type safety
+enum UserRole {
+  GUEST
+  HOST
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum PropertyType {
+  APARTMENT
+  HOUSE
+  VILLA
+  STUDIO
+  LOFT
+  CONDO
+  TOWNHOUSE
+  OTHER
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CHECKED_IN
+  CHECKED_OUT
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  REFUNDED
+  CANCELLED
+}
+
+enum PricingRuleType {
+  SEASONAL
+  WEEKEND
+  HOLIDAY
+  LAST_MINUTE
+  EARLY_BIRD
+  MINIMUM_STAY
+  CUSTOM
+}
+
+enum NotificationType {
+  NEW_BOOKING
+  BOOKING_CANCELLED
+  PAYMENT_RECEIVED
+  PAYMENT_FAILED
+  PROPERTY_INQUIRY
+  REVIEW_SUBMITTED
+  SYSTEM_ALERT
+  MAINTENANCE_REQUEST
+}
+
+enum NotificationPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}

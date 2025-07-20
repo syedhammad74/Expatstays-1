@@ -1,0 +1,798 @@
+{
+  "properties": [
+    {
+      "id": "prop_001",
+      "title": "Luxury Marina Villa with Infinity Pool",
+      "description": "Stunning 4-bedroom villa overlooking Dubai Marina with panoramic views, infinity pool, and world-class amenities. Perfect for families and groups seeking an exclusive Dubai experience.",
+      "location": {
+        "address": "123 Marina Boulevard, Dubai Marina",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.076, "lng": 55.1297 }
+      },
+      "propertyType": "villa",
+      "capacity": { "bedrooms": 4, "bathrooms": 3, "maxGuests": 8 },
+      "amenities": [
+        "WiFi",
+        "Pool",
+        "Air Conditioning",
+        "Kitchen",
+        "Parking",
+        "Security",
+        "Garden",
+        "Terrace",
+        "BBQ Area",
+        "Gym",
+        "Spa",
+        "Concierge"
+      ],
+      "images": [
+        "/media/DSC01806 HDR June 25 2025/DSC01970-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg"
+      ],
+      "pricing": {
+        "basePrice": 450,
+        "currency": "USD",
+        "cleaningFee": 50,
+        "serviceFee": 25
+      },
+      "availability": { "isActive": true, "minimumStay": 2, "maximumStay": 14 },
+      "rating": 4.9,
+      "reviewCount": 127,
+      "owner": {
+        "uid": "owner1",
+        "name": "Sarah Johnson",
+        "email": "sarah@example.com"
+      },
+      "createdAt": "2024-01-15T10:30:00Z",
+      "updatedAt": "2024-01-20T15:45:00Z"
+    },
+    {
+      "id": "prop_002",
+      "title": "Modern Downtown Penthouse",
+      "description": "Chic 3-bedroom penthouse in the heart of downtown Dubai with breathtaking city views, rooftop terrace, and walking distance to major attractions.",
+      "location": {
+        "address": "456 Business Bay Drive, Business Bay",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.1865, "lng": 55.2654 }
+      },
+      "propertyType": "apartment",
+      "capacity": { "bedrooms": 3, "bathrooms": 2, "maxGuests": 6 },
+      "amenities": [
+        "WiFi",
+        "Air Conditioning",
+        "Kitchen",
+        "Laundry",
+        "Balcony",
+        "City View",
+        "Elevator",
+        "Security",
+        "Gym",
+        "Pool"
+      ],
+      "images": [
+        "/media/DSC01806 HDR June 25 2025/DSC01929-HDR.jpg",
+        "/media/Close Ups June 25 2025/DSC01835.jpg"
+      ],
+      "pricing": {
+        "basePrice": 320,
+        "currency": "USD",
+        "cleaningFee": 40,
+        "serviceFee": 18
+      },
+      "availability": { "isActive": true, "minimumStay": 1, "maximumStay": 30 },
+      "rating": 4.8,
+      "reviewCount": 89,
+      "owner": {
+        "uid": "owner2",
+        "name": "Michael Chen",
+        "email": "michael@example.com"
+      },
+      "createdAt": "2024-01-10T08:15:00Z",
+      "updatedAt": "2024-01-18T12:30:00Z"
+    },
+    {
+      "id": "prop_003",
+      "title": "Beachfront Condo with Ocean Views",
+      "description": "Spectacular 2-bedroom beachfront condominium with direct beach access, panoramic ocean views, and resort-style amenities.",
+      "location": {
+        "address": "789 Jumeirah Beach Road, Jumeirah",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.2084, "lng": 55.2719 }
+      },
+      "propertyType": "condo",
+      "capacity": { "bedrooms": 2, "bathrooms": 2, "maxGuests": 4 },
+      "amenities": [
+        "WiFi",
+        "Beach Access",
+        "Ocean View",
+        "Pool",
+        "Air Conditioning",
+        "Kitchen",
+        "Balcony",
+        "Parking",
+        "Security",
+        "Spa",
+        "Restaurant"
+      ],
+      "images": [
+        "/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01970-HDR.jpg"
+      ],
+      "pricing": {
+        "basePrice": 280,
+        "currency": "USD",
+        "cleaningFee": 35,
+        "serviceFee": 15
+      },
+      "availability": { "isActive": true, "minimumStay": 3, "maximumStay": 21 },
+      "rating": 4.7,
+      "reviewCount": 156,
+      "owner": {
+        "uid": "owner3",
+        "name": "Emma Rodriguez",
+        "email": "emma@example.com"
+      },
+      "createdAt": "2024-01-08T14:20:00Z",
+      "updatedAt": "2024-01-22T09:15:00Z"
+    },
+    {
+      "id": "prop_004",
+      "title": "Executive Penthouse Suite",
+      "description": "Luxurious 5-bedroom penthouse with private rooftop terrace, jacuzzi, and panoramic city views. Perfect for business travelers and VIP guests.",
+      "location": {
+        "address": "321 Sheikh Zayed Road, DIFC",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.1972, "lng": 55.2744 }
+      },
+      "propertyType": "apartment",
+      "capacity": { "bedrooms": 5, "bathrooms": 4, "maxGuests": 10 },
+      "amenities": [
+        "WiFi",
+        "Private Terrace",
+        "City View",
+        "Jacuzzi",
+        "Air Conditioning",
+        "Kitchen",
+        "Dining Room",
+        "Office",
+        "Gym",
+        "Concierge",
+        "Valet"
+      ],
+      "images": [
+        "/media/Close Ups June 25 2025/DSC01835.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01884-HDR.jpg"
+      ],
+      "pricing": {
+        "basePrice": 650,
+        "currency": "USD",
+        "cleaningFee": 80,
+        "serviceFee": 35
+      },
+      "availability": { "isActive": true, "minimumStay": 3, "maximumStay": 30 },
+      "rating": 4.9,
+      "reviewCount": 203,
+      "owner": {
+        "uid": "owner4",
+        "name": "David Wilson",
+        "email": "david@example.com"
+      },
+      "createdAt": "2024-01-05T16:45:00Z",
+      "updatedAt": "2024-01-25T11:20:00Z"
+    },
+    {
+      "id": "prop_005",
+      "title": "Cozy Garden House in Al Barsha",
+      "description": "Charming 3-bedroom house with beautiful garden, perfect for families and nature lovers seeking tranquility while staying close to the city.",
+      "location": {
+        "address": "555 Al Barsha Street, Al Barsha",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.114, "lng": 55.1969 }
+      },
+      "propertyType": "house",
+      "capacity": { "bedrooms": 3, "bathrooms": 2, "maxGuests": 6 },
+      "amenities": [
+        "WiFi",
+        "Garden",
+        "BBQ Area",
+        "Air Conditioning",
+        "Kitchen",
+        "Laundry",
+        "Parking",
+        "Pet Friendly",
+        "Playground",
+        "Terrace"
+      ],
+      "images": [
+        "/media/DSC01806 HDR June 25 2025/DSC01929-HDR.jpg",
+        "/media/Close Ups June 25 2025/DSC01964.jpg"
+      ],
+      "pricing": {
+        "basePrice": 200,
+        "currency": "USD",
+        "cleaningFee": 25,
+        "serviceFee": 12
+      },
+      "availability": { "isActive": true, "minimumStay": 1, "maximumStay": 28 },
+      "rating": 4.6,
+      "reviewCount": 94,
+      "owner": {
+        "uid": "owner5",
+        "name": "Lisa Thompson",
+        "email": "lisa@example.com"
+      },
+      "createdAt": "2024-01-12T09:30:00Z",
+      "updatedAt": "2024-01-19T14:15:00Z"
+    },
+    {
+      "id": "prop_006",
+      "title": "Palm Jumeirah Luxury Apartment",
+      "description": "Exclusive 2-bedroom apartment on the iconic Palm Jumeirah with stunning views of the Arabian Gulf and Dubai skyline.",
+      "location": {
+        "address": "777 Palm Jumeirah Crescent, Palm Jumeirah",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.1124, "lng": 55.139 }
+      },
+      "propertyType": "apartment",
+      "capacity": { "bedrooms": 2, "bathrooms": 2, "maxGuests": 4 },
+      "amenities": [
+        "WiFi",
+        "Beach Access",
+        "Sea View",
+        "Pool",
+        "Air Conditioning",
+        "Kitchen",
+        "Balcony",
+        "Parking",
+        "Security",
+        "Spa",
+        "Marina"
+      ],
+      "images": [
+        "/media/DSC01806 HDR June 25 2025/DSC01884-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01970-HDR.jpg"
+      ],
+      "pricing": {
+        "basePrice": 380,
+        "currency": "USD",
+        "cleaningFee": 45,
+        "serviceFee": 22
+      },
+      "availability": { "isActive": true, "minimumStay": 2, "maximumStay": 21 },
+      "rating": 4.8,
+      "reviewCount": 118,
+      "owner": {
+        "uid": "owner6",
+        "name": "Ahmed Al Mansouri",
+        "email": "ahmed@example.com"
+      },
+      "createdAt": "2024-01-03T13:20:00Z",
+      "updatedAt": "2024-01-21T10:45:00Z"
+    },
+    {
+      "id": "prop_007",
+      "title": "JLT Studio with Lake Views",
+      "description": "Modern studio apartment in Jumeirah Lake Towers with beautiful lake views, perfect for solo travelers and couples.",
+      "location": {
+        "address": "888 Cluster M, JLT",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.0657, "lng": 55.1404 }
+      },
+      "propertyType": "studio",
+      "capacity": { "bedrooms": 1, "bathrooms": 1, "maxGuests": 2 },
+      "amenities": [
+        "WiFi",
+        "Lake View",
+        "Air Conditioning",
+        "Kitchenette",
+        "Gym",
+        "Pool",
+        "Security",
+        "Metro Access"
+      ],
+      "images": [
+        "/media/Close Ups June 25 2025/DSC01964.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01929-HDR.jpg"
+      ],
+      "pricing": {
+        "basePrice": 120,
+        "currency": "USD",
+        "cleaningFee": 20,
+        "serviceFee": 8
+      },
+      "availability": { "isActive": true, "minimumStay": 1, "maximumStay": 45 },
+      "rating": 4.5,
+      "reviewCount": 67,
+      "owner": {
+        "uid": "owner7",
+        "name": "Sofia Petrov",
+        "email": "sofia@example.com"
+      },
+      "createdAt": "2024-01-07T11:10:00Z",
+      "updatedAt": "2024-01-23T16:30:00Z"
+    },
+    {
+      "id": "prop_008",
+      "title": "Emirates Hills Mansion",
+      "description": "Opulent 6-bedroom mansion in the prestigious Emirates Hills community with golf course views, private pool, and premium amenities.",
+      "location": {
+        "address": "999 Emirates Hills Boulevard, Emirates Hills",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.1048, "lng": 55.1728 }
+      },
+      "propertyType": "villa",
+      "capacity": { "bedrooms": 6, "bathrooms": 5, "maxGuests": 12 },
+      "amenities": [
+        "WiFi",
+        "Private Pool",
+        "Golf View",
+        "Garden",
+        "BBQ Area",
+        "Gym",
+        "Study",
+        "Maid's Room",
+        "Driver's Room",
+        "Security",
+        "Concierge"
+      ],
+      "images": [
+        "/media/DSC01806 HDR June 25 2025/DSC01970-HDR.jpg",
+        "/media/Close Ups June 25 2025/DSC01835.jpg"
+      ],
+      "pricing": {
+        "basePrice": 850,
+        "currency": "USD",
+        "cleaningFee": 100,
+        "serviceFee": 45
+      },
+      "availability": { "isActive": true, "minimumStay": 5, "maximumStay": 30 },
+      "rating": 5.0,
+      "reviewCount": 45,
+      "owner": {
+        "uid": "owner8",
+        "name": "Robert Sterling",
+        "email": "robert@example.com"
+      },
+      "createdAt": "2024-01-01T20:15:00Z",
+      "updatedAt": "2024-01-24T12:00:00Z"
+    },
+    {
+      "id": "prop_009",
+      "title": "City Walk Trendy Loft",
+      "description": "Stylish 1-bedroom loft in the vibrant City Walk district, surrounded by restaurants, cafes, and shopping. Perfect for urban explorers.",
+      "location": {
+        "address": "101 City Walk Boulevard, City Walk",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.1996, "lng": 55.2588 }
+      },
+      "propertyType": "loft",
+      "capacity": { "bedrooms": 1, "bathrooms": 1, "maxGuests": 3 },
+      "amenities": [
+        "WiFi",
+        "City View",
+        "Air Conditioning",
+        "Kitchen",
+        "Balcony",
+        "Shopping Access",
+        "Restaurant Access",
+        "Security"
+      ],
+      "images": [
+        "/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01884-HDR.jpg"
+      ],
+      "pricing": {
+        "basePrice": 180,
+        "currency": "USD",
+        "cleaningFee": 30,
+        "serviceFee": 12
+      },
+      "availability": { "isActive": true, "minimumStay": 2, "maximumStay": 20 },
+      "rating": 4.7,
+      "reviewCount": 78,
+      "owner": {
+        "uid": "owner9",
+        "name": "Layla Hassan",
+        "email": "layla@example.com"
+      },
+      "createdAt": "2024-01-09T15:25:00Z",
+      "updatedAt": "2024-01-20T08:40:00Z"
+    },
+    {
+      "id": "prop_010",
+      "title": "Burj Al Arab View Apartment",
+      "description": "Luxurious 3-bedroom apartment with direct views of the iconic Burj Al Arab and pristine beaches. An Instagram-worthy location.",
+      "location": {
+        "address": "202 Jumeirah Beach Residence, JBR",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.0778, "lng": 55.1335 }
+      },
+      "propertyType": "apartment",
+      "capacity": { "bedrooms": 3, "bathrooms": 2, "maxGuests": 6 },
+      "amenities": [
+        "WiFi",
+        "Burj Al Arab View",
+        "Beach Access",
+        "Pool",
+        "Air Conditioning",
+        "Kitchen",
+        "Balcony",
+        "Gym",
+        "Marina",
+        "Restaurants"
+      ],
+      "images": [
+        "/media/Close Ups June 25 2025/DSC01964.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01929-HDR.jpg"
+      ],
+      "pricing": {
+        "basePrice": 420,
+        "currency": "USD",
+        "cleaningFee": 55,
+        "serviceFee": 28
+      },
+      "availability": { "isActive": true, "minimumStay": 3, "maximumStay": 15 },
+      "rating": 4.9,
+      "reviewCount": 134,
+      "owner": {
+        "uid": "owner10",
+        "name": "Carlos Mendez",
+        "email": "carlos@example.com"
+      },
+      "createdAt": "2024-01-04T12:50:00Z",
+      "updatedAt": "2024-01-22T17:20:00Z"
+    },
+    {
+      "id": "prop_011",
+      "title": "Arabian Ranches Family Villa",
+      "description": "Spacious 4-bedroom family villa in Arabian Ranches with private garden, community pool, and golf course proximity. Perfect for families.",
+      "location": {
+        "address": "303 Arabian Ranches Drive, Arabian Ranches",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.0518, "lng": 55.2707 }
+      },
+      "propertyType": "villa",
+      "capacity": { "bedrooms": 4, "bathrooms": 3, "maxGuests": 8 },
+      "amenities": [
+        "WiFi",
+        "Private Garden",
+        "Community Pool",
+        "Golf Access",
+        "BBQ Area",
+        "Parking",
+        "Security",
+        "Playground",
+        "Pet Friendly"
+      ],
+      "images": [
+        "/media/DSC01806 HDR June 25 2025/DSC01884-HDR.jpg",
+        "/media/Close Ups June 25 2025/DSC01835.jpg"
+      ],
+      "pricing": {
+        "basePrice": 300,
+        "currency": "USD",
+        "cleaningFee": 40,
+        "serviceFee": 20
+      },
+      "availability": { "isActive": true, "minimumStay": 3, "maximumStay": 30 },
+      "rating": 4.6,
+      "reviewCount": 112,
+      "owner": {
+        "uid": "owner11",
+        "name": "Jennifer Park",
+        "email": "jennifer@example.com"
+      },
+      "createdAt": "2024-01-06T10:15:00Z",
+      "updatedAt": "2024-01-19T13:45:00Z"
+    },
+    {
+      "id": "prop_012",
+      "title": "The Greens Poolside Apartment",
+      "description": "Relaxing 2-bedroom apartment in The Greens community with direct pool access, lush surroundings, and peaceful ambiance.",
+      "location": {
+        "address": "404 The Greens Avenue, The Greens",
+        "city": "Dubai",
+        "state": "Dubai",
+        "country": "UAE",
+        "coordinates": { "lat": 25.0976, "lng": 55.1711 }
+      },
+      "propertyType": "apartment",
+      "capacity": { "bedrooms": 2, "bathrooms": 2, "maxGuests": 4 },
+      "amenities": [
+        "WiFi",
+        "Pool Access",
+        "Garden View",
+        "Air Conditioning",
+        "Kitchen",
+        "Balcony",
+        "Gym",
+        "Tennis Court",
+        "Security"
+      ],
+      "images": [
+        "/media/DSC01806 HDR June 25 2025/DSC01970-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg"
+      ],
+      "pricing": {
+        "basePrice": 220,
+        "currency": "USD",
+        "cleaningFee": 35,
+        "serviceFee": 15
+      },
+      "availability": { "isActive": true, "minimumStay": 2, "maximumStay": 25 },
+      "rating": 4.5,
+      "reviewCount": 86,
+      "owner": {
+        "uid": "owner12",
+        "name": "Mark Thompson",
+        "email": "mark@example.com"
+      },
+      "createdAt": "2024-01-11T14:30:00Z",
+      "updatedAt": "2024-01-21T09:55:00Z"
+    }
+  ],
+  "users": [
+    {
+      "uid": "user1",
+      "email": "alice.johnson@example.com",
+      "displayName": "Alice Johnson",
+      "profile": {
+        "firstName": "Alice",
+        "lastName": "Johnson",
+        "phone": "+1234567890",
+        "nationality": "American"
+      },
+      "preferences": {
+        "currency": "USD",
+        "language": "en",
+        "emailNotifications": true,
+        "smsNotifications": false
+      },
+      "bookingHistory": [],
+      "createdAt": "2024-01-01T10:00:00Z",
+      "updatedAt": "2024-01-20T15:30:00Z"
+    },
+    {
+      "uid": "user2",
+      "email": "bob.smith@example.com",
+      "displayName": "Bob Smith",
+      "profile": {
+        "firstName": "Bob",
+        "lastName": "Smith",
+        "phone": "+1234567891",
+        "nationality": "British"
+      },
+      "preferences": {
+        "currency": "USD",
+        "language": "en",
+        "emailNotifications": true,
+        "smsNotifications": true
+      },
+      "bookingHistory": [],
+      "createdAt": "2024-01-02T11:30:00Z",
+      "updatedAt": "2024-01-18T12:45:00Z"
+    },
+    {
+      "uid": "user3",
+      "email": "carol.davis@example.com",
+      "displayName": "Carol Davis",
+      "profile": {
+        "firstName": "Carol",
+        "lastName": "Davis",
+        "phone": "+1234567892",
+        "nationality": "Canadian"
+      },
+      "preferences": {
+        "currency": "USD",
+        "language": "en",
+        "emailNotifications": false,
+        "smsNotifications": true
+      },
+      "bookingHistory": [],
+      "createdAt": "2024-01-03T09:15:00Z",
+      "updatedAt": "2024-01-19T14:20:00Z"
+    }
+  ],
+  "bookings": [
+    {
+      "id": "booking_001",
+      "propertyId": "prop_001",
+      "guest": {
+        "uid": "user1",
+        "name": "Alice Johnson",
+        "email": "alice.johnson@example.com",
+        "phone": "+1234567890"
+      },
+      "dates": {
+        "checkIn": "2024-02-15",
+        "checkOut": "2024-02-18",
+        "nights": 3
+      },
+      "guests": {
+        "adults": 2,
+        "children": 1,
+        "infants": 0,
+        "total": 3
+      },
+      "pricing": {
+        "basePrice": 450,
+        "totalNights": 3,
+        "subtotal": 1350,
+        "cleaningFee": 50,
+        "serviceFee": 25,
+        "taxes": 108,
+        "total": 1533,
+        "currency": "USD"
+      },
+      "status": "confirmed",
+      "payment": {
+        "status": "completed",
+        "amount": 1533,
+        "currency": "USD",
+        "paymentIntentId": "pi_1AbCdE2fGhIjKlMn",
+        "paymentMethod": "card",
+        "receiptUrl": "https://pay.stripe.com/receipts/1AbCdE2fGhIjKlMn",
+        "processedAt": "2024-01-25T10:30:00Z"
+      },
+      "specialRequests": "Early check-in if possible",
+      "createdAt": "2024-01-25T10:15:00Z",
+      "updatedAt": "2024-01-25T10:30:00Z"
+    },
+    {
+      "id": "booking_002",
+      "propertyId": "prop_003",
+      "guest": {
+        "uid": "user2",
+        "name": "Bob Smith",
+        "email": "bob.smith@example.com",
+        "phone": "+1234567891"
+      },
+      "dates": {
+        "checkIn": "2024-02-20",
+        "checkOut": "2024-02-25",
+        "nights": 5
+      },
+      "guests": {
+        "adults": 2,
+        "children": 0,
+        "infants": 0,
+        "total": 2
+      },
+      "pricing": {
+        "basePrice": 280,
+        "totalNights": 5,
+        "subtotal": 1400,
+        "cleaningFee": 35,
+        "serviceFee": 15,
+        "taxes": 112,
+        "total": 1562,
+        "currency": "USD"
+      },
+      "status": "pending",
+      "payment": {
+        "status": "pending",
+        "amount": 1562,
+        "currency": "USD"
+      },
+      "createdAt": "2024-01-26T14:20:00Z",
+      "updatedAt": "2024-01-26T14:20:00Z"
+    },
+    {
+      "id": "booking_003",
+      "propertyId": "prop_002",
+      "guest": {
+        "uid": "user3",
+        "name": "Carol Davis",
+        "email": "carol.davis@example.com",
+        "phone": "+1234567892"
+      },
+      "dates": {
+        "checkIn": "2024-03-01",
+        "checkOut": "2024-03-04",
+        "nights": 3
+      },
+      "guests": {
+        "adults": 3,
+        "children": 1,
+        "infants": 0,
+        "total": 4
+      },
+      "pricing": {
+        "basePrice": 320,
+        "totalNights": 3,
+        "subtotal": 960,
+        "cleaningFee": 40,
+        "serviceFee": 18,
+        "taxes": 76.8,
+        "total": 1094.8,
+        "currency": "USD"
+      },
+      "status": "completed",
+      "payment": {
+        "status": "completed",
+        "amount": 1094.8,
+        "currency": "USD",
+        "paymentIntentId": "pi_2CdEfG3hIjKlMnOp",
+        "paymentMethod": "card",
+        "receiptUrl": "https://pay.stripe.com/receipts/2CdEfG3hIjKlMnOp",
+        "processedAt": "2024-01-24T16:45:00Z"
+      },
+      "createdAt": "2024-01-24T16:30:00Z",
+      "updatedAt": "2024-03-04T12:00:00Z"
+    }
+  ],
+  "availability": [
+    {
+      "id": "avail_001",
+      "propertyId": "prop_001",
+      "date": "2024-02-15",
+      "bookingId": "booking_001",
+      "blocked": true,
+      "createdAt": "2024-01-25T10:30:00Z"
+    },
+    {
+      "id": "avail_002",
+      "propertyId": "prop_001",
+      "date": "2024-02-16",
+      "bookingId": "booking_001",
+      "blocked": true,
+      "createdAt": "2024-01-25T10:30:00Z"
+    },
+    {
+      "id": "avail_003",
+      "propertyId": "prop_001",
+      "date": "2024-02-17",
+      "bookingId": "booking_001",
+      "blocked": true,
+      "createdAt": "2024-01-25T10:30:00Z"
+    }
+  ],
+  "admin_notifications": [
+    {
+      "id": "notif_001",
+      "type": "booking_created",
+      "title": "New Booking Received",
+      "message": "A new booking has been created for Luxury Marina Villa with Infinity Pool",
+      "data": {
+        "bookingId": "booking_001",
+        "propertyId": "prop_001"
+      },
+      "isRead": false,
+      "createdAt": "2024-01-25T10:15:00Z"
+    },
+    {
+      "id": "notif_002",
+      "type": "payment_completed",
+      "title": "Payment Successful",
+      "message": "Payment completed for booking booking_001",
+      "data": {
+        "bookingId": "booking_001",
+        "amount": 1533
+      },
+      "isRead": false,
+      "createdAt": "2024-01-25T10:30:00Z"
+    }
+  ]
+}
