@@ -8,7 +8,7 @@
  */
 
 import { setGlobalOptions } from "firebase-functions";
-import { onRequest, onCall } from "firebase-functions/v2/https";
+import { onCall } from "firebase-functions/v2/https";
 import {
   onDocumentCreated,
   onDocumentUpdated,
@@ -37,7 +37,6 @@ setGlobalOptions({ maxInstances: 10 });
 
 // Firestore and Auth references
 const db = admin.firestore();
-const auth = admin.auth();
 
 // ========== Booking Workflow Functions ==========
 
@@ -160,7 +159,7 @@ export const createPaymentIntent = onCall(async (request) => {
 
 // Send email notifications (placeholder - integrate with your email service)
 export const sendEmailNotification = onCall(async (request) => {
-  const { to, subject, template, data } = request.data;
+  const { to, subject } = request.data;
 
   if (!request.auth) {
     throw new Error("Authentication required");
@@ -238,7 +237,7 @@ export const validatePropertyData = onCall(async (request) => {
     logger.error("Error validating property data:", error);
     return {
       isValid: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 });
