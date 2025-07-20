@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { getLocalImage } from "@/lib/imageUtils";
-import { motion } from "motion";
+import { motion } from "framer-motion";
 
 // Mock blog post data
 const blogPost = {

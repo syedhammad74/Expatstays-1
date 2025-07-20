@@ -569,4 +569,4 @@ This is an automated notification.`;
   }
 }
 
-
+export const emailService = EmailService.getInstance();
