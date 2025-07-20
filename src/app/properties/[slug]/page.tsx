@@ -106,11 +106,8 @@ const testimonials = [
   },
 ];
 
-export default function PropertyDetailPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+export default function PropertyDetailPage(props: any) {
+  const params = props?.params || { slug: "" };
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
