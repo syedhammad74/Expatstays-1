@@ -40,7 +40,11 @@ const blogPost = {
   readTime: "8 min read",
 };
 
-export default function BlogPostDetailPage({ params }: { params: { slug: any } }) {
+export default function BlogPostDetailPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   // In a real app, you'd fetch post data based on params.slug
   const post = blogPost; // Using mock data for now
 
