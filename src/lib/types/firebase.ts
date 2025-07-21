@@ -38,6 +38,7 @@ export interface Property {
   };
   createdAt: string;
   updatedAt: string;
+  featured?: boolean;
 }
 
 export interface Booking {
