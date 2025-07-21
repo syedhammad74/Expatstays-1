@@ -68,6 +68,14 @@ const nextConfig: NextConfig = {
   
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
+     config.resolve.alias = {
+       ...(config.resolve.alias || {}),
+       // any import of 'next/document' now resolves to our shim
+       "next/document": path.resolve(
+         __dirname,
+         "src/mocks/next-document-shim.tsx"
+       ),
+     };
     // Optimize for production
     if (!dev && !isServer) {
       config.optimization = {
@@ -85,10 +93,7 @@ const nextConfig: NextConfig = {
               chunks: "all",
               enforce: true,
             },
-            "next/document": path.resolve(
-              __dirname,
-              "src/mocks/next-document-shim.tsx"
-            ),
+          
           },
         },
       };
