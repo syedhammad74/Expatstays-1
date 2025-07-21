@@ -23,7 +23,7 @@ const testimonials = [
   },
   {
     quote:
-      "Booking with Expat Stays was seamless, and their concierge service helped us plan the perfect itinerary. We can't wait to return!",
+      "Booking with Expat Stays was seamless, and their concierge service helped us plan the perfect itinerary. We can&apos;t wait to return!",
     name: "Aisha K.",
     location: "Riyadh, KSA",
     avatar:
@@ -77,7 +77,7 @@ const TestimonialsSection = () => {
               </CardHeader>
               <CardContent>
                 <blockquote className="text-muted-foreground leading-relaxed italic">
-                  "{testimonial.quote}"
+                  &quot;{testimonial.quote}&quot;
                 </blockquote>
               </CardContent>
             </Card>

@@ -124,7 +124,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     loadAdminData();
     setupRealTimeSubscriptions();
-  }, []);
+  }, [loadAdminData, setupRealTimeSubscriptions]);
 
   // Filter bookings whenever filters change
   useEffect(() => {

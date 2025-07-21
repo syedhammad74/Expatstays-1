@@ -1,6 +1,7 @@
 "use client";
 import { IconArrowNarrowRight } from "@tabler/icons-react";
 import { useState, useRef, useId, useEffect } from "react";
+import Image from "next/image";
 
 interface SlideData {
   title: string;
@@ -79,7 +80,10 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
               : "scale(1) rotateX(0deg) rotateY(0deg)",
           transition: "transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
           transformOrigin: "center",
-          filter: current !== index ? "brightness(0.6) contrast(0.8)" : "brightness(1) contrast(1)",
+          filter:
+            current !== index
+              ? "brightness(0.6) contrast(0.8)"
+              : "brightness(1) contrast(1)",
         }}
       >
         <div
@@ -91,7 +95,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
                 : "none",
           }}
         >
-          <img
+          <Image
             className="absolute inset-0 w-full h-full object-cover transition-all duration-700 ease-in-out"
             style={{
               opacity: current === index ? 1 : 0.7,
@@ -102,22 +106,27 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
             onLoad={imageLoaded}
             loading="eager"
             decoding="sync"
+            fill
           />
-          
+
           {/* Dark atmospheric overlay */}
-          <div className={`absolute inset-0 transition-all duration-1000 ${
-            current === index 
-              ? "bg-gradient-to-t from-black/80 via-black/40 to-transparent" 
-              : "bg-gradient-to-t from-black/90 via-black/60 to-black/20"
-          }`} />
-          
+          <div
+            className={`absolute inset-0 transition-all duration-1000 ${
+              current === index
+                ? "bg-gradient-to-t from-black/80 via-black/40 to-transparent"
+                : "bg-gradient-to-t from-black/90 via-black/60 to-black/20"
+            }`}
+          />
+
           {/* Subtle noise texture overlay */}
           <div className="absolute inset-0 opacity-20 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8ZGVmcz4KICAgIDxmaWx0ZXIgaWQ9Im5vaXNlIj4KICAgICAgPGZlVHVyYnVsZW5jZSB0eXBlPSJ0dXJidWxlbmNlIiBiYXNlRnJlcXVlbmN5PSIwLjkiIG51bU9jdGF2ZXM9IjQiIHNlZWQ9IjEiIHN0aXRjaFRpbGVzPSJzdGl0Y2giLz4KICA8L2ZpbHRlcj4KICA8L2RlZnM+CiAgPHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI25vaXNlKSIgb3BhY2l0eT0iMC4xIi8+Cjwvc3ZnPgo=')] mix-blend-overlay" />
         </div>
 
         <article
           className={`relative p-[4vmin] transition-all duration-1000 ease-in-out z-10 ${
-            current === index ? "opacity-100 visible transform-none" : "opacity-0 invisible translate-y-8"
+            current === index
+              ? "opacity-100 visible transform-none"
+              : "opacity-0 invisible translate-y-8"
           }`}
         >
           <h2 className="text-2xl md:text-3xl lg:text-5xl font-bold relative mb-4 tracking-tight">
@@ -125,7 +134,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
               {title}
             </span>
           </h2>
-          
+
           <div className="flex justify-center">
             <button className="group mt-8 px-8 py-4 w-fit mx-auto text-sm font-semibold text-black bg-white/95 backdrop-blur-sm border border-white/20 flex justify-center items-center rounded-full hover:bg-white hover:scale-105 hover:shadow-2xl hover:shadow-white/25 transition-all duration-300 ease-out relative overflow-hidden">
               <span className="relative z-10">{button}</span>
@@ -134,7 +143,7 @@ const Slide = ({ slide, index, current, handleSlideClick }: SlideProps) => {
           </div>
         </article>
       </li>
-        </div>
+    </div>
   );
 };
 
@@ -150,7 +159,7 @@ const CarouselControl = ({
   handleClick,
 }: CarouselControlProps) => {
   return (
-      <button
+    <button
       className={`group w-12 h-12 flex items-center mx-3 justify-center bg-white/10 backdrop-blur-md border border-white/20 rounded-full focus:border-white/40 focus:outline-none hover:bg-white/20 hover:scale-110 hover:shadow-lg hover:shadow-white/25 active:scale-95 transition-all duration-300 ease-out ${
         type === "previous" ? "rotate-180" : ""
       }`}
@@ -158,7 +167,7 @@ const CarouselControl = ({
       onClick={handleClick}
     >
       <IconArrowNarrowRight className="text-white/90 group-hover:text-white transition-colors duration-300" />
-      </button>
+    </button>
   );
 };
 
@@ -222,15 +231,15 @@ export function Carousel({ slides }: CarouselProps) {
           handleClick={handleNextClick}
         />
       </div>
-      
+
       {/* Slide indicators */}
       <div className="absolute flex justify-center w-full top-[calc(100%+4.5rem)] space-x-2">
         {slides.map((_, index) => (
           <button
             key={index}
             className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              current === index 
-                ? "bg-white/90 scale-110 shadow-lg shadow-white/25" 
+              current === index
+                ? "bg-white/90 scale-110 shadow-lg shadow-white/25"
                 : "bg-white/30 hover:bg-white/50"
             }`}
             onClick={() => setCurrent(index)}

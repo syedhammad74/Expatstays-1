@@ -12,11 +12,11 @@ import { motion } from "framer-motion";
 // Mock blog post data
 const blogPost = {
   id: "top-5-luxury-experiences-dubai",
-  title: "Top 5 Luxury Experiences in Dubai You Can't Miss",
+  title: "Top 5 Luxury Experiences in Dubai You Can&apos;t Miss",
   excerpt:
     "Discover the pinnacle of opulence with our curated list of must-try luxury experiences in the dazzling city of Dubai.",
   content: `
-    <p>Dubai has established itself as the global capital of luxury, offering experiences that redefine opulence and sophistication. Whether you're visiting for business or pleasure, these five luxury experiences will create memories that last a lifetime.</p>
+    <p>Dubai has established itself as the global capital of luxury, offering experiences that redefine opulence and sophistication. Whether you&apos;re visiting for business or pleasure, these five luxury experiences will create memories that last a lifetime.</p>
     
     <h2>1. Private Yacht Charter in Dubai Marina</h2>
     <p>Nothing says luxury quite like cruising the pristine waters of the Arabian Gulf aboard your own private yacht. Dubai Marina offers some of the most spectacular yacht charters in the world.</p>
@@ -25,13 +25,13 @@ const blogPost = {
     <p>Experience the magic of the Arabian desert with our exclusive luxury desert safari. From thrilling dune bashing to stargazing in premium desert camps, this adventure combines excitement with unparalleled comfort.</p>
     
     <h2>3. Helicopter Tour of Iconic Landmarks</h2>
-    <p>See Dubai from a bird's eye view with a private helicopter tour. Marvel at the Burj Khalifa, Palm Jumeirah, and the World Islands from above.</p>
+    <p>See Dubai from a bird&apos;s eye view with a private helicopter tour. Marvel at the Burj Khalifa, Palm Jumeirah, and the World Islands from above.</p>
     
     <h2>4. Private Shopping Experience at Dubai Mall</h2>
     <p>Enjoy VIP treatment with a personal shopping assistant who will guide you through the world's largest shopping mall, ensuring access to exclusive collections and personalized service.</p>
     
     <h2>5. Fine Dining at Michelin-Starred Restaurants</h2>
-    <p>Dubai's culinary scene rivals any major city in the world. Experience world-class cuisine at restaurants helmed by celebrity chefs and award-winning culinary teams.</p>
+    <p>Dubai&apos;s culinary scene rivals any major city in the world. Experience world-class cuisine at restaurants helmed by celebrity chefs and award-winning culinary teams.</p>
   `,
   publishedDate: "October 26, 2023",
   author: "Jane Doe",

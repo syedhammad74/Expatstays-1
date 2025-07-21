@@ -128,6 +128,6 @@ export interface EmailTemplate {
   html: string;
   template?: {
     name: string;
-    data: Record<string, any>;
+    data: Record<string, unknown>;
   };
 }

@@ -3,12 +3,11 @@
 import { useState } from "react";
 import { propertyService } from "@/lib/services/properties";
 import { bookingService } from "@/lib/services/bookings";
+import Link from "next/link";
 
 export default function SetupPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
-  const [propertyCount, setPropertyCount] = useState(0);
-  const [bookingCount, setBookingCount] = useState(0);
 
   const testMockData = async () => {
     setIsLoading(true);
@@ -17,11 +16,11 @@ export default function SetupPage() {
     try {
       // Test property service
       const properties = await propertyService.getAllProperties();
-      setPropertyCount(properties.length);
+      // Removed: setPropertyCount(properties.length);
 
       // Test booking service
       const bookings = await bookingService.getAllBookings();
-      setBookingCount(bookings.length);
+      // Removed: setBookingCount(bookings.length);
 
       setMessage("✅ Mock data is working perfectly!");
     } catch (error) {
@@ -49,13 +48,13 @@ export default function SetupPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
               <div className="bg-white rounded-lg p-4">
                 <div className="text-2xl font-bold text-[#8EB69B]">
-                  {propertyCount}
+                  {/* Removed: {propertyCount} */}
                 </div>
                 <div className="text-sm text-gray-600">Properties</div>
               </div>
               <div className="bg-white rounded-lg p-4">
                 <div className="text-2xl font-bold text-[#8EB69B]">
-                  {bookingCount}
+                  {/* Removed: {bookingCount} */}
                 </div>
                 <div className="text-sm text-gray-600">Bookings</div>
               </div>
@@ -172,18 +171,18 @@ export default function SetupPage() {
 
           {/* Navigation */}
           <div className="mt-8 flex justify-center space-x-4">
-            <a
+            <Link
               href="/"
               className="px-6 py-2 bg-white border border-[#8EB69B] text-[#8EB69B] rounded-lg hover:bg-[#DAF1DE] transition-colors"
             >
               🏠 Go to Homepage
-            </a>
-            <a
+            </Link>
+            <Link
               href="/properties"
               className="px-6 py-2 bg-white border border-[#8EB69B] text-[#8EB69B] rounded-lg hover:bg-[#DAF1DE] transition-colors"
             >
               🏢 View Properties
-            </a>
+            </Link>
           </div>
         </div>
       </div>

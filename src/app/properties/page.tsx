@@ -143,7 +143,7 @@ export default function PropertiesPage() {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [dateRange]); // Added dateRange as dependency
 
   // Filter properties when search criteria change
   useEffect(() => {

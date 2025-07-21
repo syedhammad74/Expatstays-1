@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Loader2, Database, CheckCircle, AlertCircle } from "lucide-react";
 
 export default function QuickTestPage() {
   const [loading, setLoading] = useState(false);

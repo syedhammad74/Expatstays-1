@@ -113,7 +113,11 @@ export const useDebounce = <T>(value: T, delay: number): T => {
 
 // Local storage cache with TTL
 export class CacheManager {
-  private static setItem(key: string, value: any, ttl: number = 3600000): void {
+  private static setItem(
+    key: string,
+    value: unknown,
+    ttl: number = 3600000
+  ): void {
     if (typeof window === "undefined") return;
 
     try {
@@ -149,23 +153,27 @@ export class CacheManager {
     }
   }
 
-  static cacheProperties(properties: any[], ttl: number = 300000): void {
+  static cacheProperties(properties: unknown[], ttl: number = 300000): void {
     // 5 minutes
     this.setItem("cached_properties", properties, ttl);
   }
 
-  static getCachedProperties(): any[] | null {
-    return this.getItem<any[]>("cached_properties");
+  static getCachedProperties(): unknown[] | null {
+    return this.getItem<unknown[]>("cached_properties");
   }
 
-  static cacheProperty(property: any, ttl: number = 600000): void {
+  static cacheProperty(property: unknown, ttl: number = 600000): void {
     // 10 minutes
-    if (property && property.id) {
-      this.setItem(`cached_property_${property.id}`, property, ttl);
+    if (property && (property as { id?: string }).id) {
+      this.setItem(
+        `cached_property_${(property as { id: string }).id}`,
+        property,
+        ttl
+      );
     }
   }
 
-  static getCachedProperty(propertyId: string): any | null {
+  static getCachedProperty(propertyId: string): unknown | null {
     if (!propertyId) return null;
     return this.getItem(`cached_property_${propertyId}`);
   }

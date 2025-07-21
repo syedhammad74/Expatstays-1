@@ -51,7 +51,7 @@ export interface AdminNotification {
     | "payment_received";
   title: string;
   message: string;
-  data: any;
+  data: unknown;
   isRead: boolean;
   createdAt: string;
 }
@@ -409,5 +409,3 @@ export class AvailabilityService {
 }
 
 export const availabilityService = AvailabilityService.getInstance();
-
-

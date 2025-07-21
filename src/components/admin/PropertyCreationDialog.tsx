@@ -51,6 +51,7 @@ import {
   Image as ImageIcon,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
+import Image from "next/image";
 
 interface PropertyCreationDialogProps {
   open: boolean;
@@ -839,9 +840,10 @@ export function PropertyCreationDialog({
                           className="relative group bg-white/50 rounded-lg border border-[#8EB69B]/20 overflow-hidden hover:shadow-lg transition-all duration-300"
                         >
                           <div className="aspect-video relative">
-                            <img
+                            <Image
                               src={url}
                               alt={`Property image ${index + 1}`}
+                              fill
                               className="w-full h-full object-cover"
                               onError={(e) => {
                                 e.currentTarget.src =

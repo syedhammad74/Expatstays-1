@@ -528,9 +528,9 @@ export default function AboutPage() {
                 {/* Quote */}
                 <blockquote className="text-sm lg:text-base text-[#235347] leading-relaxed italic mb-4 lg:mb-6 relative">
                   <div className="absolute -top-1 lg:-top-2 -left-1 lg:-left-2 text-2xl lg:text-4xl text-[#8EB69B]/30">
-                    "
+                    &quot;
                   </div>
-                  {testimonial.quote}
+                  &quot;{testimonial.quote}&quot;
                 </blockquote>
 
                 {/* Rating and Details */}

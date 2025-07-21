@@ -30,7 +30,7 @@ export interface AdminDataItem {
   title: string;
   description: string;
   category: string;
-  data: any;
+  data: unknown;
   createdAt?: string | Timestamp;
   updatedAt?: string | Timestamp;
   createdBy: string;
@@ -44,7 +44,7 @@ export interface RealtimeAdminData {
     title: string;
     description: string;
     category: string;
-    data: any;
+    data: unknown;
     createdAt: number;
     updatedAt: number;
     createdBy: string;

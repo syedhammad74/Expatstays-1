@@ -61,7 +61,6 @@ export default function Home() {
   const [guestsOpen, setGuestsOpen] = useState(false);
   const [location, setLocation] = useState("Dubai");
   const router = useRouter();
-  const [error, setError] = useState<string | null>(null);
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
@@ -787,7 +786,7 @@ export default function Home() {
               },
               {
                 quote:
-                  "The most minimal, beautiful rental experience I've ever had. Everything was perfect from start to finish.",
+                  "The most minimal, beautiful rental experience I&apos;ve ever had. Everything was perfect from start to finish.",
                 author: "Alex J.",
                 location: "Palm Jumeirah Retreat",
                 rating: "5.0",
@@ -851,7 +850,7 @@ export default function Home() {
                   {/* Quote */}
                   <div className="mb-4 lg:mb-6">
                     <div className="text-sm lg:text-base text-[#235347] leading-relaxed italic">
-                      "{testimonial.quote}"
+                      &quot;{testimonial.quote}&quot;
                     </div>
                   </div>
 

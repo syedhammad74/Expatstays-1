@@ -19,7 +19,7 @@ const mockDatabase = mockData as {
     type: string;
     title: string;
     message: string;
-    data: any;
+    data: unknown;
     isRead: boolean;
     createdAt: string;
   }>;
@@ -323,7 +323,7 @@ export class MockAdminService {
       type: string;
       title: string;
       message: string;
-      data: any;
+      data: unknown;
       isRead: boolean;
       createdAt: string;
     }>

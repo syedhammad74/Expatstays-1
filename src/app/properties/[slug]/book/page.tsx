@@ -92,9 +92,6 @@ export default function PropertyBookingPage() {
   });
   const [paymentMethod, setPaymentMethod] = useState("card");
   const [isProcessing, setIsProcessing] = useState(false);
-  const [imageLoadingStates, setImageLoadingStates] = useState<{
-    [key: string]: boolean;
-  }>({});
 
   // Debounced guest details for better performance
   const debouncedGuestDetails = useDebounce(guestDetails, 300);
@@ -234,10 +231,10 @@ export default function PropertyBookingPage() {
 
   // Handle image loading states
   const handleImageLoad = useCallback((imageUrl: string) => {
-    setImageLoadingStates((prev) => ({
-      ...prev,
-      [imageUrl]: true,
-    }));
+    // setImageLoadingStates((prev) => ({
+    //   ...prev,
+    //   [imageUrl]: true,
+    // }));
   }, []);
 
   // Handle booking submission with performance monitoring

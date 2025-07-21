@@ -27,7 +27,7 @@ interface BookingFormProps {
 }
 
 export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
-  const { user, userProfile } = useAuth();
+  const { user } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [formData, setFormData] = useState({
     checkIn: "",

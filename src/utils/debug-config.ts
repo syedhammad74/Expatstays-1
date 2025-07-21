@@ -1,12 +1,8 @@
-import { db } from "@/lib/firebase";
-import { USE_MOCK_DATA } from "@/lib/services/mock-data";
-
 export const debugConfiguration = () => {
   console.log("🔍 === CONFIGURATION DEBUG ===");
   console.log("Environment Variables:");
   console.log("  - NODE_ENV:", process.env.NODE_ENV);
-  console.log("  - USE_MOCK_DATA:", USE_MOCK_DATA);
-  console.log("  - USE_MOCK_DATA (raw env):", process.env.USE_MOCK_DATA);
+  console.log("  - USE_MOCK_DATA:", process.env.USE_MOCK_DATA);
 
   console.log("\nFirebase Configuration:");
   console.log("  - Database available:", !!db);
@@ -18,7 +14,7 @@ export const debugConfiguration = () => {
   console.log("  - Auth Domain:", process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN);
 
   console.log("\nData Source Decision:");
-  if (USE_MOCK_DATA) {
+  if (process.env.USE_MOCK_DATA) {
     console.log("  ❌ USING MOCK DATA - Properties will be fake");
     console.log("  🔧 Solution: Set USE_MOCK_DATA=false in .env.local");
   } else if (!db) {
@@ -57,4 +53,3 @@ SKIP_STRIPE_PAYMENT=true
 };
 
 export default debugConfiguration;
- 

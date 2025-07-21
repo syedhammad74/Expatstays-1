@@ -140,7 +140,7 @@ export const firebase = {
   auth: {
     getCurrentUser: () => auth.currentUser,
     signOut: () => auth.signOut(),
-    onAuthStateChanged: (callback: (user: any) => void) =>
+    onAuthStateChanged: (callback: (user: unknown) => void) =>
       auth.onAuthStateChanged(callback),
   },
 
@@ -157,15 +157,15 @@ export const firebase = {
       const { ref } = require("firebase/database");
       return ref(realtimeDb, path);
     },
-    set: async (reference: any, value: any) => {
+    set: async (reference: unknown, value: unknown) => {
       const { set } = require("firebase/database");
       return set(reference, value);
     },
-    push: async (reference: any, value: any) => {
+    push: async (reference: unknown, value: unknown) => {
       const { push } = require("firebase/database");
       return push(reference, value);
     },
-    onValue: (reference: any, callback: (snapshot: any) => void) => {
+    onValue: (reference: unknown, callback: (snapshot: unknown) => void) => {
       const { onValue } = require("firebase/database");
       return onValue(reference, callback);
     },
@@ -189,11 +189,11 @@ export const firebase = {
       const { ref } = require("firebase/storage");
       return ref(storage, path);
     },
-    uploadBytes: async (storageRef: any, file: File) => {
+    uploadBytes: async (storageRef: unknown, file: File) => {
       const { uploadBytes } = require("firebase/storage");
       return uploadBytes(storageRef, file);
     },
-    getDownloadURL: async (storageRef: any) => {
+    getDownloadURL: async (storageRef: unknown) => {
       const { getDownloadURL } = require("firebase/storage");
       return getDownloadURL(storageRef);
     },

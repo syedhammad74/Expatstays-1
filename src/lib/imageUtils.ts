@@ -174,40 +174,10 @@ export const getHeroImage = (section: string = "main"): string => {
   return getLocalImage("hero", section.length % 3);
 };
 
-/**
- * Legacy function for backward compatibility
- * @deprecated Use getLocalImage instead
- */
-export const getUnsplashImage = (query: string): string => {
-  console.warn("getUnsplashImage is deprecated. Using local images instead.");
-  return getLocalImage(query);
-};
-
-/**
- * Legacy function for backward compatibility
- * @deprecated Use getLocalImages instead
- */
-export const getUnsplashFromCollection = (collectionId: string): string => {
-  console.warn(
-    "getUnsplashFromCollection is deprecated. Using local images instead."
-  );
-  return getRandomLocalImage();
-};
-
-// Export collections for backward compatibility
-export const unsplashCollections = {
-  luxury: "local-hdr",
-  villa: "local-hdr",
-  interior: "local-closeup",
-  details: "local-closeup",
-};
-
 export default {
   getLocalImage,
   getLocalImages,
   getRandomLocalImage,
   getPropertyImage,
   getHeroImage,
-  getUnsplashImage, // deprecated
-  getUnsplashFromCollection, // deprecated
 };
