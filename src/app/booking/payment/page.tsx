@@ -28,7 +28,6 @@ import StripeProvider from "@/components/payment/StripeProvider";
 import PaymentForm from "@/components/payment/PaymentForm";
 import { MockPaymentForm } from "@/components/payment/MockPaymentForm";
 import { useToast } from "@/hooks/use-toast";
-import { motion } from "framer-motion";
 import Link from "next/link";
 
 // Check if we're in mock mode

@@ -2,7 +2,6 @@
 import {
   collection,
   doc,
-  addDoc,
   updateDoc,
   deleteDoc,
   getDocs,
@@ -12,12 +11,11 @@ import {
   orderBy,
   onSnapshot,
   serverTimestamp,
-  Timestamp,
   runTransaction,
   writeBatch,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { Booking, Property } from "@/lib/types/firebase";
+import { Booking } from "@/lib/types/firebase";
 import { availabilityService } from "./availability";
 import { emailService } from "./email";
 import { propertyService } from "./properties";

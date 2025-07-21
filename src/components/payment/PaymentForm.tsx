@@ -31,7 +31,7 @@ export interface PaymentFormProps {
   bookingId: string;
   customerEmail: string;
   customerName: string;
-  onSuccess: (paymentIntent: any) => void;
+  onSuccess: (paymentIntent: Stripe.PaymentIntent) => void;
   onError: (error: string) => void;
   loading?: boolean;
 }
@@ -133,7 +133,7 @@ export default function PaymentForm({
     setPaymentError(null);
 
     try {
-      let result;
+      let result: Stripe.PaymentIntent;
 
       if (usePaymentElement) {
         // Use Payment Element (recommended)
@@ -157,7 +157,7 @@ export default function PaymentForm({
         const { paymentIntent } = await stripe.retrievePaymentIntent(
           clientSecret
         );
-        result = { paymentIntent };
+        result = paymentIntent;
       } else {
         // Use Card Element (legacy)
         const cardElement = elements.getElement(CardElement);
@@ -178,15 +178,15 @@ export default function PaymentForm({
         }
       }
 
-      if (result.paymentIntent?.status === "succeeded") {
+      if (result.status === "succeeded") {
         setPaymentSucceeded(true);
-        onSuccess(result.paymentIntent);
+        onSuccess(result);
         toast({
           title: "Payment Successful!",
           description: "Your booking has been confirmed.",
         });
       }
-    } catch (error) {
+    } catch (error: unknown) {
       const errorMessage =
         error instanceof Error ? error.message : "Payment failed";
       setPaymentError(errorMessage);

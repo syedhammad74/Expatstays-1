@@ -38,24 +38,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
-  Calendar,
   DollarSign,
   Plus,
   Edit,
   Trash2,
   Loader2,
-  AlertCircle,
-  Save,
-  TrendingUp,
-  BarChart3,
   Home,
   ArrowLeft,
+  Save,
+  BarChart3,
 } from "lucide-react";
 import { Property } from "@/lib/types/firebase";
 import { useToast } from "@/hooks/use-toast";
-import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function AdminPricingPage() {

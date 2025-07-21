@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import {
   Sailboat,
   MountainSnow,
@@ -9,16 +9,12 @@ import {
   Star,
   ArrowRight,
   Filter,
-  Search,
-  Sparkles,
   Clock,
   Users,
   MapPin,
   ChevronRight,
   BookOpen,
-  Zap,
-  Globe,
-  Shield,
+  Sparkles,
 } from "lucide-react";
 import {
   Card,
@@ -29,13 +25,11 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
 import { getLocalImage } from "@/lib/imageUtils";
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
-
 
 const experiencesData = [
   {

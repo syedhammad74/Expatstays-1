@@ -4,7 +4,7 @@ import { SignInForm } from "@/components/auth/SignInForm";
 import { useAuth } from "@/hooks/use-auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Loader2, Sparkles, ArrowRight, Shield, Zap } from "lucide-react";
+import { Loader2, Sparkles, Shield, Zap } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";

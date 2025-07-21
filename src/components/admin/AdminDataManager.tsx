@@ -41,41 +41,27 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { useToast } from "@/hooks/use-toast";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   Plus,
   Edit,
   Trash2,
-  Eye,
-  Download,
-  Upload,
   RefreshCw,
   Activity,
   Database,
   Cloud,
-  Filter,
   Search,
-  BarChart3,
   Loader2,
   CheckCircle,
-  AlertCircle,
+  Archive,
   Clock,
   Tags,
-  Archive,
-  Zap,
-  TrendingUp,
-  Users,
   FileText,
   Settings,
   X,
   Home,
+  Zap,
 } from "lucide-react";
 
 interface AdminDataManagerProps {
@@ -89,8 +75,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
 
   // State management
   const [firestoreData, setFirestoreData] = useState<AdminDataItem[]>([]);
-  const [realtimeData, setRealtimeData] = useState<RealtimeAdminData>({});
-  const [activityFeed, setActivityFeed] = useState<any[]>([]);
+  const [activityFeed, setActivityFeed] = useState<unknown[]>([]);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
   const [firestoreConnected, setFirestoreConnected] = useState(false);
@@ -177,7 +162,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
       // Subscribe to Realtime Database
       const unsubscribeRealtime = adminDataService.subscribeToRealtimeData(
         (data) => {
-          setRealtimeData(data);
+          // setRealtimeData(data); // This variable is no longer used
         }
       );
 
@@ -756,7 +741,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                             </Label>
                             <Select
                               value={formData.priority}
-                              onValueChange={(value: any) =>
+                              onValueChange={(
+                                value: "low" | "medium" | "high"
+                              ) =>
                                 setFormData((prev) => ({
                                   ...prev,
                                   priority: value,
@@ -806,7 +793,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                             </Label>
                             <Select
                               value={formData.status}
-                              onValueChange={(value: any) =>
+                              onValueChange={(
+                                value: "active" | "inactive" | "archived"
+                              ) =>
                                 setFormData((prev) => ({
                                   ...prev,
                                   status: value,
@@ -1297,9 +1286,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                 No recent activity
               </p>
             ) : (
-              activityFeed.map((activity, index) => (
+              activityFeed.map((activity) => (
                 <div
-                  key={index}
+                  key={activity.id}
                   className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-[#DAF1DE]/20 to-white border border-[#8EB69B]/10"
                 >
                   <div className="h-8 w-8 rounded-full bg-[#8EB69B]/10 flex items-center justify-center">
@@ -1434,7 +1423,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                     </Label>
                     <Select
                       value={formData.priority}
-                      onValueChange={(value: any) =>
+                      onValueChange={(value: "low" | "medium" | "high") =>
                         setFormData((prev) => ({ ...prev, priority: value }))
                       }
                     >
@@ -1481,9 +1470,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                     </Label>
                     <Select
                       value={formData.status}
-                      onValueChange={(value: any) =>
-                        setFormData((prev) => ({ ...prev, status: value }))
-                      }
+                      onValueChange={(
+                        value: "active" | "inactive" | "archived"
+                      ) => setFormData((prev) => ({ ...prev, status: value }))}
                     >
                       <SelectTrigger className="border-[#8EB69B]/30 focus:border-[#8EB69B] bg-white/80 backdrop-blur-sm transition-all duration-300 hover:border-[#8EB69B]/50">
                         <SelectValue />

@@ -13,15 +13,12 @@ import { Booking } from "@/lib/types/firebase";
 export default function BookingCancelPage() {
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("booking_id");
-  const sessionId = searchParams.get("session_id");
 
   const [booking, setBooking] = useState<Booking | null>(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchBookingDetails = async () => {
       if (!bookingId) {
-        setLoading(false);
         return;
       }
 
@@ -31,7 +28,6 @@ export default function BookingCancelPage() {
       } catch (err) {
         console.error("Error fetching booking details:", err);
       } finally {
-        setLoading(false);
       }
     };
 

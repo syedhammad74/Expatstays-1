@@ -20,7 +20,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Switch } from "@/components/ui/switch";
-import { Badge } from "@/components/ui/badge";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { useToast } from "@/hooks/use-toast";
@@ -30,8 +29,6 @@ import {
   MapPin,
   DollarSign,
   Users,
-  BedDouble,
-  Bath,
   Wifi,
   Car,
   Utensils,
@@ -48,7 +45,6 @@ import {
   FileText,
   Tags,
   Upload,
-  Image as ImageIcon,
 } from "lucide-react";
 import { useAuth } from "@/hooks/use-auth";
 import Image from "next/image";

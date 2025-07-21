@@ -5,17 +5,15 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { SignInForm } from "./SignInForm";
 import { SignUpForm } from "./SignUpForm";
 
-interface AuthModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-  initialMode?: "signin" | "signup";
-}
-
 export function AuthModal({
   isOpen,
   onClose,
   initialMode = "signin",
-}: AuthModalProps) {
+}: {
+  isOpen: boolean;
+  onClose: () => void;
+  initialMode?: "signin" | "signup";
+}) {
   const [mode, setMode] = useState<"signin" | "signup">(initialMode);
 
   const toggleMode = () => {

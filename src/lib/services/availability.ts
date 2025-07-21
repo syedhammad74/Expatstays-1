@@ -5,17 +5,14 @@ import {
   updateDoc,
   deleteDoc,
   getDocs,
-  getDoc,
   query,
   where,
   orderBy,
   onSnapshot,
   serverTimestamp,
   writeBatch,
-  runTransaction,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
-import { Booking, Property } from "@/lib/types/firebase";
 
 export interface AvailabilityEntry {
   id: string;

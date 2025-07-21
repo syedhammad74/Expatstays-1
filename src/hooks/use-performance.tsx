@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useCallback, useState } from "react";
 
 interface PerformanceMetrics {
   pageLoadTime: number;
@@ -27,7 +27,7 @@ export function usePerformanceMonitor(componentName: string) {
   // Track component mount and render time
   useEffect(() => {
     const renderTime = Date.now() - startTimeRef.current;
-    setMetrics(prev => ({
+    setMetrics((prev) => ({
       ...prev,
       componentRenderTime: renderTime,
     }));
@@ -35,9 +35,9 @@ export function usePerformanceMonitor(componentName: string) {
     console.log(`⚡ ${componentName} rendered in ${renderTime}ms`);
 
     // Track memory usage if available
-    if ('memory' in performance) {
-      const memInfo = (performance as any).memory;
-      setMetrics(prev => ({
+    if ("memory" in performance) {
+      const memInfo = (performance as Performance)["memory"];
+      setMetrics((prev) => ({
         ...prev,
         memoryUsage: memInfo?.usedJSHeapSize || 0,
       }));
@@ -46,14 +46,16 @@ export function usePerformanceMonitor(componentName: string) {
 
   // Track page load performance and Core Web Vitals
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     // Page load time from Navigation Timing API
     const getPageLoadTime = () => {
-      const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
+      const navigation = performance.getEntriesByType(
+        "navigation"
+      )[0] as PerformanceNavigationTiming;
       if (navigation) {
         const loadTime = navigation.loadEventEnd - navigation.fetchStart;
-        setMetrics(prev => ({
+        setMetrics((prev) => ({
           ...prev,
           pageLoadTime: loadTime,
         }));
@@ -66,7 +68,7 @@ export function usePerformanceMonitor(componentName: string) {
       const lcpObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         const lcp = entries[entries.length - 1];
-        setMetrics(prev => ({
+        setMetrics((prev) => ({
           ...prev,
           coreWebVitals: {
             ...prev.coreWebVitals,
@@ -79,7 +81,7 @@ export function usePerformanceMonitor(componentName: string) {
       const fidObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry) => {
-          setMetrics(prev => ({
+          setMetrics((prev) => ({
             ...prev,
             coreWebVitals: {
               ...prev.coreWebVitals,
@@ -93,10 +95,10 @@ export function usePerformanceMonitor(componentName: string) {
       let clsValue = 0;
       const clsObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
-        entries.forEach((entry: any) => {
+        entries.forEach((entry: PerformanceEntry) => {
           if (!entry.hadRecentInput) {
             clsValue += entry.value;
-            setMetrics(prev => ({
+            setMetrics((prev) => ({
               ...prev,
               coreWebVitals: {
                 ...prev.coreWebVitals,
@@ -108,11 +110,11 @@ export function usePerformanceMonitor(componentName: string) {
       });
 
       try {
-        lcpObserver.observe({ entryTypes: ['largest-contentful-paint'] });
-        fidObserver.observe({ entryTypes: ['first-input'] });
-        clsObserver.observe({ entryTypes: ['layout-shift'] });
+        lcpObserver.observe({ entryTypes: ["largest-contentful-paint"] });
+        fidObserver.observe({ entryTypes: ["first-input"] });
+        clsObserver.observe({ entryTypes: ["layout-shift"] });
       } catch (e) {
-        console.warn('Performance observers not supported:', e);
+        console.warn("Performance observers not supported:", e);
       }
 
       return () => {
@@ -123,53 +125,65 @@ export function usePerformanceMonitor(componentName: string) {
     };
 
     // Wait for page load
-    if (document.readyState === 'complete') {
+    if (document.readyState === "complete") {
       getPageLoadTime();
     } else {
-      window.addEventListener('load', getPageLoadTime);
+      window.addEventListener("load", getPageLoadTime);
     }
 
     const cleanup = trackCoreWebVitals();
 
     return () => {
-      window.removeEventListener('load', getPageLoadTime);
+      window.removeEventListener("load", getPageLoadTime);
       cleanup?.();
     };
   }, []);
 
-  const trackInteraction = useCallback((action: string, details?: any) => {
-    setMetrics(prev => ({
-      ...prev,
-      interactionCount: prev.interactionCount + 1,
-    }));
-    
-    console.log(`🖱️ User interaction: ${action} in ${componentName}`, details);
+  const trackInteraction = useCallback(
+    (action: string, details?: unknown) => {
+      setMetrics((prev) => ({
+        ...prev,
+        interactionCount: prev.interactionCount + 1,
+      }));
 
-    // Track with Performance API if available
-    if ('measure' in performance) {
-      performance.mark(`interaction-${action}-${Date.now()}`);
-    }
-  }, [componentName]);
+      console.log(
+        `🖱️ User interaction: ${action} in ${componentName}`,
+        details
+      );
 
-  const trackError = useCallback((error: Error | string, context?: string) => {
-    setMetrics(prev => ({
-      ...prev,
-      errorCount: prev.errorCount + 1,
-    }));
-    
-    const errorMessage = typeof error === 'string' ? error : error.message;
-    console.error(`❌ Error in ${componentName}${context ? ` (${context})` : ''}:`, errorMessage);
-    
-    // Track error timing
-    performance.mark(`error-${componentName}-${Date.now()}`);
-  }, [componentName]);
+      // Track with Performance API if available
+      if ("measure" in performance) {
+        performance.mark(`interaction-${action}-${Date.now()}`);
+      }
+    },
+    [componentName]
+  );
+
+  const trackError = useCallback(
+    (error: Error | string, context?: string) => {
+      setMetrics((prev) => ({
+        ...prev,
+        errorCount: prev.errorCount + 1,
+      }));
+
+      const errorMessage = typeof error === "string" ? error : error.message;
+      console.error(
+        `❌ Error in ${componentName}${context ? ` (${context})` : ""}:`,
+        errorMessage
+      );
+
+      // Track error timing
+      performance.mark(`error-${componentName}-${Date.now()}`);
+    },
+    [componentName]
+  );
 
   const getPerformanceReport = useCallback(() => {
     return {
       ...metrics,
       timestamp: Date.now(),
       componentName,
-      url: typeof window !== 'undefined' ? window.location.href : '',
+      url: typeof window !== "undefined" ? window.location.href : "",
     };
   }, [metrics, componentName]);
 
@@ -187,8 +201,8 @@ export function useImageOptimization() {
   const [loadingImages, setLoadingImages] = useState<Set<string>>(new Set());
 
   const handleImageLoad = useCallback((src: string) => {
-    setLoadedImages(prev => new Set(prev).add(src));
-    setLoadingImages(prev => {
+    setLoadedImages((prev) => new Set(prev).add(src));
+    setLoadingImages((prev) => {
       const newSet = new Set(prev);
       newSet.delete(src);
       return newSet;
@@ -196,8 +210,8 @@ export function useImageOptimization() {
   }, []);
 
   const handleImageError = useCallback((src: string) => {
-    setFailedImages(prev => new Set(prev).add(src));
-    setLoadingImages(prev => {
+    setFailedImages((prev) => new Set(prev).add(src));
+    setLoadingImages((prev) => {
       const newSet = new Set(prev);
       newSet.delete(src);
       return newSet;
@@ -205,34 +219,49 @@ export function useImageOptimization() {
   }, []);
 
   const handleImageStart = useCallback((src: string) => {
-    setLoadingImages(prev => new Set(prev).add(src));
+    setLoadingImages((prev) => new Set(prev).add(src));
   }, []);
 
-  const isImageLoaded = useCallback((src: string) => {
-    return loadedImages.has(src);
-  }, [loadedImages]);
+  const isImageLoaded = useCallback(
+    (src: string) => {
+      return loadedImages.has(src);
+    },
+    [loadedImages]
+  );
 
-  const hasImageFailed = useCallback((src: string) => {
-    return failedImages.has(src);
-  }, [failedImages]);
+  const hasImageFailed = useCallback(
+    (src: string) => {
+      return failedImages.has(src);
+    },
+    [failedImages]
+  );
 
-  const isImageLoading = useCallback((src: string) => {
-    return loadingImages.has(src);
-  }, [loadingImages]);
+  const isImageLoading = useCallback(
+    (src: string) => {
+      return loadingImages.has(src);
+    },
+    [loadingImages]
+  );
 
-  const getOptimizedSrc = useCallback((src: string, options?: { width?: number; height?: number; quality?: number }) => {
-    if (src.startsWith('data:') || src.startsWith('blob:')) {
-      return src;
-    }
+  const getOptimizedSrc = useCallback(
+    (
+      src: string,
+      options?: { width?: number; height?: number; quality?: number }
+    ) => {
+      if (src.startsWith("data:") || src.startsWith("blob:")) {
+        return src;
+      }
 
-    const params = new URLSearchParams();
-    if (options?.width) params.append('w', options.width.toString());
-    if (options?.height) params.append('h', options.height.toString());
-    if (options?.quality) params.append('q', options.quality.toString());
+      const params = new URLSearchParams();
+      if (options?.width) params.append("w", options.width.toString());
+      if (options?.height) params.append("h", options.height.toString());
+      if (options?.quality) params.append("q", options.quality.toString());
 
-    const hasParams = src.includes('?');
-    return `${src}${hasParams ? '&' : '?'}${params.toString()}`;
-  }, []);
+      const hasParams = src.includes("?");
+      return `${src}${hasParams ? "&" : "?"}${params.toString()}`;
+    },
+    []
+  );
 
   return {
     handleImageLoad,
@@ -271,7 +300,7 @@ export function useDebounce<T>(value: T, delay: number): T {
 export function useScrollPerformance() {
   const [scrollMetrics, setScrollMetrics] = useState({
     scrollY: 0,
-    scrollDirection: 'down' as 'up' | 'down',
+    scrollDirection: "down" as "up" | "down",
     isScrolling: false,
     scrollSpeed: 0,
   });
@@ -281,7 +310,7 @@ export function useScrollPerformance() {
   const scrollTimeoutRef = useRef<NodeJS.Timeout>();
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === "undefined") return;
 
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -291,7 +320,8 @@ export function useScrollPerformance() {
 
       setScrollMetrics({
         scrollY: currentScrollY,
-        scrollDirection: currentScrollY > lastScrollYRef.current ? 'down' : 'up',
+        scrollDirection:
+          currentScrollY > lastScrollYRef.current ? "down" : "up",
         isScrolling: true,
         scrollSpeed: timeDiff > 0 ? scrollDiff / timeDiff : 0,
       });
@@ -303,17 +333,17 @@ export function useScrollPerformance() {
 
       // Set new timeout to detect scroll end
       scrollTimeoutRef.current = setTimeout(() => {
-        setScrollMetrics(prev => ({ ...prev, isScrolling: false }));
+        setScrollMetrics((prev) => ({ ...prev, isScrolling: false }));
       }, 150);
 
       lastScrollYRef.current = currentScrollY;
       lastScrollTimeRef.current = currentTime;
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener("scroll", handleScroll);
       if (scrollTimeoutRef.current) {
         clearTimeout(scrollTimeoutRef.current);
       }
@@ -341,13 +371,16 @@ export function useIntersectionPerformance(options?: IntersectionObserverInit) {
   }, []);
 
   useEffect(() => {
-    observer.current = new IntersectionObserver((observerEntries) => {
-      setEntries(observerEntries);
-    }, {
-      threshold: [0, 0.25, 0.5, 0.75, 1],
-      rootMargin: '50px',
-      ...options,
-    });
+    observer.current = new IntersectionObserver(
+      (observerEntries) => {
+        setEntries(observerEntries);
+      },
+      {
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+        rootMargin: "50px",
+        ...options,
+      }
+    );
 
     return () => {
       if (observer.current) {
@@ -357,4 +390,4 @@ export function useIntersectionPerformance(options?: IntersectionObserverInit) {
   }, [options]);
 
   return { entries, observe, unobserve };
-} 
+}

@@ -1,23 +1,7 @@
 "use client";
-import {
-  ArrowRight,
-  Calendar,
-  User,
-  Search,
-  Filter,
-  Grid,
-  List,
-  Sparkles,
-} from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card";
+import { ArrowRight, Calendar, User, Search, Sparkles } from "lucide-react";
+import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";

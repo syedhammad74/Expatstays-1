@@ -16,7 +16,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User, Calendar, Settings, LogOut, Loader2 } from "lucide-react";
 
 export function UserMenu() {
-  const { user, userProfile, logout } = useAuth();
+  const { user, logout } = useAuth();
   const [loggingOut, setLoggingOut] = useState(false);
 
   const handleLogout = async () => {
@@ -86,87 +86,86 @@ export function UserMenu() {
               </Avatar>
               <div className="flex flex-col">
                 <p className="text-base font-bold leading-tight truncate text-[#163832]">
-              {user?.displayName || "User"}
-            </p>
+                  {user?.displayName || "User"}
+                </p>
                 <p className="text-xs leading-tight text-[#8EB69B]/80 truncate font-medium">
-              {user?.email}
-            </p>
+                  {user?.email}
+                </p>
                 <div className="flex items-center mt-1">
                   <div className="w-2 h-2 bg-green-500 rounded-full mr-1.5"></div>
-                  <span className="text-xs text-[#235347]/70 font-medium">Online</span>
+                  <span className="text-xs text-[#235347]/70 font-medium">
+                    Online
+                  </span>
                 </div>
               </div>
-          </div>
-        </DropdownMenuLabel>
+            </div>
+          </DropdownMenuLabel>
         </div>
 
         {/* Menu items */}
         <div className="p-2">
-        <DropdownMenuItem
-          asChild
+          <DropdownMenuItem
+            asChild
             className="group rounded-xl px-3 py-3 text-base sm:text-sm cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-[#8EB69B]/10 hover:to-[#DAF1DE]/20 hover:scale-[1.02] hover:shadow-lg border border-transparent hover:border-[#8EB69B]/20"
-        >
-          <Link
-            href="/profile"
-              className="flex items-center w-full"
-            >
+          >
+            <Link href="/profile" className="flex items-center w-full">
               <div className="mr-3 p-2 rounded-lg bg-gradient-to-br from-[#8EB69B]/20 to-[#0B2B26]/20 group-hover:from-[#8EB69B]/30 group-hover:to-[#0B2B26]/30 transition-all duration-300">
                 <User className="h-4 w-4 text-[#8EB69B] group-hover:scale-110 transition-transform duration-300" />
               </div>
-              <span className="font-medium text-[#163832] group-hover:text-[#0B2B26] transition-colors duration-300">Profile</span>
-          </Link>
-        </DropdownMenuItem>
-          
-        <DropdownMenuItem
-          asChild
+              <span className="font-medium text-[#163832] group-hover:text-[#0B2B26] transition-colors duration-300">
+                Profile
+              </span>
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            asChild
             className="group rounded-xl px-3 py-3 text-base sm:text-sm cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-[#8EB69B]/10 hover:to-[#DAF1DE]/20 hover:scale-[1.02] hover:shadow-lg border border-transparent hover:border-[#8EB69B]/20"
-        >
-          <Link
-            href="/my-bookings"
-              className="flex items-center w-full"
-            >
+          >
+            <Link href="/my-bookings" className="flex items-center w-full">
               <div className="mr-3 p-2 rounded-lg bg-gradient-to-br from-[#8EB69B]/20 to-[#0B2B26]/20 group-hover:from-[#8EB69B]/30 group-hover:to-[#0B2B26]/30 transition-all duration-300">
                 <Calendar className="h-4 w-4 text-[#8EB69B] group-hover:scale-110 transition-transform duration-300" />
               </div>
-              <span className="font-medium text-[#163832] group-hover:text-[#0B2B26] transition-colors duration-300">My Bookings</span>
-          </Link>
-        </DropdownMenuItem>
-          
-        <DropdownMenuItem
-          asChild
+              <span className="font-medium text-[#163832] group-hover:text-[#0B2B26] transition-colors duration-300">
+                My Bookings
+              </span>
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            asChild
             className="group rounded-xl px-3 py-3 text-base sm:text-sm cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-[#8EB69B]/10 hover:to-[#DAF1DE]/20 hover:scale-[1.02] hover:shadow-lg border border-transparent hover:border-[#8EB69B]/20"
-        >
-          <Link
-            href="/profile/settings"
-              className="flex items-center w-full"
-            >
+          >
+            <Link href="/profile/settings" className="flex items-center w-full">
               <div className="mr-3 p-2 rounded-lg bg-gradient-to-br from-[#8EB69B]/20 to-[#0B2B26]/20 group-hover:from-[#8EB69B]/30 group-hover:to-[#0B2B26]/30 transition-all duration-300">
                 <Settings className="h-4 w-4 text-[#8EB69B] group-hover:scale-110 group-hover:rotate-90 transition-all duration-300" />
               </div>
-              <span className="font-medium text-[#163832] group-hover:text-[#0B2B26] transition-colors duration-300">Settings</span>
-          </Link>
-        </DropdownMenuItem>
+              <span className="font-medium text-[#163832] group-hover:text-[#0B2B26] transition-colors duration-300">
+                Settings
+              </span>
+            </Link>
+          </DropdownMenuItem>
         </div>
 
         <DropdownMenuSeparator className="mx-2 bg-gradient-to-r from-transparent via-[#8EB69B]/30 to-transparent" />
-        
+
         <div className="p-2">
-        <DropdownMenuItem
+          <DropdownMenuItem
             className="group rounded-xl px-3 py-3 text-base sm:text-sm cursor-pointer transition-all duration-300 hover:bg-gradient-to-r hover:from-red-50 hover:to-red-100 hover:scale-[1.02] hover:shadow-lg border border-transparent hover:border-red-200"
-          onClick={handleLogout}
-          disabled={loggingOut}
-        >
+            onClick={handleLogout}
+            disabled={loggingOut}
+          >
             <div className="mr-3 p-2 rounded-lg bg-gradient-to-br from-red-100/50 to-red-200/50 group-hover:from-red-200/70 group-hover:to-red-300/70 transition-all duration-300">
-          {loggingOut ? (
+              {loggingOut ? (
                 <Loader2 className="h-4 w-4 text-red-600 animate-spin" />
-          ) : (
+              ) : (
                 <LogOut className="h-4 w-4 text-red-600 group-hover:scale-110 group-hover:translate-x-1 transition-all duration-300" />
-          )}
+              )}
             </div>
             <span className="font-medium text-red-700 group-hover:text-red-800 transition-colors duration-300">
               {loggingOut ? "Logging out..." : "Log out"}
             </span>
-        </DropdownMenuItem>
+          </DropdownMenuItem>
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

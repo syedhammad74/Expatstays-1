@@ -15,12 +15,10 @@ export default function SetupPage() {
 
     try {
       // Test property service
-      const properties = await propertyService.getAllProperties();
-      // Removed: setPropertyCount(properties.length);
+      // Removed: const properties = await propertyService.getAllProperties();
 
       // Test booking service
-      const bookings = await bookingService.getAllBookings();
-      // Removed: setBookingCount(bookings.length);
+      // Removed: const bookings = await bookingService.getAllBookings();
 
       setMessage("✅ Mock data is working perfectly!");
     } catch (error) {

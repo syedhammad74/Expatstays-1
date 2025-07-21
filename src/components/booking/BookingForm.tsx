@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { bookingService } from "@/lib/services/bookings";
-import { propertyService } from "@/lib/services/properties";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,15 +15,10 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
-import { Calendar, MapPin, Users, Loader2, AlertCircle } from "lucide-react";
+import { Calendar, Loader2, AlertCircle } from "lucide-react";
 import { Property, Booking } from "@/lib/types/firebase";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { AvailabilityCalendar } from "@/components/AvailabilityCalendar";
-
-interface BookingFormProps {
-  property: Property;
-  onBookingComplete?: (booking: Booking) => void;
-}
 
 export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
   const { user } = useAuth();
@@ -143,7 +137,7 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
       return;
     }
 
-    if (!validateForm() || !pricing || !userProfile) return;
+    if (!validateForm() || !pricing) return;
 
     setLoading(true);
     setError("");
@@ -153,9 +147,9 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
         propertyId: property.id,
         guest: {
           uid: user.uid,
-          name: userProfile.displayName,
+          name: user.displayName,
           email: user.email!,
-          phone: userProfile.profile.phone || "",
+          phone: user.phoneNumber || "",
         },
         dates: {
           checkIn: formData.checkIn,
@@ -202,15 +196,6 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
     } finally {
       setLoading(false);
     }
-  };
-
-  const formatDate = (dateString: string) => {
-    if (!dateString) return "";
-    return new Date(dateString).toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    });
   };
 
   return (

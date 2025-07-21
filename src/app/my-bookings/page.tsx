@@ -4,20 +4,13 @@ import { useState, useEffect } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { bookingService } from "@/lib/services/bookings";
 import { propertyService } from "@/lib/services/properties";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Calendar,
-  User,
   MapPin,
   Loader2,
   Download,
@@ -29,21 +22,18 @@ import {
   XCircle,
   DollarSign,
   Phone,
-  Mail,
-  Star,
-  Home,
   Users,
   BedDouble,
   Sparkles,
   ArrowRight,
   Eye,
+  Home,
 } from "lucide-react";
 import { Booking, Property } from "@/lib/types/firebase";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { getLocalImage } from "@/lib/imageUtils";
 import Header from "@/components/layout/Header";
 
 interface BookingWithProperty extends Booking {
@@ -161,7 +151,7 @@ export default function MyBookingsPage() {
       case "cancelled":
         return <XCircle className="h-4 w-4" />;
       case "completed":
-        return <Star className="h-4 w-4" />;
+        return <CheckCircle className="h-4 w-4" />;
       default:
         return <AlertCircle className="h-4 w-4" />;
     }
@@ -210,7 +200,7 @@ export default function MyBookingsPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#FAFAFA] via-white to-[#DAF1DE]/30">
         <Header />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
           <div className="flex items-center justify-center h-64">
             <motion.div
               animate={{ rotate: 360 }}
@@ -228,7 +218,7 @@ export default function MyBookingsPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#FAFAFA] via-white to-[#DAF1DE]/30">
         <Header />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -237,15 +227,15 @@ export default function MyBookingsPage() {
             <Alert className="max-w-md mx-auto bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-2xl shadow-xl">
               <AlertCircle className="h-4 w-4 text-[#8EB69B]" />
               <AlertDescription className="text-[#163832]">
-            Please sign in to view your bookings.{" "}
+                Please sign in to view your bookings.{" "}
                 <Link
                   href="/"
                   className="text-[#8EB69B] hover:text-[#0B2B26] underline font-medium"
                 >
-              Go to homepage
-            </Link>
-          </AlertDescription>
-        </Alert>
+                  Go to homepage
+                </Link>
+              </AlertDescription>
+            </Alert>
           </motion.div>
         </div>
       </div>
@@ -262,7 +252,7 @@ export default function MyBookingsPage() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 right-0 w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] bg-gradient-to-br from-[#DAF1DE]/10 to-[#8EB69B]/5 rounded-full blur-3xl"></div>
         <div className="absolute bottom-20 left-0 w-[400px] lg:w-[800px] h-[400px] lg:h-[800px] bg-gradient-to-tr from-[#0B2B26]/5 to-transparent rounded-full blur-3xl"></div>
-        </div>
+      </div>
 
       <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
         <div className="max-w-7xl mx-auto space-y-8">
@@ -310,7 +300,7 @@ export default function MyBookingsPage() {
               {
                 label: "Completed",
                 count: counts.completed,
-                icon: Star,
+                icon: CheckCircle,
                 color: "from-blue-400 to-blue-600",
               },
               {
@@ -356,9 +346,9 @@ export default function MyBookingsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
           >
-        <Tabs
-          value={filter}
-          onValueChange={setFilter}
+            <Tabs
+              value={filter}
+              onValueChange={setFilter}
               className="space-y-6"
             >
               <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 gap-2 bg-white/60 backdrop-blur-xl border-[#8EB69B]/20 rounded-2xl shadow-lg p-2">
@@ -387,13 +377,13 @@ export default function MyBookingsPage() {
                     className="text-sm lg:text-base font-medium rounded-xl data-[state=active]:bg-[#8EB69B] data-[state=active]:text-white data-[state=active]:shadow-lg hover:bg-[#8EB69B]/10 transition-all duration-300"
                   >
                     {tab.label} ({tab.count})
-            </TabsTrigger>
+                  </TabsTrigger>
                 ))}
-          </TabsList>
+              </TabsList>
 
               <AnimatePresence mode="wait">
                 <TabsContent key={filter} value={filter} className="space-y-6">
-            {filteredBookings.length === 0 ? (
+                  {filteredBookings.length === 0 ? (
                     <motion.div
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -420,7 +410,7 @@ export default function MyBookingsPage() {
                             transition={{ duration: 0.6, delay: 0.4 }}
                             className="text-2xl lg:text-3xl font-bold text-[#163832] mb-3 text-center"
                           >
-                    No {filter === "all" ? "" : filter} bookings found
+                            No {filter === "all" ? "" : filter} bookings found
                           </motion.h3>
                           <motion.p
                             initial={{ opacity: 0, y: 10 }}
@@ -428,11 +418,11 @@ export default function MyBookingsPage() {
                             transition={{ duration: 0.6, delay: 0.5 }}
                             className="text-lg text-[#235347]/70 text-center mb-8 max-w-md"
                           >
-                    {filter === "all"
+                            {filter === "all"
                               ? "You haven't made any bookings yet. Start exploring our amazing luxury properties!"
-                      : `You don't have any ${filter} bookings at the moment.`}
+                              : `You don't have any ${filter} bookings at the moment.`}
                           </motion.p>
-                  {filter === "all" && (
+                          {filter === "all" && (
                             <motion.div
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
@@ -448,11 +438,11 @@ export default function MyBookingsPage() {
                                   Discover Properties
                                   <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                                 </Link>
-                    </Button>
+                              </Button>
                             </motion.div>
-                  )}
-                </CardContent>
-              </Card>
+                          )}
+                        </CardContent>
+                      </Card>
                     </motion.div>
                   ) : (
                     <motion.div
@@ -472,23 +462,23 @@ export default function MyBookingsPage() {
                           className="group"
                         >
                           <Card className="bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
-                    <CardContent className="p-0">
-                      <div className="grid grid-cols-1 lg:grid-cols-4 gap-0">
-                        {/* Property Image */}
+                            <CardContent className="p-0">
+                              <div className="grid grid-cols-1 lg:grid-cols-4 gap-0">
+                                {/* Property Image */}
                                 <div className="lg:col-span-1 relative">
                                   <div className="aspect-[4/3] lg:aspect-auto lg:h-full relative overflow-hidden">
-                          {booking.propertyDetails?.images?.[0] ? (
-                              <Image
-                                src={booking.propertyDetails.images[0]}
-                                alt="Property"
-                                fill
+                                    {booking.propertyDetails?.images?.[0] ? (
+                                      <Image
+                                        src={booking.propertyDetails.images[0]}
+                                        alt="Property"
+                                        fill
                                         className="object-cover transition-transform duration-700 group-hover:scale-110"
-                              />
-                          ) : (
+                                      />
+                                    ) : (
                                       <div className="w-full h-full bg-gradient-to-br from-[#8EB69B]/10 to-[#0B2B26]/10 flex items-center justify-center">
                                         <Home className="h-16 w-16 text-[#8EB69B]/50" />
-                            </div>
-                          )}
+                                      </div>
+                                    )}
                                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
 
                                     {/* Property Type Badge */}
@@ -499,23 +489,23 @@ export default function MyBookingsPage() {
                                       </Badge>
                                     </div>
                                   </div>
-                        </div>
+                                </div>
 
-                        {/* Booking Details */}
+                                {/* Booking Details */}
                                 <div className="lg:col-span-3 p-6 lg:p-8">
                                   {/* Header with Status */}
                                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6 gap-4">
-                            <div className="flex-1">
+                                    <div className="flex-1">
                                       <h3 className="text-2xl lg:text-3xl font-bold text-[#163832] mb-3 group-hover:text-[#8EB69B] transition-colors duration-300">
-                                  {booking.propertyDetails?.title ||
-                                    "Property Details Loading..."}
-                                </h3>
+                                        {booking.propertyDetails?.title ||
+                                          "Property Details Loading..."}
+                                      </h3>
 
                                       {/* Status Badges */}
                                       <div className="flex flex-wrap items-center gap-3 mb-4">
-                                <Badge
-                                  className={`${getStatusColor(
-                                    booking.status
+                                        <Badge
+                                          className={`${getStatusColor(
+                                            booking.status
                                           )} border px-3 py-1 text-sm font-medium rounded-full flex items-center gap-2`}
                                         >
                                           {getStatusIcon(booking.status)}
@@ -523,9 +513,9 @@ export default function MyBookingsPage() {
                                             .charAt(0)
                                             .toUpperCase() +
                                             booking.status.slice(1)}
-                                </Badge>
-                                <Badge
-                                  className={`${getPaymentStatusColor(
+                                        </Badge>
+                                        <Badge
+                                          className={`${getPaymentStatusColor(
                                             booking.payment.status
                                           )} border px-3 py-1 text-sm font-medium rounded-full flex items-center gap-2`}
                                         >
@@ -537,8 +527,8 @@ export default function MyBookingsPage() {
                                                 .charAt(0)
                                                 .toUpperCase() +
                                               booking.payment.status.slice(1)}
-                                </Badge>
-                              </div>
+                                        </Badge>
+                                      </div>
 
                                       {/* Property Details */}
                                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[#235347]/70">
@@ -555,11 +545,11 @@ export default function MyBookingsPage() {
                                                 .country
                                             }
                                           </span>
-                                </div>
+                                        </div>
                                         <div className="flex items-center gap-2">
                                           <Users className="h-4 w-4 text-[#8EB69B]" />
                                           <span className="text-sm lg:text-base">
-                                  {booking.guests.total} guest
+                                            {booking.guests.total} guest
                                             {booking.guests.total > 1
                                               ? "s"
                                               : ""}
@@ -587,26 +577,26 @@ export default function MyBookingsPage() {
                                               ? "s"
                                               : ""}
                                           </span>
-                                </div>
-                              </div>
-                            </div>
+                                        </div>
+                                      </div>
+                                    </div>
 
                                     {/* Price Section */}
                                     <div className="text-center lg:text-right">
                                       <div className="text-3xl lg:text-4xl font-bold text-[#163832] mb-2">
                                         $
                                         {booking.pricing.total.toLocaleString()}
-                              </div>
+                                      </div>
                                       <div className="text-sm lg:text-base text-[#235347]/70">
-                                ${booking.pricing.basePrice}/night ×{" "}
-                                {booking.dates.nights} nights
-                              </div>
+                                        ${booking.pricing.basePrice}/night ×{" "}
+                                        {booking.dates.nights} nights
+                                      </div>
                                       <div className="text-xs text-[#235347]/50 mt-1">
                                         Booking #
                                         {booking.id.slice(-8).toUpperCase()}
-                              </div>
-                            </div>
-                          </div>
+                                      </div>
+                                    </div>
+                                  </div>
 
                                   {/* Dates Section */}
                                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
@@ -615,98 +605,98 @@ export default function MyBookingsPage() {
                                         <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-xl flex items-center justify-center">
                                           <Calendar className="h-5 w-5 text-[#8EB69B]" />
                                         </div>
-                              <div>
+                                        <div>
                                           <div className="font-semibold text-[#163832] text-lg">
-                                  Check-in
-                                </div>
+                                            Check-in
+                                          </div>
                                           <div className="text-[#235347]/70">
-                                  {formatDate(booking.dates.checkIn)}
-                                </div>
-                              </div>
-                            </div>
+                                            {formatDate(booking.dates.checkIn)}
+                                          </div>
+                                        </div>
+                                      </div>
                                     </div>
                                     <div className="bg-[#0B2B26]/5 backdrop-blur-sm rounded-2xl p-4 border border-[#0B2B26]/10">
                                       <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 bg-[#0B2B26]/20 rounded-xl flex items-center justify-center">
                                           <Calendar className="h-5 w-5 text-[#0B2B26]" />
                                         </div>
-                              <div>
+                                        <div>
                                           <div className="font-semibold text-[#163832] text-lg">
-                                  Check-out
-                                </div>
-                                          <div className="text-[#235347]/70">
-                                  {formatDate(booking.dates.checkOut)}
+                                            Check-out
                                           </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                                          <div className="text-[#235347]/70">
+                                            {formatDate(booking.dates.checkOut)}
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
 
-                          {/* Special Requests */}
-                          {booking.specialRequests && (
+                                  {/* Special Requests */}
+                                  {booking.specialRequests && (
                                     <div className="mb-6 p-4 bg-gradient-to-r from-[#8EB69B]/5 to-[#0B2B26]/5 rounded-2xl border border-[#8EB69B]/10">
                                       <div className="flex items-center gap-2 mb-2">
                                         <MessageSquare className="h-4 w-4 text-[#8EB69B]" />
                                         <span className="font-semibold text-[#163832]">
-                                Special Requests
+                                          Special Requests
                                         </span>
-                              </div>
+                                      </div>
                                       <p className="text-[#235347]/70 text-sm lg:text-base">
-                                {booking.specialRequests}
+                                        {booking.specialRequests}
                                       </p>
-                            </div>
-                          )}
+                                    </div>
+                                  )}
 
                                   {/* Action Buttons */}
                                   <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-[#8EB69B]/10">
-                            <Button
-                              variant="outline"
+                                    <Button
+                                      variant="outline"
                                       size="default"
-                              asChild
+                                      asChild
                                       className="border-[#8EB69B]/30 text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white rounded-full transition-all duration-300 group"
-                            >
-                              <Link href={`/my-bookings/${booking.id}`}>
+                                    >
+                                      <Link href={`/my-bookings/${booking.id}`}>
                                         <Eye className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                                View Details
-                              </Link>
-                            </Button>
+                                        View Details
+                                      </Link>
+                                    </Button>
 
-                            {booking.status === "confirmed" && (
-                              <>
-                                <Button
-                                  variant="outline"
+                                    {booking.status === "confirmed" && (
+                                      <>
+                                        <Button
+                                          variant="outline"
                                           size="default"
                                           className="border-[#8EB69B]/30 text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white rounded-full transition-all duration-300 group"
-                                >
+                                        >
                                           <Phone className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                                  Contact Host
-                                </Button>
-                                <Button
-                                  variant="outline"
+                                          Contact Host
+                                        </Button>
+                                        <Button
+                                          variant="outline"
                                           size="default"
                                           className="border-[#8EB69B]/30 text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white rounded-full transition-all duration-300 group"
-                                >
+                                        >
                                           <Download className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                                  Download Receipt
-                                </Button>
-                              </>
-                            )}
+                                          Download Receipt
+                                        </Button>
+                                      </>
+                                    )}
 
-                            {booking.status === "pending" &&
+                                    {booking.status === "pending" &&
                                       booking.payment.status === "pending" && (
-                                <Button
+                                        <Button
                                           size="default"
                                           className="bg-[#8EB69B] hover:bg-[#0B2B26] text-white rounded-full transition-all duration-300 group"
-                                >
+                                        >
                                           <CreditCard className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                                  Complete Payment
-                                </Button>
-                              )}
+                                          Complete Payment
+                                        </Button>
+                                      )}
 
-                            {(booking.status === "pending" ||
-                              booking.status === "confirmed") && (
-                              <Button
-                                variant="destructive"
+                                    {(booking.status === "pending" ||
+                                      booking.status === "confirmed") && (
+                                      <Button
+                                        variant="destructive"
                                         size="default"
                                         onClick={() =>
                                           handleCancelBooking(booking.id)
@@ -714,21 +704,21 @@ export default function MyBookingsPage() {
                                         className="rounded-full transition-all duration-300 group hover:scale-105"
                                       >
                                         <XCircle className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                                Cancel Booking
-                              </Button>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                                        Cancel Booking
+                                      </Button>
+                                    )}
+                                  </div>
+                                </div>
+                              </div>
+                            </CardContent>
+                          </Card>
                         </motion.div>
-                ))}
+                      ))}
                     </motion.div>
-            )}
-          </TabsContent>
+                  )}
+                </TabsContent>
               </AnimatePresence>
-        </Tabs>
+            </Tabs>
           </motion.div>
         </div>
       </div>

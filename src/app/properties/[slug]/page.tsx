@@ -8,21 +8,15 @@ import { BookingForm } from "@/components/booking/BookingForm";
 import { AvailabilityCalendar } from "@/components/AvailabilityCalendar";
 import {
   Wifi,
-  Droplet,
   Dumbbell,
   UtensilsCrossed,
-  Tv,
-  Wind,
-  Car,
-  Users,
-  CalendarIcon,
+  Waves,
   MapPin,
   BedDouble,
-  Waves,
 } from "lucide-react"; // Wind for AC, Car for Parking
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
-import { getLocalImages, getLocalImage } from "@/lib/imageUtils";
+import { getLocalImage } from "@/lib/imageUtils";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { useToast } from "@/hooks/use-toast";
@@ -81,10 +75,8 @@ const getMockProperty = (slug: string): Property => ({
 
 const propertyFeatures = [
   { icon: MapPin, label: "Prime Marina Location" },
-  { icon: Users, label: "Up to 10 Guests" },
   { icon: BedDouble, label: "5 Bedrooms" },
   { icon: Wifi, label: "High-Speed WiFi" },
-  { icon: Car, label: "Private Parking" },
   { icon: Dumbbell, label: "Fitness Center" },
   { icon: UtensilsCrossed, label: "Gourmet Kitchen" },
   { icon: Waves, label: "Waterfront Access" },

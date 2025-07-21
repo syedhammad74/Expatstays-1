@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
 import {
   Phone,
   Mail,
@@ -14,26 +13,19 @@ import {
   MessageSquare,
   Send,
   Sparkles,
-  ArrowRight,
+  ChevronRight,
   CheckCircle,
   Star,
-  Globe,
-  Building,
-  Users,
-  Loader2,
   Shield,
-  Zap,
-  Target,
-  Crown,
+  Loader2,
   AlertCircle,
-  X,
-  ChevronRight,
+  Building,
+  Zap,
   Award,
   Heart,
 } from "lucide-react";
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import Header from "@/components/layout/Header";
 import {
   Tooltip,
@@ -42,21 +34,17 @@ import {
   TooltipContent,
 } from "@/components/ui/tooltip";
 
-interface FormData {
+// Ensure all used symbols (e.g., useState, FormData, FormErrors) are imported or defined.
+import { useState } from "react";
+// Define FormData and FormErrors types if not already defined.
+type FormData = {
   fullName: string;
   email: string;
   phone: string;
   reason: string;
   message: string;
-}
-
-interface FormErrors {
-  fullName?: string;
-  email?: string;
-  phone?: string;
-  reason?: string;
-  message?: string;
-}
+};
+type FormErrors = Partial<Record<keyof FormData, string>>;
 
 // Enhanced decorative SVG blob for hero
 const HeroBlob = () => (
@@ -432,7 +420,6 @@ export default function ContactPage() {
                               }`}
                               placeholder="Enter your full name"
                             />
-                            <Users className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#8EB69B] opacity-60 pointer-events-none" />
                           </div>
                           {errors.fullName && (
                             <p className="text-red-500 text-sm flex items-center gap-1">
@@ -464,7 +451,6 @@ export default function ContactPage() {
                               }`}
                               placeholder="your.email@example.com"
                             />
-                            <Mail className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#8EB69B] opacity-60 pointer-events-none" />
                           </div>
                           {errors.email && (
                             <p className="text-red-500 text-sm flex items-center gap-1">
@@ -500,7 +486,6 @@ export default function ContactPage() {
                               }`}
                               placeholder="+971 50 123 4567"
                             />
-                            <Phone className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#8EB69B] opacity-60 pointer-events-none" />
                           </div>
                           {errors.phone && (
                             <p className="text-red-500 text-sm flex items-center gap-1">
@@ -538,7 +523,6 @@ export default function ContactPage() {
                               <option value="partnership">Partnership</option>
                               <option value="general">General Question</option>
                             </select>
-                            <ChevronRight className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-[#8EB69B] opacity-60 pointer-events-none rotate-90" />
                           </div>
                           {errors.reason && (
                             <p className="text-red-500 text-sm flex items-center gap-1">
@@ -571,7 +555,6 @@ export default function ContactPage() {
                             }`}
                             placeholder="Tell us about your requirements and how we can help you..."
                           />
-                          <MessageSquare className="absolute right-4 top-4 w-5 h-5 text-[#8EB69B] opacity-60 pointer-events-none" />
                         </div>
                         {errors.message && (
                           <p className="text-red-500 text-sm flex items-center gap-1">

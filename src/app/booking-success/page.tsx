@@ -34,7 +34,6 @@ export default function BookingSuccessPage() {
   const [booking, setBooking] = useState<Booking | null>(null);
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("bookingId");
   const { toast } = useToast();

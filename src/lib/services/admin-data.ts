@@ -5,7 +5,6 @@ import {
   updateDoc,
   deleteDoc,
   getDocs,
-  getDoc,
   query,
   orderBy,
   onSnapshot,
@@ -13,16 +12,7 @@ import {
   Timestamp,
   where,
 } from "firebase/firestore";
-import {
-  ref,
-  push,
-  set,
-  onValue,
-  off,
-  serverTimestamp as realtimeServerTimestamp,
-  remove,
-  update,
-} from "firebase/database";
+import { ref, push, set, onValue, remove, update } from "firebase/database";
 import { db, realtimeDb } from "@/lib/firebase";
 
 export interface AdminDataItem {
@@ -72,7 +62,6 @@ export class AdminDataService {
     data: Omit<AdminDataItem, "id" | "createdAt" | "updatedAt">
   ): Promise<string> {
     try {
-      const timestamp = new Date().toISOString();
       const realtimeTimestamp = Date.now();
 
       // Prepare data for Firestore
@@ -124,7 +113,6 @@ export class AdminDataService {
     updates: Partial<AdminDataItem>
   ): Promise<void> {
     try {
-      const timestamp = new Date().toISOString();
       const realtimeTimestamp = Date.now();
 
       // Prepare updates for Firestore

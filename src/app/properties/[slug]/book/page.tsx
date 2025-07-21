@@ -4,21 +4,14 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { format, addDays } from "date-fns";
+import { format } from "date-fns";
 import {
   Calendar as CalendarIcon,
   MapPin,
   Users,
   BedDouble,
   Bath,
-  Wifi,
-  Car,
-  ChefHat,
-  Waves,
   ArrowLeft,
-  Star,
-  Check,
-  CreditCard,
   Lock,
   Shield,
 } from "lucide-react";
@@ -36,7 +29,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -54,7 +46,6 @@ import { Property } from "@/lib/types/firebase";
 import {
   CacheManager,
   optimizeImageUrl,
-  useImageLoad,
   performanceMonitor,
   useDebounce,
 } from "@/lib/performance";
@@ -228,14 +219,6 @@ export default function PropertyBookingPage() {
             alt: property?.title || "Property image",
           },
         ];
-
-  // Handle image loading states
-  const handleImageLoad = useCallback((imageUrl: string) => {
-    // setImageLoadingStates((prev) => ({
-    //   ...prev,
-    //   [imageUrl]: true,
-    // }));
-  }, []);
 
   // Handle booking submission with performance monitoring
   const handleBooking = useCallback(async () => {

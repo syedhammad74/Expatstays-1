@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Logo from "../../../public/logo.png";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, Search, Bell, ChevronDown } from "lucide-react";
+import { Menu, X, Search, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -63,27 +63,13 @@ const NavLink = ({ href, label }: { href: string; label: string }) => {
   );
 };
 
-// Throttle function for better performance
-const throttle = (func: Function, limit: number) => {
-  let inThrottle: boolean;
-  return function (this: any, ...args: any[]) {
-    if (!inThrottle) {
-      func.apply(this, args);
-      inThrottle = true;
-      setTimeout(() => (inThrottle = false), limit);
-    }
-  };
-};
-
 const Header = () => {
   const [isSticky, setIsSticky] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isVisible, setIsVisible] = React.useState(true);
-  const [lastScrollY, setLastScrollY] = React.useState(0);
   const [scrollDelta, setScrollDelta] = React.useState(0);
   const [lockout, setLockout] = React.useState(false);
   const { user, loading } = useAuth();
-  const scrollTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
 
   React.useEffect(() => {
     let lastY = window.scrollY;
@@ -99,14 +85,14 @@ const Header = () => {
           if (currentY < 50) {
             setIsVisible(true);
             setScrollDelta(0);
-            setLastScrollY(currentY);
+            lastY = currentY;
             ticking = false;
             return;
           }
 
           // Debounce lockout to prevent rapid toggling
           if (lockout) {
-            setLastScrollY(currentY);
+            lastY = currentY;
             ticking = false;
             return;
           }
@@ -131,7 +117,6 @@ const Header = () => {
             setScrollDelta(newDelta);
           }
 
-          setLastScrollY(currentY);
           lastY = currentY;
           ticking = false;
         });

@@ -6,16 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import {
-  Loader2,
-  Eye,
-  EyeOff,
-  Check,
-  User,
-  Mail,
-  Lock,
-  Phone,
-} from "lucide-react";
+import { Loader2, Eye, EyeOff, Check, User, Mail, Lock } from "lucide-react";
 
 interface SignUpFormProps {
   onToggleMode: () => void;

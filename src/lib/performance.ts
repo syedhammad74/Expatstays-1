@@ -232,7 +232,7 @@ export const performanceMonitor = {
 };
 
 // Optimize component re-renders
-export const useMemoizedCallback = <T extends (...args: any[]) => any>(
+export const useMemoizedCallback = <T extends (...args: unknown[]) => unknown>(
   callback: T,
   deps: React.DependencyList
 ): T => {

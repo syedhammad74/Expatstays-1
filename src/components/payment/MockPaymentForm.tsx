@@ -22,7 +22,7 @@ interface MockPaymentFormProps {
   bookingId: string;
   amount: number;
   currency: string;
-  onSuccess: (paymentResult: any) => void;
+  onSuccess: (paymentResult: unknown) => void;
   onError: (error: string) => void;
 }
 
@@ -56,7 +56,7 @@ export function MockPaymentForm({
         }),
       });
 
-      const data = await response.json();
+      const data: { success: boolean; error?: string } = await response.json();
 
       if (response.ok && data.success) {
         setCompleted(true);
@@ -73,7 +73,7 @@ export function MockPaymentForm({
       } else {
         throw new Error(data.error || "Payment failed");
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Mock payment error:", error);
       const errorMessage =
         error instanceof Error ? error.message : "Payment failed";

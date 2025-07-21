@@ -9,11 +9,10 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Loader2, Eye, EyeOff, Mail, Lock, Key } from "lucide-react";
 
 interface SignInFormProps {
-  onToggleMode: () => void;
   onClose?: () => void;
 }
 
-export function SignInForm({ onToggleMode, onClose }: SignInFormProps) {
+export function SignInForm({ onClose }: SignInFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -87,10 +86,23 @@ export function SignInForm({ onToggleMode, onClose }: SignInFormProps) {
   };
 
   return (
-    <div className="space-y-6 bg-white/90 rounded-2xl shadow-lg border border-[#DAF1DE] px-4 py-6 sm:px-6 sm:py-8 max-w-md mx-auto font-sans md:bg-transparent md:shadow-none md:border-none md:rounded-none md:px-0 md:py-0" style={{ WebkitTapHighlightColor: 'transparent', WebkitFontSmoothing: 'antialiased' }}>
+    <div
+      className="space-y-6 bg-white/90 rounded-2xl shadow-lg border border-[#DAF1DE] px-4 py-6 sm:px-6 sm:py-8 max-w-md mx-auto font-sans md:bg-transparent md:shadow-none md:border-none md:rounded-none md:px-0 md:py-0"
+      style={{
+        WebkitTapHighlightColor: "transparent",
+        WebkitFontSmoothing: "antialiased",
+      }}
+    >
       {error && (
-        <Alert variant={error.includes('sent') ? 'default' : 'destructive'} className="border-red-200 bg-red-50 md:bg-inherit md:border-none">
-          <AlertDescription className={error.includes('sent') ? 'text-[#0B2B26]' : 'text-red-800'}>
+        <Alert
+          variant={error.includes("sent") ? "default" : "destructive"}
+          className="border-red-200 bg-red-50 md:bg-inherit md:border-none"
+        >
+          <AlertDescription
+            className={
+              error.includes("sent") ? "text-[#0B2B26]" : "text-red-800"
+            }
+          >
             {error}
           </AlertDescription>
         </Alert>
@@ -98,7 +110,10 @@ export function SignInForm({ onToggleMode, onClose }: SignInFormProps) {
 
       <form onSubmit={handleSubmit} className="space-y-5 md:space-y-4">
         <div className="space-y-2 md:space-y-1.5">
-          <Label htmlFor="email" className="text-base font-semibold text-[#0B2B26] md:text-sm md:font-medium">
+          <Label
+            htmlFor="email"
+            className="text-base font-semibold text-[#0B2B26] md:text-sm md:font-medium"
+          >
             Email Address
           </Label>
           <div className="relative">
@@ -116,14 +131,17 @@ export function SignInForm({ onToggleMode, onClose }: SignInFormProps) {
         </div>
 
         <div className="space-y-2 md:space-y-1.5">
-          <Label htmlFor="password" className="text-base font-semibold text-[#0B2B26] md:text-sm md:font-medium">
+          <Label
+            htmlFor="password"
+            className="text-base font-semibold text-[#0B2B26] md:text-sm md:font-medium"
+          >
             Password
           </Label>
           <div className="relative">
             <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-[#8EB69B] md:h-4 md:w-4" />
             <Input
               id="password"
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
@@ -171,7 +189,7 @@ export function SignInForm({ onToggleMode, onClose }: SignInFormProps) {
               Signing in...
             </>
           ) : (
-            'Sign In'
+            "Sign In"
           )}
         </Button>
       </form>

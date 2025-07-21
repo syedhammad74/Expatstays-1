@@ -17,7 +17,7 @@ import {
   Star,
   Heart,
 } from "lucide-react";
-import { useState, memo } from "react";
+import { useState } from "react";
 import { optimizeImageUrl, useImageLoad } from "@/lib/performance";
 
 export interface PropertyCardProps {

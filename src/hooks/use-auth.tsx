@@ -1,6 +1,12 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useCallback,
+} from "react";
 import {
   User as FirebaseUser,
   onAuthStateChanged,
@@ -41,6 +47,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [userProfile, setUserProfile] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const loadUserProfile = useCallback(async (uid: string) => {
+    try {
+      const userDoc = await getDoc(doc(db, "users", uid));
+      if (userDoc.exists()) {
+        setUserProfile(userDoc.data() as User);
+      }
+    } catch (error) {
+      console.error("Error loading user profile:", error);
+    }
+  }, []);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
       if (firebaseUser) {
@@ -55,17 +72,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     return () => unsubscribe();
   }, [loadUserProfile]); // Added loadUserProfile as dependency
-
-  const loadUserProfile = async (uid: string) => {
-    try {
-      const userDoc = await getDoc(doc(db, "users", uid));
-      if (userDoc.exists()) {
-        setUserProfile(userDoc.data() as User);
-      }
-    } catch (error) {
-      console.error("Error loading user profile:", error);
-    }
-  };
 
   const createUserProfile = async (firebaseUser: FirebaseUser) => {
     const userProfile: User = {

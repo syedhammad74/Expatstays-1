@@ -3,19 +3,10 @@
 import { useState, useEffect } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { bookingService } from "@/lib/services/bookings";
 import { availabilityService } from "@/lib/services/availability";
-import {
-  CalendarDays,
-  Loader2,
-  AlertCircle,
-  CheckCircle,
-  XCircle,
-  Clock,
-  Info,
-} from "lucide-react";
+import { CalendarDays, Loader2, CheckCircle, Clock, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import {
   format,
@@ -45,7 +36,6 @@ export function AvailabilityCalendar({
 }: AvailabilityCalendarProps) {
   const [blockedDates, setBlockedDates] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentMonth, setCurrentMonth] = useState(new Date());
   const [selectingCheckIn, setSelectingCheckIn] = useState(true);
   const [tempCheckIn, setTempCheckIn] = useState<string | undefined>(
     selectedDates?.checkIn
@@ -57,7 +47,7 @@ export function AvailabilityCalendar({
 
   useEffect(() => {
     loadAvailabilityData();
-  }, [propertyId, currentMonth, loadAvailabilityData]); // Added loadAvailabilityData as dependency
+  }, [propertyId, loadAvailabilityData]); // Added loadAvailabilityData as dependency
 
   useEffect(() => {
     // Set up real-time subscription for availability changes
@@ -77,9 +67,9 @@ export function AvailabilityCalendar({
   const loadAvailabilityData = async () => {
     setLoading(true);
     try {
-      const startDate = format(startOfMonth(currentMonth), "yyyy-MM-dd");
+      const startDate = format(startOfMonth(new Date()), "yyyy-MM-dd");
       const endDate = format(
-        endOfMonth(addMonths(currentMonth, 2)),
+        endOfMonth(addMonths(new Date(), 2)),
         "yyyy-MM-dd"
       );
 
@@ -198,31 +188,6 @@ export function AvailabilityCalendar({
     if (onDateSelect) {
       onDateSelect({});
     }
-  };
-
-  const getDateStatus = (
-    date: Date
-  ): {
-    status: "available" | "blocked" | "past" | "selected" | "in-range";
-    reason?: string;
-  } => {
-    if (isDateInPast(date)) {
-      return { status: "past", reason: "Past date" };
-    }
-
-    if (isDateBlocked(date)) {
-      return { status: "blocked", reason: "Not available" };
-    }
-
-    if (isDateSelected(date)) {
-      return { status: "selected", reason: "Selected" };
-    }
-
-    if (isDateInRange(date)) {
-      return { status: "in-range", reason: "In selected range" };
-    }
-
-    return { status: "available", reason: "Available" };
   };
 
   const modifiers = {

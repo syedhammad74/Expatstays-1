@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "../../index.css";
 import { Toaster } from "@/components/ui/toaster";
-import Header from "@/components/layout/Header";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
 

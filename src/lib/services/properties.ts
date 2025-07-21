@@ -13,6 +13,7 @@ import {
   serverTimestamp,
   limit,
   startAfter,
+  DocumentSnapshot,
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Property } from "@/lib/types/firebase";
@@ -74,11 +75,11 @@ export class PropertyService {
   // Get all properties with pagination
   async getProperties(
     pageSize: number = 10,
-    lastDoc?: any
+    lastDoc?: DocumentSnapshot
   ): Promise<{
     properties: Property[];
     hasMore: boolean;
-    lastDoc: any;
+    lastDoc: DocumentSnapshot;
   }> {
     try {
       let q = query(
@@ -358,7 +359,7 @@ export class PropertyService {
   ): Promise<void> {
     try {
       await this.updateProperty(propertyId, {
-        availability: { isActive } as any,
+        availability: { isActive } as unknown as Property["availability"],
         updatedAt: new Date().toISOString(),
       });
     } catch (error) {

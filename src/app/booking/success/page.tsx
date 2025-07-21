@@ -22,18 +22,15 @@ import { Booking, Property } from "@/lib/types/firebase";
 export default function BookingSuccessPage() {
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("booking_id");
-  const sessionId = searchParams.get("session_id");
-  const paymentIntentId = searchParams.get("payment_intent");
 
   const [booking, setBooking] = useState<Booking | null>(null);
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchBookingDetails = async () => {
       if (!bookingId) {
-        setError("No booking ID provided");
+        // setError("No booking ID provided"); // This line was removed
         setLoading(false);
         return;
       }
@@ -41,7 +38,7 @@ export default function BookingSuccessPage() {
       try {
         const bookingData = await bookingService.getBookingById(bookingId);
         if (!bookingData) {
-          setError("Booking not found");
+          // setError("Booking not found"); // This line was removed
           setLoading(false);
           return;
         }
@@ -55,7 +52,7 @@ export default function BookingSuccessPage() {
         setProperty(propertyData);
       } catch (err) {
         console.error("Error fetching booking details:", err);
-        setError("Failed to load booking details");
+        // setError("Failed to load booking details"); // This line was removed
       } finally {
         setLoading(false);
       }
@@ -91,7 +88,7 @@ export default function BookingSuccessPage() {
     );
   }
 
-  if (error || !booking) {
+  if (!booking) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -99,7 +96,7 @@ export default function BookingSuccessPage() {
           <h2 className="text-2xl font-bold text-[#163832] mb-2">
             Error Loading Booking
           </h2>
-          <p className="text-[#235347]/70 mb-4">{error}</p>
+          <p className="text-[#235347]/70 mb-4">No booking ID provided.</p>
           <Button asChild>
             <Link href="/">Return Home</Link>
           </Button>

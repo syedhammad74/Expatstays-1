@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Users,
@@ -8,7 +8,6 @@ import {
   Trophy,
   Award,
   Star,
-  Heart,
   Shield,
   ArrowRight,
   Sparkles,
@@ -16,21 +15,9 @@ import {
   Clock,
   CheckCircle,
   Target,
-  Zap,
-  Crown,
-  MapPin,
   Phone,
-  Mail,
   Calendar,
-  TrendingUp,
 } from "lucide-react";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
-import { getLocalImage } from "@/lib/imageUtils";
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 
@@ -54,70 +41,10 @@ const features = [
     color: "from-[#235347] to-[#163832]",
   },
   {
-    icon: Crown,
+    icon: Trophy,
     title: "Excellence",
     desc: "Unwavering commitment to luxury and quality.",
     color: "from-[#8EB69B] to-[#DAF1DE]",
-  },
-];
-
-const team = [
-  {
-    name: "Alex Johnson",
-    role: "Founder & CEO",
-    image: "/media/Close Ups June 25 2025/DSC01835.jpg",
-    bio: "Former hospitality executive with 15+ years in luxury markets.",
-    experience: "15+ Years",
-    expertise: "Luxury Hospitality",
-  },
-  {
-    name: "Maria Garcia",
-    role: "Head of Operations",
-    image: "/media/Close Ups June 25 2025/DSC01964.jpg",
-    bio: "Expert in guest experience and property management.",
-    experience: "12+ Years",
-    expertise: "Guest Experience",
-  },
-  {
-    name: "Kenji Tanaka",
-    role: "Chief Technology Officer",
-    image: "/media/Close Ups June 25 2025/DSC01965.jpg",
-    bio: "Pioneering seamless digital experiences for luxury travel.",
-    experience: "10+ Years",
-    expertise: "Digital Innovation",
-  },
-];
-
-const differentiators = [
-  {
-    icon: CheckCircle,
-    text: "Curated portfolio across the UAE",
-    detail: "500+ handpicked properties",
-  },
-  {
-    icon: CheckCircle,
-    text: "Concierge-level service",
-    detail: "24/7 personalized support",
-  },
-  {
-    icon: CheckCircle,
-    text: "Rated 4.9 by 4,000+ clients",
-    detail: "Based on verified reviews",
-  },
-  {
-    icon: CheckCircle,
-    text: "Exclusive member benefits",
-    detail: "Premium perks and upgrades",
-  },
-  {
-    icon: CheckCircle,
-    text: "Handpicked luxury properties",
-    detail: "Quality verified locations",
-  },
-  {
-    icon: CheckCircle,
-    text: "Seamless booking experience",
-    detail: "Instant confirmation",
   },
 ];
 

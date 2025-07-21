@@ -48,7 +48,6 @@ export default function QuickTestPage() {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              <Database className="h-5 w-5 text-[#8EB69B]" />
               Add Simple Test Data
             </CardTitle>
           </CardHeader>

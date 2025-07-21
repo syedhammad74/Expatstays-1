@@ -10,7 +10,6 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-  CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -24,8 +23,6 @@ import {
   User,
   Calendar,
   Settings,
-  Mail,
-  Phone,
   MapPin,
   Loader2,
   Edit3,
@@ -33,7 +30,6 @@ import {
   X,
   Heart,
   Star,
-  Clock,
   Users,
   ArrowRight,
   Shield,
@@ -41,10 +37,6 @@ import {
   Globe,
   CreditCard,
   LogOut,
-  Plus,
-  Trash2,
-  Eye,
-  EyeOff,
   BedDouble,
   Home,
   CalendarIcon,
@@ -54,8 +46,6 @@ import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { getLocalImage } from "@/lib/imageUtils";
-import Header from "@/components/layout/Header";
 
 export default function ProfilePage() {
   const {
@@ -75,7 +65,6 @@ export default function ProfilePage() {
     phone: "",
   });
   const [updatingProfile, setUpdatingProfile] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
@@ -258,7 +247,6 @@ export default function ProfilePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FAFAFA] via-white to-[#DAF1DE]/30">
-      <Header />
       <div className="container mx-auto px-2 sm:px-4 md:px-6 lg:px-8 py-8 pt-24 md:pt-32">
         <div className="max-w-6xl mx-auto space-y-8">
           {/* Header Section */}
