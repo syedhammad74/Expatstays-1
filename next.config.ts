@@ -1,5 +1,6 @@
 // next.config.ts
 import type { NextConfig } from "next";
+const path = require("path");
 
 const nextConfig: NextConfig = {
   // Enable experimental features for better performance
@@ -64,7 +65,7 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-
+  
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
     // Optimize for production
@@ -84,6 +85,10 @@ const nextConfig: NextConfig = {
               chunks: "all",
               enforce: true,
             },
+            "next/document": path.resolve(
+              __dirname,
+              "src/mocks/next-document-shim.tsx"
+            ),
           },
         },
       };
