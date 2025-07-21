@@ -179,20 +179,44 @@ export default function PropertyBookingPage() {
     if (!property?.images || !Array.isArray(property.images)) return [];
 
     return property.images
-      .filter((image) => image && image.url && typeof image.url === "string")
-      .map((image) => ({
-        ...image,
-        optimizedUrl: optimizeImageUrl(image.url, {
-          width: 800,
-          height: 600,
-          quality: 90,
-        }),
-        thumbnailUrl: optimizeImageUrl(image.url, {
-          width: 120,
-          height: 90,
-          quality: 80,
-        }),
-      }));
+      .map((image) => {
+        if (typeof image === "string") {
+          return {
+            url: image,
+            optimizedUrl: optimizeImageUrl(image, {
+              width: 800,
+              height: 600,
+              quality: 90,
+            }),
+            thumbnailUrl: optimizeImageUrl(image, {
+              width: 120,
+              height: 90,
+              quality: 80,
+            }),
+          };
+        } else if (
+          image &&
+          typeof image === "object" &&
+          "url" in image &&
+          typeof image.url === "string"
+        ) {
+          return {
+            ...image,
+            optimizedUrl: optimizeImageUrl(image.url, {
+              width: 800,
+              height: 600,
+              quality: 90,
+            }),
+            thumbnailUrl: optimizeImageUrl(image.url, {
+              width: 120,
+              height: 90,
+              quality: 80,
+            }),
+          };
+        }
+        return null;
+      })
+      .filter(Boolean);
   }, [property?.images]);
 
   // Safe image display with fallback
