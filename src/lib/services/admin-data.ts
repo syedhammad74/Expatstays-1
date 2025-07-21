@@ -275,7 +275,17 @@ export class AdminDataService {
           id: key,
           ...(value as unknown as AdminDataItem),
         }))
-        .sort((a, b) => b.timestamp - a.timestamp)
+        .sort((a, b) => {
+          const aTime =
+            typeof a.createdAt === "number"
+              ? a.createdAt
+              : Date.parse(a.createdAt as string);
+          const bTime =
+            typeof b.createdAt === "number"
+              ? b.createdAt
+              : Date.parse(b.createdAt as string);
+          return bTime - aTime;
+        })
         .slice(0, 50); // Keep only latest 50 activities
       callback(activities);
     });

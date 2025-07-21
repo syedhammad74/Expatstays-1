@@ -23,14 +23,8 @@ import { mockBookingService, USE_MOCK_DATA } from "./mock-data";
 
 export class BookingService {
   private static instance: BookingService;
-  private bookingsCollection = collection<Booking>(db, "bookings");
-  private availabilityCollection = collection<{
-    propertyId: string;
-    date: string;
-    bookingId: string;
-    blocked: true;
-    createdAt: unknown;
-  }>(db, "availability");
+  private bookingsCollection = collection(db, "bookings");
+  private availabilityCollection = collection(db, "availability");
 
   static getInstance(): BookingService {
     if (!BookingService.instance) {
@@ -135,7 +129,7 @@ export class BookingService {
 
   // Check availability within a transaction
   private async checkAvailabilityInTransaction(
-    transaction: unknown,
+    transaction: import("firebase/firestore").Transaction,
     propertyId: string,
     checkIn: string,
     checkOut: string
@@ -147,9 +141,7 @@ export class BookingService {
       where("date", "<", checkOut)
     );
 
-    const availabilitySnapshot = await (
-      transaction as unknown as FirebaseFirestore.Transaction
-    ).get(availabilityQuery);
+    const availabilitySnapshot = await transaction.get(availabilityQuery);
 
     // If any dates are blocked, return false
     return availabilitySnapshot.empty;
@@ -157,7 +149,7 @@ export class BookingService {
 
   // Block dates in availability collection within transaction
   private async blockDatesInTransaction(
-    transaction: unknown,
+    transaction: import("firebase/firestore").Transaction,
     propertyId: string,
     checkIn: string,
     checkOut: string,
@@ -170,24 +162,15 @@ export class BookingService {
     const currentDate = new Date(checkInDate);
     while (currentDate < checkOutDate) {
       const dateString = currentDate.toISOString().split("T")[0];
-      const availabilityRef = doc<{
-        propertyId: string;
-        date: string;
-        bookingId: string;
-        blocked: true;
-        createdAt: unknown;
-      }>(this.availabilityCollection);
+      const availabilityRef = doc(this.availabilityCollection);
 
-      (transaction as unknown as FirebaseFirestore.Transaction).set(
-        availabilityRef,
-        {
-          propertyId,
-          date: dateString,
-          bookingId,
-          blocked: true,
-          createdAt: serverTimestamp(),
-        }
-      );
+      transaction.set(availabilityRef, {
+        propertyId,
+        date: dateString,
+        bookingId,
+        blocked: true,
+        createdAt: serverTimestamp(),
+      });
 
       currentDate.setDate(currentDate.getDate() + 1);
     }

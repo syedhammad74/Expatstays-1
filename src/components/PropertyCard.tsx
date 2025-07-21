@@ -17,7 +17,7 @@ import {
   Star,
   Heart,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { optimizeImageUrl, useImageLoad } from "@/lib/performance";
 
 export interface PropertyCardProps {
@@ -43,7 +43,7 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
     location,
     price,
     rating = 4.8,
-  }) => {
+  }: PropertyCardProps) => {
     const [imageError, setImageError] = useState(false);
     const { isLoaded, hasError } = useImageLoad(imageUrl);
 

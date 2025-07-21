@@ -22,7 +22,6 @@ import { propertyService } from "@/lib/services/properties";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import type { Metadata, NextPage } from "next";
-import type { PageProps } from "next/app";
 
 // Mock property data - In production, this would come from Firebase
 const propertyFeatures = [
@@ -51,8 +50,12 @@ const testimonials = [
 ];
 
 // Update the function signature to use PageProps
-export default function PropertyDetailPage({ params }: PageProps) {
-  const slug = params?.slug || "";
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -231,7 +234,7 @@ export default function PropertyDetailPage({ params }: PageProps) {
         <div className="lg:col-span-1 order-1 lg:order-2">
           <div className="lg:sticky lg:top-24">
             <BookingForm
-              property={property}
+              property={{ ...property, name: property.title }}
               onBookingComplete={handleBookingComplete}
             />
           </div>

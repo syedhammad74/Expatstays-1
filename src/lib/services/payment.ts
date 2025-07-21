@@ -8,8 +8,8 @@ import {
 
 // Initialize Stripe for server-side operations
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2023-10-16",
-});
+  apiVersion: "2022-11-15",
+} as Stripe.StripeConfig);
 
 export interface PaymentIntent {
   id: string;
@@ -203,7 +203,9 @@ class PaymentService {
           currency: paymentIntent.currency,
           status: "completed",
           paymentMethod: paymentIntent.payment_method as string,
-          receiptUrl: paymentIntent.charges.data[0]?.receipt_url || undefined,
+          receiptUrl:
+            (paymentIntent as Stripe.PaymentIntent).charges?.data?.[0]
+              ?.receipt_url || undefined,
         });
       } else if (paymentIntent.status === "canceled") {
         status = "canceled";
@@ -217,7 +219,8 @@ class PaymentService {
         status,
         bookingId,
         amount: paymentIntent.amount / 100,
-        receiptUrl: paymentIntent.charges.data[0]?.receipt_url,
+        receiptUrl: (paymentIntent as Stripe.PaymentIntent).charges?.data?.[0]
+          ?.receipt_url,
       };
     } catch (error) {
       console.error("Error confirming payment:", error);
@@ -349,7 +352,9 @@ class PaymentService {
         currency: paymentIntent.currency,
         status: "completed",
         paymentMethod: paymentIntent.payment_method as string,
-        receiptUrl: paymentIntent.charges.data[0]?.receipt_url || undefined,
+        receiptUrl:
+          (paymentIntent as Stripe.PaymentIntent).charges?.data?.[0]
+            ?.receipt_url || undefined,
       });
 
       console.log(`Payment succeeded for booking ${bookingId}`);
@@ -372,7 +377,7 @@ class PaymentService {
       }
 
       // Update booking status to failed
-      await bookingService.updateBookingStatus(bookingId, "failed");
+      await bookingService.updateBookingStatus(bookingId, "cancelled");
 
       console.log(`Payment failed for booking ${bookingId}`);
     } catch (error) {
@@ -417,7 +422,7 @@ class PaymentService {
         amount: amount || 0,
         currency: "usd",
         status: "succeeded",
-      } as Stripe.Refund;
+      } as unknown as Stripe.Refund;
     }
 
     try {

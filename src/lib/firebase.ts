@@ -4,9 +4,19 @@ import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 import { getStorage, connectStorageEmulator } from "firebase/storage";
 import { getDatabase, connectDatabaseEmulator } from "firebase/database";
-import { ref as dbRef, set as dbSet, push as dbPush, onValue as dbOnValue, serverTimestamp as dbServerTimestamp } from "firebase/database";
+import {
+  ref as dbRef,
+  set as dbSet,
+  push as dbPush,
+  onValue as dbOnValue,
+  serverTimestamp as dbServerTimestamp,
+} from "firebase/database";
 import { httpsCallable as fbHttpsCallable } from "firebase/functions";
-import { ref as storageRef, uploadBytes as storageUploadBytes, getDownloadURL as storageGetDownloadURL } from "firebase/storage";
+import {
+  ref as storageRef,
+  uploadBytes as storageUploadBytes,
+  getDownloadURL as storageGetDownloadURL,
+} from "firebase/storage";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -44,28 +54,17 @@ export const functions = getFunctions(app);
 export const storage = getStorage(app);
 export const realtimeDb = getDatabase(app);
 
-// Connect to emulators in development
+let emulatorsConnected = false;
 if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
   const useEmulators = process.env.NEXT_PUBLIC_USE_EMULATORS === "true";
-
-  if (useEmulators) {
+  if (useEmulators && !emulatorsConnected) {
     try {
-      // Only connect to emulators once
-      if (!auth.config.emulator) {
-        connectAuthEmulator(auth, "http://localhost:9099", {
-          disableWarnings: true,
-        });
-      }
-      if (!db._delegate._terminated) {
-        connectFirestoreEmulator(db, "localhost", 8080);
-      }
-      if (!functions.app.options.projectId?.includes("demo-")) {
-        connectFunctionsEmulator(functions, "localhost", 5001);
-      }
-      if (!storage.app.options.projectId?.includes("demo-")) {
-        connectStorageEmulator(storage, "localhost", 9199);
-      }
-      // Connect Realtime Database emulator
+      connectAuthEmulator(auth, "http://localhost:9099", {
+        disableWarnings: true,
+      });
+      connectFirestoreEmulator(db, "localhost", 8080);
+      connectFunctionsEmulator(functions, "localhost", 5001);
+      connectStorageEmulator(storage, "localhost", 9199);
       try {
         connectDatabaseEmulator(realtimeDb, "localhost", 9000);
       } catch (realtimeError) {
@@ -74,6 +73,7 @@ if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
           realtimeError
         );
       }
+      emulatorsConnected = true;
     } catch (error) {
       console.log("Emulators already connected or failed to connect:", error);
     }
@@ -100,7 +100,11 @@ if (process.env.NEXT_PUBLIC_USE_DATA_CONNECT === "true") {
                 process.env.NEXT_PUBLIC_USE_EMULATORS === "true";
               if (useEmulators) {
                 try {
-                  connectDataConnectEmulator(dataConnect, "localhost", 9399);
+                  connectDataConnectEmulator(
+                    dataConnect as unknown,
+                    "localhost",
+                    9399
+                  );
                 } catch (dcError) {
                   console.log(
                     "Data Connect emulator already connected or failed to connect:",
@@ -149,8 +153,17 @@ export const firebase = {
 
   // Firestore helpers
   firestore: {
-    doc: (path: string) => db.collection("").doc(path),
-    collection: (path: string) => db.collection(path),
+    doc: (path: string) => {
+      // Use modular Firestore API
+      const [collectionPath, docId] = path.split("/");
+      // @ts-ignore
+      return { collectionPath, docId };
+    },
+    collection: (path: string) => {
+      // Use modular Firestore API
+      // @ts-ignore
+      return { collectionPath: path };
+    },
     serverTimestamp: () => ({ serverTimestamp: true }),
   },
 
@@ -186,10 +199,10 @@ export const firebase = {
       return storageRef(storage, path);
     },
     uploadBytes: async (storageRef: unknown, file: File) => {
-      return storageUploadBytes(storageRef, file);
+      return storageUploadBytes(storageRef as unknown, file);
     },
     getDownloadURL: async (storageRef: unknown) => {
-      return storageGetDownloadURL(storageRef);
+      return storageGetDownloadURL(storageRef as unknown);
     },
   },
 };

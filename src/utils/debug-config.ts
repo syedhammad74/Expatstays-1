@@ -1,3 +1,5 @@
+import { db } from "@/lib/firebase";
+
 export const debugConfiguration = () => {
   console.log("🔍 === CONFIGURATION DEBUG ===");
   console.log("Environment Variables:");

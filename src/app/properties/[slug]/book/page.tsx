@@ -48,6 +48,8 @@ import {
   performanceMonitor,
   useDebounce,
 } from "@/lib/performance";
+import { Booking } from "@/lib/types/firebase";
+type BookingStatus = "pending" | "confirmed" | "completed" | "cancelled";
 
 export default function PropertyBookingPage() {
   const params = useParams();
@@ -87,10 +89,6 @@ export default function PropertyBookingPage() {
   const debouncedGuestDetails = useDebounce(guestDetails, 300);
 
   // Load property data with caching
-  useEffect(() => {
-    loadProperty();
-  }, [propertyId, loadProperty]);
-
   const loadProperty = useCallback(async () => {
     try {
       setLoading(true);
@@ -100,7 +98,7 @@ export default function PropertyBookingPage() {
       const cachedProperty = CacheManager.getCachedProperty(propertyId);
       if (cachedProperty) {
         console.log("📱 Using cached property for faster loading");
-        setProperty(cachedProperty);
+        setProperty(cachedProperty as Property);
         setLoading(false);
         return;
       }
@@ -136,6 +134,10 @@ export default function PropertyBookingPage() {
     }
   }, [propertyId, router]);
 
+  useEffect(() => {
+    loadProperty();
+  }, [propertyId, loadProperty]);
+
   // Memoized calculations for better performance
   const bookingDetails = useMemo(() => {
     if (!dateRange.from || !dateRange.to || !property) return null;
@@ -162,49 +164,21 @@ export default function PropertyBookingPage() {
   }, [dateRange, property]);
 
   // Optimized image URLs with proper error handling
+  type ImageObj = { url: string; [key: string]: unknown };
   const optimizedImages = useMemo(() => {
     if (!property?.images || !Array.isArray(property.images)) return [];
 
     return property.images
       .map((image) => {
         if (typeof image === "string") {
-          return {
-            url: image,
-            optimizedUrl: optimizeImageUrl(image, {
-              width: 800,
-              height: 600,
-              quality: 90,
-            }),
-            thumbnailUrl: optimizeImageUrl(image, {
-              width: 120,
-              height: 90,
-              quality: 80,
-            }),
-          };
-        } else if (
-          image &&
-          typeof image === "object" &&
-          "url" in image &&
-          typeof image.url === "string"
-        ) {
-          return {
-            ...image,
-            optimizedUrl: optimizeImageUrl(image.url, {
-              width: 800,
-              height: 600,
-              quality: 90,
-            }),
-            thumbnailUrl: optimizeImageUrl(image.url, {
-              width: 120,
-              height: 90,
-              quality: 80,
-            }),
-          };
+          return { url: image };
+        } else if (typeof image === "object" && image !== null && "url" in image) {
+          return image as ImageObj;
         }
         return null;
       })
-      .filter(Boolean);
-  }, [property?.images]);
+      .filter((img): img is ImageObj => Boolean(img));
+  }, [property]);
 
   // Safe image display with fallback
   const displayImages =
@@ -256,37 +230,49 @@ export default function PropertyBookingPage() {
       setIsProcessing(true);
       performanceMonitor.markStart("process-booking");
 
-      const bookingData = {
+      const numAdults = guests.adults;
+      const numChildren = guests.children;
+      const numInfants = guests.infants;
+      const totalGuests = numAdults + numChildren + numInfants;
+
+      const bookingData: Omit<Booking, "id" | "createdAt" | "updatedAt"> = {
         propertyId: property!.id,
         guest: {
           uid: user.uid,
-          firstName: debouncedGuestDetails.firstName,
-          lastName: debouncedGuestDetails.lastName,
+          name: `${debouncedGuestDetails.firstName} ${debouncedGuestDetails.lastName}`,
           email: debouncedGuestDetails.email,
           phone: debouncedGuestDetails.phone,
         },
         dates: {
           checkIn: format(dateRange.from, "yyyy-MM-dd"),
           checkOut: format(dateRange.to, "yyyy-MM-dd"),
+          nights: bookingDetails!.nights,
         },
         guests: {
-          adults: guests.adults,
-          children: guests.children,
-          infants: guests.infants,
+          adults: numAdults,
+          children: numChildren,
+          infants: numInfants,
+          total: totalGuests,
         },
         pricing: {
           basePrice: bookingDetails!.basePrice,
+          totalNights: bookingDetails!.nights,
+          subtotal:
+            bookingDetails!.basePrice +
+            bookingDetails!.cleaningFee +
+            bookingDetails!.serviceFee,
           cleaningFee: bookingDetails!.cleaningFee,
           serviceFee: bookingDetails!.serviceFee,
           taxes: bookingDetails!.taxes,
           total: bookingDetails!.total,
+          currency: property!.pricing.currency,
         },
         payment: {
           method: paymentMethod,
           status: "pending",
         },
         specialRequests: debouncedGuestDetails.specialRequests,
-        status: "pending",
+        status: "pending" as BookingStatus,
       };
 
       const bookingId = await bookingService.createBooking(bookingData);
@@ -375,12 +361,14 @@ export default function PropertyBookingPage() {
               className="relative"
             >
               <div className="relative h-96 rounded-2xl overflow-hidden">
+                {displayImages[currentImageIndex] && (
                 <Image
                   src={displayImages[currentImageIndex].url}
                   alt={property.title}
                   fill
                   className="object-cover"
                 />
+                )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
                 {/* Image Navigation */}
@@ -414,12 +402,14 @@ export default function PropertyBookingPage() {
                           : "hover:opacity-80"
                       }`}
                     >
+                      {image && (
                       <Image
                         src={image.url}
                         alt=""
                         fill
                         className="object-cover"
                       />
+                      )}
                     </button>
                   ))}
                 </div>
@@ -546,9 +536,10 @@ export default function PropertyBookingPage() {
                           mode="range"
                           selected={{ from: dateRange.from, to: dateRange.to }}
                           onSelect={(range) =>
-                            setDateRange(
-                              range || { from: undefined, to: undefined }
-                            )
+                            setDateRange({
+                              from: range?.from,
+                              to: range?.to,
+                            })
                           }
                           disabled={(date) => date < new Date()}
                           initialFocus

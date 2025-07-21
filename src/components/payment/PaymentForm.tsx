@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion, AnimatePresence } from "framer-motion";
+import type { PaymentIntent } from "@stripe/stripe-js";
 
 export interface PaymentFormProps {
   clientSecret: string;
@@ -31,7 +32,7 @@ export interface PaymentFormProps {
   bookingId: string;
   customerEmail: string;
   customerName: string;
-  onSuccess: (paymentIntent: Stripe.PaymentIntent) => void;
+  onSuccess: (paymentIntent: PaymentIntent) => void;
   onError: (error: string) => void;
   loading?: boolean;
 }
@@ -133,7 +134,7 @@ export default function PaymentForm({
     setPaymentError(null);
 
     try {
-      let result: Stripe.PaymentIntent;
+      let result: PaymentIntent;
 
       if (usePaymentElement) {
         // Use Payment Element (recommended)
@@ -154,9 +155,8 @@ export default function PaymentForm({
         }
 
         // If we get here, payment succeeded without redirect
-        const { paymentIntent } = await stripe.retrievePaymentIntent(
-          clientSecret
-        );
+        const { paymentIntent } = await stripe.retrievePaymentIntent(clientSecret);
+        if (!paymentIntent) throw new Error("PaymentIntent not found");
         result = paymentIntent;
       } else {
         // Use Card Element (legacy)
@@ -165,17 +165,18 @@ export default function PaymentForm({
           throw new Error("Card element not found");
         }
 
-        result = await stripe.confirmCardPayment(clientSecret, {
+        const confirmResult = await stripe.confirmCardPayment(clientSecret, {
           payment_method: {
             card: cardElement,
             billing_details: billingDetails,
           },
           setup_future_usage: savePaymentMethod ? "off_session" : undefined,
         });
-
-        if (result.error) {
-          throw new Error(result.error.message);
+        if (confirmResult.error) {
+          throw new Error(confirmResult.error.message);
         }
+        if (!confirmResult.paymentIntent) throw new Error("PaymentIntent not found");
+        result = confirmResult.paymentIntent;
       }
 
       if (result.status === "succeeded") {

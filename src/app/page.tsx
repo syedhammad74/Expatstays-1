@@ -46,6 +46,7 @@ export default function Home() {
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+  const [error, setError] = useState<string | null>(null);
 
   // Carousel data with diverse images
   const carouselSlides = [

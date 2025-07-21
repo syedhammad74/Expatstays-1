@@ -1,5 +1,6 @@
 // Performance optimization utilities
 import { useState, useEffect, useCallback, useRef } from "react";
+import * as React from "react";
 
 // Image optimization utility
 export const optimizeImageUrl = (
@@ -304,7 +305,9 @@ export const useVirtualization = (
 };
 
 // Component lazy loading hook (Next.js compatible)
-export const useLazyComponent = (importFn: () => Promise<unknown>) => {
+export const useLazyComponent = (
+  importFn: () => Promise<{ default: React.ComponentType<unknown> }>
+) => {
   const [Component, setComponent] =
     useState<React.ComponentType<unknown> | null>(null);
   const [loading, setLoading] = useState(true);

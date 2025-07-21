@@ -27,6 +27,7 @@ import {
   Calendar as CalendarIcon,
   Check,
   Loader2,
+  Award,
 } from "lucide-react";
 import { getLocalImage } from "@/lib/imageUtils";
 import { motion } from "framer-motion";
@@ -54,7 +55,7 @@ export default function PropertiesPage() {
   const [location, setLocation] = useState("Dubai");
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // const _searchParams = useSearchParams(); // unused
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [properties, setProperties] = useState<Property[]>([]);
@@ -66,58 +67,6 @@ export default function PropertiesPage() {
 
   // Debounced search for better performance
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
-
-  // Initialize from URL params
-  useEffect(() => {
-    const checkin = searchParams.get("checkin");
-    const checkout = searchParams.get("checkout");
-    const adults = searchParams.get("adults");
-    const children = searchParams.get("children");
-    const infants = searchParams.get("infants");
-    const locationParam = searchParams.get("location");
-
-    if (checkin && checkout) {
-      setDateRange({
-        from: new Date(checkin),
-        to: new Date(checkout),
-      });
-    }
-
-    if (adults) setGuests((prev) => ({ ...prev, adults: parseInt(adults) }));
-    if (children)
-      setGuests((prev) => ({ ...prev, children: parseInt(children) }));
-    if (infants) setGuests((prev) => ({ ...prev, infants: parseInt(infants) }));
-    if (locationParam) setLocation(locationParam);
-  }, [searchParams]);
-
-  // Load properties on mount and set up real-time subscription
-  useEffect(() => {
-    loadProperties();
-
-    // Set up real-time subscription for properties
-    const unsubscribe = propertyService.subscribeToProperties(
-      (updatedProperties) => {
-        setProperties(updatedProperties);
-        if (!dateRange?.from || !dateRange?.to) {
-          setFilteredProperties(updatedProperties);
-        }
-      }
-    );
-
-    // Cleanup subscription on unmount
-    return () => {
-      unsubscribe();
-    };
-  }, [dateRange, loadProperties]);
-
-  // Filter properties when search criteria change
-  useEffect(() => {
-    if (dateRange?.from && dateRange?.to) {
-      filterPropertiesByAvailability();
-    } else {
-      setFilteredProperties(properties);
-    }
-  }, [properties, dateRange, filterPropertiesByAvailability]);
 
   // Enhanced loadProperties with caching
   const loadProperties = useCallback(async () => {
@@ -185,6 +134,7 @@ export default function PropertiesPage() {
     }
   }, [toast]); // Added dateRange and toast to dependencies
 
+  // Filter properties by availability
   const filterPropertiesByAvailability = useCallback(async () => {
     if (!dateRange?.from || !dateRange?.to) return;
 
@@ -234,6 +184,35 @@ export default function PropertiesPage() {
     }
   }, [guests, properties, toast, trackError]); // Added dateRange, guests, properties, and toast to dependencies
 
+  // Load properties on mount and set up real-time subscription
+  useEffect(() => {
+    loadProperties();
+
+    // Set up real-time subscription for properties
+    const unsubscribe = propertyService.subscribeToProperties(
+      (updatedProperties) => {
+        setProperties(updatedProperties);
+        if (!dateRange?.from || !dateRange?.to) {
+          setFilteredProperties(updatedProperties);
+        }
+      }
+    );
+
+    // Cleanup subscription on unmount
+    return () => {
+      unsubscribe();
+    };
+  }, [dateRange, loadProperties, dateRange.from, dateRange.to]);
+
+  // Filter properties when search criteria change
+  useEffect(() => {
+    if (dateRange?.from && dateRange?.to) {
+      filterPropertiesByAvailability();
+    } else {
+      setFilteredProperties(properties);
+    }
+  }, [properties, dateRange, filterPropertiesByAvailability]);
+
   // Helper for guests summary
   const guestsSummary = () => {
     const total = guests.adults + guests.children;
@@ -252,7 +231,7 @@ export default function PropertiesPage() {
           property.title
             .toLowerCase()
             .includes(debouncedSearchQuery.toLowerCase()) ||
-          property.location
+          `${property.location.city}, ${property.location.country}`
             .toLowerCase()
             .includes(debouncedSearchQuery.toLowerCase()) ||
           property.description

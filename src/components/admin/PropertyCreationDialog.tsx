@@ -92,15 +92,13 @@ export function PropertyCreationDialog({
   const [formData, setFormData] = useState({
     title: "",
     description: "",
-    propertyType: "",
+    propertyType: "apartment",
     location: {
       address: "",
       city: "",
       state: "",
       country: "",
-      zipCode: "",
-      latitude: 0,
-      longitude: 0,
+      coordinates: { lat: 0, lng: 0 },
     },
     capacity: {
       maxGuests: 1,
@@ -120,8 +118,8 @@ export function PropertyCreationDialog({
     images: [] as string[],
     availability: {
       isActive: true,
-      minStay: 1,
-      maxStay: 30,
+      minimumStay: 2,
+      maximumStay: 30,
       instantBook: false,
     },
     rules: {
@@ -168,34 +166,22 @@ export function PropertyCreationDialog({
         setLoading(false);
         return;
       }
+      type PropertyType =
+        | "apartment"
+        | "house"
+        | "villa"
+        | "condo"
+        | "hotel"
+        | "other";
       const propertyData: Omit<Property, "id" | "createdAt" | "updatedAt"> = {
         ...formData,
         owner: {
           uid: user.uid,
           name: user.displayName || user.email || "Admin",
-          email: user.email,
+          email: user.email || "",
         },
-        rating: {
-          average: 0,
-          count: 0,
-          breakdown: {
-            cleanliness: 0,
-            communication: 0,
-            checkIn: 0,
-            accuracy: 0,
-            location: 0,
-            value: 0,
-          },
-        },
-        bookings: {
-          total: 0,
-          confirmed: 0,
-          pending: 0,
-          cancelled: 0,
-        },
-        status: "active",
         featured: false,
-        tags: [],
+        propertyType: formData.propertyType as PropertyType,
       };
 
       const propertyId = await propertyService.createProperty(propertyData);
@@ -231,15 +217,13 @@ export function PropertyCreationDialog({
     setFormData({
       title: "",
       description: "",
-      propertyType: "",
+      propertyType: "apartment",
       location: {
         address: "",
         city: "",
         state: "",
         country: "",
-        zipCode: "",
-        latitude: 0,
-        longitude: 0,
+        coordinates: { lat: 0, lng: 0 },
       },
       capacity: {
         maxGuests: 1,
@@ -259,8 +243,8 @@ export function PropertyCreationDialog({
       images: [],
       availability: {
         isActive: true,
-        minStay: 1,
-        maxStay: 30,
+        minimumStay: 2,
+        maximumStay: 30,
         instantBook: false,
       },
       rules: {
@@ -584,23 +568,52 @@ export function PropertyCreationDialog({
                 </div>
                 <div className="space-y-2">
                   <Label
-                    htmlFor="zipCode"
-                    className="text-[#235347] font-medium"
+                    htmlFor="coordinates"
+                    className="text-[#235347] font-medium flex items-center gap-2"
                   >
-                    ZIP Code
+                    <span className="text-red-500">*</span>
+                    Coordinates
                   </Label>
-                  <Input
-                    id="zipCode"
-                    value={formData.location.zipCode}
-                    onChange={(e) =>
-                      setFormData((prev) => ({
-                        ...prev,
-                        location: { ...prev.location, zipCode: e.target.value },
-                      }))
-                    }
-                    placeholder="00000"
-                    className="border-[#8EB69B]/30 focus:border-[#8EB69B] bg-white/80"
-                  />
+                  <div className="grid grid-cols-2 gap-2">
+                    <Input
+                      id="latitude"
+                      type="number"
+                      value={formData.location.coordinates.lat}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          location: {
+                            ...prev.location,
+                            coordinates: {
+                              ...prev.location.coordinates,
+                              lat: parseFloat(e.target.value) || 0,
+                            },
+                          },
+                        }))
+                      }
+                      placeholder="Latitude"
+                      className="border-[#8EB69B]/30 focus:border-[#8EB69B] bg-white/80"
+                    />
+                    <Input
+                      id="longitude"
+                      type="number"
+                      value={formData.location.coordinates.lng}
+                      onChange={(e) =>
+                        setFormData((prev) => ({
+                          ...prev,
+                          location: {
+                            ...prev.location,
+                            coordinates: {
+                              ...prev.location.coordinates,
+                              lng: parseFloat(e.target.value) || 0,
+                            },
+                          },
+                        }))
+                      }
+                      placeholder="Longitude"
+                      className="border-[#8EB69B]/30 focus:border-[#8EB69B] bg-white/80"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
@@ -921,13 +934,13 @@ export function PropertyCreationDialog({
                     id="minStay"
                     type="number"
                     min="1"
-                    value={formData.availability.minStay}
+                    value={formData.availability.minimumStay}
                     onChange={(e) =>
                       setFormData((prev) => ({
                         ...prev,
                         availability: {
                           ...prev.availability,
-                          minStay: parseInt(e.target.value) || 1,
+                          minimumStay: parseInt(e.target.value) || 1,
                         },
                       }))
                     }
@@ -945,13 +958,13 @@ export function PropertyCreationDialog({
                     id="maxStay"
                     type="number"
                     min="1"
-                    value={formData.availability.maxStay}
+                    value={formData.availability.maximumStay}
                     onChange={(e) =>
                       setFormData((prev) => ({
                         ...prev,
                         availability: {
                           ...prev.availability,
-                          maxStay: parseInt(e.target.value) || 30,
+                          maximumStay: parseInt(e.target.value) || 30,
                         },
                       }))
                     }

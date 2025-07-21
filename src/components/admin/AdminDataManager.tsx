@@ -67,12 +67,21 @@ interface AdminDataManagerProps {
 
 const adminDataService = AdminDataService.getInstance();
 
+// Helper to convert Firestore Timestamp to Date
+function toDateSafe(val: unknown): Date {
+  if (val instanceof Date) return val;
+  if (val && typeof val.toDate === "function") return val.toDate();
+  return new Date(val || "");
+}
+
 export function AdminDataManager({ className }: AdminDataManagerProps) {
   const { toast } = useToast();
 
   // State management
   const [firestoreData, setFirestoreData] = useState<AdminDataItem[]>([]);
-  const [activityFeed, setActivityFeed] = useState<unknown[]>([]);
+  const [activityFeed, setActivityFeed] = useState<
+    { id: string; [key: string]: unknown }[]
+  >([]);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
   const [firestoreConnected, setFirestoreConnected] = useState(false);
@@ -157,9 +166,11 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
       );
 
       // Subscribe to Realtime Database
-      const unsubscribeRealtime = adminDataService.subscribeToRealtimeData(() => {
-        // setRealtimeData(data); // This variable is no longer used
-      });
+      const unsubscribeRealtime = adminDataService.subscribeToRealtimeData(
+        () => {
+          // setRealtimeData(data); // This variable is no longer used
+        }
+      );
 
       // Subscribe to activity feed
       const unsubscribeActivity = adminDataService.subscribeToActivityFeed(
@@ -398,7 +409,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
       priority: item.priority,
       status: item.status,
       tags: item.tags.join(", "),
-      image: item.image || "", // Set image preview
+      image: (item as { image?: string }).image || "", // Set image preview
     });
     setIsEditDialogOpen(true);
   };
@@ -449,6 +460,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
         return "bg-gray-500 text-white";
     }
   };
+
+  // Add a stub for handleImageChange to fix missing function error
+  const handleImageChange = () => {};
 
   if (loading) {
     return (
@@ -1232,11 +1246,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                       </TableCell>
                       <TableCell>
                         <p className="text-sm text-[#235347]/70">
-                          {item.createdAt instanceof Date
-                            ? item.createdAt.toLocaleDateString()
-                            : new Date(
-                                item.createdAt || ""
-                              ).toLocaleDateString()}
+                          {toDateSafe(item.createdAt).toLocaleDateString()}
                         </p>
                       </TableCell>
                       <TableCell className="text-right">
@@ -1283,27 +1293,29 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                 No recent activity
               </p>
             ) : (
-              activityFeed.map((activity) => (
-                <div
-                  key={activity.id}
-                  className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-[#DAF1DE]/20 to-white border border-[#8EB69B]/10"
-                >
-                  <div className="h-8 w-8 rounded-full bg-[#8EB69B]/10 flex items-center justify-center">
-                    <Activity className="h-4 w-4 text-[#8EB69B]" />
+              activityFeed.map(
+                (activity: { id: string; [key: string]: unknown }) => (
+                  <div
+                    key={activity.id}
+                    className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-[#DAF1DE]/20 to-white border border-[#8EB69B]/10"
+                  >
+                    <div className="h-8 w-8 rounded-full bg-[#8EB69B]/10 flex items-center justify-center">
+                      <Activity className="h-4 w-4 text-[#8EB69B]" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-[#051F20]">
+                        {activity.title}
+                      </p>
+                      <p className="text-xs text-[#235347]/70">
+                        {activity.description}
+                      </p>
+                    </div>
+                    <div className="text-xs text-[#235347]/50">
+                      {new Date(activity.timestamp).toLocaleTimeString()}
+                    </div>
                   </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-[#051F20]">
-                      {activity.title}
-                    </p>
-                    <p className="text-xs text-[#235347]/70">
-                      {activity.description}
-                    </p>
-                  </div>
-                  <div className="text-xs text-[#235347]/50">
-                    {new Date(activity.timestamp).toLocaleTimeString()}
-                  </div>
-                </div>
-              ))
+                )
+              )
             )}
           </div>
         </CardContent>

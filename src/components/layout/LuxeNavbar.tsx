@@ -79,6 +79,7 @@ export default function LuxeNavbar() {
             <div className="flex items-center min-w-[160px] h-14">
               <Link href="/" className="flex items-center gap-2 group h-full">
                 <span className="inline-flex items-center justify-center text-[#163832] h-full">
+                  {/** @ts-expect-error className prop for Logo */}
                   <Logo className="h-7 w-7" />
                 </span>
                 <span
@@ -180,6 +181,7 @@ export default function LuxeNavbar() {
             >
               <div className="flex items-center justify-between px-6 py-5 border-b border-[#8EB69B]/20 h-20">
                 <Link href="/" className="flex items-center gap-2 group h-full">
+                  {/* @ts-expect-error: Logo may not accept className */}
                   <Logo className="h-7 w-7" />
                   <span
                     className="ml-1 text-2xl font-extrabold tracking-tight leading-none text-[#163832] group-hover:text-[#8EB69B] transition-colors duration-200"

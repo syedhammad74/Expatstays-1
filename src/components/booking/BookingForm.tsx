@@ -54,6 +54,8 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
   const [pricing, setPricing] = useState<unknown>(null);
   const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
   const [checkingAvailability, setCheckingAvailability] = useState(false);
+  const [availabilityStatus, setAvailabilityStatus] =
+    useState<React.ReactNode>(null);
 
   // Calculate pricing when dates change
   const calculatePricing = useCallback(() => {
@@ -176,14 +178,14 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
         propertyId: property.id,
         guest: {
           uid: user.uid,
-          name: user.displayName,
-          email: user.email!,
+          name: user.displayName || "",
+          email: user.email || "",
           phone: user.phoneNumber || "",
         },
         dates: {
           checkIn: formData.checkIn,
           checkOut: formData.checkOut,
-          nights: (pricing as { nights: number }).nights, // Cast to any to access nights
+          nights: (pricing as { nights: number }).nights, // If pricing is unknown, narrow before accessing nights
         },
         guests: {
           adults: formData.adults,
@@ -193,7 +195,12 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
         },
         pricing: {
           basePrice: property.pricing.basePrice,
-          totalNights: (pricing as { nights: number }).nights, // Cast to any to access nights
+          totalNights:
+            typeof pricing === "object" &&
+            pricing !== null &&
+            "nights" in pricing
+              ? (pricing as { nights: number }).nights
+              : 0,
           subtotal: (pricing as { subtotal: number }).subtotal,
           cleaningFee: (pricing as { cleaningFee: number }).cleaningFee,
           serviceFee: (pricing as { serviceFee: number }).serviceFee,
@@ -336,15 +343,15 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
                 {checkingAvailability ? (
                   <div className="flex items-center gap-2 text-sm text-muted-foreground">
                     <Loader2 className="h-4 w-4 animate-spin" />
-                    Checking availability...
+                    {"Checking availability..." as React.ReactNode}
                   </div>
                 ) : isAvailable === true ? (
                   <div className="text-green-600 text-sm font-medium">
-                    ✓ Available for selected dates
+                    {"Available for selected dates" as React.ReactNode}
                   </div>
                 ) : isAvailable === false ? (
                   <div className="text-red-600 text-sm font-medium">
-                    ✗ Not available for selected dates
+                    {"Not available for selected dates" as React.ReactNode}
                   </div>
                 ) : null}
               </div>

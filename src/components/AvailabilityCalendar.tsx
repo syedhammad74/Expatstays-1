@@ -274,7 +274,13 @@ export function AvailabilityCalendar({
             mode="single"
             selected={tempCheckIn ? parseISO(tempCheckIn) : undefined}
             onSelect={(date) => date && handleDateClick(date)}
-            modifiers={modifiers}
+            modifiers={
+              Object.fromEntries(
+                Object.entries(modifiers).filter(
+                  ([, value]) => value !== undefined && value !== null
+                )
+              ) as import("react-day-picker").DayModifiers
+            }
             modifiersStyles={modifiersStyles}
             disabled={mode === "view"}
             className="rounded-md border"

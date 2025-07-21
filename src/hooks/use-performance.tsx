@@ -35,8 +35,13 @@ export function usePerformanceMonitor(componentName: string) {
     console.log(`⚡ ${componentName} rendered in ${renderTime}ms`);
 
     // Track memory usage if available
-    if ("memory" in performance) {
-      const memInfo = (performance as Performance)["memory"];
+    if (
+      typeof (performance as Performance & { memory?: unknown }).memory !==
+      "undefined"
+    ) {
+      const memInfo = (
+        performance as Performance & { memory?: { usedJSHeapSize?: number } }
+      ).memory;
       setMetrics((prev) => ({
         ...prev,
         memoryUsage: memInfo?.usedJSHeapSize || 0,
@@ -81,13 +86,20 @@ export function usePerformanceMonitor(componentName: string) {
       const fidObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry) => {
-          setMetrics((prev) => ({
-            ...prev,
-            coreWebVitals: {
-              ...prev.coreWebVitals,
-              fid: entry.processingStart - entry.startTime,
-            },
-          }));
+          if (
+            "processingStart" in entry &&
+            typeof entry.processingStart === "number"
+          ) {
+            setMetrics((prev) => ({
+              ...prev,
+              coreWebVitals: {
+                ...prev.coreWebVitals,
+                fid:
+                  (entry as PerformanceEntry & { processingStart?: number })
+                    .processingStart! - entry.startTime,
+              },
+            }));
+          }
         });
       });
 
@@ -96,8 +108,13 @@ export function usePerformanceMonitor(componentName: string) {
       const clsObserver = new PerformanceObserver((list) => {
         const entries = list.getEntries();
         entries.forEach((entry: PerformanceEntry) => {
-          if (!entry.hadRecentInput) {
-            clsValue += entry.value;
+          if (
+            "hadRecentInput" in entry &&
+            !(entry as PerformanceEntry & { hadRecentInput?: boolean })
+              .hadRecentInput
+          ) {
+            clsValue +=
+              (entry as PerformanceEntry & { value?: number }).value || 0;
             setMetrics((prev) => ({
               ...prev,
               coreWebVitals: {
