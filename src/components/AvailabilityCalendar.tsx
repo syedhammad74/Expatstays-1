@@ -57,7 +57,7 @@ export function AvailabilityCalendar({
 
   useEffect(() => {
     loadAvailabilityData();
-  }, [propertyId, currentMonth]);
+  }, [propertyId, currentMonth, loadAvailabilityData]); // Added loadAvailabilityData as dependency
 
   useEffect(() => {
     // Set up real-time subscription for availability changes
@@ -72,7 +72,7 @@ export function AvailabilityCalendar({
     );
 
     return () => unsubscribe();
-  }, [propertyId]);
+  }, [propertyId, setBlockedDates]); // Added setBlockedDates as dependency
 
   const loadAvailabilityData = async () => {
     setLoading(true);

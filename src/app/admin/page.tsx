@@ -129,12 +129,12 @@ export default function AdminDashboard() {
   // Filter bookings whenever filters change
   useEffect(() => {
     applyBookingFilters();
-  }, [bookings, bookingFilter]);
+  }, [bookings, bookingFilter, applyBookingFilters]); // Added applyBookingFilters as dependency
 
   // Recalculate analytics when data changes
   useEffect(() => {
     calculateAnalytics();
-  }, [bookings, properties, selectedTimeRange]);
+  }, [bookings, properties, selectedTimeRange, calculateAnalytics]); // Added calculateAnalytics as dependency
 
   const loadAdminData = async () => {
     setLoading(true);
@@ -199,10 +199,10 @@ export default function AdminDashboard() {
   const setupRealTimeSubscriptions = () => {
     // Subscribe to admin notifications
     try {
-    const unsubscribeNotifications =
-      availabilityService.subscribeToAdminNotifications(
-        (updatedNotifications) => {
-          setNotifications(updatedNotifications);
+      const unsubscribeNotifications =
+        availabilityService.subscribeToAdminNotifications(
+          (updatedNotifications) => {
+            setNotifications(updatedNotifications);
           }
         );
 
@@ -220,12 +220,12 @@ export default function AdminDashboard() {
         }
       );
 
-    // Cleanup subscriptions on unmount
-    return () => {
-      unsubscribeNotifications();
+      // Cleanup subscriptions on unmount
+      return () => {
+        unsubscribeNotifications();
         unsubscribeBookings();
         unsubscribeProperties();
-    };
+      };
     } catch (error) {
       console.error("Error setting up real-time subscriptions:", error);
     }
@@ -233,35 +233,35 @@ export default function AdminDashboard() {
 
   const calculateAnalytics = () => {
     try {
-    const now = new Date();
-    const daysAgo = parseInt(selectedTimeRange.replace("d", ""));
-    const startDate = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
+      const now = new Date();
+      const daysAgo = parseInt(selectedTimeRange.replace("d", ""));
+      const startDate = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
 
       const recentBookings = bookings.filter((booking) => {
         const bookingDate = new Date(booking.createdAt);
         return bookingDate >= startDate;
       });
 
-    const totalRevenue = recentBookings.reduce(
+      const totalRevenue = recentBookings.reduce(
         (sum, booking) => sum + (booking.pricing?.total || 0),
-      0
-    );
+        0
+      );
 
-    const pendingBookings = bookings.filter(
-      (booking) => booking.status === "pending"
-    ).length;
+      const pendingBookings = bookings.filter(
+        (booking) => booking.status === "pending"
+      ).length;
 
-    const completedBookings = bookings.filter(
-      (booking) => booking.status === "completed"
-    ).length;
+      const completedBookings = bookings.filter(
+        (booking) => booking.status === "completed"
+      ).length;
 
-    const cancelledBookings = bookings.filter(
-      (booking) => booking.status === "cancelled"
-    ).length;
+      const cancelledBookings = bookings.filter(
+        (booking) => booking.status === "cancelled"
+      ).length;
 
-    const activeListings = properties.filter(
+      const activeListings = properties.filter(
         (property) => property.availability?.isActive
-    ).length;
+      ).length;
 
       // Calculate occupancy rate (simplified)
       const totalNights = recentBookings.reduce((sum, booking) => {
@@ -279,16 +279,16 @@ export default function AdminDashboard() {
           ? Math.round((totalNights / possibleNights) * 100)
           : 0;
 
-    setAnalytics({
-      totalBookings: recentBookings.length,
-      totalRevenue,
+      setAnalytics({
+        totalBookings: recentBookings.length,
+        totalRevenue,
         occupancyRate: Math.min(occupancyRate, 100), // Cap at 100%
-      totalProperties: properties.length,
-      pendingBookings,
-      completedBookings,
-      cancelledBookings,
-      activeListings,
-    });
+        totalProperties: properties.length,
+        pendingBookings,
+        completedBookings,
+        cancelledBookings,
+        activeListings,
+      });
     } catch (error) {
       console.error("Error calculating analytics:", error);
       setAnalytics({
@@ -375,30 +375,30 @@ export default function AdminDashboard() {
 
   const applyBookingFilters = () => {
     try {
-    let filtered = [...bookings];
+      let filtered = [...bookings];
 
-    // Status filter
-    if (bookingFilter.status !== "all") {
-      filtered = filtered.filter(
-        (booking) => booking.status === bookingFilter.status
-      );
-    }
+      // Status filter
+      if (bookingFilter.status !== "all") {
+        filtered = filtered.filter(
+          (booking) => booking.status === bookingFilter.status
+        );
+      }
 
-    // Date range filter
-    if (bookingFilter.dateRange !== "all") {
-      const now = new Date();
+      // Date range filter
+      if (bookingFilter.dateRange !== "all") {
+        const now = new Date();
         let startDate: Date;
 
-      switch (bookingFilter.dateRange) {
+        switch (bookingFilter.dateRange) {
           case "7d":
             startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-          break;
+            break;
           case "30d":
             startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-          break;
+            break;
           case "90d":
             startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
-          break;
+            break;
           default:
             startDate = new Date(0);
         }
@@ -407,27 +407,27 @@ export default function AdminDashboard() {
           const bookingDate = new Date(booking.createdAt);
           return bookingDate >= startDate;
         });
-    }
+      }
 
-    // Property filter
-    if (bookingFilter.property !== "all") {
-      filtered = filtered.filter(
-        (booking) => booking.propertyId === bookingFilter.property
-      );
-    }
+      // Property filter
+      if (bookingFilter.property !== "all") {
+        filtered = filtered.filter(
+          (booking) => booking.propertyId === bookingFilter.property
+        );
+      }
 
-    // Search term filter
-    if (bookingFilter.searchTerm) {
-      const searchLower = bookingFilter.searchTerm.toLowerCase();
-      filtered = filtered.filter(
-        (booking) =>
-          booking.guest.name.toLowerCase().includes(searchLower) ||
-          booking.guest.email.toLowerCase().includes(searchLower) ||
+      // Search term filter
+      if (bookingFilter.searchTerm) {
+        const searchLower = bookingFilter.searchTerm.toLowerCase();
+        filtered = filtered.filter(
+          (booking) =>
+            booking.guest.name.toLowerCase().includes(searchLower) ||
+            booking.guest.email.toLowerCase().includes(searchLower) ||
             booking.id.toLowerCase().includes(searchLower)
-      );
-    }
+        );
+      }
 
-    setFilteredBookings(filtered);
+      setFilteredBookings(filtered);
     } catch (error) {
       console.error("Error filtering bookings:", error);
       setFilteredBookings(bookings);
@@ -537,35 +537,35 @@ export default function AdminDashboard() {
 
   const exportBookings = () => {
     try {
-    const csvData = filteredBookings.map((booking) => ({
-      "Booking ID": booking.id,
-      "Guest Name": booking.guest.name,
-      "Guest Email": booking.guest.email,
-      Property: booking.propertyId,
-      "Check-in": booking.dates.checkIn,
-      "Check-out": booking.dates.checkOut,
-      Status: booking.status,
-      "Payment Status": booking.payment.status,
-      Amount: booking.pricing.total,
-      Created: formatDate(booking.createdAt),
-    }));
+      const csvData = filteredBookings.map((booking) => ({
+        "Booking ID": booking.id,
+        "Guest Name": booking.guest.name,
+        "Guest Email": booking.guest.email,
+        Property: booking.propertyId,
+        "Check-in": booking.dates.checkIn,
+        "Check-out": booking.dates.checkOut,
+        Status: booking.status,
+        "Payment Status": booking.payment.status,
+        Amount: booking.pricing.total,
+        Created: formatDate(booking.createdAt),
+      }));
 
-    const csvContent =
-      "data:text/csv;charset=utf-8," +
-      Object.keys(csvData[0]).join(",") +
-      "\n" +
-      csvData.map((row) => Object.values(row).join(",")).join("\n");
+      const csvContent =
+        "data:text/csv;charset=utf-8," +
+        Object.keys(csvData[0]).join(",") +
+        "\n" +
+        csvData.map((row) => Object.values(row).join(",")).join("\n");
 
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute(
-      "download",
-      `bookings-${new Date().toISOString().split("T")[0]}.csv`
-    );
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+      const encodedUri = encodeURI(csvContent);
+      const link = document.createElement("a");
+      link.setAttribute("href", encodedUri);
+      link.setAttribute(
+        "download",
+        `bookings-${new Date().toISOString().split("T")[0]}.csv`
+      );
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
 
       toast({
         title: "Success",
@@ -1075,21 +1075,21 @@ export default function AdminDashboard() {
                       >
                         Status
                       </Label>
-                    <Select
-                      value={bookingFilter.status}
-                      onValueChange={(value) =>
+                      <Select
+                        value={bookingFilter.status}
+                        onValueChange={(value) =>
                           setBookingFilter((prev) => ({
                             ...prev,
                             status: value,
                           }))
-                      }
-                    >
+                        }
+                      >
                         <SelectTrigger
                           id="status-filter"
                           className="border-[#8EB69B]/30 focus:border-[#8EB69B] bg-white/80 backdrop-blur-sm transition-all duration-300 hover:border-[#8EB69B]/50"
                         >
-                        <SelectValue placeholder="All Statuses" />
-                      </SelectTrigger>
+                          <SelectValue placeholder="All Statuses" />
+                        </SelectTrigger>
                         <SelectContent className="bg-white/95 backdrop-blur-md border-[#8EB69B]/30">
                           <SelectItem
                             value="all"
@@ -1136,9 +1136,9 @@ export default function AdminDashboard() {
                               Completed
                             </div>
                           </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                        </SelectContent>
+                      </Select>
+                    </div>
                     <div className="space-y-2">
                       <Label
                         htmlFor="date-filter"
@@ -1146,21 +1146,21 @@ export default function AdminDashboard() {
                       >
                         Date Range
                       </Label>
-                    <Select
-                      value={bookingFilter.dateRange}
-                      onValueChange={(value) =>
-                        setBookingFilter((prev) => ({
-                          ...prev,
-                          dateRange: value,
-                        }))
-                      }
-                    >
+                      <Select
+                        value={bookingFilter.dateRange}
+                        onValueChange={(value) =>
+                          setBookingFilter((prev) => ({
+                            ...prev,
+                            dateRange: value,
+                          }))
+                        }
+                      >
                         <SelectTrigger
                           id="date-filter"
                           className="border-[#8EB69B]/30 focus:border-[#8EB69B] bg-white/80 backdrop-blur-sm transition-all duration-300 hover:border-[#8EB69B]/50"
                         >
-                        <SelectValue placeholder="All Dates" />
-                      </SelectTrigger>
+                          <SelectValue placeholder="All Dates" />
+                        </SelectTrigger>
                         <SelectContent className="bg-white/95 backdrop-blur-md border-[#8EB69B]/30">
                           <SelectItem
                             value="all"
@@ -1192,9 +1192,9 @@ export default function AdminDashboard() {
                           >
                             This Quarter
                           </SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                        </SelectContent>
+                      </Select>
+                    </div>
                     <div className="space-y-2">
                       <Label
                         htmlFor="property-filter"
@@ -1202,21 +1202,21 @@ export default function AdminDashboard() {
                       >
                         Property
                       </Label>
-                    <Select
-                      value={bookingFilter.property}
-                      onValueChange={(value) =>
-                        setBookingFilter((prev) => ({
-                          ...prev,
-                          property: value,
-                        }))
-                      }
-                    >
+                      <Select
+                        value={bookingFilter.property}
+                        onValueChange={(value) =>
+                          setBookingFilter((prev) => ({
+                            ...prev,
+                            property: value,
+                          }))
+                        }
+                      >
                         <SelectTrigger
                           id="property-filter"
                           className="border-[#8EB69B]/30 focus:border-[#8EB69B] bg-white/80 backdrop-blur-sm transition-all duration-300 hover:border-[#8EB69B]/50"
                         >
-                        <SelectValue placeholder="All Properties" />
-                      </SelectTrigger>
+                          <SelectValue placeholder="All Properties" />
+                        </SelectTrigger>
                         <SelectContent className="bg-white/95 backdrop-blur-md border-[#8EB69B]/30">
                           <SelectItem
                             value="all"
@@ -1224,18 +1224,18 @@ export default function AdminDashboard() {
                           >
                             All Properties
                           </SelectItem>
-                        {properties.map((property) => (
+                          {properties.map((property) => (
                             <SelectItem
                               key={property.id}
                               value={property.id}
                               className="focus:bg-[#DAF1DE]/30"
                             >
-                            {property.title}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
+                              {property.title}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                     <div className="space-y-2">
                       <Label
                         htmlFor="search-filter"
@@ -1243,16 +1243,16 @@ export default function AdminDashboard() {
                       >
                         Search
                       </Label>
-                    <Input
-                      id="search-filter"
+                      <Input
+                        id="search-filter"
                         placeholder="Search by guest name or email..."
-                      value={bookingFilter.searchTerm}
+                        value={bookingFilter.searchTerm}
                         onChange={(e) =>
-                        setBookingFilter((prev) => ({
-                          ...prev,
-                          searchTerm: e.target.value,
-                        }))
-                      }
+                          setBookingFilter((prev) => ({
+                            ...prev,
+                            searchTerm: e.target.value,
+                          }))
+                        }
                         className="border-[#8EB69B]/30 focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 bg-white/80 backdrop-blur-sm transition-all duration-300 hover:border-[#8EB69B]/50"
                       />
                     </div>
@@ -1277,48 +1277,48 @@ export default function AdminDashboard() {
                         <CheckCircle className="h-4 w-4 text-[#8EB69B]" />
                       </div>
                       <span className="text-sm font-medium text-[#235347]">
-                      {selectedBookings.size} booking
-                      {selectedBookings.size > 1 ? "s" : ""} selected
-                    </span>
-                    <div className="flex items-center gap-2 ml-auto">
-                      <Button
-                        size="sm"
-                        onClick={() => handleBulkStatusUpdate("confirmed")}
-                        disabled={bulkActionLoading}
+                        {selectedBookings.size} booking
+                        {selectedBookings.size > 1 ? "s" : ""} selected
+                      </span>
+                      <div className="flex items-center gap-2 ml-auto">
+                        <Button
+                          size="sm"
+                          onClick={() => handleBulkStatusUpdate("confirmed")}
+                          disabled={bulkActionLoading}
                           className="bg-[#8EB69B] hover:bg-[#235347] text-white text-xs px-4 h-8 transition-all duration-300"
-                      >
+                        >
                           <CheckCircle className="h-3 w-3 mr-1" />
-                        Confirm Selected
-                      </Button>
-                      <Button
-                        size="sm"
+                          Confirm Selected
+                        </Button>
+                        <Button
+                          size="sm"
                           onClick={() => handleBulkStatusUpdate("completed")}
-                        disabled={bulkActionLoading}
+                          disabled={bulkActionLoading}
                           className="bg-green-500 hover:bg-green-600 text-white text-xs px-4 h-8 transition-all duration-300"
-                      >
+                        >
                           <CheckCircle className="h-3 w-3 mr-1" />
                           Complete Selected
-                      </Button>
-                      <Button
-                        size="sm"
+                        </Button>
+                        <Button
+                          size="sm"
                           variant="destructive"
                           onClick={() => handleBulkStatusUpdate("cancelled")}
-                        disabled={bulkActionLoading}
+                          disabled={bulkActionLoading}
                           className="text-xs px-4 h-8 transition-all duration-300"
-                      >
+                        >
                           <XCircle className="h-3 w-3 mr-1" />
                           Cancel Selected
-                      </Button>
-                      <Button
-                        size="sm"
-                        variant="ghost"
-                        onClick={() => setSelectedBookings(new Set())}
+                        </Button>
+                        <Button
+                          size="sm"
+                          variant="ghost"
+                          onClick={() => setSelectedBookings(new Set())}
                           className="text-[#235347] hover:bg-[#8EB69B]/10 text-xs px-3 h-8 transition-all duration-300"
-                      >
+                        >
                           Clear
-                      </Button>
+                        </Button>
+                      </div>
                     </div>
-                  </div>
                   </motion.div>
                 )}
 
@@ -1656,8 +1656,8 @@ export default function AdminDashboard() {
                             <Users className="h-5 w-5 text-[#8EB69B]" />
                           </div>
                           <h3 className="text-xl font-semibold text-[#235347]">
-                          Guest Information
-                        </h3>
+                            Guest Information
+                          </h3>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="space-y-2">
@@ -1691,11 +1691,11 @@ export default function AdminDashboard() {
                             <div className="bg-white/60 rounded-lg p-3 border border-[#8EB69B]/20">
                               <div className="flex items-center gap-2 text-sm text-[#051F20]">
                                 <Users className="h-4 w-4 text-[#8EB69B]" />
-                              {selectedBooking.guests.adults} adults
-                              {selectedBooking.guests.children > 0 &&
-                                `, ${selectedBooking.guests.children} children`}
-                              {selectedBooking.guests.infants > 0 &&
-                                `, ${selectedBooking.guests.infants} infants`}
+                                {selectedBooking.guests.adults} adults
+                                {selectedBooking.guests.children > 0 &&
+                                  `, ${selectedBooking.guests.children} children`}
+                                {selectedBooking.guests.infants > 0 &&
+                                  `, ${selectedBooking.guests.infants} infants`}
                               </div>
                             </div>
                           </div>
@@ -1709,8 +1709,8 @@ export default function AdminDashboard() {
                             <Calendar className="h-5 w-5 text-[#8EB69B]" />
                           </div>
                           <h3 className="text-xl font-semibold text-[#235347]">
-                          Booking Details
-                        </h3>
+                            Booking Details
+                          </h3>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                           <div className="space-y-2">
@@ -1726,14 +1726,14 @@ export default function AdminDashboard() {
                               Status
                             </Label>
                             <div className="bg-white/60 rounded-lg p-3 border border-[#8EB69B]/20">
-                            <Badge
-                              className={`${getStatusColor(
-                                selectedBooking.status
-                              )} text-xs`}
-                            >
-                              {selectedBooking.status}
-                            </Badge>
-                          </div>
+                              <Badge
+                                className={`${getStatusColor(
+                                  selectedBooking.status
+                                )} text-xs`}
+                              >
+                                {selectedBooking.status}
+                              </Badge>
+                            </div>
                           </div>
                           <div className="space-y-2">
                             <Label className="text-[#235347] font-medium">
@@ -1742,8 +1742,8 @@ export default function AdminDashboard() {
                             <div className="bg-white/60 rounded-lg p-3 border border-[#8EB69B]/20">
                               <div className="flex items-center gap-2 text-sm text-[#051F20]">
                                 <Calendar className="h-4 w-4 text-[#8EB69B]" />
-                              {selectedBooking.dates.checkIn}
-                          </div>
+                                {selectedBooking.dates.checkIn}
+                              </div>
                             </div>
                           </div>
                           <div className="space-y-2">
@@ -1753,8 +1753,8 @@ export default function AdminDashboard() {
                             <div className="bg-white/60 rounded-lg p-3 border border-[#8EB69B]/20">
                               <div className="flex items-center gap-2 text-sm text-[#051F20]">
                                 <Calendar className="h-4 w-4 text-[#8EB69B]" />
-                              {selectedBooking.dates.checkOut}
-                          </div>
+                                {selectedBooking.dates.checkOut}
+                              </div>
                             </div>
                           </div>
                           <div className="space-y-2">
@@ -1783,8 +1783,8 @@ export default function AdminDashboard() {
                             <DollarSign className="h-5 w-5 text-[#8EB69B]" />
                           </div>
                           <h3 className="text-xl font-semibold text-[#235347]">
-                          Pricing Information
-                        </h3>
+                            Pricing Information
+                          </h3>
                         </div>
                         <div className="space-y-4">
                           <div className="flex justify-between items-center py-3 px-4 bg-white/60 rounded-lg border border-[#8EB69B]/20">
@@ -1842,52 +1842,52 @@ export default function AdminDashboard() {
                           </h4>
                         </div>
                         <div className="flex gap-3">
-                        {selectedBooking.status === "pending" && (
-                          <>
-                            <Button
-                              onClick={() => {
-                                handleBookingStatusUpdate(
-                                  selectedBooking.id,
-                                  "confirmed"
-                                );
-                                setBookingDetailsOpen(false);
-                              }}
+                          {selectedBooking.status === "pending" && (
+                            <>
+                              <Button
+                                onClick={() => {
+                                  handleBookingStatusUpdate(
+                                    selectedBooking.id,
+                                    "confirmed"
+                                  );
+                                  setBookingDetailsOpen(false);
+                                }}
                                 className="flex-1 bg-gradient-to-r from-[#8EB69B] to-[#235347] hover:from-[#235347] hover:to-[#051F20] text-white shadow-lg hover:shadow-xl transition-all duration-300"
-                            >
+                              >
                                 <CheckCircle className="h-4 w-4 mr-2" />
-                              Confirm Booking
-                            </Button>
+                                Confirm Booking
+                              </Button>
+                              <Button
+                                variant="destructive"
+                                onClick={() => {
+                                  handleBookingStatusUpdate(
+                                    selectedBooking.id,
+                                    "cancelled"
+                                  );
+                                  setBookingDetailsOpen(false);
+                                }}
+                                className="flex-1 shadow-lg hover:shadow-xl transition-all duration-300"
+                              >
+                                <XCircle className="h-4 w-4 mr-2" />
+                                Cancel Booking
+                              </Button>
+                            </>
+                          )}
+                          {selectedBooking.status === "confirmed" && (
                             <Button
-                              variant="destructive"
                               onClick={() => {
                                 handleBookingStatusUpdate(
                                   selectedBooking.id,
-                                  "cancelled"
+                                  "completed"
                                 );
                                 setBookingDetailsOpen(false);
                               }}
-                                className="flex-1 shadow-lg hover:shadow-xl transition-all duration-300"
-                            >
-                                <XCircle className="h-4 w-4 mr-2" />
-                              Cancel Booking
-                            </Button>
-                          </>
-                        )}
-                        {selectedBooking.status === "confirmed" && (
-                          <Button
-                            onClick={() => {
-                              handleBookingStatusUpdate(
-                                selectedBooking.id,
-                                "completed"
-                              );
-                              setBookingDetailsOpen(false);
-                            }}
                               className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
-                          >
+                            >
                               <CheckCircle className="h-4 w-4 mr-2" />
-                            Mark as Completed
-                          </Button>
-                        )}
+                              Mark as Completed
+                            </Button>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -1909,7 +1909,7 @@ export default function AdminDashboard() {
                     <CardDescription className="text-[#235347]/70 text-lg">
                       Manage your property listings, availability, and pricing
                       with ease
-                </CardDescription>
+                    </CardDescription>
                   </div>
                   <Button
                     onClick={() => setPropertyCreationDialogOpen(true)}
@@ -1934,12 +1934,12 @@ export default function AdminDashboard() {
                           <div className="flex items-start justify-between">
                             <div className="flex-1">
                               <CardTitle className="text-lg text-[#051F20] group-hover:text-[#8EB69B] transition-colors duration-300 line-clamp-2">
-                          {property.title}
-                        </CardTitle>
+                                {property.title}
+                              </CardTitle>
                               <div className="flex items-center text-sm text-[#235347]/70 mt-2">
                                 <div className="h-6 w-6 rounded-full bg-[#8EB69B]/10 flex items-center justify-center mr-2">
                                   <MapPin className="h-3 w-3 text-[#8EB69B]" />
-                        </div>
+                                </div>
                                 {property.location.city},{" "}
                                 {property.location.country}
                               </div>
@@ -1973,7 +1973,7 @@ export default function AdminDashboard() {
                                 </span>
                               </div>
                               <p className="text-lg font-bold text-[#051F20] mt-1">
-                              {formatCurrency(property.pricing.basePrice)}
+                                {formatCurrency(property.pricing.basePrice)}
                               </p>
                             </div>
                             <div className="p-3 rounded-lg bg-gradient-to-r from-[#DAF1DE]/30 to-white/50 border border-[#8EB69B]/20">
@@ -1981,10 +1981,10 @@ export default function AdminDashboard() {
                                 <Users className="h-4 w-4 text-[#8EB69B]" />
                                 <span className="text-xs text-[#235347]/70">
                                   Capacity
-                            </span>
-                          </div>
+                                </span>
+                              </div>
                               <p className="text-lg font-bold text-[#051F20] mt-1">
-                              {property.capacity.maxGuests} guests
+                                {property.capacity.maxGuests} guests
                               </p>
                             </div>
                           </div>
@@ -1998,8 +1998,8 @@ export default function AdminDashboard() {
                               </span>
                               <span className="text-sm font-medium text-[#051F20]">
                                 {property.capacity.bedrooms}
-                            </span>
-                          </div>
+                              </span>
+                            </div>
                             <div className="flex justify-between items-center py-2 px-3 bg-white/50 rounded-lg">
                               <span className="text-sm text-[#235347] flex items-center gap-2">
                                 <Calendar className="h-4 w-4 text-[#8EB69B]" />
@@ -2010,34 +2010,34 @@ export default function AdminDashboard() {
                                   ? "Available"
                                   : "Blocked"}
                               </span>
-                        </div>
+                            </div>
                           </div>
 
                           {/* Action Buttons */}
                           <div className="grid grid-cols-2 gap-2 pt-2">
-                          <Button
-                            size="sm"
-                            variant="outline"
+                            <Button
+                              size="sm"
+                              variant="outline"
                               onClick={() =>
                                 handlePropertyAvailabilityClick(property)
                               }
                               className="border-[#8EB69B]/30 text-[#235347] hover:bg-[#8EB69B]/10 hover:border-[#8EB69B] transition-all duration-300"
-                          >
+                            >
                               <Calendar className="h-3 w-3 mr-1" />
                               Availability
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="outline"
                               onClick={() =>
                                 handlePropertyPricingClick(property)
                               }
                               className="border-[#8EB69B]/30 text-[#235347] hover:bg-[#8EB69B]/10 hover:border-[#8EB69B] transition-all duration-300"
-                          >
+                            >
                               <DollarSign className="h-3 w-3 mr-1" />
                               Pricing
-                          </Button>
-                        </div>
+                            </Button>
+                          </div>
                           <Button
                             size="sm"
                             className="w-full bg-gradient-to-r from-[#8EB69B] to-[#235347] hover:from-[#235347] hover:to-[#051F20] text-white transition-all duration-300"
@@ -2045,8 +2045,8 @@ export default function AdminDashboard() {
                             <Eye className="h-3 w-3 mr-2" />
                             View Details
                           </Button>
-                      </CardContent>
-                    </Card>
+                        </CardContent>
+                      </Card>
                     </motion.div>
                   ))}
 

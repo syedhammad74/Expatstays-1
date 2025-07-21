@@ -1,33 +1,37 @@
-'use client';
+"use client";
 
-import { createContext, useContext, useEffect, useState } from 'react';
-import { 
-  User as FirebaseUser, 
-  onAuthStateChanged, 
-  signInWithEmailAndPassword, 
-  createUserWithEmailAndPassword, 
-  signOut, 
-  signInWithPopup, 
+import { createContext, useContext, useEffect, useState } from "react";
+import {
+  User as FirebaseUser,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  signInWithPopup,
   GoogleAuthProvider,
   sendEmailVerification,
   sendPasswordResetEmail,
-  updateProfile
-} from 'firebase/auth';
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
-import { auth, db } from '@/lib/firebase';
-import { User } from '@/lib/types/firebase';
+  updateProfile,
+} from "firebase/auth";
+import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { auth, db } from "@/lib/firebase";
+import { User } from "@/lib/types/firebase";
 
 interface AuthContextType {
   user: FirebaseUser | null;
   userProfile: User | null;
   loading: boolean;
   signIn: (email: string, password: string) => Promise<void>;
-  signUp: (email: string, password: string, displayName: string) => Promise<void>;
+  signUp: (
+    email: string,
+    password: string,
+    displayName: string
+  ) => Promise<void>;
   signInWithGoogle: () => Promise<void>;
   logout: () => Promise<void>;
   resetPassword: (email: string) => Promise<void>;
   resendEmailVerification: () => Promise<void>;
-  updateUserProfile: (data: Partial<User['profile']>) => Promise<void>;
+  updateUserProfile: (data: Partial<User["profile"]>) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -50,16 +54,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     });
 
     return () => unsubscribe();
-  }, []);
+  }, [loadUserProfile]); // Added loadUserProfile as dependency
 
   const loadUserProfile = async (uid: string) => {
     try {
-      const userDoc = await getDoc(doc(db, 'users', uid));
+      const userDoc = await getDoc(doc(db, "users", uid));
       if (userDoc.exists()) {
         setUserProfile(userDoc.data() as User);
       }
     } catch (error) {
-      console.error('Error loading user profile:', error);
+      console.error("Error loading user profile:", error);
     }
   };
 
@@ -67,15 +71,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const userProfile: User = {
       uid: firebaseUser.uid,
       email: firebaseUser.email!,
-      displayName: firebaseUser.displayName || '',
+      displayName: firebaseUser.displayName || "",
       photoURL: firebaseUser.photoURL || undefined,
       profile: {
-        firstName: firebaseUser.displayName?.split(' ')[0] || '',
-        lastName: firebaseUser.displayName?.split(' ')[1] || '',
+        firstName: firebaseUser.displayName?.split(" ")[0] || "",
+        lastName: firebaseUser.displayName?.split(" ")[1] || "",
       },
       preferences: {
-        currency: 'USD',
-        language: 'en',
+        currency: "USD",
+        language: "en",
         emailNotifications: true,
         smsNotifications: false,
       },
@@ -85,10 +89,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     try {
-      await setDoc(doc(db, 'users', firebaseUser.uid), userProfile);
+      await setDoc(doc(db, "users", firebaseUser.uid), userProfile);
       setUserProfile(userProfile);
     } catch (error) {
-      console.error('Error creating user profile:', error);
+      console.error("Error creating user profile:", error);
     }
   };
 
@@ -100,9 +104,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const signUp = async (email: string, password: string, displayName: string) => {
+  const signUp = async (
+    email: string,
+    password: string,
+    displayName: string
+  ) => {
     try {
-      const result = await createUserWithEmailAndPassword(auth, email, password);
+      const result = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       await updateProfile(result.user, { displayName });
       await createUserProfile(result.user);
       await sendEmailVerification(result.user);
@@ -115,9 +127,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      
+
       // Check if user profile exists, create if not
-      const userDoc = await getDoc(doc(db, 'users', result.user.uid));
+      const userDoc = await getDoc(doc(db, "users", result.user.uid));
       if (!userDoc.exists()) {
         await createUserProfile(result.user);
       }
@@ -152,7 +164,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
-  const updateUserProfile = async (data: Partial<User['profile']>) => {
+  const updateUserProfile = async (data: Partial<User["profile"]>) => {
     if (user && userProfile) {
       try {
         const updatedProfile = {
@@ -161,7 +173,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           updatedAt: new Date().toISOString(),
         };
 
-        await updateDoc(doc(db, 'users', user.uid), updatedProfile);
+        await updateDoc(doc(db, "users", user.uid), updatedProfile);
         setUserProfile(updatedProfile);
       } catch (error) {
         throw error;
@@ -182,17 +194,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     updateUserProfile,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error('useAuth must be used within an AuthProvider');
+    throw new Error("useAuth must be used within an AuthProvider");
   }
   return context;
-} 
+}

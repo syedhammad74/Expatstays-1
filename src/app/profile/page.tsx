@@ -86,14 +86,14 @@ export default function ProfilePage() {
         phone: userProfile.profile.phone || "",
       });
     }
-  }, [userProfile]);
+  }, [userProfile, setProfileData]); // Added setProfileData as dependency
 
   useEffect(() => {
     if (user) {
       loadUserBookings();
     }
     loadRecommendedProperties();
-  }, [user]);
+  }, [user, loadUserBookings, loadRecommendedProperties]); // Added missing dependencies
 
   const loadUserBookings = async () => {
     if (!user) return;
@@ -736,9 +736,9 @@ export default function ProfilePage() {
                         </Button>
                       </div>
                     ) : (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {properties.map((property) => (
-                        <motion.div
+                          <motion.div
                             key={property.id}
                             initial={{ opacity: 0, scale: 0.95 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -780,7 +780,7 @@ export default function ProfilePage() {
                                   4.9
                                 </div>
                               </div>
-                              </div>
+                            </div>
 
                             {/* Property Details */}
                             <div className="p-4 space-y-3">
@@ -808,7 +808,7 @@ export default function ProfilePage() {
                                   <Users className="h-4 w-4" />
                                   {property.capacity.maxGuests} guests
                                 </span>
-                            </div>
+                              </div>
 
                               {/* Price */}
                               <div className="flex items-center justify-between">
@@ -820,7 +820,7 @@ export default function ProfilePage() {
                                     / night
                                   </span>
                                 </div>
-                                </div>
+                              </div>
 
                               {/* Book Now Button */}
                               <Button
@@ -833,9 +833,9 @@ export default function ProfilePage() {
                                 Book Now
                               </Button>
                             </div>
-                        </motion.div>
-                      ))}
-                    </div>
+                          </motion.div>
+                        ))}
+                      </div>
                     )}
                   </CardContent>
                 </Card>
