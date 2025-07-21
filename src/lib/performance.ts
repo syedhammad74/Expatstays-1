@@ -1,5 +1,5 @@
 // Performance optimization utilities
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import * as React from "react";
 
 // Image optimization utility
@@ -34,7 +34,7 @@ export const optimizeImageUrl = (
 
 // Preload image utility
 export const preloadImage = (src: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     if (!src || typeof src !== "string") {
       resolve(); // Don't reject for invalid src, just resolve
       return;
@@ -239,6 +239,8 @@ export const useMemoizedCallback = <T extends (...args: unknown[]) => unknown>(
 ): T => {
   return useCallback(callback, deps);
 };
+
+// For any useCallback with unknown dependencies, use an inline function or list all dependencies explicitly.
 
 // Image loading states
 export const useImageLoad = (src: string | undefined | null) => {

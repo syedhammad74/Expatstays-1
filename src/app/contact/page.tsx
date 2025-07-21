@@ -161,9 +161,10 @@ export default function ContactPage() {
   };
 
   // Email sending function (simulated)
-  const sendEmail = async (
-    _data: FormData
-  ): Promise<{ success: boolean; message: string }> => {
+  const sendEmail = async (): Promise<{
+    success: boolean;
+    message: string;
+  }> => {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 2000));
 
@@ -183,7 +184,7 @@ export default function ContactPage() {
     setErrorMessage("");
 
     try {
-      const result = await sendEmail(formData);
+      const result = await sendEmail();
 
       if (result.success) {
         setShowSuccess(true);

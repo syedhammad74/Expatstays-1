@@ -89,16 +89,7 @@ export function VirtualGrid<T>({
 
     setVisibleRange({ start, end });
     setVisibleItems(items.slice(start, end));
-  }, [
-    items,
-    itemHeight,
-    itemsPerRow,
-    overscan,
-    gap,
-    rowCount,
-    containerHeight,
-    rowHeight,
-  ]);
+  }, [items, itemsPerRow, overscan, rowCount, containerHeight, rowHeight]);
 
   // Handle scroll events with throttling
   const handleScroll = useCallback(() => {

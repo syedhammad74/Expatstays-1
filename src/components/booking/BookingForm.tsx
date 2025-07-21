@@ -54,8 +54,6 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
   const [pricing, setPricing] = useState<unknown>(null);
   const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
   const [checkingAvailability, setCheckingAvailability] = useState(false);
-  const [availabilityStatus, setAvailabilityStatus] =
-    useState<React.ReactNode>(null);
 
   // Calculate pricing when dates change
   const calculatePricing = useCallback(() => {

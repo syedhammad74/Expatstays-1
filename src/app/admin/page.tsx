@@ -255,9 +255,44 @@ export default function AdminDashboard() {
     }
   }, [bookings, properties, selectedTimeRange]);
 
+  // Move setupRealTimeSubscriptions and its useEffect above other useEffects
+  const setupRealTimeSubscriptions = useCallback(() => {
+    // Subscribe to admin notifications
+    try {
+      const unsubscribeNotifications =
+        availabilityService.subscribeToAdminNotifications(
+          (updatedNotifications) => {
+            setNotifications(updatedNotifications);
+          }
+        );
+      // Subscribe to real-time bookings updates
+      const unsubscribeBookings = bookingService.subscribeToAllBookings(
+        (updatedBookings) => {
+          setBookings(updatedBookings);
+        }
+      );
+
+      // Subscribe to properties updates
+      const unsubscribeProperties = propertyService.subscribeToProperties(
+        (updatedProperties) => {
+          setProperties(updatedProperties);
+        }
+      );
+
+      // Cleanup subscriptions on unmount
+      return () => {
+        unsubscribeNotifications();
+        unsubscribeBookings();
+        unsubscribeProperties();
+      };
+    } catch (error) {
+      console.error("Error setting up real-time subscriptions:", error);
+    }
+  }, []);
+
   useEffect(() => {
     setupRealTimeSubscriptions();
-  }, []);
+  }, [setupRealTimeSubscriptions]);
 
   // Filter bookings whenever filters change
   useEffect(() => {
@@ -267,7 +302,7 @@ export default function AdminDashboard() {
   // Recalculate analytics when data changes
   useEffect(() => {
     calculateAnalytics();
-  }, [bookings, properties, selectedTimeRange, calculateAnalytics]); // Added calculateAnalytics as dependency
+  }, [bookings, properties, selectedTimeRange, calculateAnalytics]);
 
   const loadAdminData = useCallback(async () => {
     setLoading(true);
@@ -328,49 +363,6 @@ export default function AdminDashboard() {
       setLoading(false);
     }
   }, [toast]);
-
-  const setupRealTimeSubscriptions = useCallback(() => {
-    // Subscribe to admin notifications
-    try {
-      const unsubscribeNotifications =
-        availabilityService.subscribeToAdminNotifications(
-          (updatedNotifications) => {
-            setNotifications(updatedNotifications);
-          }
-        );
-      // Subscribe to real-time bookings updates
-      const unsubscribeBookings = bookingService.subscribeToAllBookings(
-        (updatedBookings) => {
-          setBookings(updatedBookings);
-        }
-      );
-
-      // Subscribe to properties updates
-      const unsubscribeProperties = propertyService.subscribeToProperties(
-        (updatedProperties) => {
-          setProperties(updatedProperties);
-        }
-      );
-
-      // Cleanup subscriptions on unmount
-      return () => {
-        unsubscribeNotifications();
-        unsubscribeBookings();
-        unsubscribeProperties();
-      };
-    } catch (error) {
-      console.error("Error setting up real-time subscriptions:", error);
-    }
-  }, []);
-
-  // Top-level useEffect to load data and setup subscriptions on mount
-  useEffect(() => {
-    loadAdminData();
-    const unsubscribe = setupRealTimeSubscriptions();
-    return () => {
-      if (typeof unsubscribe === "function") unsubscribe();
-    };
-  }, [loadAdminData, setupRealTimeSubscriptions]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {

@@ -36,7 +36,7 @@ import Header from "@/components/layout/Header";
 import { useState, useEffect, useCallback } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-day-picker";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { bookingService } from "@/lib/services/bookings";
@@ -64,6 +64,9 @@ export default function PropertiesPage() {
   const [searchLoading, setSearchLoading] = useState(false);
   const [useVirtualScrolling, setUseVirtualScrolling] = useState(false);
   const { toast } = useToast();
+
+  const from = dateRange?.from;
+  const to = dateRange?.to;
 
   // Debounced search for better performance
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
@@ -136,12 +139,12 @@ export default function PropertiesPage() {
 
   // Filter properties by availability
   const filterPropertiesByAvailability = useCallback(async () => {
-    if (!dateRange?.from || !dateRange?.to) return;
+    if (!from || !to) return;
 
     setSearchLoading(true);
     try {
-      const checkIn = format(dateRange.from, "yyyy-MM-dd");
-      const checkOut = format(dateRange.to, "yyyy-MM-dd");
+      const checkIn = format(from, "yyyy-MM-dd");
+      const checkOut = format(to, "yyyy-MM-dd");
 
       // Check availability for each property
       const availableProperties = await Promise.all(
@@ -182,7 +185,7 @@ export default function PropertiesPage() {
     } finally {
       setSearchLoading(false);
     }
-  }, [guests, properties, toast, trackError]); // Added dateRange, guests, properties, and toast to dependencies
+  }, [guests, properties, toast, trackError, from, to]); // Added dateRange, guests, properties, and toast to dependencies
 
   // Load properties on mount and set up real-time subscription
   useEffect(() => {
@@ -192,7 +195,7 @@ export default function PropertiesPage() {
     const unsubscribe = propertyService.subscribeToProperties(
       (updatedProperties) => {
         setProperties(updatedProperties);
-        if (!dateRange?.from || !dateRange?.to) {
+        if (!from || !to) {
           setFilteredProperties(updatedProperties);
         }
       }
@@ -202,16 +205,16 @@ export default function PropertiesPage() {
     return () => {
       unsubscribe();
     };
-  }, [dateRange, loadProperties, dateRange.from, dateRange.to]);
+  }, [dateRange, loadProperties, from, to]);
 
   // Filter properties when search criteria change
   useEffect(() => {
-    if (dateRange?.from && dateRange?.to) {
+    if (from && to) {
       filterPropertiesByAvailability();
     } else {
       setFilteredProperties(properties);
     }
-  }, [properties, dateRange, filterPropertiesByAvailability]);
+  }, [properties, dateRange, filterPropertiesByAvailability, from, to]);
 
   // Helper for guests summary
   const guestsSummary = () => {
@@ -239,10 +242,10 @@ export default function PropertiesPage() {
             .includes(debouncedSearchQuery.toLowerCase())
       );
       setFilteredProperties(filtered);
-    } else if (!dateRange?.from || !dateRange?.to) {
+    } else if (!from || !to) {
       setFilteredProperties(properties);
     }
-  }, [debouncedSearchQuery, properties, dateRange, trackInteraction]);
+  }, [debouncedSearchQuery, properties, dateRange, trackInteraction, from, to]);
 
   // Enable virtual scrolling for large lists
   useEffect(() => {
@@ -263,10 +266,8 @@ export default function PropertiesPage() {
 
       // Update URL with search params
       const params = new URLSearchParams();
-      if (dateRange?.from)
-        params.set("checkin", format(dateRange.from, "yyyy-MM-dd"));
-      if (dateRange?.to)
-        params.set("checkout", format(dateRange.to, "yyyy-MM-dd"));
+      if (from) params.set("checkin", format(from, "yyyy-MM-dd"));
+      if (to) params.set("checkout", format(to, "yyyy-MM-dd"));
       params.set("adults", guests.adults.toString());
       params.set("children", guests.children.toString());
       params.set("infants", guests.infants.toString());
@@ -274,7 +275,7 @@ export default function PropertiesPage() {
 
       router.push(`/properties?${params.toString()}`);
 
-      if (dateRange?.from && dateRange?.to) {
+      if (from && to) {
         await filterPropertiesByAvailability();
       }
 
@@ -300,6 +301,9 @@ export default function PropertiesPage() {
     filterPropertiesByAvailability,
     toast,
     trackInteraction,
+    from,
+    to,
+    trackError,
   ]); // Added dateRange, guests, location, router, filterPropertiesByAvailability, toast, and trackInteraction to dependencies
 
   // Convert Property to PropertyCardProps

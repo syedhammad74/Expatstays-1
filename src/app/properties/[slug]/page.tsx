@@ -21,7 +21,6 @@ import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import type { Metadata, NextPage } from "next";
 
 // Mock property data - In production, this would come from Firebase
 const propertyFeatures = [
@@ -50,12 +49,8 @@ const testimonials = [
 ];
 
 // Update the function signature to use PageProps
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default function Page({ params }: { params: { slug: string } }) {
+  const { slug } = params;
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();

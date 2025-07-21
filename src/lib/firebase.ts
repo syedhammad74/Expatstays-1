@@ -156,12 +156,12 @@ export const firebase = {
     doc: (path: string) => {
       // Use modular Firestore API
       const [collectionPath, docId] = path.split("/");
-      // @ts-ignore
+      // @ts-expect-error: Firestore modular API type mismatch
       return { collectionPath, docId };
     },
     collection: (path: string) => {
       // Use modular Firestore API
-      // @ts-ignore
+      // @ts-expect-error: Firestore modular API type mismatch
       return { collectionPath: path };
     },
     serverTimestamp: () => ({ serverTimestamp: true }),

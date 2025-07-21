@@ -9,15 +9,11 @@ import { Loader2 } from "lucide-react";
 interface StripeProviderProps {
   children: ReactNode;
   clientSecret?: string;
-  amount?: number;
-  currency?: string;
 }
 
 export default function StripeProvider({
   children,
   clientSecret,
-  amount,
-  currency = "USD",
 }: StripeProviderProps) {
   const [stripePromise] = useState(() => getStripe());
 

@@ -44,7 +44,6 @@ import AmenityIcon from "@/components/AmenityIcon";
 import { Property } from "@/lib/types/firebase";
 import {
   CacheManager,
-  optimizeImageUrl,
   performanceMonitor,
   useDebounce,
 } from "@/lib/performance";
@@ -172,7 +171,11 @@ export default function PropertyBookingPage() {
       .map((image) => {
         if (typeof image === "string") {
           return { url: image };
-        } else if (typeof image === "object" && image !== null && "url" in image) {
+        } else if (
+          typeof image === "object" &&
+          image !== null &&
+          "url" in image
+        ) {
           return image as ImageObj;
         }
         return null;
@@ -362,12 +365,12 @@ export default function PropertyBookingPage() {
             >
               <div className="relative h-96 rounded-2xl overflow-hidden">
                 {displayImages[currentImageIndex] && (
-                <Image
-                  src={displayImages[currentImageIndex].url}
-                  alt={property.title}
-                  fill
-                  className="object-cover"
-                />
+                  <Image
+                    src={displayImages[currentImageIndex].url}
+                    alt={property.title}
+                    fill
+                    className="object-cover"
+                  />
                 )}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
@@ -403,12 +406,12 @@ export default function PropertyBookingPage() {
                       }`}
                     >
                       {image && (
-                      <Image
-                        src={image.url}
-                        alt=""
-                        fill
-                        className="object-cover"
-                      />
+                        <Image
+                          src={image.url}
+                          alt=""
+                          fill
+                          className="object-cover"
+                        />
                       )}
                     </button>
                   ))}
