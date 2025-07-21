@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import {
   Card,
   CardContent,
@@ -31,6 +32,14 @@ import Link from "next/link";
 import Image from "next/image";
 
 export default function BookingSuccessPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center">Loading booking details...</div>}>
+      <BookingSuccessContent />
+    </Suspense>
+  );
+}
+
+function BookingSuccessContent() {
   const [booking, setBooking] = useState<Booking | null>(null);
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
@@ -41,17 +50,13 @@ export default function BookingSuccessPage() {
 
   const loadBookingDetails = useCallback(async () => {
     if (!bookingId) return;
-
     try {
       const bookingData = await bookingService.getBookingById(bookingId);
       if (!bookingData) {
         setError("Booking not found");
         return;
       }
-
       setBooking(bookingData);
-
-      // Load property details
       const propertyData = await propertyService.getPropertyById(
         bookingData.propertyId
       );
@@ -84,9 +89,7 @@ export default function BookingSuccessPage() {
 
   const handleDownloadReceipt = async () => {
     if (!booking) return;
-
     try {
-      // In a real app, this would generate and download a PDF receipt
       toast({
         title: "Receipt Downloaded",
         description: "Your booking receipt has been downloaded.",
