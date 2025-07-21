@@ -906,13 +906,13 @@ export default function PropertiesPage() {
                   "Premium Amenities",
                 ],
               },
-            ].map((service, i) => (
+            ].map((service) => (
               <motion.div
                 key={service.title}
                 className="group relative"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
                 whileHover={{ y: -8 }}
               >
                 <div className="bg-white rounded-xl lg:rounded-2xl shadow-sm border border-slate-200/50 p-6 lg:p-8 group-hover:shadow-xl transition-all duration-300">
@@ -926,7 +926,7 @@ export default function PropertiesPage() {
                     {service.desc}
                   </p>
                   <div className="space-y-2 lg:space-y-3">
-                    {service.features.map((feature, j) => (
+                    {service.features.map((feature) => (
                       <div
                         key={feature}
                         className="flex items-center gap-2 lg:gap-3"

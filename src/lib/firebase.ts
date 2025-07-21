@@ -81,7 +81,7 @@ if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
 }
 
 // Data Connect integration (if enabled)
-export let dataConnect: any = null;
+export let dataConnect: unknown = null;
 if (process.env.NEXT_PUBLIC_USE_DATA_CONNECT === "true") {
   try {
     // Import Data Connect SDK properly

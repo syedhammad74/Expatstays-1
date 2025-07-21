@@ -277,7 +277,7 @@ export default function ContactPage() {
                 transition={{ duration: 0.8, delay: 0.3 }}
                 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#051F20] leading-tight tracking-tight mb-4 sm:mb-6"
               >
-                Let's Start a
+                Let&apos;s Start a
                 <span className="block text-[#8EB69B]">Conversation</span>
               </motion.h1>
 
@@ -354,7 +354,7 @@ export default function ContactPage() {
                           Send us a Message
                         </CardTitle>
                         <p className="text-[#235347] text-sm mt-1">
-                          We'll get back to you within 24 hours
+                          We&apos;ll get back to you within 24 hours
                         </p>
                       </div>
                     </div>
@@ -373,8 +373,8 @@ export default function ContactPage() {
                           >
                             <CheckCircle className="w-5 h-5 text-green-600" />
                             <span className="text-green-800 font-medium">
-                              Message sent successfully! We'll get back to you
-                              soon.
+                              Message sent successfully! We&apos;ll get back to
+                              you soon.
                             </span>
                           </motion.div>
                         )}
@@ -799,8 +799,8 @@ export default function ContactPage() {
                 </h3>
                 <p className="text-xl text-[#235347] max-w-2xl leading-relaxed">
                   Chat with our concierge or schedule a call for personalized
-                  assistance. We're here to make your experience seamless and
-                  extraordinary.
+                  assistance. We&apos;re here to make your experience seamless
+                  and extraordinary.
                 </p>
               </div>
             </div>

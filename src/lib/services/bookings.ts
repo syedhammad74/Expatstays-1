@@ -23,8 +23,14 @@ import { mockBookingService, USE_MOCK_DATA } from "./mock-data";
 
 export class BookingService {
   private static instance: BookingService;
-  private bookingsCollection = collection(db, "bookings");
-  private availabilityCollection = collection(db, "availability");
+  private bookingsCollection = collection<Booking>(db, "bookings");
+  private availabilityCollection = collection<{
+    propertyId: string;
+    date: string;
+    bookingId: string;
+    blocked: true;
+    createdAt: unknown;
+  }>(db, "availability");
 
   static getInstance(): BookingService {
     if (!BookingService.instance) {
@@ -112,7 +118,7 @@ export class BookingService {
       }
 
       return result;
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error creating booking:", error);
       console.log("🔧 Falling back to mock booking creation");
       return mockBookingService.createBooking(bookingData);
@@ -141,9 +147,9 @@ export class BookingService {
       where("date", "<", checkOut)
     );
 
-    const availabilitySnapshot = await (transaction as any).get(
-      availabilityQuery
-    );
+    const availabilitySnapshot = await (
+      transaction as unknown as FirebaseFirestore.Transaction
+    ).get(availabilityQuery);
 
     // If any dates are blocked, return false
     return availabilitySnapshot.empty;
@@ -164,15 +170,24 @@ export class BookingService {
     const currentDate = new Date(checkInDate);
     while (currentDate < checkOutDate) {
       const dateString = currentDate.toISOString().split("T")[0];
-      const availabilityRef = doc(this.availabilityCollection);
+      const availabilityRef = doc<{
+        propertyId: string;
+        date: string;
+        bookingId: string;
+        blocked: true;
+        createdAt: unknown;
+      }>(this.availabilityCollection);
 
-      (transaction as any).set(availabilityRef, {
-        propertyId,
-        date: dateString,
-        bookingId,
-        blocked: true,
-        createdAt: serverTimestamp(),
-      });
+      (transaction as unknown as FirebaseFirestore.Transaction).set(
+        availabilityRef,
+        {
+          propertyId,
+          date: dateString,
+          bookingId,
+          blocked: true,
+          createdAt: serverTimestamp(),
+        }
+      );
 
       currentDate.setDate(currentDate.getDate() + 1);
     }
@@ -190,7 +205,7 @@ export class BookingService {
         return { id: bookingDoc.id, ...bookingDoc.data() } as Booking;
       }
       return null;
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error getting booking:", error);
       return mockBookingService.getBookingById(bookingId);
     }
@@ -212,7 +227,7 @@ export class BookingService {
       return querySnapshot.docs.map(
         (doc) => ({ id: doc.id, ...doc.data() } as Booking)
       );
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error getting user bookings:", error);
       return mockBookingService.getBookingsByUser(userId);
     }
@@ -234,7 +249,7 @@ export class BookingService {
       return querySnapshot.docs.map(
         (doc) => ({ id: doc.id, ...doc.data() } as Booking)
       );
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error getting property bookings:", error);
       return mockBookingService.getBookingsByProperty(propertyId);
     }
@@ -254,7 +269,7 @@ export class BookingService {
         ...updates,
         updatedAt: serverTimestamp(),
       });
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error updating booking:", error);
       return mockBookingService.updateBooking(bookingId, updates);
     }
@@ -271,7 +286,7 @@ export class BookingService {
 
       // Unblock dates when booking is cancelled
       await this.unblockDates(bookingId);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error cancelling booking:", error);
       throw error;
     }
@@ -281,7 +296,7 @@ export class BookingService {
   async deleteBooking(bookingId: string): Promise<void> {
     try {
       await deleteDoc(doc(this.bookingsCollection, bookingId));
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error deleting booking:", error);
       throw error;
     }
@@ -330,7 +345,7 @@ export class BookingService {
 
       // If any dates are blocked, return false
       return availabilitySnapshot.empty;
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error checking availability:", error);
       return mockBookingService.checkAvailability(
         propertyId,
@@ -369,7 +384,7 @@ export class BookingService {
 
       const availabilitySnapshot = await getDocs(availabilityQuery);
       return availabilitySnapshot.docs.map((doc) => doc.data().date);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error getting blocked dates:", error);
       return [];
     }
@@ -395,7 +410,7 @@ export class BookingService {
       });
 
       await batch.commit();
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error unblocking dates:", error);
       throw error;
     }
@@ -438,7 +453,7 @@ export class BookingService {
       // Return properties that are not in the unavailable list
       // This would typically be combined with a property query
       return unavailablePropertyIds;
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error getting available properties:", error);
       throw error;
     }
@@ -457,7 +472,7 @@ export class BookingService {
       return querySnapshot.docs.map(
         (doc) => ({ id: doc.id, ...doc.data() } as Booking)
       );
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error getting all bookings:", error);
       console.log("🔧 Falling back to mock booking data");
       return mockBookingService.getAllBookings();
@@ -476,7 +491,7 @@ export class BookingService {
       return querySnapshot.docs.map(
         (doc) => ({ id: doc.id, ...doc.data() } as Booking)
       );
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error getting bookings by status:", error);
       throw error;
     }
@@ -500,7 +515,7 @@ export class BookingService {
       }
 
       console.log(`Booking ${bookingId} status updated to ${newStatus}`);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error updating booking status:", error);
       throw error;
     }
@@ -531,7 +546,7 @@ export class BookingService {
       });
 
       console.log(`Booking ${bookingId} payment information updated`);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error updating booking payment:", error);
       throw error;
     }
@@ -590,7 +605,7 @@ export class BookingService {
         cancelledBookings,
         averageBookingValue,
       };
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error getting booking analytics:", error);
       throw error;
     }
@@ -707,7 +722,7 @@ export class BookingService {
       await emailService.sendAdminNotification(booking, property, adminEmails);
 
       console.log(`Confirmation emails sent for booking ${bookingId}`);
-    } catch (error) {
+    } catch (error: unknown) {
       console.error("Error sending booking confirmation email:", error);
       throw error;
     }

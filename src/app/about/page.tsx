@@ -216,7 +216,7 @@ export default function AboutPage() {
             />
           </h1>
           <p className="text-base lg:text-lg text-[#235347] mb-6 lg:mb-10 max-w-md">
-            We curate the world's most extraordinary stays and experiences for
+            We curate the world&apos;s most extraordinary stays and experiences for
             modern expats and global citizens.
           </p>
         </motion.div>

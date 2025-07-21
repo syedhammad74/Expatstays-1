@@ -98,7 +98,7 @@ const Header = () => {
           }
 
           const delta = currentY - lastY;
-          let newDelta = scrollDelta + delta;
+          const newDelta = scrollDelta + delta;
 
           // Hide header if scrolled down more than 32px
           if (delta > 0 && newDelta > 32 && isVisible) {

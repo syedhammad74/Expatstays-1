@@ -171,8 +171,8 @@ export default function BookingCancelPage() {
             </CardHeader>
             <CardContent>
               <p className="text-[#235347]/70 mb-4">
-                If you're experiencing issues with payment or have questions
-                about your booking:
+                If you&apos;re experiencing issues with payment or have
+                questions about your booking:
               </p>
               <div className="space-y-2">
                 <Button asChild variant="outline" className="w-full">

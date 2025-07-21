@@ -136,8 +136,8 @@ export default function BookingSuccessPage() {
           </div>
           <h1 className="text-2xl lg:text-3xl font-bold">Booking Confirmed!</h1>
           <p className="text-sm lg:text-base text-muted-foreground">
-            Your reservation has been successfully created. You'll receive a
-            confirmation email shortly.
+            Your reservation has been successfully created. You&apos;ll receive
+            a confirmation email shortly.
           </p>
         </div>
 
@@ -320,7 +320,9 @@ export default function BookingSuccessPage() {
         {/* Next Steps */}
         <Card>
           <CardHeader className="p-4 lg:p-6">
-            <CardTitle className="text-lg lg:text-xl">What's Next?</CardTitle>
+            <CardTitle className="text-lg lg:text-xl">
+              What&apos;s Next?
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-3 lg:space-y-4 p-4 lg:p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3 lg:gap-4">
@@ -331,7 +333,7 @@ export default function BookingSuccessPage() {
                     Check your email
                   </h4>
                   <p className="text-xs lg:text-sm text-muted-foreground">
-                    We've sent a confirmation email with all your booking
+                    We&apos;ve sent a confirmation email with all your booking
                     details
                   </p>
                 </div>

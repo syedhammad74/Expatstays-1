@@ -193,7 +193,7 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [toast]);
 
   const setupRealTimeSubscriptions = useCallback(() => {
     // Subscribe to admin notifications

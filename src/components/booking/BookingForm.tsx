@@ -113,7 +113,7 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
     checkAvailability,
   ]);
 
-  const handleInputChange = (field: string, value: any) => {
+  const handleInputChange = (field: string, value: unknown) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     setError("");
   };
@@ -183,7 +183,7 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
         dates: {
           checkIn: formData.checkIn,
           checkOut: formData.checkOut,
-          nights: (pricing as any).nights, // Cast to any to access nights
+          nights: (pricing as { nights: number }).nights, // Cast to any to access nights
         },
         guests: {
           adults: formData.adults,
@@ -193,18 +193,18 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
         },
         pricing: {
           basePrice: property.pricing.basePrice,
-          totalNights: (pricing as any).nights, // Cast to any to access nights
-          subtotal: (pricing as any).subtotal,
-          cleaningFee: (pricing as any).cleaningFee,
-          serviceFee: (pricing as any).serviceFee,
-          taxes: (pricing as any).taxes,
-          total: (pricing as any).total,
+          totalNights: (pricing as { nights: number }).nights, // Cast to any to access nights
+          subtotal: (pricing as { subtotal: number }).subtotal,
+          cleaningFee: (pricing as { cleaningFee: number }).cleaningFee,
+          serviceFee: (pricing as { serviceFee: number }).serviceFee,
+          taxes: (pricing as { taxes: number }).taxes,
+          total: (pricing as { total: number }).total,
           currency: property.pricing.currency,
         },
         status: "pending",
         payment: {
           status: "pending",
-          amount: (pricing as any).total,
+          amount: (pricing as { total: number }).total,
           currency: property.pricing.currency,
         },
         specialRequests: formData.specialRequests,
@@ -355,27 +355,29 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
               <div className="border rounded-md p-4 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>
-                    ${property.pricing.basePrice} × {(pricing as any).nights}{" "}
-                    nights
+                    ${property.pricing.basePrice} ×{" "}
+                    {(pricing as { nights: number }).nights} nights
                   </span>
-                  <span>${(pricing as any).subtotal}</span>
+                  <span>${(pricing as { subtotal: number }).subtotal}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Cleaning fee</span>
-                  <span>${(pricing as any).cleaningFee}</span>
+                  <span>
+                    ${(pricing as { cleaningFee: number }).cleaningFee}
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Service fee</span>
-                  <span>${(pricing as any).serviceFee}</span>
+                  <span>${(pricing as { serviceFee: number }).serviceFee}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Taxes</span>
-                  <span>${(pricing as any).taxes}</span>
+                  <span>${(pricing as { taxes: number }).taxes}</span>
                 </div>
                 <Separator />
                 <div className="flex justify-between font-semibold">
                   <span>Total</span>
-                  <span>${(pricing as any).total}</span>
+                  <span>${(pricing as { total: number }).total}</span>
                 </div>
               </div>
             )}

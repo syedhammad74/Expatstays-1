@@ -366,7 +366,9 @@ export default function BookingSuccessPage() {
         >
           <Card className="bg-blue-50 border-blue-200">
             <CardHeader>
-              <CardTitle className="text-[#163832]">What's Next?</CardTitle>
+              <CardTitle className="text-[#163832]">
+                What&apos;s Next?
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-2 text-[#235347]/70">
@@ -381,7 +383,7 @@ export default function BookingSuccessPage() {
                 </li>
                 <li className="flex items-center gap-2">
                   <User className="h-4 w-4" />
-                  You'll receive contact information for the property
+                  You&apos;ll receive contact information for the property
                   owner/manager
                 </li>
               </ul>

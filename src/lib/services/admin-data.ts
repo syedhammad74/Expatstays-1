@@ -263,13 +263,18 @@ export class AdminDataService {
   }
 
   // Subscribe to activity feed
-  subscribeToActivityFeed(callback: (activities: any[]) => void): () => void {
+  subscribeToActivityFeed(
+    callback: (activities: AdminDataItem[]) => void
+  ): () => void {
     const activityRef = ref(realtimeDb, "admin_activity");
 
     const unsubscribe = onValue(activityRef, (snapshot) => {
       const data = snapshot.val() || {};
       const activities = Object.entries(data)
-        .map(([key, value]) => ({ id: key, ...(value as any) }))
+        .map(([key, value]) => ({
+          id: key,
+          ...(value as unknown as AdminDataItem),
+        }))
         .sort((a, b) => b.timestamp - a.timestamp)
         .slice(0, 50); // Keep only latest 50 activities
       callback(activities);

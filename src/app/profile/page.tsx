@@ -281,7 +281,7 @@ export default function ProfilePage() {
                         "Guest"}
                     </h1>
                     <p className="text-[#235347]/70 mt-1 text-sm sm:text-base">
-                      Here's your latest activity and preferences.
+                      Here&apos;s your latest activity and preferences.
                     </p>
                     <p className="text-xs sm:text-sm text-[#235347]/60 mt-2">
                       Member since{" "}

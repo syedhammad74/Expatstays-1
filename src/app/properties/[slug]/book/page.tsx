@@ -40,7 +40,6 @@ import { toast } from "@/hooks/use-toast";
 import { propertyService } from "@/lib/services/properties";
 import { bookingService } from "@/lib/services/bookings";
 import { useAuth } from "@/hooks/use-auth";
-import { getLocalImage } from "@/lib/imageUtils";
 import AmenityIcon from "@/components/AmenityIcon";
 import { Property } from "@/lib/types/firebase";
 import {

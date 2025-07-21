@@ -116,7 +116,7 @@ export function SignUpForm({ onToggleMode, onClose }: SignUpFormProps) {
             Account Created!
           </h3>
           <p className="text-[#4A4A4A] mb-4">
-            We've sent a verification email to {formData.email}
+            We&apos;ve sent a verification email to {formData.email}
           </p>
         </div>
 

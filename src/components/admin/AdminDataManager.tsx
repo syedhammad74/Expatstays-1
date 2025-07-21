@@ -128,7 +128,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
     } finally {
       setLoading(false);
     }
-  }, [adminDataService, toast]);
+  }, [toast]);
 
   useEffect(() => {
     initializeDataManager();

@@ -304,10 +304,9 @@ export const useVirtualization = (
 };
 
 // Component lazy loading hook (Next.js compatible)
-export const useLazyComponent = (importFn: () => Promise<any>) => {
-  const [Component, setComponent] = useState<React.ComponentType<any> | null>(
-    null
-  );
+export const useLazyComponent = (importFn: () => Promise<unknown>) => {
+  const [Component, setComponent] =
+    useState<React.ComponentType<unknown> | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 

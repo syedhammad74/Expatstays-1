@@ -210,7 +210,7 @@ export default function PaymentPage() {
     }
   };
 
-  const handlePaymentSuccess = (paymentResult: any) => {
+  const handlePaymentSuccess = (paymentResult: unknown) => {
     toast({
       title: "Payment Successful!",
       description: "Your booking has been confirmed.",
@@ -495,8 +495,8 @@ export default function PaymentPage() {
                     <TabsContent value="checkout" className="mt-6">
                       <div className="space-y-4">
                         <p className="text-gray-600">
-                          You'll be redirected to Stripe's secure checkout page
-                          to complete your payment.
+                          You&apos;ll be redirected to Stripe&apos;s secure
+                          checkout page to complete your payment.
                         </p>
                         <Button
                           onClick={handleCheckoutSession}

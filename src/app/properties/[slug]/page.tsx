@@ -48,7 +48,7 @@ const testimonials = [
   },
 ];
 
-export default function PropertyDetailPage(props: any) {
+export default function PropertyDetailPage(props: { params: { slug: string } }) {
   const params = props?.params || { slug: "" };
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
@@ -67,7 +67,8 @@ export default function PropertyDetailPage(props: any) {
         } else {
           toast({
             title: "Property Not Found",
-            description: "The property you're looking for doesn't exist.",
+            description:
+              "The property you&apos;re looking for doesn&apos;t exist.",
             variant: "destructive",
           });
         }
@@ -93,7 +94,9 @@ export default function PropertyDetailPage(props: any) {
         "Your booking has been successfully created. Check your email for confirmation.",
     });
     // Redirect to booking confirmation page
-    router.push(`/booking-success?bookingId=${(booking as any).id}`);
+    router.push(
+      `/booking-success?bookingId=${(booking as unknown as { id: string }).id}`
+    );
   };
 
   if (loading) {
@@ -122,7 +125,7 @@ export default function PropertyDetailPage(props: any) {
             Property not found
           </h1>
           <p className="text-sm lg:text-base text-gray-600 mt-2">
-            The property you're looking for doesn't exist.
+            The property you&apos;re looking for doesn&apos;t exist.
           </p>
         </div>
       </div>
