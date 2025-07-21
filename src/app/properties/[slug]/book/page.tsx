@@ -352,15 +352,6 @@ export default function PropertyBookingPage() {
     );
   }
 
-  const images =
-    property.images && property.images.length > 0
-      ? property.images
-      : [
-          getLocalImage("villa", 0),
-          getLocalImage("villa", 1),
-          getLocalImage("villa", 2),
-        ];
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-[#DAF1DE]/30">
       {/* Header with Back Button */}

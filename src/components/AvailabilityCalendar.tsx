@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Calendar } from "@/components/ui/calendar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -45,26 +45,7 @@ export function AvailabilityCalendar({
   );
   const { toast } = useToast();
 
-  useEffect(() => {
-    loadAvailabilityData();
-  }, [propertyId, loadAvailabilityData]); // Added loadAvailabilityData as dependency
-
-  useEffect(() => {
-    // Set up real-time subscription for availability changes
-    const unsubscribe = availabilityService.subscribeToAvailabilityChanges(
-      propertyId,
-      (availabilityEntries) => {
-        const blocked = availabilityEntries
-          .filter((entry) => entry.blocked)
-          .map((entry) => entry.date);
-        setBlockedDates(blocked);
-      }
-    );
-
-    return () => unsubscribe();
-  }, [propertyId, setBlockedDates]); // Added setBlockedDates as dependency
-
-  const loadAvailabilityData = async () => {
+  const loadAvailabilityData = useCallback(async () => {
     setLoading(true);
     try {
       const startDate = format(startOfMonth(new Date()), "yyyy-MM-dd");
@@ -89,7 +70,26 @@ export function AvailabilityCalendar({
     } finally {
       setLoading(false);
     }
-  };
+  }, [propertyId, toast]);
+
+  useEffect(() => {
+    loadAvailabilityData();
+  }, [propertyId, loadAvailabilityData]); // Added loadAvailabilityData as dependency
+
+  useEffect(() => {
+    // Set up real-time subscription for availability changes
+    const unsubscribe = availabilityService.subscribeToAvailabilityChanges(
+      propertyId,
+      (availabilityEntries) => {
+        const blocked = availabilityEntries
+          .filter((entry) => entry.blocked)
+          .map((entry) => entry.date);
+        setBlockedDates(blocked);
+      }
+    );
+
+    return () => unsubscribe();
+  }, [propertyId, setBlockedDates]); // Added setBlockedDates as dependency
 
   const isDateBlocked = (date: Date): boolean => {
     const dateString = format(date, "yyyy-MM-dd");
@@ -100,21 +100,6 @@ export function AvailabilityCalendar({
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     return date < today;
-  };
-
-  const isDateSelected = (date: Date): boolean => {
-    const dateString = format(date, "yyyy-MM-dd");
-    return dateString === tempCheckIn || dateString === tempCheckOut;
-  };
-
-  const isDateInRange = (date: Date): boolean => {
-    if (!tempCheckIn || !tempCheckOut) return false;
-
-    const dateString = format(date, "yyyy-MM-dd");
-    const checkInDate = new Date(tempCheckIn);
-    const checkOutDate = new Date(tempCheckOut);
-
-    return date >= checkInDate && date <= checkOutDate;
   };
 
   const handleDateClick = (date: Date) => {
@@ -152,7 +137,7 @@ export function AvailabilityCalendar({
         const checkInDate = new Date(tempCheckIn);
         const checkOutDate = date;
 
-        let currentDate = new Date(checkInDate);
+        const currentDate = new Date(checkInDate);
         currentDate.setDate(currentDate.getDate() + 1); // Start from day after check-in
 
         while (currentDate < checkOutDate) {

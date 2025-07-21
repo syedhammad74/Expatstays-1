@@ -40,8 +40,7 @@ const blogPost = {
   readTime: "8 min read",
 };
 
-export default function BlogPostDetailPage(props: any) {
-  const params = props?.params || { slug: " " };
+export default function BlogPostDetailPage(props: { slug: string }) {
   const post = blogPost;
 
   return (

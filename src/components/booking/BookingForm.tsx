@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { bookingService } from "@/lib/services/bookings";
 import { Button } from "@/components/ui/button";
@@ -16,9 +16,27 @@ import {
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
 import { Calendar, Loader2, AlertCircle } from "lucide-react";
-import { Property, Booking } from "@/lib/types/firebase";
+import { Booking } from "@/lib/types/firebase";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { AvailabilityCalendar } from "@/components/AvailabilityCalendar";
+
+interface BookingFormProps {
+  property: {
+    id: string;
+    name: string;
+    description: string;
+    capacity: {
+      maxGuests: number;
+    };
+    pricing: {
+      basePrice: number;
+      cleaningFee: number;
+      serviceFee: number;
+      currency: string;
+    };
+  };
+  onBookingComplete: (booking: Booking) => void;
+}
 
 export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
   const { user } = useAuth();
@@ -33,19 +51,12 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [pricing, setPricing] = useState<any>(null);
+  const [pricing, setPricing] = useState<unknown>(null);
   const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
   const [checkingAvailability, setCheckingAvailability] = useState(false);
 
   // Calculate pricing when dates change
-  useEffect(() => {
-    if (formData.checkIn && formData.checkOut) {
-      calculatePricing();
-      checkAvailability();
-    }
-  }, [formData.checkIn, formData.checkOut]);
-
-  const calculatePricing = () => {
+  const calculatePricing = useCallback(() => {
     if (!formData.checkIn || !formData.checkOut) return;
 
     const checkInDate = new Date(formData.checkIn);
@@ -63,9 +74,15 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
       );
       setPricing({ ...pricingDetails, nights });
     }
-  };
+  }, [
+    formData.checkIn,
+    formData.checkOut,
+    property.pricing.basePrice,
+    property.pricing.cleaningFee,
+    property.pricing.serviceFee,
+  ]);
 
-  const checkAvailability = async () => {
+  const checkAvailability = useCallback(async () => {
     if (!formData.checkIn || !formData.checkOut) return;
 
     setCheckingAvailability(true);
@@ -82,7 +99,19 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
     } finally {
       setCheckingAvailability(false);
     }
-  };
+  }, [formData.checkIn, formData.checkOut, property.id]);
+
+  useEffect(() => {
+    if (formData.checkIn && formData.checkOut) {
+      calculatePricing();
+      checkAvailability();
+    }
+  }, [
+    formData.checkIn,
+    formData.checkOut,
+    calculatePricing,
+    checkAvailability,
+  ]);
 
   const handleInputChange = (field: string, value: any) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -154,7 +183,7 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
         dates: {
           checkIn: formData.checkIn,
           checkOut: formData.checkOut,
-          nights: pricing.nights,
+          nights: (pricing as any).nights, // Cast to any to access nights
         },
         guests: {
           adults: formData.adults,
@@ -164,18 +193,18 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
         },
         pricing: {
           basePrice: property.pricing.basePrice,
-          totalNights: pricing.nights,
-          subtotal: pricing.subtotal,
-          cleaningFee: pricing.cleaningFee,
-          serviceFee: pricing.serviceFee,
-          taxes: pricing.taxes,
-          total: pricing.total,
+          totalNights: (pricing as any).nights, // Cast to any to access nights
+          subtotal: (pricing as any).subtotal,
+          cleaningFee: (pricing as any).cleaningFee,
+          serviceFee: (pricing as any).serviceFee,
+          taxes: (pricing as any).taxes,
+          total: (pricing as any).total,
           currency: property.pricing.currency,
         },
         status: "pending",
         payment: {
           status: "pending",
-          amount: pricing.total,
+          amount: (pricing as any).total,
           currency: property.pricing.currency,
         },
         specialRequests: formData.specialRequests,
@@ -326,26 +355,27 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
               <div className="border rounded-md p-4 space-y-2">
                 <div className="flex justify-between text-sm">
                   <span>
-                    ${property.pricing.basePrice} × {pricing.nights} nights
+                    ${property.pricing.basePrice} × {(pricing as any).nights}{" "}
+                    nights
                   </span>
-                  <span>${pricing.subtotal}</span>
+                  <span>${(pricing as any).subtotal}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Cleaning fee</span>
-                  <span>${pricing.cleaningFee}</span>
+                  <span>${(pricing as any).cleaningFee}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Service fee</span>
-                  <span>${pricing.serviceFee}</span>
+                  <span>${(pricing as any).serviceFee}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span>Taxes</span>
-                  <span>${pricing.taxes}</span>
+                  <span>${(pricing as any).taxes}</span>
                 </div>
                 <Separator />
                 <div className="flex justify-between font-semibold">
                   <span>Total</span>
-                  <span>${pricing.total}</span>
+                  <span>${(pricing as any).total}</span>
                 </div>
               </div>
             )}

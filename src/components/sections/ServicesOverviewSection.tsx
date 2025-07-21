@@ -187,7 +187,7 @@ const ServicesOverviewSection = () => {
               How Our Concierge Works
             </h3>
             <ol className="list-none space-y-3 lg:space-y-4 text-neutral-200 relative z-20 pl-0">
-              {howItWorksSteps.map((step, idx) => (
+              {howItWorksSteps.map((step) => (
                 <li key={step} className="flex gap-2 lg:gap-3 items-start">
                   <CheckCircle className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B] mt-1 shrink-0" />
                   <span className="text-sm lg:text-base font-medium text-white">

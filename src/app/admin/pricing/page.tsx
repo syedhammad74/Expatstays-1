@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { propertyService } from "@/lib/services/properties";
 import { availabilityService, PricingRule } from "@/lib/services/availability";
 import {
@@ -73,17 +73,7 @@ export default function AdminPricingPage() {
     description: "",
   });
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  useEffect(() => {
-    if (selectedProperty) {
-      loadPricingRules(selectedProperty);
-    }
-  }, [selectedProperty]);
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     setLoading(true);
     try {
       const allProperties = await propertyService.getAllProperties();
@@ -102,21 +92,34 @@ export default function AdminPricingPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [toast]);
 
-  const loadPricingRules = async (propertyId: string) => {
-    try {
-      const rules = await availabilityService.getPricingRules(propertyId);
-      setPricingRules(rules);
-    } catch (error) {
-      console.error("Error loading pricing rules:", error);
-      toast({
-        title: "Error",
-        description: "Failed to load pricing rules",
-        variant: "destructive",
-      });
+  const loadPricingRules = useCallback(
+    async (propertyId: string) => {
+      try {
+        const rules = await availabilityService.getPricingRules(propertyId);
+        setPricingRules(rules);
+      } catch (error) {
+        console.error("Error loading pricing rules:", error);
+        toast({
+          title: "Error",
+          description: "Failed to load pricing rules",
+          variant: "destructive",
+        });
+      }
+    },
+    [toast]
+  );
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
+
+  useEffect(() => {
+    if (selectedProperty) {
+      loadPricingRules(selectedProperty);
     }
-  };
+  }, [selectedProperty, loadPricingRules]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({ ...prev, [field]: value }));

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { bookingService } from "@/lib/services/bookings";
 import { propertyService } from "@/lib/services/properties";
 import { availabilityService } from "@/lib/services/availability";
@@ -104,7 +104,6 @@ export default function AdminDashboard() {
   );
   const [pricingDialogOpen, setPricingDialogOpen] = useState(false);
   const [availabilityDialogOpen, setAvailabilityDialogOpen] = useState(false);
-  const [propertyFormOpen, setPropertyFormOpen] = useState(false);
   const [propertyCreationDialogOpen, setPropertyCreationDialogOpen] =
     useState(false);
   const [propertyFormLoading, setPropertyFormLoading] = useState(false);
@@ -136,7 +135,7 @@ export default function AdminDashboard() {
     calculateAnalytics();
   }, [bookings, properties, selectedTimeRange, calculateAnalytics]); // Added calculateAnalytics as dependency
 
-  const loadAdminData = async () => {
+  const loadAdminData = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
@@ -194,9 +193,9 @@ export default function AdminDashboard() {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
-  const setupRealTimeSubscriptions = () => {
+  const setupRealTimeSubscriptions = useCallback(() => {
     // Subscribe to admin notifications
     try {
       const unsubscribeNotifications =
@@ -229,9 +228,9 @@ export default function AdminDashboard() {
     } catch (error) {
       console.error("Error setting up real-time subscriptions:", error);
     }
-  };
+  }, []);
 
-  const calculateAnalytics = () => {
+  const calculateAnalytics = useCallback(() => {
     try {
       const now = new Date();
       const daysAgo = parseInt(selectedTimeRange.replace("d", ""));
@@ -302,7 +301,7 @@ export default function AdminDashboard() {
         activeListings: 0,
       });
     }
-  };
+  }, [bookings, properties, selectedTimeRange]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -373,7 +372,7 @@ export default function AdminDashboard() {
     });
   };
 
-  const applyBookingFilters = () => {
+  const applyBookingFilters = useCallback(() => {
     try {
       let filtered = [...bookings];
 
@@ -432,7 +431,7 @@ export default function AdminDashboard() {
       console.error("Error filtering bookings:", error);
       setFilteredBookings(bookings);
     }
-  };
+  }, [bookings, bookingFilter]);
 
   const handleBookingStatusUpdate = async (
     bookingId: string,

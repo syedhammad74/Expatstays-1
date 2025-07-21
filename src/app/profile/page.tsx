@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { bookingService } from "@/lib/services/bookings";
 import { propertyService } from "@/lib/services/properties";
@@ -40,6 +40,7 @@ import {
   BedDouble,
   Home,
   CalendarIcon,
+  Eye,
 } from "lucide-react";
 import { Booking, Property } from "@/lib/types/firebase";
 import { useToast } from "@/hooks/use-toast";
@@ -67,24 +68,7 @@ export default function ProfilePage() {
   const [updatingProfile, setUpdatingProfile] = useState(false);
   const { toast } = useToast();
 
-  useEffect(() => {
-    if (userProfile) {
-      setProfileData({
-        firstName: userProfile.profile.firstName,
-        lastName: userProfile.profile.lastName,
-        phone: userProfile.profile.phone || "",
-      });
-    }
-  }, [userProfile, setProfileData]); // Added setProfileData as dependency
-
-  useEffect(() => {
-    if (user) {
-      loadUserBookings();
-    }
-    loadRecommendedProperties();
-  }, [user, loadUserBookings, loadRecommendedProperties]); // Added missing dependencies
-
-  const loadUserBookings = async () => {
+  const loadUserBookings = useCallback(async () => {
     if (!user) return;
 
     setLoadingBookings(true);
@@ -101,9 +85,9 @@ export default function ProfilePage() {
     } finally {
       setLoadingBookings(false);
     }
-  };
+  }, [user, toast]);
 
-  const loadRecommendedProperties = async () => {
+  const loadRecommendedProperties = useCallback(async () => {
     setLoadingProperties(true);
     try {
       // Debug configuration
@@ -141,7 +125,24 @@ export default function ProfilePage() {
     } finally {
       setLoadingProperties(false);
     }
-  };
+  }, [toast]);
+
+  useEffect(() => {
+    if (userProfile) {
+      setProfileData({
+        firstName: userProfile.profile.firstName,
+        lastName: userProfile.profile.lastName,
+        phone: userProfile.profile.phone || "",
+      });
+    }
+  }, [userProfile, setProfileData]); // Added setProfileData as dependency
+
+  useEffect(() => {
+    if (user) {
+      loadUserBookings();
+    }
+    loadRecommendedProperties();
+  }, [user, loadUserBookings, loadRecommendedProperties]); // Added missing dependencies
 
   const handleProfileUpdate = async () => {
     if (!profileData.firstName || !profileData.lastName) {

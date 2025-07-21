@@ -129,7 +129,7 @@ export class BookingService {
 
   // Check availability within a transaction
   private async checkAvailabilityInTransaction(
-    transaction: any,
+    transaction: unknown,
     propertyId: string,
     checkIn: string,
     checkOut: string
@@ -141,7 +141,9 @@ export class BookingService {
       where("date", "<", checkOut)
     );
 
-    const availabilitySnapshot = await transaction.get(availabilityQuery);
+    const availabilitySnapshot = await (transaction as any).get(
+      availabilityQuery
+    );
 
     // If any dates are blocked, return false
     return availabilitySnapshot.empty;
@@ -149,7 +151,7 @@ export class BookingService {
 
   // Block dates in availability collection within transaction
   private async blockDatesInTransaction(
-    transaction: any,
+    transaction: unknown,
     propertyId: string,
     checkIn: string,
     checkOut: string,
@@ -164,7 +166,7 @@ export class BookingService {
       const dateString = currentDate.toISOString().split("T")[0];
       const availabilityRef = doc(this.availabilityCollection);
 
-      transaction.set(availabilityRef, {
+      (transaction as any).set(availabilityRef, {
         propertyId,
         date: dateString,
         bookingId,

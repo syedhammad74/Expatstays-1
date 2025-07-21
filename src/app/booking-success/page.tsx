@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   Card,
@@ -38,16 +38,7 @@ export default function BookingSuccessPage() {
   const bookingId = searchParams.get("bookingId");
   const { toast } = useToast();
 
-  useEffect(() => {
-    if (bookingId) {
-      loadBookingDetails();
-    } else {
-      setError("No booking ID provided");
-      setLoading(false);
-    }
-  }, [bookingId]);
-
-  const loadBookingDetails = async () => {
+  const loadBookingDetails = useCallback(async () => {
     if (!bookingId) return;
 
     try {
@@ -70,7 +61,16 @@ export default function BookingSuccessPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [bookingId]);
+
+  useEffect(() => {
+    if (bookingId) {
+      loadBookingDetails();
+    } else {
+      setError("No booking ID provided");
+      setLoading(false);
+    }
+  }, [bookingId, loadBookingDetails]);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {

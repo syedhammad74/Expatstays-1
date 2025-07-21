@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/Logo";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, Bell, Search } from "lucide-react";
+import { Menu, X, Bell, Search } from "lucide-react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 

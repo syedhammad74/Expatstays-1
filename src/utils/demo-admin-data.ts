@@ -203,9 +203,12 @@ export function getDemoDataStats() {
   return stats;
 }
 
-export default {
+// Assign the object to a variable before exporting as default
+const demoAdminDataUtils = {
   demoAdminData,
   populateDemoData,
   clearDemoData,
   getDemoDataStats,
 };
+
+export default demoAdminDataUtils;

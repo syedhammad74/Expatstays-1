@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useAuth } from "@/hooks/use-auth";
 import { bookingService } from "@/lib/services/bookings";
 import { propertyService } from "@/lib/services/properties";
@@ -47,21 +47,7 @@ export default function MyBookingsPage() {
   const [filter, setFilter] = useState<string>("all");
   const { toast } = useToast();
 
-  useEffect(() => {
-    if (user) {
-      loadBookingsWithProperties();
-
-      // Set up real-time subscription
-      const unsubscribe = bookingService.subscribeToUserBookings(
-        user.uid,
-        handleBookingsUpdate
-      );
-
-      return () => unsubscribe();
-    }
-  }, [user]);
-
-  const loadBookingsWithProperties = async () => {
+  const loadBookingsWithProperties = useCallback(async () => {
     if (!user) return;
 
     setLoading(true);
@@ -94,7 +80,21 @@ export default function MyBookingsPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [user, toast]);
+
+  useEffect(() => {
+    if (user) {
+      loadBookingsWithProperties();
+
+      // Set up real-time subscription
+      const unsubscribe = bookingService.subscribeToUserBookings(
+        user.uid,
+        handleBookingsUpdate
+      );
+
+      return () => unsubscribe();
+    }
+  }, [user, loadBookingsWithProperties]);
 
   const handleBookingsUpdate = (updatedBookings: Booking[]) => {
     // Update bookings in real-time

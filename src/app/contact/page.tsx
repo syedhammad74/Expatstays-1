@@ -13,7 +13,6 @@ import {
   MessageSquare,
   Send,
   Sparkles,
-  ChevronRight,
   CheckCircle,
   Star,
   Shield,

@@ -4,6 +4,9 @@ import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { getFunctions, connectFunctionsEmulator } from "firebase/functions";
 import { getStorage, connectStorageEmulator } from "firebase/storage";
 import { getDatabase, connectDatabaseEmulator } from "firebase/database";
+import { ref as dbRef, set as dbSet, push as dbPush, onValue as dbOnValue, serverTimestamp as dbServerTimestamp } from "firebase/database";
+import { httpsCallable as fbHttpsCallable } from "firebase/functions";
+import { ref as storageRef, uploadBytes as storageUploadBytes, getDownloadURL as storageGetDownloadURL } from "firebase/storage";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -154,48 +157,39 @@ export const firebase = {
   // Realtime Database helpers
   realtimeDb: {
     ref: (path: string) => {
-      const { ref } = require("firebase/database");
-      return ref(realtimeDb, path);
+      return dbRef(realtimeDb, path);
     },
     set: async (reference: unknown, value: unknown) => {
-      const { set } = require("firebase/database");
-      return set(reference, value);
+      return dbSet(reference, value);
     },
     push: async (reference: unknown, value: unknown) => {
-      const { push } = require("firebase/database");
-      return push(reference, value);
+      return dbPush(reference, value);
     },
     onValue: (reference: unknown, callback: (snapshot: unknown) => void) => {
-      const { onValue } = require("firebase/database");
-      return onValue(reference, callback);
+      return dbOnValue(reference, callback);
     },
     serverTimestamp: () => {
-      const { serverTimestamp } = require("firebase/database");
-      return serverTimestamp();
+      return dbServerTimestamp();
     },
   },
 
   // Functions helpers
   functions: {
     httpsCallable: (name: string) => {
-      const { httpsCallable } = require("firebase/functions");
-      return httpsCallable(functions, name);
+      return fbHttpsCallable(functions, name);
     },
   },
 
   // Storage helpers
   storage: {
     ref: (path: string) => {
-      const { ref } = require("firebase/storage");
-      return ref(storage, path);
+      return storageRef(storage, path);
     },
     uploadBytes: async (storageRef: unknown, file: File) => {
-      const { uploadBytes } = require("firebase/storage");
-      return uploadBytes(storageRef, file);
+      return storageUploadBytes(storageRef, file);
     },
     getDownloadURL: async (storageRef: unknown) => {
-      const { getDownloadURL } = require("firebase/storage");
-      return getDownloadURL(storageRef);
+      return storageGetDownloadURL(storageRef);
     },
   },
 };

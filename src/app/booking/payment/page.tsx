@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
 import { bookingService } from "@/lib/services/bookings";
@@ -53,6 +53,61 @@ export default function PaymentPage() {
   >(USE_MOCK_DATA ? "mock" : "elements");
   const [showAuthModal, setShowAuthModal] = useState(false);
 
+  const createPaymentIntent = useCallback(
+    async (bookingData: Booking) => {
+      if (!user) {
+        setShowAuthModal(true);
+        return;
+      }
+
+      setCreatingPaymentIntent(true);
+      try {
+        const response = await fetch("/api/payment/create-intent", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            bookingId: bookingData.id,
+            amount: bookingData.payment.amount,
+            currency: bookingData.payment.currency,
+            customerEmail: bookingData.guest.email,
+            customerName: bookingData.guest.name,
+            metadata: {
+              propertyId: bookingData.propertyId,
+              checkIn: bookingData.dates.checkIn,
+              checkOut: bookingData.dates.checkOut,
+              guests: bookingData.guests.total.toString(),
+            },
+          }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to create payment intent");
+        }
+
+        setClientSecret(data.clientSecret);
+        setPaymentIntentId(data.paymentIntentId);
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error
+            ? err.message
+            : "Failed to create payment intent";
+        setError(errorMessage);
+        toast({
+          title: "Payment Setup Failed",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      } finally {
+        setCreatingPaymentIntent(false);
+      }
+    },
+    [user, toast]
+  );
+
   useEffect(() => {
     const fetchBookingDetails = async () => {
       if (!bookingId) {
@@ -101,57 +156,7 @@ export default function PaymentPage() {
     };
 
     fetchBookingDetails();
-  }, [bookingId, paymentMethod]);
-
-  const createPaymentIntent = async (bookingData: Booking) => {
-    if (!user) {
-      setShowAuthModal(true);
-      return;
-    }
-
-    setCreatingPaymentIntent(true);
-    try {
-      const response = await fetch("/api/payment/create-intent", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          bookingId: bookingData.id,
-          amount: bookingData.payment.amount,
-          currency: bookingData.payment.currency,
-          customerEmail: bookingData.guest.email,
-          customerName: bookingData.guest.name,
-          metadata: {
-            propertyId: bookingData.propertyId,
-            checkIn: bookingData.dates.checkIn,
-            checkOut: bookingData.dates.checkOut,
-            guests: bookingData.guests.total.toString(),
-          },
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to create payment intent");
-      }
-
-      setClientSecret(data.clientSecret);
-      setPaymentIntentId(data.paymentIntentId);
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Failed to create payment intent";
-      setError(errorMessage);
-      toast({
-        title: "Payment Setup Failed",
-        description: errorMessage,
-        variant: "destructive",
-      });
-    } finally {
-      setCreatingPaymentIntent(false);
-    }
-  };
+  }, [bookingId, paymentMethod, createPaymentIntent]);
 
   const handleCheckoutSession = async () => {
     if (!booking || !user) {
@@ -435,7 +440,11 @@ export default function PaymentPage() {
                   // Real Stripe Payment Options
                   <Tabs
                     value={paymentMethod}
-                    onValueChange={(value) => setPaymentMethod(value as any)}
+                    onValueChange={(value) =>
+                      setPaymentMethod(
+                        value as unknown as "elements" | "checkout"
+                      )
+                    }
                     className="w-full"
                   >
                     <TabsList className="grid w-full grid-cols-2">

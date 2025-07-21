@@ -28,8 +28,12 @@ export function SignInForm({ onClose }: SignInFormProps) {
     try {
       await signIn(email, password);
       onClose?.();
-    } catch (err: any) {
-      setError(getErrorMessage(err.code));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(getErrorMessage(err.message));
+      } else {
+        setError("An unknown error occurred.");
+      }
     } finally {
       setLoading(false);
     }
@@ -42,8 +46,12 @@ export function SignInForm({ onClose }: SignInFormProps) {
     try {
       await signInWithGoogle();
       onClose?.();
-    } catch (err: any) {
-      setError(getErrorMessage(err.code));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(getErrorMessage(err.message));
+      } else {
+        setError("An unknown error occurred.");
+      }
     } finally {
       setLoading(false);
     }
@@ -61,8 +69,12 @@ export function SignInForm({ onClose }: SignInFormProps) {
     try {
       await resetPassword(email);
       setError("Password reset email sent! Check your inbox.");
-    } catch (err: any) {
-      setError(getErrorMessage(err.code));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(getErrorMessage(err.message));
+      } else {
+        setError("An unknown error occurred.");
+      }
     } finally {
       setLoading(false);
     }
@@ -178,9 +190,9 @@ export function SignInForm({ onClose }: SignInFormProps) {
           </Button>
         </div>
 
-        <Button 
-          type="submit" 
-          className="w-full bg-[#0B2B26] hover:bg-[#235347] text-white h-12 text-base font-semibold rounded-xl shadow-md transition-all duration-200 md:h-10 md:text-sm md:font-medium md:rounded-buttons md:shadow-none" 
+        <Button
+          type="submit"
+          className="w-full bg-[#0B2B26] hover:bg-[#235347] text-white h-12 text-base font-semibold rounded-xl shadow-md transition-all duration-200 md:h-10 md:text-sm md:font-medium md:rounded-buttons md:shadow-none"
           disabled={loading}
         >
           {loading ? (

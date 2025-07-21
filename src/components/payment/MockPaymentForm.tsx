@@ -207,7 +207,7 @@ export function MockPaymentForm({
         <div className="font-semibold mb-1">Development Information:</div>
         <ul className="space-y-1">
           <li>• Mock payments always succeed after 2 seconds</li>
-          <li>• Booking status will be updated to "confirmed"</li>
+          <li>• Booking status will be updated to &quot;confirmed&quot;</li>
           <li>• Mock receipt URL will be generated</li>
           <li>• No real payment processing occurs</li>
         </ul>

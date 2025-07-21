@@ -17,6 +17,7 @@ import {
   Target,
   Phone,
   Calendar,
+  MapPin,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
@@ -362,7 +363,7 @@ export default function AboutPage() {
             visible: { transition: { staggerChildren: 0.1 } },
           }}
         >
-          {features.map((feature, i) => (
+          {features.map((feature) => (
             <motion.div
               key={feature.title}
               variants={{
@@ -399,8 +400,8 @@ export default function AboutPage() {
             What Our Guests Say
           </h2>
           <p className="text-base lg:text-lg xl:text-xl text-[#235347] max-w-3xl mx-auto leading-relaxed">
-            Real experiences from real guests who've experienced the Expat Stays
-            difference across the UAE.
+            Real experiences from real guests who&apos;ve experienced the Expat
+            Stays difference across the UAE.
           </p>
         </div>
 
@@ -414,7 +415,7 @@ export default function AboutPage() {
             visible: { transition: { staggerChildren: 0.15 } },
           }}
         >
-          {testimonials.map((testimonial, i) => (
+          {testimonials.map((testimonial) => (
             <motion.div
               key={testimonial.author}
               variants={{
@@ -490,7 +491,7 @@ export default function AboutPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          {stats.map((stat, i) => (
+          {stats.map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="flex items-center justify-center mb-2 lg:mb-3">
                 <div className="w-10 lg:w-12 h-10 lg:h-12 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full flex items-center justify-center">
@@ -534,7 +535,7 @@ export default function AboutPage() {
             visible: { transition: { staggerChildren: 0.1 } },
           }}
         >
-          {achievements.map((achievement, i) => (
+          {achievements.map((achievement) => (
             <motion.div
               key={achievement.title}
               variants={{
@@ -593,9 +594,9 @@ export default function AboutPage() {
               Start Your Luxury Journey Today
             </h2>
             <p className="text-base lg:text-lg xl:text-xl text-[#235347] mb-6 lg:mb-8 max-w-2xl mx-auto leading-relaxed">
-              Join thousands of satisfied guests who've discovered the Expat
-              Luxe difference. Experience unparalleled luxury and personalized
-              service.
+              Join thousands of satisfied guests who&apos;ve discovered the
+              Expat Luxe difference. Experience unparalleled luxury and
+              personalized service.
             </p>
 
             {/* Feature highlights */}

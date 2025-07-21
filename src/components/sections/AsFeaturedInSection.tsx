@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 // Media outlets that have featured us
 const mediaOutlets = [
   { name: "Forbes", src: null, imageHint: "Forbes logo" },

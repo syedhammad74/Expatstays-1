@@ -54,7 +54,7 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import Header from "@/components/layout/Header";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { DateRange } from "react-day-picker";
@@ -155,7 +155,7 @@ export default function PropertiesPage() {
   }, [properties, dateRange]);
 
   // Enhanced loadProperties with caching
-  const loadProperties = async () => {
+  const loadProperties = useCallback(async () => {
     try {
       setLoading(true);
       performanceMonitor.markStart("load-properties");
@@ -218,9 +218,9 @@ export default function PropertiesPage() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [dateRange, toast]); // Added dateRange and toast to dependencies
 
-  const filterPropertiesByAvailability = async () => {
+  const filterPropertiesByAvailability = useCallback(async () => {
     if (!dateRange?.from || !dateRange?.to) return;
 
     setSearchLoading(true);
@@ -267,7 +267,7 @@ export default function PropertiesPage() {
     } finally {
       setSearchLoading(false);
     }
-  };
+  }, [dateRange, guests, properties, toast]); // Added dateRange, guests, properties, and toast to dependencies
 
   // Helper for guests summary
   const guestsSummary = () => {
@@ -306,7 +306,7 @@ export default function PropertiesPage() {
   }, [filteredProperties.length]);
 
   // Enhanced handleFind with performance tracking
-  const handleFind = async () => {
+  const handleFind = useCallback(async () => {
     try {
       setSearchLoading(true);
       trackInteraction("search-properties", {
@@ -348,7 +348,15 @@ export default function PropertiesPage() {
     } finally {
       setSearchLoading(false);
     }
-  };
+  }, [
+    dateRange,
+    guests,
+    location,
+    router,
+    filterPropertiesByAvailability,
+    toast,
+    trackInteraction,
+  ]); // Added dateRange, guests, location, router, filterPropertiesByAvailability, toast, and trackInteraction to dependencies
 
   // Convert Property to PropertyCardProps
   const convertToPropertyCard = (property: Property): PropertyCardProps => ({

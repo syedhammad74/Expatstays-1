@@ -1,8 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { propertyService } from "@/lib/services/properties";
-import { bookingService } from "@/lib/services/bookings";
 import Link from "next/link";
 
 export default function SetupPage() {

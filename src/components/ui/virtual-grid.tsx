@@ -38,7 +38,6 @@ export function VirtualGrid<T>({
 }: VirtualGridProps<T>) {
   const [visibleItems, setVisibleItems] = useState<T[]>([]);
   const [visibleRange, setVisibleRange] = useState({ start: 0, end: 20 });
-  const [scrollTop, setScrollTop] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
@@ -90,7 +89,6 @@ export function VirtualGrid<T>({
 
     setVisibleRange({ start, end });
     setVisibleItems(items.slice(start, end));
-    setScrollTop(scrollTop);
   }, [
     items,
     itemHeight,

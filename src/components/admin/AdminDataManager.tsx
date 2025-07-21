@@ -1,11 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import {
-  AdminDataService,
-  AdminDataItem,
-  RealtimeAdminData,
-} from "@/lib/services/admin-data";
+import React, { useState, useEffect, useCallback } from "react";
+import { AdminDataService, AdminDataItem } from "@/lib/services/admin-data";
 import {
   Card,
   CardContent,
@@ -113,23 +109,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
     recentActivity: 0,
   });
 
-  useEffect(() => {
-    initializeDataManager();
-    loadData();
-    setupSubscriptions();
-  }, []);
-
-  const initializeDataManager = () => {
-    setLoading(true);
-
-    // Simulate connection status
-    setTimeout(() => {
-      setFirestoreConnected(true);
-      setRealtimeConnected(true);
-    }, 1000);
-  };
-
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       const [firestoreItems, stats] = await Promise.all([
         adminDataService.getAllAdminData(),
@@ -148,6 +128,22 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
     } finally {
       setLoading(false);
     }
+  }, [adminDataService, toast]);
+
+  useEffect(() => {
+    initializeDataManager();
+    loadData();
+    setupSubscriptions();
+  }, [loadData]);
+
+  const initializeDataManager = () => {
+    setLoading(true);
+
+    // Simulate connection status
+    setTimeout(() => {
+      setFirestoreConnected(true);
+      setRealtimeConnected(true);
+    }, 1000);
   };
 
   const setupSubscriptions = () => {

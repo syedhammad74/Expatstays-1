@@ -23,56 +23,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 
 // Mock property data - In production, this would come from Firebase
-const getMockProperty = (slug: string): Property => ({
-  id: slug,
-  title: "Opulent Villa by the Marina",
-  description:
-    "Experience unparalleled luxury in this stunning marina-front villa featuring panoramic water views, premium amenities, and world-class service. Perfect for families and groups seeking an exclusive Dubai experience.",
-  location: {
-    address: "123 Marina Walk",
-    city: "Dubai",
-    state: "Dubai",
-    country: "UAE",
-    coordinates: {
-      lat: 25.0657,
-      lng: 55.1713,
-    },
-  },
-  propertyType: "villa",
-  capacity: {
-    bedrooms: 5,
-    bathrooms: 4,
-    maxGuests: 10,
-  },
-  amenities: ["wifi", "parking", "gym", "kitchen", "pool", "waterfront"],
-  images: [
-    getLocalImage("interior", 0),
-    getLocalImage("interior", 1),
-    getLocalImage("interior", 2),
-    getLocalImage("villa", 0),
-    getLocalImage("interior", 3),
-    getLocalImage("villa", 1),
-  ],
-  pricing: {
-    basePrice: 1200,
-    currency: "USD",
-    cleaningFee: 150,
-    serviceFee: 180,
-  },
-  availability: {
-    isActive: true,
-    minimumStay: 1,
-    maximumStay: 30,
-  },
-  owner: {
-    uid: "owner-123",
-    name: "Property Owner",
-    email: "owner@example.com",
-  },
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-});
-
 const propertyFeatures = [
   { icon: MapPin, label: "Prime Marina Location" },
   { icon: BedDouble, label: "5 Bedrooms" },
@@ -136,14 +86,14 @@ export default function PropertyDetailPage(props: any) {
     loadProperty();
   }, [params.slug, toast]);
 
-  const handleBookingComplete = (booking: any) => {
+  const handleBookingComplete = (booking: unknown) => {
     toast({
       title: "Booking Created!",
       description:
         "Your booking has been successfully created. Check your email for confirmation.",
     });
     // Redirect to booking confirmation page
-    router.push(`/booking-success?bookingId=${booking.id}`);
+    router.push(`/booking-success?bookingId=${(booking as any).id}`);
   };
 
   if (loading) {

@@ -65,8 +65,10 @@ export function SignUpForm({ onToggleMode, onClose }: SignUpFormProps) {
       await signUp(formData.email, formData.password, displayName);
       setSuccess(true);
       // Don't close immediately - show success message
-    } catch (err: any) {
-      setError(getErrorMessage(err.code));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(getErrorMessage(err.message));
+      }
     } finally {
       setLoading(false);
     }
@@ -79,8 +81,10 @@ export function SignUpForm({ onToggleMode, onClose }: SignUpFormProps) {
     try {
       await signInWithGoogle();
       onClose?.();
-    } catch (err: any) {
-      setError(getErrorMessage(err.code));
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        setError(getErrorMessage(err.message));
+      }
     } finally {
       setLoading(false);
     }
