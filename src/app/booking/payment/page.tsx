@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useAuth } from "@/hooks/use-auth";
 import { bookingService } from "@/lib/services/bookings";
@@ -36,6 +36,20 @@ const USE_MOCK_DATA =
   process.env.NEXT_PUBLIC_USE_MOCK_DATA !== "false";
 
 export default function PaymentPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading payment page...
+        </div>
+      }
+    >
+      <BookingPaymentContent />
+    </Suspense>
+  );
+}
+
+function BookingPaymentContent() {
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("booking_id");
   const { user } = useAuth();
@@ -427,99 +441,15 @@ export default function PaymentPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                {USE_MOCK_DATA ? (
-                  // Mock Payment Form
-                  <MockPaymentForm
-                    bookingId={booking.id}
-                    amount={booking.payment.amount}
-                    currency={booking.payment.currency}
-                    onSuccess={handlePaymentSuccess}
-                    onError={handlePaymentError}
-                  />
-                ) : (
-                  // Real Stripe Payment Options
-                  <Tabs
-                    value={paymentMethod}
-                    onValueChange={(value) =>
-                      setPaymentMethod(
-                        value as unknown as "elements" | "checkout"
-                      )
-                    }
-                    className="w-full"
-                  >
-                    <TabsList className="grid w-full grid-cols-2">
-                      <TabsTrigger value="elements">Card Payment</TabsTrigger>
-                      <TabsTrigger value="checkout">Checkout</TabsTrigger>
-                    </TabsList>
-
-                    <TabsContent value="elements" className="mt-6">
-                      {clientSecret && paymentIntentId ? (
-                        <StripeProvider>
-                          <PaymentForm
-                            clientSecret={clientSecret}
-                            bookingId={booking.id}
-                            customerEmail={booking.guest.email}
-                            customerName={booking.guest.name}
-                            onSuccess={handlePaymentSuccess}
-                            onError={handlePaymentError}
-                            amount={booking.payment.amount}
-                            currency={booking.payment.currency}
-                          />
-                        </StripeProvider>
-                      ) : (
-                        <div className="text-center py-8">
-                          {creatingPaymentIntent ? (
-                            <div>
-                              <Loader2 className="h-8 w-8 animate-spin text-[#8EB69B] mx-auto mb-4" />
-                              <p className="text-gray-600">
-                                Setting up payment...
-                              </p>
-                            </div>
-                          ) : (
-                            <div>
-                              <p className="text-gray-600 mb-4">
-                                Click the button below to set up your payment
-                              </p>
-                              <Button
-                                onClick={() => createPaymentIntent(booking)}
-                                className="bg-[#8EB69B] hover:bg-[#235347] text-white"
-                              >
-                                Setup Payment
-                              </Button>
-                            </div>
-                          )}
-                        </div>
-                      )}
-                    </TabsContent>
-
-                    <TabsContent value="checkout" className="mt-6">
-                      <div className="space-y-4">
-                        <p className="text-gray-600">
-                          You&apos;ll be redirected to Stripe&apos;s secure
-                          checkout page to complete your payment.
-                        </p>
-                        <Button
-                          onClick={handleCheckoutSession}
-                          disabled={creatingPaymentIntent}
-                          className="w-full bg-[#8EB69B] hover:bg-[#235347] text-white"
-                          size="lg"
-                        >
-                          {creatingPaymentIntent ? (
-                            <>
-                              <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                              Creating checkout session...
-                            </>
-                          ) : (
-                            <>
-                              <ExternalLink className="h-4 w-4 mr-2" />
-                              Continue to Checkout
-                            </>
-                          )}
-                        </Button>
-                      </div>
-                    </TabsContent>
-                  </Tabs>
-                )}
+                {/* Always use mock payment form, disable Stripe */}
+                <MockPaymentForm
+                  bookingId={booking.id}
+                  amount={booking.payment.amount}
+                  currency={booking.payment.currency}
+                  onSuccess={handlePaymentSuccess}
+                  onError={handlePaymentError}
+                />
+                {/* Stripe payment is disabled for this deployment */}
               </CardContent>
             </Card>
           </div>

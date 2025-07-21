@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -11,6 +11,20 @@ import { bookingService } from "@/lib/services/bookings";
 import { Booking } from "@/lib/types/firebase";
 
 export default function BookingCancelPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading cancellation details...
+        </div>
+      }
+    >
+      <BookingCancelContent />
+    </Suspense>
+  );
+}
+
+function BookingCancelContent() {
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("booking_id");
 

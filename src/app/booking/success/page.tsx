@@ -18,8 +18,23 @@ import Link from "next/link";
 import { bookingService } from "@/lib/services/bookings";
 import { propertyService } from "@/lib/services/properties";
 import { Booking, Property } from "@/lib/types/firebase";
+import { Suspense } from "react";
 
 export default function BookingSuccessPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center">
+          Loading booking details...
+        </div>
+      }
+    >
+      <BookingSuccessContent />
+    </Suspense>
+  );
+}
+
+function BookingSuccessContent() {
   const searchParams = useSearchParams();
   const bookingId = searchParams.get("booking_id");
 
@@ -30,34 +45,26 @@ export default function BookingSuccessPage() {
   useEffect(() => {
     const fetchBookingDetails = async () => {
       if (!bookingId) {
-        // setError("No booking ID provided"); // This line was removed
         setLoading(false);
         return;
       }
-
       try {
         const bookingData = await bookingService.getBookingById(bookingId);
         if (!bookingData) {
-          // setError("Booking not found"); // This line was removed
           setLoading(false);
           return;
         }
-
         setBooking(bookingData);
-
-        // Fetch property details
         const propertyData = await propertyService.getPropertyById(
           bookingData.propertyId
         );
         setProperty(propertyData);
       } catch (err) {
         console.error("Error fetching booking details:", err);
-        // setError("Failed to load booking details"); // This line was removed
       } finally {
         setLoading(false);
       }
     };
-
     fetchBookingDetails();
   }, [bookingId]);
 
