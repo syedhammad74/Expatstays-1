@@ -43,6 +43,15 @@ import { bookingService } from "@/lib/services/bookings";
 import { useToast } from "@/hooks/use-toast";
 import { usePerformanceMonitor, useDebounce } from "@/hooks/use-performance";
 import { VirtualGrid } from "@/components/ui/virtual-grid";
+import dynamic from "next/dynamic";
+
+// Memoize PropertyCard for performance
+const MemoizedPropertyCard = dynamic(
+  () => import("@/components/PropertyCard"),
+  {
+    ssr: false,
+  }
+);
 
 export default function PropertiesPage() {
   // Performance monitoring
@@ -318,7 +327,7 @@ export default function PropertiesPage() {
     price: `$${property.pricing.basePrice} / night`,
   });
 
-  // Render properties with virtual scrolling or regular grid
+  // Always use VirtualGrid for property lists, but keep the view toggle for user control
   const renderProperties = () => {
     if (loading) {
       return (
@@ -361,44 +370,27 @@ export default function PropertiesPage() {
       );
     }
 
-    if (useVirtualScrolling) {
-      return (
-        <VirtualGrid
-          items={filteredProperties.map(convertToPropertyCard)}
-          renderItem={(property) => (
-            <PropertyCard key={property.slug} {...property} />
-          )}
-          itemHeight={450}
-          itemsPerRow={
-            window.innerWidth >= 1024 ? 3 : window.innerWidth >= 768 ? 2 : 1
-          }
-          className="mt-8"
-          gap={24}
-          containerHeight={800}
-        />
-      );
-    }
-
+    // Always use VirtualGrid for smoother performance
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
-      >
-        {filteredProperties.map((property) => {
-          const propertyCard = convertToPropertyCard(property);
-          return (
-            <motion.div
-              key={property.id}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0 }}
-            >
-              <PropertyCard {...propertyCard} />
-            </motion.div>
-          );
-        })}
-      </motion.div>
+      <VirtualGrid
+        items={filteredProperties.map(convertToPropertyCard)}
+        renderItem={(property) => (
+          <MemoizedPropertyCard key={property.slug} {...property} />
+        )}
+        itemHeight={450}
+        itemsPerRow={
+          typeof window !== "undefined"
+            ? window.innerWidth >= 1024
+              ? 3
+              : window.innerWidth >= 768
+              ? 2
+              : 1
+            : 1
+        }
+        className="mt-8"
+        gap={24}
+        containerHeight={800}
+      />
     );
   };
 

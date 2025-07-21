@@ -21,6 +21,7 @@ import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import Head from "next/head";
 
 // Mock property data - In production, this would come from Firebase
 const propertyFeatures = [
@@ -98,6 +99,37 @@ export default function Page({ params }: { params: { slug: string } }) {
     );
   };
 
+  // SEO meta tags and JSON-LD
+  const metaTitle = property
+    ? `${property.title} | Expat Stays`
+    : "Expat Stays - Property Details";
+  const metaDescription = property
+    ? property.description?.slice(0, 160)
+    : "Discover luxury properties for rent at Expat Stays.";
+  const metaImage = property?.images?.[0]
+    ? `https://myexpatstays.com${property.images[0]}`
+    : "https://myexpatstays.com/logo.png";
+  const metaUrl = `https://myexpatstays.com/properties/${slug}`;
+  const jsonLd = property
+    ? {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        name: property.title,
+        description: property.description,
+        image: property.images?.map((img) => `https://myexpatstays.com${img}`),
+        offers: {
+          "@type": "Offer",
+          price: property.pricing?.basePrice,
+          priceCurrency: "USD",
+          availability: property.availability?.isActive
+            ? "https://schema.org/InStock"
+            : "https://schema.org/OutOfStock",
+        },
+        address: property.location?.address,
+        url: metaUrl,
+      }
+    : null;
+
   if (loading) {
     return (
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
@@ -138,7 +170,25 @@ export default function Page({ params }: { params: { slug: string } }) {
   }));
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
+    <>
+      <Head>
+        <title>{metaTitle}</title>
+        <meta name="description" content={metaDescription} />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
+        <meta property="og:image" content={metaImage} />
+        <meta property="og:url" content={metaUrl} />
+        <meta name="twitter:title" content={metaTitle} />
+        <meta name="twitter:description" content={metaDescription} />
+        <meta name="twitter:image" content={metaImage} />
+        <link rel="canonical" href={metaUrl} />
+        {jsonLd && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+          />
+        )}
+      </Head>
       <PropertyImageGallery images={galleryImages} />
 
       <div className="mt-6 lg:mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -235,6 +285,6 @@ export default function Page({ params }: { params: { slug: string } }) {
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

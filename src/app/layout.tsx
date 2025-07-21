@@ -6,7 +6,7 @@ import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
 
 export const metadata: Metadata = {
-  title: "Expat Stays - Luxury Property Rentals",
+  title: "Expat Stays",
   description:
     "High-end luxury property rental and management with modern glass morphism design.",
 };
@@ -19,6 +19,40 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <title>Expat Stays - Luxury Property Rentals</title>
+        <meta
+          name="description"
+          content="High-end luxury property rental and management with modern glass morphism design. Book luxury villas, apartments, and more in Dubai and beyond."
+        />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="canonical" href="https://myexpatstays.com/" />
+        <meta name="robots" content="index, follow" />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:title"
+          content="Expat Stays - Luxury Property Rentals"
+        />
+        <meta
+          property="og:description"
+          content="High-end luxury property rental and management with modern glass morphism design. Book luxury villas, apartments, and more in Dubai and beyond."
+        />
+        <meta property="og:url" content="https://myexpatstays.com/" />
+        <meta property="og:image" content="https://myexpatstays.com/logo.png" />
+        <meta property="og:site_name" content="Expat Stays" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content="Expat Stays - Luxury Property Rentals"
+        />
+        <meta
+          name="twitter:description"
+          content="High-end luxury property rental and management with modern glass morphism design. Book luxury villas, apartments, and more in Dubai and beyond."
+        />
+        <meta
+          name="twitter:image"
+          content="https://myexpatstays.com/logo.png"
+        />
+        <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
