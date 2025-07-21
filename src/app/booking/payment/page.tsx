@@ -449,6 +449,9 @@ export default function PaymentPage() {
                         <StripeProvider>
                           <PaymentForm
                             clientSecret={clientSecret}
+                            bookingId={booking.id}
+                            customerEmail={booking.guest.email}
+                            customerName={booking.guest.name}
                             onSuccess={handlePaymentSuccess}
                             onError={handlePaymentError}
                             amount={booking.payment.amount}
@@ -519,7 +522,6 @@ export default function PaymentPage() {
       <AuthModal
         isOpen={showAuthModal}
         onClose={() => setShowAuthModal(false)}
-        onSuccess={() => setShowAuthModal(false)}
       />
     </div>
   );
