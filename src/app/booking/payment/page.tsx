@@ -32,7 +32,9 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 
 // Check if we're in mock mode
-const USE_MOCK_DATA = process.env.NODE_ENV === 'development' && process.env.NEXT_PUBLIC_USE_MOCK_DATA !== 'false';
+const USE_MOCK_DATA =
+  process.env.NODE_ENV === "development" &&
+  process.env.NEXT_PUBLIC_USE_MOCK_DATA !== "false";
 
 export default function PaymentPage() {
   const searchParams = useSearchParams();
@@ -47,9 +49,9 @@ export default function PaymentPage() {
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
   const [creatingPaymentIntent, setCreatingPaymentIntent] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<"elements" | "checkout" | "mock">(
-    USE_MOCK_DATA ? "mock" : "elements"
-  );
+  const [paymentMethod, setPaymentMethod] = useState<
+    "elements" | "checkout" | "mock"
+  >(USE_MOCK_DATA ? "mock" : "elements");
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   useEffect(() => {
@@ -209,7 +211,7 @@ export default function PaymentPage() {
       title: "Payment Successful!",
       description: "Your booking has been confirmed.",
     });
-    
+
     // Redirect to success page
     window.location.href = `/booking/success?booking_id=${bookingId}`;
   };
@@ -262,7 +264,10 @@ export default function PaymentPage() {
           </Alert>
           <div className="mt-6 text-center">
             <Link href="/properties">
-              <Button variant="outline" className="border-[#8EB69B] text-[#8EB69B] hover:bg-[#DAF1DE]">
+              <Button
+                variant="outline"
+                className="border-[#8EB69B] text-[#8EB69B] hover:bg-[#DAF1DE]"
+              >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Properties
               </Button>
@@ -297,13 +302,17 @@ export default function PaymentPage() {
               <p className="text-gray-600">
                 {USE_MOCK_DATA && (
                   <span className="text-orange-600 font-semibold">
-                    [Development Mode] 
+                    [Development Mode]
                   </span>
-                )} Secure your booking for {property.title}
+                )}{" "}
+                Secure your booking for {property.title}
               </p>
             </div>
             <Link href={`/properties/${property.id}`}>
-              <Button variant="outline" className="border-[#8EB69B] text-[#8EB69B] hover:bg-[#DAF1DE]">
+              <Button
+                variant="outline"
+                className="border-[#8EB69B] text-[#8EB69B] hover:bg-[#DAF1DE]"
+              >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Property
               </Button>
@@ -360,7 +369,8 @@ export default function PaymentPage() {
                 <div className="space-y-2">
                   <div className="flex justify-between text-sm">
                     <span>
-                      ${booking.pricing.basePrice} × {booking.dates.nights} nights
+                      ${booking.pricing.basePrice} × {booking.dates.nights}{" "}
+                      nights
                     </span>
                     <span>${booking.pricing.subtotal}</span>
                   </div>
@@ -379,14 +389,23 @@ export default function PaymentPage() {
                   <Separator />
                   <div className="flex justify-between font-semibold text-lg text-[#051F20]">
                     <span>Total</span>
-                    <span>{formatCurrency(booking.pricing.total, booking.pricing.currency)}</span>
+                    <span>
+                      {formatCurrency(
+                        booking.pricing.total,
+                        booking.pricing.currency
+                      )}
+                    </span>
                   </div>
                 </div>
 
                 {/* Status */}
                 <div className="flex items-center justify-between">
                   <span className="text-sm text-gray-600">Status</span>
-                  <Badge variant={booking.status === "confirmed" ? "default" : "secondary"}>
+                  <Badge
+                    variant={
+                      booking.status === "confirmed" ? "default" : "secondary"
+                    }
+                  >
                     {booking.status}
                   </Badge>
                 </div>
@@ -415,18 +434,21 @@ export default function PaymentPage() {
                   />
                 ) : (
                   // Real Stripe Payment Options
-                  <Tabs value={paymentMethod} onValueChange={(value) => setPaymentMethod(value as any)} className="w-full">
+                  <Tabs
+                    value={paymentMethod}
+                    onValueChange={(value) => setPaymentMethod(value as any)}
+                    className="w-full"
+                  >
                     <TabsList className="grid w-full grid-cols-2">
                       <TabsTrigger value="elements">Card Payment</TabsTrigger>
                       <TabsTrigger value="checkout">Checkout</TabsTrigger>
                     </TabsList>
-                    
+
                     <TabsContent value="elements" className="mt-6">
                       {clientSecret && paymentIntentId ? (
                         <StripeProvider>
                           <PaymentForm
                             clientSecret={clientSecret}
-                            paymentIntentId={paymentIntentId}
                             onSuccess={handlePaymentSuccess}
                             onError={handlePaymentError}
                             amount={booking.payment.amount}
@@ -438,7 +460,9 @@ export default function PaymentPage() {
                           {creatingPaymentIntent ? (
                             <div>
                               <Loader2 className="h-8 w-8 animate-spin text-[#8EB69B] mx-auto mb-4" />
-                              <p className="text-gray-600">Setting up payment...</p>
+                              <p className="text-gray-600">
+                                Setting up payment...
+                              </p>
                             </div>
                           ) : (
                             <div>
@@ -456,11 +480,12 @@ export default function PaymentPage() {
                         </div>
                       )}
                     </TabsContent>
-                    
+
                     <TabsContent value="checkout" className="mt-6">
                       <div className="space-y-4">
                         <p className="text-gray-600">
-                          You'll be redirected to Stripe's secure checkout page to complete your payment.
+                          You'll be redirected to Stripe's secure checkout page
+                          to complete your payment.
                         </p>
                         <Button
                           onClick={handleCheckoutSession}
