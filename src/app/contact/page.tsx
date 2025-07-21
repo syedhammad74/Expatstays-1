@@ -162,7 +162,7 @@ export default function ContactPage() {
 
   // Email sending function (simulated)
   const sendEmail = async (
-    data: FormData
+    _data: FormData
   ): Promise<{ success: boolean; message: string }> => {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 2000));
@@ -199,7 +199,7 @@ export default function ContactPage() {
         setShowError(true);
         setErrorMessage(result.message);
       }
-    } catch (error) {
+    } catch {
       setShowError(true);
       setErrorMessage("An unexpected error occurred. Please try again.");
     } finally {
@@ -746,8 +746,8 @@ export default function ContactPage() {
                 Visit Our Office
               </h3>
               <p className="text-lg text-[#235347] max-w-2xl mx-auto">
-                Located in the heart of Dubai's business district, our office is
-                easily accessible and ready to welcome you.
+                Located in the heart of Dubai&apos;s business district, our
+                office is easily accessible and ready to welcome you.
               </p>
             </div>
 

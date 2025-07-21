@@ -89,7 +89,7 @@ export default function PropertyBookingPage() {
   // Load property data with caching
   useEffect(() => {
     loadProperty();
-  }, [propertyId]);
+  }, [propertyId, loadProperty]);
 
   const loadProperty = useCallback(async () => {
     try {

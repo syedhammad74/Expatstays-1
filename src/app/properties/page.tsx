@@ -4,8 +4,6 @@ import PropertyCard, {
   type PropertyCardProps,
 } from "@/components/PropertyCard";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -13,8 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
@@ -23,54 +19,27 @@ import {
 } from "@/components/ui/popover";
 import {
   MapPin,
-  BedDouble,
-  DollarSign,
-  TrendingUp,
-  SlidersHorizontal,
   Search,
-  Filter,
   Grid,
   List,
-  Star,
   Shield,
-  Clock,
   Users,
-  ArrowRight,
-  Heart,
   Calendar as CalendarIcon,
   Check,
-  Eye,
-  Sparkles,
-  Award,
-  ChevronDown,
   Loader2,
 } from "lucide-react";
 import { getLocalImage } from "@/lib/imageUtils";
-import {
-  motion,
-  useScroll,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Header from "@/components/layout/Header";
 import { useState, useEffect, useCallback } from "react";
 import { format } from "date-fns";
-import { cn } from "@/lib/utils";
 import { DateRange } from "react-day-picker";
 import { useRouter, useSearchParams } from "next/navigation";
-import { DayPicker, DateRange as DayPickerDateRange } from "react-day-picker";
-import type { DayPickerProps, DayProps } from "react-day-picker";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { bookingService } from "@/lib/services/bookings";
 import { useToast } from "@/hooks/use-toast";
-import {
-  CacheManager,
-  optimizeImageUrl,
-  useImageLoad,
-  performanceMonitor,
-} from "@/lib/performance";
 import { usePerformanceMonitor, useDebounce } from "@/hooks/use-performance";
 import { VirtualGrid } from "@/components/ui/virtual-grid";
 
@@ -86,7 +55,6 @@ export default function PropertiesPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
-  const [error, setError] = useState<string | null>(null);
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [properties, setProperties] = useState<Property[]>([]);
@@ -95,9 +63,6 @@ export default function PropertiesPage() {
   const [searchLoading, setSearchLoading] = useState(false);
   const [useVirtualScrolling, setUseVirtualScrolling] = useState(false);
   const { toast } = useToast();
-  const [imageLoadingStates, setImageLoadingStates] = useState<{
-    [key: string]: boolean;
-  }>({});
 
   // Debounced search for better performance
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
@@ -143,7 +108,7 @@ export default function PropertiesPage() {
     return () => {
       unsubscribe();
     };
-  }, [dateRange]); // Added dateRange as dependency
+  }, [dateRange, loadProperties]);
 
   // Filter properties when search criteria change
   useEffect(() => {
@@ -152,13 +117,13 @@ export default function PropertiesPage() {
     } else {
       setFilteredProperties(properties);
     }
-  }, [properties, dateRange]);
+  }, [properties, dateRange, filterPropertiesByAvailability]);
 
   // Enhanced loadProperties with caching
   const loadProperties = useCallback(async () => {
     try {
       setLoading(true);
-      performanceMonitor.markStart("load-properties");
+      // performanceMonitor.markStart("load-properties"); // Removed performanceMonitor
 
       // Debug configuration
       console.log("🔍 Properties Page - Configuration Check:");
@@ -169,20 +134,20 @@ export default function PropertiesPage() {
       );
 
       // Try to get cached properties first
-      const cachedProperties = CacheManager.getCachedProperties();
-      if (cachedProperties && cachedProperties.length > 0) {
-        console.log("📱 Using cached properties for faster loading");
-        setProperties(cachedProperties);
-        setFilteredProperties(cachedProperties);
-        setLoading(false);
-        // Still fetch fresh data in background
-        const freshProperties = await propertyService.getAllProperties();
-        CacheManager.cacheProperties(freshProperties);
-        setProperties(freshProperties);
-        setFilteredProperties(freshProperties);
-        performanceMonitor.markEnd("load-properties");
-        return;
-      }
+      // const cachedProperties = CacheManager.getCachedProperties(); // Removed CacheManager
+      // if (cachedProperties && cachedProperties.length > 0) {
+      //   console.log("📱 Using cached properties for faster loading");
+      //   setProperties(cachedProperties);
+      //   setFilteredProperties(cachedProperties);
+      //   setLoading(false);
+      //   // Still fetch fresh data in background
+      //   const freshProperties = await propertyService.getAllProperties();
+      //   CacheManager.cacheProperties(freshProperties);
+      //   setProperties(freshProperties);
+      //   setFilteredProperties(freshProperties);
+      //   performanceMonitor.markEnd("load-properties");
+      //   return;
+      // }
 
       const allProperties = await propertyService.getAllProperties();
 
@@ -200,14 +165,14 @@ export default function PropertiesPage() {
       }
 
       // Cache the properties for faster future loads
-      CacheManager.cacheProperties(allProperties);
+      // CacheManager.cacheProperties(allProperties); // Removed CacheManager
 
       setProperties(allProperties);
       setFilteredProperties(allProperties);
 
-      performanceMonitor.markEnd("load-properties");
-      const loadTime = performanceMonitor.getMeasure("load-properties");
-      console.log(`⚡ Properties loaded in ${loadTime?.toFixed(2)}ms`);
+      // performanceMonitor.markEnd("load-properties"); // Removed performanceMonitor
+      // const loadTime = performanceMonitor.getMeasure("load-properties"); // Removed performanceMonitor
+      // console.log(`⚡ Properties loaded in ${loadTime?.toFixed(2)}ms`); // Removed performanceMonitor
     } catch (error) {
       console.error("Error loading properties:", error);
       toast({
@@ -218,7 +183,7 @@ export default function PropertiesPage() {
     } finally {
       setLoading(false);
     }
-  }, [dateRange, toast]); // Added dateRange and toast to dependencies
+  }, [toast]); // Added dateRange and toast to dependencies
 
   const filterPropertiesByAvailability = useCallback(async () => {
     if (!dateRange?.from || !dateRange?.to) return;
@@ -267,7 +232,7 @@ export default function PropertiesPage() {
     } finally {
       setSearchLoading(false);
     }
-  }, [dateRange, guests, properties, toast]); // Added dateRange, guests, properties, and toast to dependencies
+  }, [guests, properties, toast, trackError]); // Added dateRange, guests, properties, and toast to dependencies
 
   // Helper for guests summary
   const guestsSummary = () => {
@@ -315,7 +280,7 @@ export default function PropertiesPage() {
         dateRange: dateRange ? "selected" : "none",
       });
 
-      performanceMonitor.markStart("filter-properties");
+      // performanceMonitor.markStart("filter-properties"); // Removed performanceMonitor
 
       // Update URL with search params
       const params = new URLSearchParams();
@@ -334,9 +299,9 @@ export default function PropertiesPage() {
         await filterPropertiesByAvailability();
       }
 
-      performanceMonitor.markEnd("filter-properties");
-      const filterTime = performanceMonitor.getMeasure("filter-properties");
-      console.log(`🔍 Properties filtered in ${filterTime?.toFixed(2)}ms`);
+      // performanceMonitor.markEnd("filter-properties"); // Removed performanceMonitor
+      // const filterTime = performanceMonitor.getMeasure("filter-properties"); // Removed performanceMonitor
+      // console.log(`🔍 Properties filtered in ${filterTime?.toFixed(2)}ms`); // Removed performanceMonitor
     } catch (error) {
       console.error("Search failed:", error);
       trackError(error as Error, "search-properties");
@@ -417,7 +382,7 @@ export default function PropertiesPage() {
       return (
         <VirtualGrid
           items={filteredProperties.map(convertToPropertyCard)}
-          renderItem={(property, index) => (
+          renderItem={(property) => (
             <PropertyCard key={property.slug} {...property} />
           )}
           itemHeight={450}
@@ -437,14 +402,14 @@ export default function PropertiesPage() {
         animate={{ opacity: 1 }}
         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8"
       >
-        {filteredProperties.map((property, index) => {
+        {filteredProperties.map((property) => {
           const propertyCard = convertToPropertyCard(property);
           return (
             <motion.div
               key={property.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.05 }}
+              transition={{ delay: 0 }}
             >
               <PropertyCard {...propertyCard} />
             </motion.div>
@@ -593,11 +558,7 @@ export default function PropertiesPage() {
           <h2 className="mb-6 text-2xl lg:text-3xl xl:text-4xl font-bold text-[#051F20] text-center font-[Manrope,Inter,sans-serif] tracking-tight">
             Book Your Next Stay in Seconds
           </h2>
-          {error && (
-            <div className="mb-4 w-full bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm font-medium animate-fade-in">
-              {error}
-            </div>
-          )}
+          {/* Removed error state */}
           <div className="w-full bg-white rounded-xl lg:rounded-full shadow-xl py-4 lg:py-3 px-4 lg:px-5 flex flex-col lg:flex-row items-center gap-4">
             {/* Location Field */}
             <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-all duration-300">

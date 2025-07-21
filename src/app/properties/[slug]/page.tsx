@@ -21,6 +21,8 @@ import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import type { Metadata, NextPage } from "next";
+import type { PageProps } from "next/app";
 
 // Mock property data - In production, this would come from Firebase
 const propertyFeatures = [
@@ -48,8 +50,9 @@ const testimonials = [
   },
 ];
 
-export default function PropertyDetailPage(props: { params: { slug: string } }) {
-  const params = props?.params || { slug: "" };
+// Update the function signature to use PageProps
+export default function PropertyDetailPage({ params }: PageProps) {
+  const slug = params?.slug || "";
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -59,9 +62,7 @@ export default function PropertyDetailPage(props: { params: { slug: string } }) 
     const loadProperty = async () => {
       try {
         // Fetch real property from Firebase
-        const fetchedProperty = await propertyService.getPropertyById(
-          params.slug
-        );
+        const fetchedProperty = await propertyService.getPropertyById(slug);
         if (fetchedProperty) {
           setProperty(fetchedProperty);
         } else {
@@ -85,7 +86,7 @@ export default function PropertyDetailPage(props: { params: { slug: string } }) 
     };
 
     loadProperty();
-  }, [params.slug, toast]);
+  }, [slug, toast]);
 
   const handleBookingComplete = (booking: unknown) => {
     toast({

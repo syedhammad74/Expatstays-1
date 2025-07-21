@@ -174,10 +174,12 @@ export const getHeroImage = (section: string = "main"): string => {
   return getLocalImage("hero", section.length % 3);
 };
 
-export default {
+const imageUtils = {
   getLocalImage,
   getLocalImages,
   getRandomLocalImage,
   getPropertyImage,
   getHeroImage,
 };
+
+export default imageUtils;

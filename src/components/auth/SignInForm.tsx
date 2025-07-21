@@ -10,9 +10,10 @@ import { Loader2, Eye, EyeOff, Mail, Lock, Key } from "lucide-react";
 
 interface SignInFormProps {
   onClose?: () => void;
+  onToggleMode?: () => void;
 }
 
-export function SignInForm({ onClose }: SignInFormProps) {
+export function SignInForm({ onClose, onToggleMode }: SignInFormProps) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -247,6 +248,18 @@ export function SignInForm({ onClose }: SignInFormProps) {
         )}
         Continue with Google
       </Button>
+
+      {/* Toggle mode button if provided */}
+      {onToggleMode && (
+        <Button
+          type="button"
+          variant="ghost"
+          className="w-full mt-2 text-[#8EB69B] hover:text-[#0B2B26] text-sm"
+          onClick={onToggleMode}
+        >
+          Don&apos;t have an account? Sign up
+        </Button>
+      )}
     </div>
   );
 }

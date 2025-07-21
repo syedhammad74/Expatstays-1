@@ -120,15 +120,149 @@ export default function AdminDashboard() {
     activeListings: 0,
   });
 
+  // Move these two useCallback hooks above the useEffect hooks that use them
+  const applyBookingFilters = useCallback(() => {
+    try {
+      let filtered = [...bookings];
+
+      // Status filter
+      if (bookingFilter.status !== "all") {
+        filtered = filtered.filter(
+          (booking) => booking.status === bookingFilter.status
+        );
+      }
+
+      // Date range filter
+      if (bookingFilter.dateRange !== "all") {
+        const now = new Date();
+        let startDate: Date;
+
+        switch (bookingFilter.dateRange) {
+          case "7d":
+            startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+            break;
+          case "30d":
+            startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+            break;
+          case "90d":
+            startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+            break;
+          default:
+            startDate = new Date(0);
+        }
+
+        filtered = filtered.filter((booking) => {
+          const bookingDate = new Date(booking.createdAt);
+          return bookingDate >= startDate;
+        });
+      }
+
+      // Property filter
+      if (bookingFilter.property !== "all") {
+        filtered = filtered.filter(
+          (booking) => booking.propertyId === bookingFilter.property
+        );
+      }
+
+      // Search term filter
+      if (bookingFilter.searchTerm) {
+        const searchLower = bookingFilter.searchTerm.toLowerCase();
+        filtered = filtered.filter(
+          (booking) =>
+            booking.guest.name.toLowerCase().includes(searchLower) ||
+            booking.guest.email.toLowerCase().includes(searchLower) ||
+            booking.id.toLowerCase().includes(searchLower)
+        );
+      }
+
+      setFilteredBookings(filtered);
+    } catch (error) {
+      console.error("Error filtering bookings:", error);
+      setFilteredBookings(bookings);
+    }
+  }, [bookings, bookingFilter]);
+
+  const calculateAnalytics = useCallback(() => {
+    try {
+      const now = new Date();
+      const daysAgo = parseInt(selectedTimeRange.replace("d", ""));
+      const startDate = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
+
+      const recentBookings = bookings.filter((booking) => {
+        const bookingDate = new Date(booking.createdAt);
+        return bookingDate >= startDate;
+      });
+
+      const totalRevenue = recentBookings.reduce(
+        (sum, booking) => sum + (booking.pricing?.total || 0),
+        0
+      );
+
+      const pendingBookings = bookings.filter(
+        (booking) => booking.status === "pending"
+      ).length;
+
+      const completedBookings = bookings.filter(
+        (booking) => booking.status === "completed"
+      ).length;
+
+      const cancelledBookings = bookings.filter(
+        (booking) => booking.status === "cancelled"
+      ).length;
+
+      const activeListings = properties.filter(
+        (property) => property.availability?.isActive
+      ).length;
+
+      // Calculate occupancy rate (simplified)
+      const totalNights = recentBookings.reduce((sum, booking) => {
+        const checkIn = new Date(booking.dates.checkIn);
+        const checkOut = new Date(booking.dates.checkOut);
+        const nights = Math.ceil(
+          (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
+        );
+        return sum + nights;
+      }, 0);
+
+      const possibleNights = activeListings * daysAgo;
+      const occupancyRate =
+        possibleNights > 0
+          ? Math.round((totalNights / possibleNights) * 100)
+          : 0;
+
+      setAnalytics({
+        totalBookings: recentBookings.length,
+        totalRevenue,
+        occupancyRate: Math.min(occupancyRate, 100), // Cap at 100%
+        totalProperties: properties.length,
+        pendingBookings,
+        completedBookings,
+        cancelledBookings,
+        activeListings,
+      });
+    } catch (error) {
+      console.error("Error calculating analytics:", error);
+      setAnalytics({
+        totalBookings: 0,
+        totalRevenue: 0,
+        occupancyRate: 0,
+        totalProperties: 0,
+        pendingBookings: 0,
+        completedBookings: 0,
+        cancelledBookings: 0,
+        activeListings: 0,
+      });
+    }
+  }, [bookings, properties, selectedTimeRange]);
+
   useEffect(() => {
-    loadAdminData();
     setupRealTimeSubscriptions();
-  }, [loadAdminData, setupRealTimeSubscriptions]);
+  }, []);
 
   // Filter bookings whenever filters change
   useEffect(() => {
     applyBookingFilters();
-  }, [bookings, bookingFilter, applyBookingFilters]); // Added applyBookingFilters as dependency
+  }, [bookings, bookingFilter, applyBookingFilters]);
 
   // Recalculate analytics when data changes
   useEffect(() => {
@@ -204,7 +338,6 @@ export default function AdminDashboard() {
             setNotifications(updatedNotifications);
           }
         );
-
       // Subscribe to real-time bookings updates
       const unsubscribeBookings = bookingService.subscribeToAllBookings(
         (updatedBookings) => {
@@ -230,78 +363,14 @@ export default function AdminDashboard() {
     }
   }, []);
 
-  const calculateAnalytics = useCallback(() => {
-    try {
-      const now = new Date();
-      const daysAgo = parseInt(selectedTimeRange.replace("d", ""));
-      const startDate = new Date(now.getTime() - daysAgo * 24 * 60 * 60 * 1000);
-
-      const recentBookings = bookings.filter((booking) => {
-        const bookingDate = new Date(booking.createdAt);
-        return bookingDate >= startDate;
-      });
-
-      const totalRevenue = recentBookings.reduce(
-        (sum, booking) => sum + (booking.pricing?.total || 0),
-        0
-      );
-
-      const pendingBookings = bookings.filter(
-        (booking) => booking.status === "pending"
-      ).length;
-
-      const completedBookings = bookings.filter(
-        (booking) => booking.status === "completed"
-      ).length;
-
-      const cancelledBookings = bookings.filter(
-        (booking) => booking.status === "cancelled"
-      ).length;
-
-      const activeListings = properties.filter(
-        (property) => property.availability?.isActive
-      ).length;
-
-      // Calculate occupancy rate (simplified)
-      const totalNights = recentBookings.reduce((sum, booking) => {
-        const checkIn = new Date(booking.dates.checkIn);
-        const checkOut = new Date(booking.dates.checkOut);
-        const nights = Math.ceil(
-          (checkOut.getTime() - checkIn.getTime()) / (1000 * 60 * 60 * 24)
-        );
-        return sum + nights;
-      }, 0);
-
-      const possibleNights = activeListings * daysAgo;
-      const occupancyRate =
-        possibleNights > 0
-          ? Math.round((totalNights / possibleNights) * 100)
-          : 0;
-
-      setAnalytics({
-        totalBookings: recentBookings.length,
-        totalRevenue,
-        occupancyRate: Math.min(occupancyRate, 100), // Cap at 100%
-        totalProperties: properties.length,
-        pendingBookings,
-        completedBookings,
-        cancelledBookings,
-        activeListings,
-      });
-    } catch (error) {
-      console.error("Error calculating analytics:", error);
-      setAnalytics({
-        totalBookings: 0,
-        totalRevenue: 0,
-        occupancyRate: 0,
-        totalProperties: 0,
-        pendingBookings: 0,
-        completedBookings: 0,
-        cancelledBookings: 0,
-        activeListings: 0,
-      });
-    }
-  }, [bookings, properties, selectedTimeRange]);
+  // Top-level useEffect to load data and setup subscriptions on mount
+  useEffect(() => {
+    loadAdminData();
+    const unsubscribe = setupRealTimeSubscriptions();
+    return () => {
+      if (typeof unsubscribe === "function") unsubscribe();
+    };
+  }, [loadAdminData, setupRealTimeSubscriptions]);
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
@@ -371,67 +440,6 @@ export default function AdminDashboard() {
       description: "Admin dashboard refreshed",
     });
   };
-
-  const applyBookingFilters = useCallback(() => {
-    try {
-      let filtered = [...bookings];
-
-      // Status filter
-      if (bookingFilter.status !== "all") {
-        filtered = filtered.filter(
-          (booking) => booking.status === bookingFilter.status
-        );
-      }
-
-      // Date range filter
-      if (bookingFilter.dateRange !== "all") {
-        const now = new Date();
-        let startDate: Date;
-
-        switch (bookingFilter.dateRange) {
-          case "7d":
-            startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
-            break;
-          case "30d":
-            startDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
-            break;
-          case "90d":
-            startDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
-            break;
-          default:
-            startDate = new Date(0);
-        }
-
-        filtered = filtered.filter((booking) => {
-          const bookingDate = new Date(booking.createdAt);
-          return bookingDate >= startDate;
-        });
-      }
-
-      // Property filter
-      if (bookingFilter.property !== "all") {
-        filtered = filtered.filter(
-          (booking) => booking.propertyId === bookingFilter.property
-        );
-      }
-
-      // Search term filter
-      if (bookingFilter.searchTerm) {
-        const searchLower = bookingFilter.searchTerm.toLowerCase();
-        filtered = filtered.filter(
-          (booking) =>
-            booking.guest.name.toLowerCase().includes(searchLower) ||
-            booking.guest.email.toLowerCase().includes(searchLower) ||
-            booking.id.toLowerCase().includes(searchLower)
-        );
-      }
-
-      setFilteredBookings(filtered);
-    } catch (error) {
-      console.error("Error filtering bookings:", error);
-      setFilteredBookings(bookings);
-    }
-  }, [bookings, bookingFilter]);
 
   const handleBookingStatusUpdate = async (
     bookingId: string,

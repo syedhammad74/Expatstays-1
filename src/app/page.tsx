@@ -1,39 +1,21 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
-  HomeIcon,
   Users,
   Star,
-  Award,
   Search,
   MapPin,
-  ArrowRight,
-  TrendingUp,
   Shield,
   Clock,
-  Heart,
   CalendarIcon,
+  ArrowRight,
 } from "lucide-react";
-import Link from "next/link";
 import Image from "next/image";
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  AnimatePresence,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
 import {
   Popover,
   PopoverContent,
@@ -111,18 +93,6 @@ export default function Home() {
   }, [carouselSlides.length]);
 
   // Navigation functions
-  const nextSlide = () => {
-    setCurrentServiceIndex(
-      (prevIndex) => (prevIndex + 1) % carouselSlides.length
-    );
-  };
-
-  const prevSlide = () => {
-    setCurrentServiceIndex((prevIndex) =>
-      prevIndex === 0 ? carouselSlides.length - 1 : prevIndex - 1
-    );
-  };
-
   const goToSlide = (index: number) => {
     setCurrentServiceIndex(index);
   };

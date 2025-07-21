@@ -59,6 +59,7 @@ import {
   Home,
   Zap,
 } from "lucide-react";
+import Image from "next/image";
 
 interface AdminDataManagerProps {
   className?: string;
@@ -156,11 +157,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
       );
 
       // Subscribe to Realtime Database
-      const unsubscribeRealtime = adminDataService.subscribeToRealtimeData(
-        (data) => {
-          // setRealtimeData(data); // This variable is no longer used
-        }
-      );
+      const unsubscribeRealtime = adminDataService.subscribeToRealtimeData(() => {
+        // setRealtimeData(data); // This variable is no longer used
+      });
 
       // Subscribe to activity feed
       const unsubscribeActivity = adminDataService.subscribeToActivityFeed(
@@ -910,10 +909,12 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                             onChange={handleImageChange}
                           />
                           {imagePreview && (
-                            <img
+                            <Image
                               src={imagePreview}
                               alt="Preview"
                               className="mt-2 rounded-lg w-32 h-32 object-cover border"
+                              width={128}
+                              height={128}
                             />
                           )}
                           <p className="text-xs text-[#235347]/70">
@@ -1581,10 +1582,12 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                     onChange={handleImageChange}
                   />
                   {imagePreview && (
-                    <img
+                    <Image
                       src={imagePreview}
                       alt="Preview"
                       className="mt-2 rounded-lg w-32 h-32 object-cover border"
+                      width={128}
+                      height={128}
                     />
                   )}
                   <p className="text-xs text-[#235347]/70">

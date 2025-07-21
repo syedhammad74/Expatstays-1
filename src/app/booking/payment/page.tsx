@@ -210,7 +210,7 @@ export default function PaymentPage() {
     }
   };
 
-  const handlePaymentSuccess = (paymentResult: unknown) => {
+  const handlePaymentSuccess = () => {
     toast({
       title: "Payment Successful!",
       description: "Your booking has been confirmed.",

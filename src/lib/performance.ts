@@ -335,7 +335,7 @@ export const useLazyComponent = (importFn: () => Promise<unknown>) => {
   return { Component, loading, error };
 };
 
-export default {
+const performanceUtils = {
   optimizeImageUrl,
   preloadImage,
   preloadImages,
@@ -348,3 +348,5 @@ export default {
   useVirtualization,
   useLazyComponent,
 };
+
+export default performanceUtils;
