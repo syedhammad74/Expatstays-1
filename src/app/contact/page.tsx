@@ -34,8 +34,6 @@ import {
   TooltipContent,
 } from "@/components/ui/tooltip";
 
-// Ensure all used symbols (e.g., useState, FormData, FormErrors) are imported or defined.
-import { useState } from "react";
 // Define FormData and FormErrors types if not already defined.
 type FormData = {
   fullName: string;
