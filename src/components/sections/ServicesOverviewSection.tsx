@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
+import { Disclosure } from "@headlessui/react";
 import {
   ConciergeBell,
   Shirt,
   Wrench,
-  Utench,
   Utensils,
   Car,
   Plane,
@@ -142,74 +142,74 @@ const faqs = [
   },
 ];
 
+// FAQ Item Component
 const ServicesOverviewSection: React.FC = () => (
   <section
     id="services-overview"
-    className="relative bg-gradient-to-b from-white to-[#F3F9F4] py-32 px-6 lg:px-24 overflow-hidden"
+    className="relative w-full bg-gradient-to-b from-white to-[#F3F9F4] py-20 overflow-visible"
   >
-    {/* Decorative shapes */}
-    <div className="absolute -top-20 -left-20 w-80 h-80 bg-[#8EB69B]/20 rounded-full filter blur-3xl rotate-45" />
-    <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#DAF1DE]/30 rounded-full filter blur-4xl rotate-12" />
+    {/* Floating shapes */}
+    <div className="absolute -top-20 -left-10 w-96 h-96 bg-[#8EB69B]/20 rounded-full filter blur-3xl rotate-45" />
+    <div className="absolute -bottom-32 -right-10 w-[30rem] h-[30rem] bg-[#DAF1DE]/30 rounded-full filter blur-4xl rotate-12" />
 
     {/* Hero */}
-    <div className="relative z-10 max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center mb-32">
-      <div className="space-y-6 text-center lg:text-left">
-        <span className="inline-block bg-gradient-to-r from-[#8EB69B] to-[#DAF1DE] text-white font-semibold px-5 py-2 rounded-full uppercase tracking-wider">
+    <div className="w-full flex flex-col lg:flex-row items-center justify-evenly px-4 py-12">
+      <div className="flex-1 space-y-4 text-center lg:text-left lg:px-8">
+        <span className="inline-block bg-gradient-to-r from-[#8EB69B] to-[#DAF1DE] text-white font-semibold px-4 py-1 rounded-full uppercase text-sm tracking-wide">
           Premium Services
         </span>
-        <h1 className="text-5xl lg:text-6xl font-extrabold text-[#051F20] leading-tight">
-          Elevate Your <br />
-          <span className="text-[#8EB69B]">Lifestyle</span>
+        <h1 className="text-4xl lg:text-5xl font-bold text-[#051F20] leading-snug">
+          Elevate Your <span className="text-[#8EB69B]">Lifestyle</span>
         </h1>
-        <p className="text-lg text-[#235347] max-w-md mx-auto lg:mx-0">
-          Experience the pinnacle of luxury with our handpicked suite of
-          services tailored for discerning clients.
+        <p className="text-base lg:text-lg text-[#235347]">
+          Experience top-tier luxury with our curated offerings built for
+          discerning tastes.
         </p>
         <Link href="/services">
           <Button
             size="lg"
-            className="mt-4 bg-[#8EB69B] hover:bg-[#72a785] text-white rounded-full px-8 py-4 shadow-lg transition-all"
+            className="mt-2 bg-[#8EB69B] hover:bg-[#72a785] text-white rounded-full px-6 py-2 shadow-md transition"
           >
             Explore All Services
-            <ArrowRight className="ml-2 w-5 h-5" aria-hidden />
+            <ArrowRight className="ml-1 w-4 h-4" aria-hidden />
           </Button>
         </Link>
       </div>
-      <div className="rounded-2xl overflow-hidden shadow-2xl border border-[#E2F1E8] transform hover:scale-105 transition">
+      <div className="flex-1 mt-8 lg:mt-0 rounded-2xl overflow-hidden shadow-lg border border-[#E2F1E8] hover:scale-105 transition-transform">
         <Carousel slides={carouselSlides} />
       </div>
     </div>
 
     {/* Services Grid */}
-    <div className="relative z-10 max-w-6xl mx-auto mb-32">
-      <h2 className="text-center text-3xl lg:text-4xl font-bold text-[#051F20] mb-12">
+    <div className="w-full px-4 py-12">
+      <h2 className="text-3xl lg:text-4xl font-bold text-[#051F20] text-center mb-8">
         Our <span className="text-[#8EB69B]">Services</span>
       </h2>
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <ul className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2">
         {services.map((svc, idx) => (
-          <li key={idx}>
-            <Card className="group relative bg-white rounded-3xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-transform border border-transparent hover:border-[#8EB69B]/20">
-              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-br from-[#8EB69B] to-[#DAF1DE] p-5 rounded-full text-white shadow-xl">
-                <svc.icon className="w-8 h-8" aria-hidden />
+          <li key={idx} className="flex">
+            <Card className="group relative w-full bg-white rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform border hover:border-[#8EB69B]/20">
+              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-br from-[#8EB69B] to-[#DAF1DE] p-3 rounded-full text-white shadow-md">
+                <svc.icon className="w-6 h-6" aria-hidden />
               </div>
-              <div className="mt-12 text-center">
-                <CardTitle className="text-2xl font-semibold text-[#051F20] mb-4">
+              <CardHeader className="mt-8 text-center">
+                <CardTitle className="text-xl font-medium text-[#051F20]">
                   {svc.title}
                 </CardTitle>
-                <CardContent>
-                  <p className="text-[#235347] text-base leading-relaxed mb-6">
-                    {svc.description}
-                  </p>
-                </CardContent>
+              </CardHeader>
+              <CardContent className="text-center mt-2">
+                <p className="text-[#235347] text-sm leading-relaxed mb-4">
+                  {svc.description}
+                </p>
                 <Link href={svc.href}>
                   <Button
                     variant="outline"
-                    className="rounded-full border-2 border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition px-8 py-3"
+                    className="rounded-full border border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white px-4 py-1 text-sm transition"
                   >
                     Learn More
                   </Button>
                 </Link>
-              </div>
+              </CardContent>
             </Card>
           </li>
         ))}
@@ -217,20 +217,20 @@ const ServicesOverviewSection: React.FC = () => (
     </div>
 
     {/* Why Choose */}
-    <div className="relative z-10 max-w-4xl mx-auto mb-32">
-      <h2 className="text-center text-3xl lg:text-4xl font-bold text-[#051F20] mb-8">
+    <div className="w-full px-4 py-12 bg-white">
+      <h2 className="text-3xl lg:text-4xl font-bold text-[#051F20] text-center mb-8">
         Why <span className="text-[#8EB69B]">Choose</span> Us?
       </h2>
-      <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <ul className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 px-2">
         {whyChoose.map((item, idx) => (
-          <li key={idx} className="text-center">
-            <div className="inline-block bg-white p-5 rounded-full shadow-xl border-2 border-[#8EB69B]/30">
-              <item.icon className="w-8 h-8 text-[#8EB69B]" aria-hidden />
+          <li key={idx} className="text-center flex flex-col items-center p-4">
+            <div className="bg-white p-4 rounded-full shadow-md border border-[#8EB69B]/30">
+              <item.icon className="w-6 h-6 text-[#8EB69B]" aria-hidden />
             </div>
-            <h3 className="mt-4 text-xl font-semibold text-[#051F20] mb-2">
+            <h3 className="mt-3 text-lg font-semibold text-[#051F20]">
               {item.title}
             </h3>
-            <p className="mt-2 text-[#235347] text-sm leading-relaxed">
+            <p className="mt-1 text-[#235347] text-sm leading-relaxed">
               {item.desc}
             </p>
           </li>
@@ -239,27 +239,27 @@ const ServicesOverviewSection: React.FC = () => (
     </div>
 
     {/* How It Works Spotlight */}
-    <div className="relative z-10 max-w-3xl mx-auto mb-32">
-      <h2 className="text-center text-3xl lg:text-4xl font-bold text-[#051F20] mb-6">
+    <div className="w-full px-4 py-12">
+      <h2 className="text-3xl lg:text-4xl font-bold text-[#051F20] text-center mb-6">
         How It <span className="text-[#8EB69B]">Works</span>
       </h2>
-      <CardSpotlight className="bg-white rounded-3xl p-10 shadow-xl border-t-4 border-[#8EB69B]">
-        <ol className="list-decimal list-inside space-y-4 text-[#235347] leading-relaxed">
+      <CardSpotlight className="w-full bg-[#E2F1E8] rounded-2xl p-6 shadow-md border-t-4 border-[#8EB69B]">
+        <ol className="list-decimal list-inside space-y-2 text-[#235347] leading-snug">
           {howItWorksSteps.map((item, idx) => (
             <li key={idx}>
               <span className="font-medium text-base text-[#051F20]">
                 {item.step}
               </span>
               {item.note && (
-                <p className="text-sm opacity-80 mt-1">{item.note}</p>
+                <div className="text-sm opacity-80 mt-1">{item.note}</div>
               )}
             </li>
           ))}
         </ol>
-        <div className="mt-8 text-center">
+        <div className="mt-4 text-center">
           <Button
-            size="lg"
-            className="bg-[#8EB69B] text-white rounded-full px-6 py-3 hover:bg-[#72a785] transition"
+            size="sm"
+            className="bg-[#8EB69B] text-white rounded-full px-4 py-1 hover:bg-[#72a785] transition"
           >
             Contact Concierge
           </Button>
@@ -268,26 +268,26 @@ const ServicesOverviewSection: React.FC = () => (
     </div>
 
     {/* FAQ Section */}
-    <div className="relative z-10 max-w-3xl mx-auto mb-32">
-      <h2 className="text-center text-3xl lg:text-4xl font-bold text-[#051F20] mb-8">
-        Frequently Asked <span className="text-[#8EB69B]">Questions</span>
+    <div className="w-full px-4 py-12 bg-white">
+      <h2 className="text-3xl lg:text-4xl font-bold text-[#051F20] text-center mb-6">
+        FAQs
       </h2>
-      <div className="space-y-4">
+      <div className="space-y-2 px-2">
         {faqs.map((faq, idx) => (
           <Disclosure key={idx}>
             {({ open }) => (
-              <div className="border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
-                <Disclosure.Button className="w-full flex justify-between items-center px-6 py-4 bg-white hover:bg-gray-50 transition">
-                  <span className="text-left font-medium text-[#051F20]">
+              <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+                <Disclosure.Button className="w-full flex justify-between items-center px-4 py-2 bg-white hover:bg-gray-50 transition">
+                  <span className="font-medium text-[#051F20] text-sm">
                     {faq.question}
                   </span>
                   {open ? (
-                    <ChevronUp className="w-5 h-5 text-[#8EB69B]" />
+                    <ChevronUp className="w-4 h-4 text-[#8EB69B]" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-gray-400" />
+                    <ChevronDown className="w-4 h-4 text-gray-400" />
                   )}
                 </Disclosure.Button>
-                <Disclosure.Panel className="px-6 py-4 bg-[#F9FBFA] text-[#235347] leading-relaxed">
+                <Disclosure.Panel className="px-4 py-2 bg-[#F9FBFA] text-[#235347] text-sm leading-relaxed">
                   {faq.answer}
                 </Disclosure.Panel>
               </div>
