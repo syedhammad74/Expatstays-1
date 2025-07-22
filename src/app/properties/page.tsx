@@ -419,7 +419,7 @@ export default function PropertiesPage() {
           <div className="absolute top-10 left-10 w-48 lg:w-96 h-48 lg:h-96 bg-gradient-to-br from-[#DAF1DE]/3 to-transparent rounded-full blur-2xl"></div>
         </div>
 
-        <div className="container mx-auto px-4 sm:px-8 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-28 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left Column - Content */}
             <motion.div
@@ -744,7 +744,7 @@ export default function PropertiesPage() {
 
       {/* Properties Grid Section */}
       <section className="py-12 lg:py-20">
-        <div className="container mx-auto px-4 sm:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Results Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -794,7 +794,7 @@ export default function PropertiesPage() {
 
       {/* Luxury Trust Section */}
       <section className="py-12 lg:py-20 bg-gradient-to-br from-slate-50 to-white">
-        <div className="container mx-auto px-4 sm:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div
             className="text-center mb-12 lg:mb-16"
             initial={{ opacity: 0, y: 30 }}

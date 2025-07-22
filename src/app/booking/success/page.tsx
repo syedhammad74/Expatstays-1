@@ -113,291 +113,285 @@ function BookingSuccessContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FAFAFA] via-white to-[#DAF1DE]/30 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-28">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-center mb-8"
+      >
+        <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
+        <h1 className="text-4xl font-bold text-[#163832] mb-2">
+          Payment Successful!
+        </h1>
+        <p className="text-xl text-[#235347]/70">
+          Your booking has been confirmed. Check your email for confirmation
+          details.
+        </p>
+      </motion.div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        {/* Booking Details */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-8"
-        >
-          <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
-          <h1 className="text-4xl font-bold text-[#163832] mb-2">
-            Payment Successful!
-          </h1>
-          <p className="text-xl text-[#235347]/70">
-            Your booking has been confirmed. Check your email for confirmation
-            details.
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Booking Details */}
-          <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Calendar className="h-5 w-5" />
-                  Booking Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-[#235347]/70">Booking ID</p>
-                    <p className="font-mono text-sm font-medium">
-                      {booking.id}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-[#235347]/70">Status</p>
-                    <Badge
-                      variant="default"
-                      className="bg-green-100 text-green-800"
-                    >
-                      {booking.status}
-                    </Badge>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-[#235347]/70">Check-in</p>
-                    <p className="font-medium">
-                      {formatDate(booking.dates.checkIn)}
-                    </p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-[#235347]/70">Check-out</p>
-                    <p className="font-medium">
-                      {formatDate(booking.dates.checkOut)}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-[#235347]/70">Nights</p>
-                    <p className="font-medium">{booking.dates.nights}</p>
-                  </div>
-                  <div>
-                    <p className="text-sm text-[#235347]/70">Guests</p>
-                    <p className="font-medium">{booking.guests.total}</p>
-                  </div>
-                </div>
-
-                {property && (
-                  <div>
-                    <p className="text-sm text-[#235347]/70">Property</p>
-                    <p className="font-medium">{property.title}</p>
-                    <p className="text-sm text-[#235347]/70">
-                      {property.location.address}
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </motion.div>
-
-          {/* Payment Details */}
-          <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-          >
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <CheckCircle className="h-5 w-5" />
-                  Payment Details
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <p className="text-sm text-[#235347]/70">Payment Status</p>
-                    <Badge
-                      variant="default"
-                      className="bg-green-100 text-green-800"
-                    >
-                      {booking.payment.status}
-                    </Badge>
-                  </div>
-                  <div>
-                    <p className="text-sm text-[#235347]/70">Payment Method</p>
-                    <p className="font-medium">
-                      {booking.payment.paymentMethod ? "Card" : "Credit Card"}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="space-y-2">
-                  <div className="flex justify-between">
-                    <span className="text-[#235347]/70">Subtotal</span>
-                    <span>
-                      {formatCurrency(
-                        booking.pricing.subtotal,
-                        booking.pricing.currency
-                      )}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#235347]/70">Cleaning Fee</span>
-                    <span>
-                      {formatCurrency(
-                        booking.pricing.cleaningFee,
-                        booking.pricing.currency
-                      )}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#235347]/70">Service Fee</span>
-                    <span>
-                      {formatCurrency(
-                        booking.pricing.serviceFee,
-                        booking.pricing.currency
-                      )}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-[#235347]/70">Taxes</span>
-                    <span>
-                      {formatCurrency(
-                        booking.pricing.taxes,
-                        booking.pricing.currency
-                      )}
-                    </span>
-                  </div>
-                  <div className="flex justify-between font-bold text-lg border-t pt-2">
-                    <span>Total Paid</span>
-                    <span>
-                      {formatCurrency(
-                        booking.pricing.total,
-                        booking.pricing.currency
-                      )}
-                    </span>
-                  </div>
-                </div>
-
-                {booking.payment.receiptUrl && (
-                  <Button asChild variant="outline" className="w-full">
-                    <a
-                      href={booking.payment.receiptUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Download className="h-4 w-4 mr-2" />
-                      Download Receipt
-                    </a>
-                  </Button>
-                )}
-              </CardContent>
-            </Card>
-          </motion.div>
-        </div>
-
-        {/* Guest Information */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.6 }}
-          className="mt-8"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
         >
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <User className="h-5 w-5" />
-                Guest Information
+                <Calendar className="h-5 w-5" />
+                Booking Details
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <p className="text-sm text-[#235347]/70">Name</p>
-                  <p className="font-medium">{booking.guest.name}</p>
+                  <p className="text-sm text-[#235347]/70">Booking ID</p>
+                  <p className="font-mono text-sm font-medium">{booking.id}</p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#235347]/70">Email</p>
-                  <p className="font-medium">{booking.guest.email}</p>
+                  <p className="text-sm text-[#235347]/70">Status</p>
+                  <Badge
+                    variant="default"
+                    className="bg-green-100 text-green-800"
+                  >
+                    {booking.status}
+                  </Badge>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-[#235347]/70">Check-in</p>
+                  <p className="font-medium">
+                    {formatDate(booking.dates.checkIn)}
+                  </p>
                 </div>
                 <div>
-                  <p className="text-sm text-[#235347]/70">Phone</p>
-                  <p className="font-medium">{booking.guest.phone}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-[#235347]/70">Guest ID</p>
-                  <p className="font-mono text-sm font-medium">
-                    {booking.guest.uid}
+                  <p className="text-sm text-[#235347]/70">Check-out</p>
+                  <p className="font-medium">
+                    {formatDate(booking.dates.checkOut)}
                   </p>
                 </div>
               </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-[#235347]/70">Nights</p>
+                  <p className="font-medium">{booking.dates.nights}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-[#235347]/70">Guests</p>
+                  <p className="font-medium">{booking.guests.total}</p>
+                </div>
+              </div>
+
+              {property && (
+                <div>
+                  <p className="text-sm text-[#235347]/70">Property</p>
+                  <p className="font-medium">{property.title}</p>
+                  <p className="text-sm text-[#235347]/70">
+                    {property.location.address}
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
         </motion.div>
 
-        {/* Action Buttons */}
+        {/* Payment Details */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.8 }}
-          className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <Button
-            asChild
-            size="lg"
-            className="bg-[#8EB69B] text-[#051F20] hover:bg-[#235347] hover:text-[#DAF1DE]"
-          >
-            <Link href="/">
-              <Home className="h-5 w-5 mr-2" />
-              Back to Home
-            </Link>
-          </Button>
-          <Button asChild variant="outline" size="lg">
-            <Link href="/properties">
-              <Calendar className="h-5 w-5 mr-2" />
-              Browse More Properties
-            </Link>
-          </Button>
-        </motion.div>
-
-        {/* Next Steps */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1 }}
-          className="mt-8"
-        >
-          <Card className="bg-blue-50 border-blue-200">
+          <Card>
             <CardHeader>
-              <CardTitle className="text-[#163832]">
-                What&apos;s Next?
+              <CardTitle className="flex items-center gap-2">
+                <CheckCircle className="h-5 w-5" />
+                Payment Details
               </CardTitle>
             </CardHeader>
-            <CardContent>
-              <ul className="space-y-2 text-[#235347]/70">
-                <li className="flex items-center gap-2">
-                  <Mail className="h-4 w-4" />
-                  Check your email for detailed confirmation and check-in
-                  instructions
-                </li>
-                <li className="flex items-center gap-2">
-                  <Calendar className="h-4 w-4" />
-                  Mark your calendar for your upcoming stay
-                </li>
-                <li className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  You&apos;ll receive contact information for the property
-                  owner/manager
-                </li>
-              </ul>
+            <CardContent className="space-y-4">
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-[#235347]/70">Payment Status</p>
+                  <Badge
+                    variant="default"
+                    className="bg-green-100 text-green-800"
+                  >
+                    {booking.payment.status}
+                  </Badge>
+                </div>
+                <div>
+                  <p className="text-sm text-[#235347]/70">Payment Method</p>
+                  <p className="font-medium">
+                    {booking.payment.paymentMethod ? "Card" : "Credit Card"}
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-[#235347]/70">Subtotal</span>
+                  <span>
+                    {formatCurrency(
+                      booking.pricing.subtotal,
+                      booking.pricing.currency
+                    )}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#235347]/70">Cleaning Fee</span>
+                  <span>
+                    {formatCurrency(
+                      booking.pricing.cleaningFee,
+                      booking.pricing.currency
+                    )}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#235347]/70">Service Fee</span>
+                  <span>
+                    {formatCurrency(
+                      booking.pricing.serviceFee,
+                      booking.pricing.currency
+                    )}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-[#235347]/70">Taxes</span>
+                  <span>
+                    {formatCurrency(
+                      booking.pricing.taxes,
+                      booking.pricing.currency
+                    )}
+                  </span>
+                </div>
+                <div className="flex justify-between font-bold text-lg border-t pt-2">
+                  <span>Total Paid</span>
+                  <span>
+                    {formatCurrency(
+                      booking.pricing.total,
+                      booking.pricing.currency
+                    )}
+                  </span>
+                </div>
+              </div>
+
+              {booking.payment.receiptUrl && (
+                <Button asChild variant="outline" className="w-full">
+                  <a
+                    href={booking.payment.receiptUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    Download Receipt
+                  </a>
+                </Button>
+              )}
             </CardContent>
           </Card>
         </motion.div>
       </div>
+
+      {/* Guest Information */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+        className="mt-8"
+      >
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <User className="h-5 w-5" />
+              Guest Information
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <p className="text-sm text-[#235347]/70">Name</p>
+                <p className="font-medium">{booking.guest.name}</p>
+              </div>
+              <div>
+                <p className="text-sm text-[#235347]/70">Email</p>
+                <p className="font-medium">{booking.guest.email}</p>
+              </div>
+              <div>
+                <p className="text-sm text-[#235347]/70">Phone</p>
+                <p className="font-medium">{booking.guest.phone}</p>
+              </div>
+              <div>
+                <p className="text-sm text-[#235347]/70">Guest ID</p>
+                <p className="font-mono text-sm font-medium">
+                  {booking.guest.uid}
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Action Buttons */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.8 }}
+        className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"
+      >
+        <Button
+          asChild
+          size="lg"
+          className="bg-[#8EB69B] text-[#051F20] hover:bg-[#235347] hover:text-[#DAF1DE]"
+        >
+          <Link href="/">
+            <Home className="h-5 w-5 mr-2" />
+            Back to Home
+          </Link>
+        </Button>
+        <Button asChild variant="outline" size="lg">
+          <Link href="/properties">
+            <Calendar className="h-5 w-5 mr-2" />
+            Browse More Properties
+          </Link>
+        </Button>
+      </motion.div>
+
+      {/* Next Steps */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1 }}
+        className="mt-8"
+      >
+        <Card className="bg-blue-50 border-blue-200">
+          <CardHeader>
+            <CardTitle className="text-[#163832]">What&apos;s Next?</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul className="space-y-2 text-[#235347]/70">
+              <li className="flex items-center gap-2">
+                <Mail className="h-4 w-4" />
+                Check your email for detailed confirmation and check-in
+                instructions
+              </li>
+              <li className="flex items-center gap-2">
+                <Calendar className="h-4 w-4" />
+                Mark your calendar for your upcoming stay
+              </li>
+              <li className="flex items-center gap-2">
+                <User className="h-4 w-4" />
+                You&apos;ll receive contact information for the property
+                owner/manager
+              </li>
+            </ul>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   );
 }

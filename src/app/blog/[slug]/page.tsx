@@ -44,7 +44,7 @@ export default function BlogPostDetailPage() {
   const post = blogPost;
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32 max-w-4xl">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-28">
       <article>
         <header className="mb-6 lg:mb-8">
           <Link

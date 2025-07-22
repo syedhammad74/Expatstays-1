@@ -36,12 +36,15 @@ export interface Property {
     name: string;
     email: string;
   };
+  rating?: number;
+  reviews?: number;
   createdAt: string;
   updatedAt: string;
   featured?: boolean;
 }
 
 export interface Booking {
+  propertyName: string;
   id: string;
   propertyId: string;
   guest: {
@@ -94,6 +97,8 @@ export interface User {
   displayName: string;
   photoURL?: string;
   profile: {
+    location: string;
+    bio: string;
     firstName: string;
     lastName: string;
     phone?: string;
@@ -105,8 +110,11 @@ export interface User {
     language: string;
     emailNotifications: boolean;
     smsNotifications: boolean;
+    marketingCommunications?: boolean;
   };
   bookingHistory: BookingHistoryItem[];
+  savedProperties?: string[];
+  loyaltyPoints?: number;
   createdAt: string;
   updatedAt: string;
 }

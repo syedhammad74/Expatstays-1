@@ -73,7 +73,7 @@ export default function LuxeNavbar() {
           backdropFilter: "blur(24px)",
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between gap-0">
             {/* Logo - single line, smaller, centered */}
             <div className="flex items-center min-w-[160px] h-14">

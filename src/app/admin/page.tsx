@@ -703,10 +703,10 @@ export default function AdminDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#FAFAFA] via-white to-[#DAF1DE]/20">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 pt-20">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-16">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
+        <div className="mb-6">
+          <div className="flex items-center justify-between mb-4">
             <div className="space-y-1">
               <h1 className="text-4xl font-bold bg-gradient-to-r from-[#051F20] to-[#235347] bg-clip-text text-transparent">
                 Admin Dashboard
@@ -755,7 +755,7 @@ export default function AdminDashboard() {
 
           {/* Error Alert */}
           {error && (
-            <Alert className="mb-6 border-orange-200 bg-orange-50/80 backdrop-blur-sm">
+            <Alert className="mb-4 border-orange-200 bg-orange-50/80 backdrop-blur-sm">
               <AlertCircle className="h-4 w-4 text-orange-500" />
               <AlertDescription className="text-orange-700">
                 {error}
@@ -765,7 +765,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Analytics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

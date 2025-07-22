@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <title>Expat Stays - Luxury Property Rentals</title>
+        <title>Expat Stays</title>
         <meta
           name="description"
           content="High-end luxury property rental and management with modern glass morphism design. Book luxury villas, apartments, and more in Dubai and beyond."
@@ -77,7 +77,9 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased flex flex-col min-h-screen">
         <AuthProvider>
-          <main className="flex-grow">{children}</main>
+          <main className="">
+            {children}
+          </main>
           <ConditionalFooter />
           <Toaster />
         </AuthProvider>

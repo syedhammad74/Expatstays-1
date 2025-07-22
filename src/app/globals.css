@@ -1,130 +1,98 @@
-@import "leaflet/dist/leaflet.css";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Leaflet CSS for map functionality */
-
-/* Custom styles for Leaflet map */
-.leaflet-container {
-  font-family: inherit;
-  z-index: 1;
-}
-
-.leaflet-popup-content-wrapper {
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-}
-
-.leaflet-popup-content {
-  margin: 12px 16px;
-  font-family: inherit;
-}
-
-.leaflet-popup-tip {
-  background: white;
-}
-
-/* Ensure map tiles load properly */
-.leaflet-tile {
-  filter: none;
-}
-
-/* Fix for map controls */
-.leaflet-control-zoom {
-  border: none !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
-}
-
-.leaflet-control-zoom a {
-  background: white !important;
-  color: #051f20 !important;
-  border: 1px solid #daf1de !important;
-}
-
-.leaflet-control-zoom a:hover {
-  background: #8eb69b !important;
-  color: white !important;
-}
-
-/* Ensure map attribution is visible */
-.leaflet-control-attribution {
-  background: rgba(255, 255, 255, 0.8) !important;
-  color: #4a4a4a !important;
-  font-size: 11px !important;
-}
-
 @layer base {
   :root {
-    /* New Green Color Palette - Modern Dashboard Style */
-    --background: 120 100% 98%; /* #DAF1DE - Base light green */
-    --foreground: 180 96% 6%; /* #051F20 - Dark text */
-    --card: 160 25% 30%; /* #163832 - Content box background */
-    --card-foreground: 120 100% 98%; /* White text on cards */
-    --popover: 160 25% 30%;
-    --popover-foreground: 120 100% 98%;
-    --primary: 180 96% 6%; /* #051F20 - Base dark */
-    --primary-foreground: 120 100% 98%; /* Light text on primary */
-    --secondary: 160 45% 55%; /* #8EB69B - Accent & button hover */
-    --secondary-foreground: 180 96% 6%; /* Dark text on secondary */
-    --muted: 160 20% 35%; /* #163832 - Muted backgrounds */
-    --muted-foreground: 120 100% 98%; /* Light text on muted */
-    --accent: 160 25% 30%; /* #163832 - Medium Forest */
-    --accent-foreground: 120 100% 98%;
-    --destructive: 0 70% 55%;
-    --destructive-foreground: 120 100% 98%;
-    --border: 160 45% 55%; /* #8EB69B - Borders and icons */
-    --input: 160 25% 30%; /* Card background for inputs */
-    --ring: 160 45% 55%; /* Focus rings */
-    --chart-1: 180 96% 6%; /* #051F20 - Base dark */
-    --chart-2: 160 45% 55%; /* #8EB69B - Accent */
-    --chart-3: 160 25% 30%; /* #163832 - Medium */
-    --chart-4: 120 100% 98%; /* #DAF1DE - Light */
-    --chart-5: 160 20% 35%; /* Medium accent */
-    --radius: 0.75rem; /* 12px - Modern rounded corners */
-    --sidebar-background: 160 25% 30%;
-    --sidebar-foreground: 120 100% 98%;
-    --sidebar-primary: 180 96% 6%;
-    --sidebar-primary-foreground: 120 100% 98%;
-    --sidebar-accent: 160 20% 35%;
-    --sidebar-accent-foreground: 120 100% 98%;
-    --sidebar-border: 160 45% 55%;
-    --sidebar-ring: 160 45% 55%;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 160 40% 23%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 160 30% 85%;
+    --secondary-foreground: 160 40% 23%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 160 30% 85%;
+    --accent-foreground: 160 40% 23%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 160 40% 23%;
+
+    --radius: 0.5rem;
+
+    --chart-1: 160 40% 23%;
+    --chart-2: 160 30% 40%;
+    --chart-3: 160 30% 60%;
+    --chart-4: 160 30% 75%;
+    --chart-5: 160 30% 85%;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222.2 84% 4.9%;
+    --sidebar-primary: 160 40% 23%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 160 30% 85%;
+    --sidebar-accent-foreground: 160 40% 23%;
+    --sidebar-border: 214.3 31.8% 91.4%;
+    --sidebar-ring: 160 40% 23%;
   }
 
   .dark {
-    --background: 180 96% 6%; /* #051F20 - Base dark */
-    --foreground: 120 100% 98%; /* Light text */
-    --card: 160 25% 30%; /* #163832 - Content box background */
-    --card-foreground: 120 100% 98%;
-    --popover: 160 25% 30%;
-    --popover-foreground: 120 100% 98%;
-    --primary: 160 45% 55%; /* #8EB69B - Lighter in dark mode */
-    --primary-foreground: 180 96% 6%; /* Dark text on light primary */
-    --secondary: 160 25% 30%; /* #163832 */
-    --secondary-foreground: 120 100% 98%;
-    --muted: 160 20% 35%;
-    --muted-foreground: 120 100% 98%;
-    --accent: 160 45% 55%; /* Forest Light for dark mode */
-    --accent-foreground: 180 96% 6%;
+    --background: 160 30% 5%;
+    --foreground: 210 40% 98%;
+
+    --card: 160 30% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 160 30% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 160 40% 50%;
+    --primary-foreground: 160 30% 5%;
+
+    --secondary: 160 30% 15%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 160 30% 15%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 160 40% 30%;
+    --accent-foreground: 210 40% 98%;
+
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 120 100% 98%;
-    --border: 160 45% 55%;
-    --input: 160 25% 30%;
-    --ring: 160 45% 55%;
-    --chart-1: 160 45% 55%;
-    --chart-2: 160 25% 30%;
-    --chart-3: 180 96% 6%;
-    --chart-4: 120 100% 98%;
-    --chart-5: 160 20% 65%;
-    --sidebar-background: 160 25% 30%;
-    --sidebar-foreground: 120 100% 98%;
-    --sidebar-primary: 160 45% 55%;
-    --sidebar-primary-foreground: 180 96% 6%;
-    --sidebar-accent: 160 20% 35%;
-    --sidebar-accent-foreground: 120 100% 98%;
-    --sidebar-border: 160 45% 55%;
-    --sidebar-ring: 160 45% 55%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 160 30% 15%;
+    --input: 160 30% 15%;
+    --ring: 160 40% 50%;
+
+    --chart-1: 160 40% 50%;
+    --chart-2: 160 40% 40%;
+    --chart-3: 160 40% 30%;
+    --chart-4: 160 30% 20%;
+    --chart-5: 160 30% 15%;
+
+    --sidebar-background: 160 30% 7%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 160 40% 50%;
+    --sidebar-primary-foreground: 160 30% 5%;
+    --sidebar-accent: 160 40% 30%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 160 30% 15%;
+    --sidebar-ring: 160 40% 50%;
   }
 }
 
@@ -134,308 +102,213 @@
   }
   body {
     @apply bg-background text-foreground;
-    font-family: "Inter", "Poppins", "Manrope", -apple-system,
-      BlinkMacSystemFont, sans-serif;
-  }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: "Inter", "Poppins", "Manrope", -apple-system,
-      BlinkMacSystemFont, sans-serif;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-  input,
-  textarea,
-  select,
-  button {
-    font-family: "Inter", "Poppins", "Manrope", -apple-system,
-      BlinkMacSystemFont, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    font-size: 1rem;
   }
 }
 
-/* Custom Scrollbar Styling */
-@layer base {
-  /* Webkit browsers (Chrome, Safari, Edge) */
-  ::-webkit-scrollbar {
-    width: 4px;
-    height: 4px;
+/* Enhanced Animations */
+@keyframes float {
+  0% {
+    transform: translateY(0px) translateX(0px);
   }
-
-  ::-webkit-scrollbar-track {
-    background: transparent;
+  50% {
+    transform: translateY(-15px) translateX(5px);
   }
-
-  ::-webkit-scrollbar-thumb {
-    background: #8eb69b;
-    border-radius: 2px;
-    transition: background-color 0.2s ease;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #0b2b26;
-  }
-
-  ::-webkit-scrollbar-corner {
-    background: transparent;
-  }
-
-  /* Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #8eb69b transparent;
-  }
-
-  /* For elements that need custom scrollbar */
-  .custom-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: #8eb69b transparent;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar {
-    width: 3px;
-    height: 3px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: #8eb69b;
-    border-radius: 1px;
-  }
-
-  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: #0b2b26;
+  100% {
+    transform: translateY(0px) translateX(0px);
   }
 }
 
-/* Modern Dashboard Layout System */
-@layer utilities {
-  .dashboard-layout {
-    @apply grid grid-cols-1 lg:grid-cols-2 gap-8;
+@keyframes pulse-subtle {
+  0%,
+  100% {
+    opacity: 0.7;
   }
-
-  .dashboard-card {
-    @apply bg-card text-card-foreground rounded-xl p-6 shadow-lg border border-border/20 backdrop-blur-sm;
-  }
-
-  .dashboard-card-hover {
-    @apply hover:shadow-xl hover:-translate-y-1 transition-all duration-300;
-  }
-
-  .neumorphic {
-    box-shadow: 8px 8px 16px rgba(5, 31, 32, 0.2),
-      -8px -8px 16px rgba(142, 182, 155, 0.1);
-  }
-
-  .glassmorphism {
-    @apply backdrop-blur-md bg-white/10 border border-white/20;
-  }
-
-  .section-transition {
-    @apply transition-all duration-500 ease-in-out;
-  }
-
-  .card-module {
-    @apply bg-card rounded-xl p-6 shadow-lg border border-border/20;
-  }
-
-  .card-module-hover {
-    @apply hover:shadow-xl hover:-translate-y-2 transition-all duration-300;
+  50% {
+    opacity: 0.9;
   }
 }
 
-/* Component Utilities */
-@layer utilities {
-  .rounded-modern {
-    border-radius: 0.75rem; /* 12px - Modern rounded corners */
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
   }
-
-  .rounded-buttons {
-    border-radius: 0.5rem; /* 8px - Button roundedness */
-  }
-
-  .rounded-large {
-    border-radius: 1rem; /* 16px - Large containers */
-  }
-
-  .shadow-modern {
-    box-shadow: 0 4px 20px rgba(5, 31, 32, 0.15);
-  }
-
-  .shadow-modern-hover {
-    box-shadow: 0 8px 30px rgba(5, 31, 32, 0.25);
-  }
-
-  .transition-smooth {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  .gradient-bg {
-    background: linear-gradient(135deg, #daf1de 0%, #8eb69b 100%);
-  }
-
-  .gradient-card {
-    background: linear-gradient(135deg, #163832 0%, #235347 100%);
+  to {
+    transform: rotate(360deg);
   }
 }
 
-/* Enhanced Calendar Styling for Date Range Selection */
-@layer components {
-  /* Calendar Container */
-  .rdp {
-    @apply bg-white border border-[#8EB69B]/20 rounded-xl shadow-xl;
+@keyframes wave {
+  0% {
+    transform: translateX(0) translateY(0);
   }
-
-  .rdp-month {
-    @apply p-4;
+  25% {
+    transform: translateX(5px) translateY(-5px);
   }
-
-  /* Calendar Table */
-  .rdp-table {
-    @apply w-full border-spacing-1;
+  50% {
+    transform: translateX(10px) translateY(0);
   }
-
-  /* Calendar Days */
-  .rdp-day {
-    @apply w-9 h-9 text-sm font-medium rounded-lg transition-all duration-200;
-    @apply hover:bg-[#8EB69B]/10 hover:text-[#0B2B26];
-    @apply focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-opacity-50;
+  75% {
+    transform: translateX(5px) translateY(5px);
   }
-
-  /* Today's Date */
-  .rdp-day_today {
-    @apply bg-[#8EB69B]/20 text-[#0B2B26] font-semibold;
-    @apply border-2 border-[#8EB69B];
+  100% {
+    transform: translateX(0) translateY(0);
   }
+}
 
-  /* Range Start (Check-in Date) - Dark Color */
-  .rdp-day_range_start {
-    @apply bg-[#0B2B26] text-white font-bold;
-    @apply hover:bg-[#163832] hover:text-white;
-    @apply rounded-l-lg;
-    position: relative;
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
+  font-size: 16.7px;
+}
+body {
+  font-size: 1rem;
+}
+
+/* Enhanced Focus Styles */
+:focus-visible {
+  @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted/50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-muted-foreground/30 rounded-full transition-colors hover:bg-muted-foreground/50;
+}
+
+/* Improved transitions */
+.page-transition-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.page-transition-out {
+  animation: fadeOut 0.3s ease forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
   }
-
-  .rdp-day_range_start::after {
-    content: "Check-in";
-    @apply absolute -bottom-6 left-1/2 transform -translate-x-1/2;
-    @apply text-xs text-[#0B2B26] font-medium;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
+}
 
-  /* Range End (Check-out Date) - Dark Color */
-  .rdp-day_range_end {
-    @apply bg-[#0B2B26] text-white font-bold;
-    @apply hover:bg-[#163832] hover:text-white;
-    @apply rounded-r-lg;
-    position: relative;
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
   }
-
-  .rdp-day_range_end::after {
-    content: "Check-out";
-    @apply absolute -bottom-6 left-1/2 transform -translate-x-1/2;
-    @apply text-xs text-[#0B2B26] font-medium;
+  to {
+    opacity: 0;
+    transform: translateY(-10px);
   }
+}
 
-  /* Range Middle Days - Light Color */
-  .rdp-day_range_middle {
-    @apply bg-[#8EB69B]/25 text-[#0B2B26];
-    @apply hover:bg-[#8EB69B]/40;
+/* Glass morphism effects */
+.glass-card {
+  @apply bg-card/80 backdrop-blur-md border border-border/50;
+}
+
+.dark .glass-card {
+  @apply bg-card/60 border-white/10;
+}
+
+/* Enhanced card hover effects */
+.enhanced-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.enhanced-card:hover {
+  transform: translateY(-5px);
+  @apply shadow-lg;
+}
+
+/* Wavy decorative elements */
+.wavy-bg {
+  position: relative;
+  overflow: hidden;
+}
+
+.wavy-bg::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 15px;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    transparent 49%,
+    hsl(var(--primary) / 0.3) 50%,
+    transparent 51%,
+    transparent
+  );
+  background-size: 20px 20px;
+  z-index: 10;
+}
+
+/* Gradient text */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent;
+}
+
+/* Improved button hover effects */
+.btn-enhanced {
+  @apply relative overflow-hidden;
+}
+
+.btn-enhanced::after {
+  content: "";
+  @apply absolute inset-0 bg-white/20 opacity-0 transition-opacity;
+}
+
+.btn-enhanced:hover::after {
+  @apply opacity-100;
+}
+
+/* Animated background gradient */
+.animated-gradient {
+  background: linear-gradient(
+    -45deg,
+    hsl(var(--primary) / 0.05),
+    hsl(var(--accent) / 0.05),
+    hsl(var(--secondary) / 0.05),
+    hsl(var(--primary) / 0.05)
+  );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
   }
-
-  /* Selected Single Date (when not in range mode) */
-  .rdp-day_selected {
-    @apply bg-[#0B2B26] text-white font-bold;
-    @apply hover:bg-[#163832] hover:text-white;
+  50% {
+    background-position: 100% 50%;
   }
-
-  /* Disabled Dates */
-  .rdp-day_disabled {
-    @apply text-gray-300 cursor-not-allowed opacity-40;
+  100% {
+    background-position: 0% 50%;
   }
+}
 
-  /* Outside Month Dates */
-  .rdp-day_outside {
-    @apply text-gray-400 opacity-50;
-  }
+/* Improved image hover effects */
+.image-hover {
+  @apply transition-all duration-300;
+}
 
-  /* Calendar Navigation */
-  .rdp-nav_button {
-    @apply w-8 h-8 bg-white border border-[#8EB69B]/30 rounded-lg;
-    @apply hover:bg-[#8EB69B] hover:text-white hover:border-[#8EB69B];
-    @apply transition-all duration-200;
-  }
-
-  /* Calendar Caption */
-  .rdp-caption_label {
-    @apply text-lg font-semibold text-[#0B2B26];
-  }
-
-  /* Week Days Header */
-  .rdp-head_cell {
-    @apply text-sm font-medium text-[#0B2B26]/70 pb-2;
-  }
-
-  /* Calendar Cell Container */
-  .rdp-cell {
-    @apply text-center relative;
-  }
-
-  /* Range Styling Enhancements */
-  .rdp-day_range_start.rdp-day_range_end {
-    @apply rounded-lg;
-  }
-
-  .rdp-day_range_start.rdp-day_range_end::after {
-    content: "1 Night";
-  }
-
-  /* Hover Effects for Range Selection */
-  .rdp-day:not(.rdp-day_selected):not(.rdp-day_range_start):not(
-      .rdp-day_range_end
-    ):not(.rdp-day_range_middle):not(.rdp-day_disabled):hover {
-    @apply bg-[#8EB69B]/15 text-[#0B2B26] scale-105;
-  }
-
-  /* Focus States */
-  .rdp-day:focus-visible {
-    @apply ring-2 ring-[#8EB69B] ring-opacity-50 ring-offset-2;
-  }
-
-  /* Animation for Date Selection */
-  .rdp-day_selected,
-  .rdp-day_range_start,
-  .rdp-day_range_end {
-    @apply transform transition-transform duration-150;
-    animation: dateSelect 0.2s ease-out;
-  }
-
-  @keyframes dateSelect {
-    0% {
-      transform: scale(0.95);
-    }
-    50% {
-      transform: scale(1.05);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-
-  /* Calendar Responsive Design */
-  @media (max-width: 640px) {
-    .rdp-day {
-      @apply w-8 h-8 text-xs;
-    }
-
-    .rdp-day_range_start::after,
-    .rdp-day_range_end::after {
-      @apply hidden;
-    }
-  }
+.image-hover:hover {
+  @apply brightness-110 scale-105;
 }

@@ -4,6 +4,15 @@ const path = require("path");
 
 const nextConfig: NextConfig = {
   // Enable experimental features for better performance
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: [
+      "framer-motion",
+      "@radix-ui/react-*",
+      "lucide-react",
+    ],
+    scrollRestoration: true,
+  },
 
   // Image optimization
   images: {
@@ -65,19 +74,20 @@ const nextConfig: NextConfig = {
       },
     ];
   },
-  
+
   // Webpack optimizations
   webpack: (config, { dev, isServer }) => {
-     config.resolve.alias = {
-       ...(config.resolve.alias || {}),
-       // any import of 'next/document' now resolves to our shim
-       "next/document": path.resolve(
-         __dirname,
-         "src/mocks/next-document-shim.tsx"
-       ),
-     };
+    config.resolve.alias = {
+      ...(config.resolve.alias || {}),
+      // any import of 'next/document' now resolves to our shim
+      "next/document": path.resolve(
+        __dirname,
+        "src/mocks/next-document-shim.tsx"
+      ),
+    };
     // Optimize for production
     if (!dev && !isServer) {
+      // Enhanced code splitting
       config.optimization = {
         ...config.optimization,
         splitChunks: {
@@ -87,15 +97,25 @@ const nextConfig: NextConfig = {
               test: /[\\/]node_modules[\\/]/,
               name: "vendors",
               chunks: "all",
+              priority: 10,
             },
-            common: {
-              minChunks: 2,
+            commons: {
+              test: /[\\/]node_modules[\\/](@firebase|firebase|framer-motion|@radix-ui)/,
+              name: "commons",
               chunks: "all",
-              enforce: true,
+              priority: 20,
             },
-          
+            default: {
+              minChunks: 2,
+              priority: -20,
+              reuseExistingChunk: true,
+            },
           },
         },
+        runtimeChunk: {
+          name: "runtime",
+        },
+        concatenateModules: true,
       };
     }
 
@@ -118,7 +138,7 @@ const nextConfig: NextConfig = {
 
   // ESLint configuration
   eslint: {
-    ignoreDuringBuilds:true,
+    ignoreDuringBuilds: true,
   },
 
   // TypeScript configuration

@@ -153,7 +153,7 @@ const Header = () => {
         >
           <motion.header
             className={cn(
-              "w-full max-w-7xl mx-auto",
+              "w-full max-w-6xl mx-auto",
               "bg-white/95 backdrop-blur-xl border border-[#EBEBEB]/50",
               "rounded-full shadow-lg",
               isSticky ? "shadow-xl" : "shadow-md"
@@ -181,7 +181,7 @@ const Header = () => {
                   <motion.div
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.2 }}
-                    className="flex items-center space-x-2 sm:space-x-3"
+                    className="flex items-center space-x-1 sm:space-x-1"
                   >
                     <Image
                       src={Logo}

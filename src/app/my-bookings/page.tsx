@@ -245,16 +245,14 @@ export default function MyBookingsPage() {
   const counts = getBookingCounts();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FAFAFA] via-white to-[#DAF1DE]/30">
+    <div className="min-h-screen bg-gradient-to-br from-[#F0F4F8] via-white to-[#DAF1DE]/40 relative">
+      {/* Decorative elements in the background */}
+      <div className="hidden lg:block absolute inset-0 pointer-events-none">
+        {/* You can use DecorativeElements or a similar background pattern here if available */}
+      </div>
       <Header />
 
-      {/* Decorative Background */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 right-0 w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] bg-gradient-to-br from-[#DAF1DE]/10 to-[#8EB69B]/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-0 w-[400px] lg:w-[800px] h-[400px] lg:h-[800px] bg-gradient-to-tr from-[#0B2B26]/5 to-transparent rounded-full blur-3xl"></div>
-      </div>
-
-      <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
+      <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 py-6 pt-20 md:pt-28">
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Header Section */}
           <motion.div

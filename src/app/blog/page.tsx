@@ -307,7 +307,7 @@ export default function BlogPage() {
         <div className="pointer-events-none absolute top-1/2 left-0 w-6 lg:w-12 h-6 lg:h-12 border border-[#8EB69B]/30 rounded-full opacity-40 z-0" />
         <div className="pointer-events-none absolute bottom-1/3 right-0 w-12 lg:w-24 h-12 lg:h-24 bg-gradient-to-br from-[#8EB69B]/15 to-[#235347]/10 rounded-full opacity-50 z-0" />
 
-        <div className="container mx-auto px-4 sm:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-28">
           <motion.div
             key={search + activeCategory} // animate on filter/search change
             className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12"

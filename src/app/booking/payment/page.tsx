@@ -309,9 +309,9 @@ function BookingPaymentContent() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-white to-[#DAF1DE]">
-      <div className="max-w-6xl mx-auto p-4 md:p-6 lg:p-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Header */}
-        <div className="mb-8">
+        <div className="mb-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-[#051F20] mb-2">
