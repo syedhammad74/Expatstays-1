@@ -176,12 +176,12 @@ const Header = () => {
                 {/* Logo */}
                 <Link
                   href="/"
-                  className="flex items-center space-x-2 sm:space-x-3"
+                  className="flex items-center space-x-2 sm:space-x-1"
                 >
                   <motion.div
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.2 }}
-                    className="flex items-center space-x-1 sm:space-x-1"
+                    className="flex items-center space-x-1 sm:space-x-3"
                   >
                     <Image
                       src={Logo}
