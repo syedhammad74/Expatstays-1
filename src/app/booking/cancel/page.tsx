@@ -201,6 +201,7 @@ function BookingCancelContent() {
           </Card>
         </motion.div>
       </div>
-    </div>
+      </div>
+      </div>
   );
 }
