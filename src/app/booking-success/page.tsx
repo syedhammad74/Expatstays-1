@@ -385,7 +385,8 @@ function BookingSuccessContent() {
             <Link href="/properties">Browse More Properties</Link>
           </Button>
         </div>
-      </div>
+        </div>
+        </div>
     </div>
   );
 }
