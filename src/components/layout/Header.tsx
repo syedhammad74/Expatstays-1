@@ -153,7 +153,7 @@ const Header = () => {
         >
           <motion.header
             className={cn(
-              "w-full mx-auto",
+              "w-auto mx-auto",
               "bg-white/95 backdrop-blur-xl border border-[#EBEBEB]/50",
               "rounded-full shadow-lg",
               isSticky ? "shadow-xl" : "shadow-md"
