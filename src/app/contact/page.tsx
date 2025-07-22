@@ -252,7 +252,7 @@ export default function ContactPage() {
             <Sparkle className="w-4 h-4 text-[#F7E9B7] opacity-80" />
           </div>
 
-          <div className="container mx-auto px-4 sm:px-8 relative z-20">
+          <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -330,8 +330,8 @@ export default function ContactPage() {
         </section>
 
         {/* Contact Form Section - Enhanced */}
-        <section className="container mx-auto px-4 sm:px-8 py-16 lg:py-24">
-          <div className="max-w-7xl mx-auto">
+        <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
+          <div className="mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

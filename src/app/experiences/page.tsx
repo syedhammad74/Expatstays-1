@@ -9,12 +9,16 @@ import {
   Star,
   ArrowRight,
   Filter,
+  Search,
+  Sparkles,
   Clock,
   Users,
   MapPin,
   ChevronRight,
   BookOpen,
-  Sparkles,
+  Zap,
+  Globe,
+  Shield,
 } from "lucide-react";
 import {
   Card,
@@ -25,6 +29,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
 import { getLocalImage } from "@/lib/imageUtils";
@@ -163,7 +168,7 @@ export default function ExperiencesPage() {
         <div className="absolute top-20 left-10 w-72 h-72 bg-[#8EB69B]/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#0B2B26]/10 rounded-full blur-3xl animate-pulse delay-1000" />
 
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-28">
+        <div className="container mx-auto px-4 sm:px-8 rela33tive z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Hero Content */}
             <motion.div
@@ -245,7 +250,7 @@ export default function ExperiencesPage() {
 
       {/* Floating Category Filter Bar */}
       <section className="relative -mt-12 mb-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -282,7 +287,7 @@ export default function ExperiencesPage() {
 
       {/* Featured Experiences Section */}
       <section className="py-16">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -407,7 +412,7 @@ export default function ExperiencesPage() {
 
       {/* All Experiences Grid */}
       <section className="py-16 bg-gradient-to-br from-[#FAFAFA]/50 to-white">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -549,7 +554,7 @@ export default function ExperiencesPage() {
 
       {/* Final CTA Section */}
       <section className="py-16 bg-gradient-to-br from-[#163832] to-[#0B2B26]">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="container mx-auto px-4 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -567,9 +572,8 @@ export default function ExperiencesPage() {
               Not Sure What to Choose?
             </h2>
             <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
-              Let our concierge guide your next experience. We&apos;ll help you
-              find the perfect adventure that matches your preferences and
-              schedule.
+              Let our concierge guide your next experience. We'll help you find
+              the perfect adventure that matches your preferences and schedule.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

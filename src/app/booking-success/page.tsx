@@ -131,8 +131,9 @@ function BookingSuccessContent() {
   }
 
   return (
-    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
-      <div className="max-w-4xl mx-auto space-y-6 lg:space-y-8">
+    <div className="min-h-screen bg-gradient-to-br from-[#FAFAFA] via-white to-[#DAF1DE]/30">
+      <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
+        <div className="max-w-4xl mx-auto space-y-6 lg:space-y-8">
         {/* Success Header */}
         <div className="text-center space-y-3 lg:space-y-4">
           <div className="flex items-center justify-center">

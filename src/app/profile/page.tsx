@@ -273,7 +273,7 @@ export default function ProfilePage() {
         <DecorativeElements variant="default" density="low" />
       </div>
 
-      <div className="container max-w-6xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 py-6 pt-20 md:pt-28">
+      <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-28">
         <div className="space-y-6">
           {/* Header Section */}
           <motion.div

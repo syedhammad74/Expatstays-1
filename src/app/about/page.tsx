@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Card, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Users,
@@ -8,6 +8,7 @@ import {
   Trophy,
   Award,
   Star,
+  Heart,
   Shield,
   ArrowRight,
   Sparkles,
@@ -15,10 +16,21 @@ import {
   Clock,
   CheckCircle,
   Target,
-  Phone,
-  Calendar,
+  Zap,
+  Crown,
   MapPin,
+  Phone,
+  Mail,
+  Calendar,
+  TrendingUp,
 } from "lucide-react";
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion";
+import { getLocalImage } from "@/lib/imageUtils";
 import { motion } from "framer-motion";
 import Header from "@/components/layout/Header";
 
@@ -42,10 +54,70 @@ const features = [
     color: "from-[#235347] to-[#163832]",
   },
   {
-    icon: Trophy,
+    icon: Crown,
     title: "Excellence",
     desc: "Unwavering commitment to luxury and quality.",
     color: "from-[#8EB69B] to-[#DAF1DE]",
+  },
+];
+
+const team = [
+  {
+    name: "Alex Johnson",
+    role: "Founder & CEO",
+    image: "/media/Close Ups June 25 2025/DSC01835.jpg",
+    bio: "Former hospitality executive with 15+ years in luxury markets.",
+    experience: "15+ Years",
+    expertise: "Luxury Hospitality",
+  },
+  {
+    name: "Maria Garcia",
+    role: "Head of Operations",
+    image: "/media/Close Ups June 25 2025/DSC01964.jpg",
+    bio: "Expert in guest experience and property management.",
+    experience: "12+ Years",
+    expertise: "Guest Experience",
+  },
+  {
+    name: "Kenji Tanaka",
+    role: "Chief Technology Officer",
+    image: "/media/Close Ups June 25 2025/DSC01965.jpg",
+    bio: "Pioneering seamless digital experiences for luxury travel.",
+    experience: "10+ Years",
+    expertise: "Digital Innovation",
+  },
+];
+
+const differentiators = [
+  {
+    icon: CheckCircle,
+    text: "Curated portfolio across the UAE",
+    detail: "500+ handpicked properties",
+  },
+  {
+    icon: CheckCircle,
+    text: "Concierge-level service",
+    detail: "24/7 personalized support",
+  },
+  {
+    icon: CheckCircle,
+    text: "Rated 4.9 by 4,000+ clients",
+    detail: "Based on verified reviews",
+  },
+  {
+    icon: CheckCircle,
+    text: "Exclusive member benefits",
+    detail: "Premium perks and upgrades",
+  },
+  {
+    icon: CheckCircle,
+    text: "Handpicked luxury properties",
+    detail: "Quality verified locations",
+  },
+  {
+    icon: CheckCircle,
+    text: "Seamless booking experience",
+    detail: "Instant confirmation",
   },
 ];
 
@@ -142,7 +214,7 @@ export default function AboutPage() {
       </div>
 
       {/* HERO SECTION */}
-      <section className="container mx-auto px-4 pt-12 lg:pt-16 pb-12 lg:pb-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
+      <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 lg:pt-16 pb-12 lg:pb-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
         {/* Decorative geometric shape behind text */}
         <motion.div
           className="pointer-events-none absolute left-0 top-16 w-72 h-32 lg:w-[420px] lg:h-40 bg-[#DAF1DE]/30 rounded-3xl blur-2xl z-0"
@@ -216,7 +288,7 @@ export default function AboutPage() {
             />
           </h1>
           <p className="text-base lg:text-lg text-[#235347] mb-6 lg:mb-10 max-w-md">
-            We curate the world&apos;s most extraordinary stays and experiences for
+            We curate the world's most extraordinary stays and experiences for
             modern expats and global citizens.
           </p>
         </motion.div>
@@ -255,7 +327,7 @@ export default function AboutPage() {
       </section>
 
       {/* OUR STORY SECTION */}
-      <section className="container mx-auto px-4 py-12 lg:py-20">
+      <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <motion.div
             className="space-y-4 lg:space-y-6 order-2 lg:order-1"
@@ -339,7 +411,7 @@ export default function AboutPage() {
       </section>
 
       {/* MISSION & VALUES */}
-      <section className="container mx-auto px-4 py-12 lg:py-20">
+      <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         <div className="text-center mb-12 lg:mb-16">
           <Badge className="bg-[#8EB69B]/20 text-[#8EB69B] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
             MISSION & VALUES
@@ -363,7 +435,7 @@ export default function AboutPage() {
             visible: { transition: { staggerChildren: 0.1 } },
           }}
         >
-          {features.map((feature) => (
+          {features.map((feature, i) => (
             <motion.div
               key={feature.title}
               variants={{
@@ -391,7 +463,7 @@ export default function AboutPage() {
       </section>
 
       {/* TESTIMONIALS SECTION */}
-      <section className="container mx-auto px-4 py-12 lg:py-20">
+      <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         <div className="text-center mb-12 lg:mb-16">
           <Badge className="bg-[#8EB69B]/20 text-[#8EB69B] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
             TESTIMONIALS
@@ -400,8 +472,8 @@ export default function AboutPage() {
             What Our Guests Say
           </h2>
           <p className="text-base lg:text-lg xl:text-xl text-[#235347] max-w-3xl mx-auto leading-relaxed">
-            Real experiences from real guests who&apos;ve experienced the Expat
-            Stays difference across the UAE.
+            Real experiences from real guests who've experienced the Expat Stays
+            difference across the UAE.
           </p>
         </div>
 
@@ -415,7 +487,7 @@ export default function AboutPage() {
             visible: { transition: { staggerChildren: 0.15 } },
           }}
         >
-          {testimonials.map((testimonial) => (
+          {testimonials.map((testimonial, i) => (
             <motion.div
               key={testimonial.author}
               variants={{
@@ -456,9 +528,9 @@ export default function AboutPage() {
                 {/* Quote */}
                 <blockquote className="text-sm lg:text-base text-[#235347] leading-relaxed italic mb-4 lg:mb-6 relative">
                   <div className="absolute -top-1 lg:-top-2 -left-1 lg:-left-2 text-2xl lg:text-4xl text-[#8EB69B]/30">
-                    &quot;
+                    "
                   </div>
-                  &quot;{testimonial.quote}&quot;
+                  {testimonial.quote}
                 </blockquote>
 
                 {/* Rating and Details */}
@@ -491,7 +563,7 @@ export default function AboutPage() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          {stats.map((stat) => (
+          {stats.map((stat, i) => (
             <div key={stat.label} className="text-center">
               <div className="flex items-center justify-center mb-2 lg:mb-3">
                 <div className="w-10 lg:w-12 h-10 lg:h-12 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full flex items-center justify-center">
@@ -511,7 +583,7 @@ export default function AboutPage() {
       </section>
 
       {/* ACHIEVEMENTS SECTION */}
-      <section className="container mx-auto px-4 py-12 lg:py-20">
+      <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         <div className="text-center mb-12 lg:mb-16">
           <Badge className="bg-[#8EB69B]/20 text-[#8EB69B] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
             ACHIEVEMENTS
@@ -535,7 +607,7 @@ export default function AboutPage() {
             visible: { transition: { staggerChildren: 0.1 } },
           }}
         >
-          {achievements.map((achievement) => (
+          {achievements.map((achievement, i) => (
             <motion.div
               key={achievement.title}
               variants={{
@@ -594,9 +666,9 @@ export default function AboutPage() {
               Start Your Luxury Journey Today
             </h2>
             <p className="text-base lg:text-lg xl:text-xl text-[#235347] mb-6 lg:mb-8 max-w-2xl mx-auto leading-relaxed">
-              Join thousands of satisfied guests who&apos;ve discovered the
-              Expat Luxe difference. Experience unparalleled luxury and
-              personalized service.
+              Join thousands of satisfied guests who've discovered the Expat
+              Luxe difference. Experience unparalleled luxury and personalized
+              service.
             </p>
 
             {/* Feature highlights */}

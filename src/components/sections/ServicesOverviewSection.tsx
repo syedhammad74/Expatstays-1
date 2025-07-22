@@ -1,10 +1,14 @@
+import React, { useState } from "react";
+import dynamic from "next/dynamic";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import Link from "next/link";
+import { CardSpotlight } from "@/components/ui/card-spotlight";
 import {
   ConciergeBell,
   Shirt,
   Wrench,
+  Utench,
   Utensils,
   Car,
   Plane,
@@ -12,26 +16,33 @@ import {
   Users,
   Star,
   ArrowRight,
-  CheckCircle,
+  ChevronDown,
+  ChevronUp,
 } from "lucide-react";
-import Carousel from "@/components/ui/carousel";
-import { CardSpotlight } from "@/components/ui/card-spotlight";
+
+// Dynamic carousel to avoid SSR issues
+const Carousel = dynamic(() => import("@/components/ui/carousel"), {
+  ssr: false,
+});
 
 const carouselSlides = [
   {
+    src: "/media/DSC01822-HDR.jpg",
+    alt: "Concierge Excellence",
     title: "Concierge Excellence",
     button: "Discover Concierge",
-    src: "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
   },
   {
+    src: "/media/DSC01846-HDR.jpg",
+    alt: "Laundry Service",
     title: "Impeccable Laundry",
-    button: "See Laundry Service",
-    src: "/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg",
+    button: "See Laundry",
   },
   {
+    src: "/media/DSC01871-HDR.jpg",
+    alt: "Tech Support",
     title: "Technical Support",
-    button: "Explore Tech Help",
-    src: "/media/DSC01806 HDR June 25 2025/DSC01871-HDR.jpg",
+    button: "Explore Tech",
   },
 ];
 
@@ -40,187 +51,252 @@ const services = [
     icon: ConciergeBell,
     title: "365 Luxury Concierge",
     description:
-      "Personalized assistance for every need, from reservations to local recommendations.",
+      "Personalized, 24/7 assistance for reservations, recommendations & more.",
+    href: "/services/concierge",
   },
   {
     icon: Shirt,
     title: "365 Laundry & Dry Cleaning",
-    description:
-      "Premium laundry and dry-cleaning, delivered with care and precision for your convenience.",
+    description: "Expert care, premium detergents & express delivery.",
+    href: "/services/laundry",
   },
   {
     icon: Wrench,
     title: "365 Technical Services",
-    description:
-      "Prompt, reliable support for all property amenities and smart home systems.",
+    description: "On-demand tech and smart-home support for flawless comfort.",
+    href: "/services/technical",
   },
   {
     icon: Utensils,
     title: "Private Chef Services",
-    description:
-      "Exquisite in-home dining experiences, tailored to your tastes and dietary needs.",
+    description: "Gourmet in-home dining experiences curated to your palate.",
+    href: "/services/chef",
   },
   {
     icon: Car,
     title: "Luxury Transportation",
-    description:
-      "Travel in style with our premium vehicles and professional chauffeurs.",
+    description: "Chauffeured rides in premium vehicles, anywhere, anytime.",
+    href: "/services/transport",
   },
   {
     icon: Plane,
     title: "Travel Planning & Arrangements",
     description:
-      "Seamless itinerary planning, bookings, and exclusive experiences worldwide.",
+      "Custom itineraries, exclusive experiences & seamless bookings.",
+    href: "/services/travel",
   },
 ];
 
 const whyChoose = [
   {
     icon: Shield,
-    title: "Verified Quality",
-    desc: "Every service and property is personally inspected and held to the highest standards.",
+    title: "Rigorous Quality",
+    desc: "Every service is vetted, audited & guaranteed for excellence.",
   },
   {
     icon: Users,
-    title: "Personalized Support",
-    desc: "Dedicated team available 24/7 for all your needs, from bookings to recommendations.",
+    title: "Dedicated Support",
+    desc: "Personal concierge available 24/7 for any request or need.",
   },
   {
     icon: Star,
-    title: "Premium Experience",
-    desc: "Curated amenities and experiences that go beyond standard luxury accommodations.",
+    title: "Elite Experiences",
+    desc: "Access to curated events, VIP access & unique local experiences.",
   },
 ];
 
 const howItWorksSteps = [
-  "Contact your dedicated concierge via app or phone",
-  "Share your preferences and requirements",
-  "Relax while we handle bookings, recommendations, and arrangements",
-  "Enjoy seamless, personalized service throughout your stay",
+  {
+    step: "1. Reach out via our app or hotline",
+    note: "Available on iOS, Android, WhatsApp & direct dial.",
+  },
+  { step: "2. Tell us your preferences & requirements" },
+  {
+    step: "3. Sit back while we coordinate every detail",
+    note: "From bookings to special requests, we handle it all.",
+  },
+  { step: "4. Enjoy unparalleled, personalized luxury service" },
 ];
 
-const ServicesOverviewSection = () => {
-  return (
-    <section className="relative py-12 lg:py-20 bg-gradient-to-br from-white to-[#F9FCFB] overflow-hidden">
-      {/* Decorative blurred green blob for depth */}
-      <div className="absolute -left-16 lg:-left-32 -top-16 lg:-top-32 w-[200px] lg:w-[420px] h-[200px] lg:h-[420px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl z-0" />
-      <div className="container mx-auto px-4 sm:px-8 relative z-10">
-        {/* Hero Heading */}
-        <div className="mb-8 lg:mb-10">
-          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-extrabold text-[#051F20] mb-3 lg:mb-4 text-left">
-            Our Bespoke Services
-          </h2>
-          <p className="text-base lg:text-lg text-[#4A4A4A] max-w-2xl text-left font-light">
-            Experience a new standard of luxury living with our curated suite of
-            services, designed for comfort, convenience, and unforgettable
-            moments.
-          </p>
-        </div>
-        {/* Carousel */}
-        <div className="mb-10 lg:mb-14 rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl">
-          <Carousel slides={carouselSlides} />
-        </div>
-        {/* Services Cards Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8 mb-16 lg:mb-20">
-          {services.map((service) => (
-            <Card
-              key={service.title}
-              className="group rounded-xl lg:rounded-2xl shadow-lg border-none bg-white/90 hover:shadow-2xl transition-all duration-300 p-0"
-            >
-              <CardHeader className="pb-0 flex flex-col items-start bg-transparent">
-                <div className="flex items-center justify-center w-12 lg:w-14 h-12 lg:h-14 rounded-full bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/40 mb-4 lg:mb-6 mt-4 lg:mt-6 ml-2">
-                  <service.icon className="h-6 lg:h-7 w-6 lg:w-7 text-[#8EB69B]" />
-                </div>
-                <CardTitle className="text-[#051F20] font-bold text-lg lg:text-xl mb-2 ml-2">
-                  {service.title}
+// FAQs
+const faqs = [
+  {
+    question: "How quickly can I request a service?",
+    answer:
+      "Our concierge is available 24/7; most requests are fulfilled within 2 hours, depending on complexity.",
+  },
+  {
+    question: "Is there a minimum spend?",
+    answer:
+      "No minimum spend. You pay per service, with transparent pricing and no hidden fees.",
+  },
+  {
+    question: "Can I customize my chef menu?",
+    answer:
+      "Absolutely! Our chefs work with you to design a menu tailored to your dietary preferences and tastes.",
+  },
+  {
+    question: "What areas do you serve?",
+    answer:
+      "We operate in major metropolitan areas worldwide. Contact us to confirm availability in your location.",
+  },
+];
+
+const ServicesOverviewSection: React.FC = () => (
+  <section
+    id="services-overview"
+    className="relative bg-gradient-to-b from-white to-[#F3F9F4] py-32 px-6 lg:px-24 overflow-hidden"
+  >
+    {/* Decorative shapes */}
+    <div className="absolute -top-20 -left-20 w-80 h-80 bg-[#8EB69B]/20 rounded-full filter blur-3xl rotate-45" />
+    <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#DAF1DE]/30 rounded-full filter blur-4xl rotate-12" />
+
+    {/* Hero */}
+    <div className="relative z-10 max-w-6xl mx-auto grid lg:grid-cols-2 gap-16 items-center mb-32">
+      <div className="space-y-6 text-center lg:text-left">
+        <span className="inline-block bg-gradient-to-r from-[#8EB69B] to-[#DAF1DE] text-white font-semibold px-5 py-2 rounded-full uppercase tracking-wider">
+          Premium Services
+        </span>
+        <h1 className="text-5xl lg:text-6xl font-extrabold text-[#051F20] leading-tight">
+          Elevate Your <br />
+          <span className="text-[#8EB69B]">Lifestyle</span>
+        </h1>
+        <p className="text-lg text-[#235347] max-w-md mx-auto lg:mx-0">
+          Experience the pinnacle of luxury with our handpicked suite of
+          services tailored for discerning clients.
+        </p>
+        <Link href="/services">
+          <Button
+            size="lg"
+            className="mt-4 bg-[#8EB69B] hover:bg-[#72a785] text-white rounded-full px-8 py-4 shadow-lg transition-all"
+          >
+            Explore All Services
+            <ArrowRight className="ml-2 w-5 h-5" aria-hidden />
+          </Button>
+        </Link>
+      </div>
+      <div className="rounded-2xl overflow-hidden shadow-2xl border border-[#E2F1E8] transform hover:scale-105 transition">
+        <Carousel slides={carouselSlides} />
+      </div>
+    </div>
+
+    {/* Services Grid */}
+    <div className="relative z-10 max-w-6xl mx-auto mb-32">
+      <h2 className="text-center text-3xl lg:text-4xl font-bold text-[#051F20] mb-12">
+        Our <span className="text-[#8EB69B]">Services</span>
+      </h2>
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {services.map((svc, idx) => (
+          <li key={idx}>
+            <Card className="group relative bg-white rounded-3xl p-10 shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-transform border border-transparent hover:border-[#8EB69B]/20">
+              <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gradient-to-br from-[#8EB69B] to-[#DAF1DE] p-5 rounded-full text-white shadow-xl">
+                <svc.icon className="w-8 h-8" aria-hidden />
+              </div>
+              <div className="mt-12 text-center">
+                <CardTitle className="text-2xl font-semibold text-[#051F20] mb-4">
+                  {svc.title}
                 </CardTitle>
-              </CardHeader>
-              <CardContent className="pt-0 pb-6 lg:pb-8 px-4 lg:px-6">
-                <p className="text-sm lg:text-base text-[#4A4A4A] leading-relaxed font-medium">
-                  {service.description}
-                </p>
-                <div className="mt-3 lg:mt-4">
-                  <Button
-                    variant="ghost"
-                    className="text-[#8EB69B] px-0 py-0 h-8 hover:underline font-semibold text-sm lg:text-base"
-                  >
-                    Learn More{" "}
-                    <ArrowRight className="inline ml-1 h-3 lg:h-4 w-3 lg:w-4" />
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        {/* Why Choose Us Section */}
-        <div className="mb-16 lg:mb-20">
-          <h3 className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6 lg:mb-8 text-left">
-            Why Choose Us
-          </h3>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-            {whyChoose.map((item) => (
-              <Card
-                key={item.title}
-                className="rounded-xl lg:rounded-2xl bg-white/95 shadow-md border-none p-0"
-              >
-                <CardHeader className="flex flex-col items-start bg-transparent pb-0">
-                  <div className="flex items-center justify-center w-10 lg:w-12 h-10 lg:h-12 rounded-lg lg:rounded-xl bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/40 mb-3 lg:mb-4 mt-4 lg:mt-6 ml-2">
-                    <item.icon className="h-5 lg:h-6 w-5 lg:w-6 text-[#8EB69B]" />
-                  </div>
-                  <CardTitle className="text-[#051F20] font-bold text-base lg:text-lg mb-2 ml-2">
-                    {item.title}
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-0 pb-6 lg:pb-8 px-4 lg:px-6">
-                  <p className="text-sm lg:text-base text-[#4A4A4A] leading-relaxed font-medium">
-                    {item.desc}
+                <CardContent>
+                  <p className="text-[#235347] text-base leading-relaxed mb-6">
+                    {svc.description}
                   </p>
                 </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-        {/* CardSpotlight: How Our Concierge Works */}
-        <div className="flex justify-center mb-10 lg:mb-12">
-          <CardSpotlight className="w-full max-w-2xl bg-[#0B2B26] rounded-2xl lg:rounded-3xl shadow-2xl p-6 lg:p-8">
-            <h3 className="text-xl lg:text-2xl font-bold text-white mb-3 lg:mb-4 relative z-20">
-              How Our Concierge Works
+                <Link href={svc.href}>
+                  <Button
+                    variant="outline"
+                    className="rounded-full border-2 border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition px-8 py-3"
+                  >
+                    Learn More
+                  </Button>
+                </Link>
+              </div>
+            </Card>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Why Choose */}
+    <div className="relative z-10 max-w-4xl mx-auto mb-32">
+      <h2 className="text-center text-3xl lg:text-4xl font-bold text-[#051F20] mb-8">
+        Why <span className="text-[#8EB69B]">Choose</span> Us?
+      </h2>
+      <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {whyChoose.map((item, idx) => (
+          <li key={idx} className="text-center">
+            <div className="inline-block bg-white p-5 rounded-full shadow-xl border-2 border-[#8EB69B]/30">
+              <item.icon className="w-8 h-8 text-[#8EB69B]" aria-hidden />
+            </div>
+            <h3 className="mt-4 text-xl font-semibold text-[#051F20] mb-2">
+              {item.title}
             </h3>
-            <ol className="list-none space-y-3 lg:space-y-4 text-neutral-200 relative z-20 pl-0">
-              {howItWorksSteps.map((step) => (
-                <li key={step} className="flex gap-2 lg:gap-3 items-start">
-                  <CheckCircle className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B] mt-1 shrink-0" />
-                  <span className="text-sm lg:text-base font-medium text-white">
-                    {step}
-                  </span>
-                </li>
-              ))}
-            </ol>
-            <p className="text-neutral-300 mt-4 lg:mt-6 relative z-20 text-xs lg:text-sm">
-              Our team is dedicated to making every moment effortless and
-              extraordinary.
+            <p className="mt-2 text-[#235347] text-sm leading-relaxed">
+              {item.desc}
             </p>
-          </CardSpotlight>
-        </div>
-        {/* CTA Button */}
-        <div className="mt-2 text-left">
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* How It Works Spotlight */}
+    <div className="relative z-10 max-w-3xl mx-auto mb-32">
+      <h2 className="text-center text-3xl lg:text-4xl font-bold text-[#051F20] mb-6">
+        How It <span className="text-[#8EB69B]">Works</span>
+      </h2>
+      <CardSpotlight className="bg-white rounded-3xl p-10 shadow-xl border-t-4 border-[#8EB69B]">
+        <ol className="list-decimal list-inside space-y-4 text-[#235347] leading-relaxed">
+          {howItWorksSteps.map((item, idx) => (
+            <li key={idx}>
+              <span className="font-medium text-base text-[#051F20]">
+                {item.step}
+              </span>
+              {item.note && (
+                <p className="text-sm opacity-80 mt-1">{item.note}</p>
+              )}
+            </li>
+          ))}
+        </ol>
+        <div className="mt-8 text-center">
           <Button
-            asChild
             size="lg"
-            className="rounded-full bg-[#0B2B26] text-white font-semibold shadow-lg hover:bg-[#235347] hover:shadow-xl transition-all duration-300 px-6 lg:px-8 py-3 lg:py-4 text-sm lg:text-base"
+            className="bg-[#8EB69B] text-white rounded-full px-6 py-3 hover:bg-[#72a785] transition"
           >
-            <Link href="/services">
-              Explore All Services{" "}
-              <ArrowRight className="inline ml-2 h-4 lg:h-5 w-4 lg:w-5" />
-            </Link>
+            Contact Concierge
           </Button>
-          <div className="text-[#8EB69B] text-sm lg:text-base font-medium mt-2 ml-2">
-            Trusted by 1000+ guests
-          </div>
         </div>
+      </CardSpotlight>
+    </div>
+
+    {/* FAQ Section */}
+    <div className="relative z-10 max-w-3xl mx-auto mb-32">
+      <h2 className="text-center text-3xl lg:text-4xl font-bold text-[#051F20] mb-8">
+        Frequently Asked <span className="text-[#8EB69B]">Questions</span>
+      </h2>
+      <div className="space-y-4">
+        {faqs.map((faq, idx) => (
+          <Disclosure key={idx}>
+            {({ open }) => (
+              <div className="border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                <Disclosure.Button className="w-full flex justify-between items-center px-6 py-4 bg-white hover:bg-gray-50 transition">
+                  <span className="text-left font-medium text-[#051F20]">
+                    {faq.question}
+                  </span>
+                  {open ? (
+                    <ChevronUp className="w-5 h-5 text-[#8EB69B]" />
+                  ) : (
+                    <ChevronDown className="w-5 h-5 text-gray-400" />
+                  )}
+                </Disclosure.Button>
+                <Disclosure.Panel className="px-6 py-4 bg-[#F9FBFA] text-[#235347] leading-relaxed">
+                  {faq.answer}
+                </Disclosure.Panel>
+              </div>
+            )}
+          </Disclosure>
+        ))}
       </div>
-    </section>
-  );
-};
+    </div>
+  </section>
+);
 
 export default ServicesOverviewSection;
