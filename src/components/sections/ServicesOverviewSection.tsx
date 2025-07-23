@@ -274,7 +274,7 @@ const ServicesOverviewSection: React.FC = () => {
       {/* Hero Section - Enhanced with better spacing and visual hierarchy */}
       <div className="relative z-10 w-full flex flex-col lg:flex-row items-center justify-evenly px-6 lg:px-12 py-16 lg:py-20 max-w-7xl mx-auto">
         <motion.div
-          className="flex-1 space-y-6 text-center lg:text-left lg:pr-12"
+          className="flex-1 space-y-6 text-center lg:text-left lg:pr-12 mb-8 lg:mb-0"
           initial={{ opacity: 0, x: -60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
@@ -288,7 +288,7 @@ const ServicesOverviewSection: React.FC = () => {
             Premium Services
           </motion.span>
           <motion.h1
-            className="text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#051F20] leading-tight"
+            className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#051F20] leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
@@ -299,7 +299,7 @@ const ServicesOverviewSection: React.FC = () => {
             </span>
           </motion.h1>
           <motion.p
-            className="text-lg lg:text-xl text-[#235347] max-w-lg leading-relaxed"
+            className="text-base sm:text-lg lg:text-xl text-[#235347] max-w-lg leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
@@ -315,10 +315,13 @@ const ServicesOverviewSection: React.FC = () => {
             <Link href="/services">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-[#8EB69B] to-[#72a785] text-white rounded-full px-8 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl hover:shadow-[#8EB69B]/25 transition-all duration-300 transform hover:scale-105"
+                className="bg-gradient-to-r from-[#8EB69B] to-[#72a785] text-white rounded-full px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg font-semibold shadow-xl hover:shadow-2xl hover:shadow-[#8EB69B]/25 transition-all duration-300 transform hover:scale-105"
               >
                 Explore All Services
-                <ArrowRight className="ml-2 w-5 h-5" aria-hidden />
+                <ArrowRight
+                  className="ml-2 w-4 h-4 sm:w-5 sm:h-5"
+                  aria-hidden
+                />
               </Button>
             </Link>
           </motion.div>
@@ -326,12 +329,12 @@ const ServicesOverviewSection: React.FC = () => {
 
         {/* Enhanced Carousel Section */}
         <motion.div
-          className="flex-1 mt-12 lg:mt-0"
+          className="flex-1 w-full lg:w-auto"
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
         >
-          <div className="relative w-full h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px] max-w-2xl mx-auto">
+          <div className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] max-w-2xl mx-auto">
             {/* Embla Carousel */}
             <div
               className="overflow-hidden rounded-2xl lg:rounded-3xl shadow-xl lg:shadow-2xl"
@@ -347,7 +350,7 @@ const ServicesOverviewSection: React.FC = () => {
                 {carouselSlides.map((slide, index) => (
                   <div
                     key={index}
-                    className="flex-[0_0_100%] min-w-0 relative h-[300px] sm:h-[350px] md:h-[400px] lg:h-[500px]"
+                    className="flex-[0_0_100%] min-w-0 relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px]"
                   >
                     <Image
                       src={slide.image}
@@ -361,15 +364,11 @@ const ServicesOverviewSection: React.FC = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none" />
 
                     {/* Enhanced slide title overlay */}
-                    <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 right-4 sm:right-6">
-                      <h3 className="text-white text-lg sm:text-xl lg:text-2xl font-bold drop-shadow-2xl">
-                        {slide.title}
-                      </h3>
-                    </div>
+                    
 
                     {/* Drag indicator */}
                     {isDragging && (
-                      <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-[#8EB69B] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium shadow-lg">
+                      <div className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 bg-[#8EB69B] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium shadow-lg">
                         ✋ Dragging
                       </div>
                     )}
@@ -378,7 +377,7 @@ const ServicesOverviewSection: React.FC = () => {
               </div>
 
               {/* Enhanced Carousel Indicators */}
-              <div className="absolute -bottom-12 sm:-bottom-16 left-1/2 transform -translate-x-1/2 z-50">
+              <div className="absolute -bottom-10 sm:-bottom-12 md:-bottom-16 left-1/2 transform -translate-x-1/2 z-50">
                 <div className="flex items-center justify-center gap-2 sm:gap-3">
                   {carouselSlides.map((_, index) => (
                     <button
@@ -387,8 +386,8 @@ const ServicesOverviewSection: React.FC = () => {
                       className={`rounded-full transition-all duration-500 ease-in-out transform hover:scale-125
                                 ${
                                   index === currentServiceIndex
-                                    ? "w-3 h-3 sm:w-4 sm:h-4 bg-gradient-to-r from-[#8EB69B] to-[#72a785] shadow-lg shadow-[#8EB69B]/30"
-                                    : "w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#8EB69B]/40 hover:bg-[#8EB69B]/60"
+                                    ? "w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 bg-gradient-to-r from-[#8EB69B] to-[#72a785] shadow-lg shadow-[#8EB69B]/30"
+                                    : "w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 bg-[#8EB69B]/40 hover:bg-[#8EB69B]/60"
                                 }
                               `}
                       aria-label={`Go to slide ${index + 1}`}
@@ -400,6 +399,9 @@ const ServicesOverviewSection: React.FC = () => {
           </div>
 
           {/* Touch Instructions */}
+          <div className="block sm:hidden mt-4 text-xs text-[#235347] text-center font-medium">
+            Swipe to navigate
+          </div>
           <div className="hidden sm:block lg:hidden mt-4 sm:mt-6 text-sm text-[#235347] text-center font-medium">
             Swipe to navigate • Touch to pause auto-play
           </div>
