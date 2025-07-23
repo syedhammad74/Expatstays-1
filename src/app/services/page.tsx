@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 
 export default function ServicesPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FAFAFA] via-white to-[#DAF1DE]/30">
+    <div className="min-h-screen bg-gradient-to-br from-white via-[#FAFDFA] to-[#F3F9F4]">
       <Header />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 ">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-6 ">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

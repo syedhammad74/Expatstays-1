@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
 import { Disclosure } from "@headlessui/react";
+import { motion } from "framer-motion";
+import useEmblaCarousel from "embla-carousel-react";
+import Image from "next/image";
 import {
   ConciergeBell,
   Shirt,
@@ -18,31 +21,41 @@ import {
   ArrowRight,
   ChevronDown,
   ChevronUp,
+  MapPin,
+  Clock,
 } from "lucide-react";
 
-// Dynamic carousel to avoid SSR issues
-const Carousel = dynamic(() => import("@/components/ui/carousel"), {
-  ssr: false,
-});
-
+// Carousel data with diverse images from main page
 const carouselSlides = [
   {
-    src: "/media/DSC01822-HDR.jpg",
-    alt: "Concierge Excellence",
-    title: "Concierge Excellence",
-    button: "Discover Concierge",
+    title: "Luxury Villa Experience",
+    image: "/media/DSC01806 HDR June 25 2025/DSC01970-HDR.jpg",
+    alt: "Luxury Villa Experience",
   },
   {
-    src: "/media/DSC01846-HDR.jpg",
-    alt: "Laundry Service",
-    title: "Impeccable Laundry",
-    button: "See Laundry",
+    title: "Modern Architecture",
+    image: "/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg",
+    alt: "Modern Architecture",
   },
   {
-    src: "/media/DSC01871-HDR.jpg",
-    alt: "Tech Support",
-    title: "Technical Support",
-    button: "Explore Tech",
+    title: "Elegant Interiors",
+    image: "/media/Close Ups June 25 2025/DSC01964.jpg",
+    alt: "Elegant Interiors",
+  },
+  {
+    title: "Premium Amenities",
+    image: "/media/DSC01806 HDR June 25 2025/DSC01884-HDR.jpg",
+    alt: "Premium Amenities",
+  },
+  {
+    title: "Breathtaking Views",
+    image: "/media/DSC01806 HDR June 25 2025/DSC01929-HDR.jpg",
+    alt: "Breathtaking Views",
+  },
+  {
+    title: "Luxury Details",
+    image: "/media/Close Ups June 25 2025/DSC01835.jpg",
+    alt: "Luxury Details",
   },
 ];
 
@@ -53,30 +66,40 @@ const services = [
     description:
       "Personalized, 24/7 assistance for reservations, recommendations & more.",
     href: "/services/concierge",
+    gradient: "from-[#8EB69B] to-[#235347]",
+    bgGradient: "from-[#8EB69B]/5] to-[#235347]/5]",
   },
   {
     icon: Shirt,
     title: "365 Laundry & Dry Cleaning",
     description: "Expert care, premium detergents & express delivery.",
     href: "/services/laundry",
+    gradient: "from-[#DAF1DE] to-[#8EB69B]",
+    bgGradient: "from-[#DAF1DE]/5] to-[#8EB69B]/5]",
   },
   {
     icon: Wrench,
     title: "365 Technical Services",
     description: "On-demand tech and smart-home support for flawless comfort.",
     href: "/services/technical",
+    gradient: "from-[#235347] to-[#163832]",
+    bgGradient: "from-[#235347]/5] to-[#163832]/5]",
   },
   {
     icon: Utensils,
     title: "Private Chef Services",
     description: "Gourmet in-home dining experiences curated to your palate.",
     href: "/services/chef",
+    gradient: "from-[#8EB69B] to-[#DAF1DE]",
+    bgGradient: "from-[#8EB69B]/5] to-[#DAF1DE]/5]",
   },
   {
     icon: Car,
     title: "Luxury Transportation",
     description: "Chauffeured rides in premium vehicles, anywhere, anytime.",
     href: "/services/transport",
+    gradient: "from-[#163832] to-[#235347]",
+    bgGradient: "from-[#163832]/5] to-[#235347]/5]",
   },
   {
     icon: Plane,
@@ -84,6 +107,8 @@ const services = [
     description:
       "Custom itineraries, exclusive experiences & seamless bookings.",
     href: "/services/travel",
+    gradient: "from-[#8EB69B] to-[#72a785]",
+    bgGradient: "from-[#8EB69B]/5] to-[#72a785]/5]",
   },
 ];
 
@@ -92,16 +117,22 @@ const whyChoose = [
     icon: Shield,
     title: "Rigorous Quality",
     desc: "Every service is vetted, audited & guaranteed for excellence.",
+    gradient: "from-[#8EB69B] to-[#235347]",
+    bgGradient: "from-[#8EB69B]/5] to-[#235347]/5]",
   },
   {
     icon: Users,
     title: "Dedicated Support",
     desc: "Personal concierge available 24/7 for any request or need.",
+    gradient: "from-[#DAF1DE] to-[#8EB69B]",
+    bgGradient: "from-[#DAF1DE]/5] to-[#8EB69B]/5]",
   },
   {
     icon: Star,
     title: "Elite Experiences",
     desc: "Access to curated events, VIP access & unique local experiences.",
+    gradient: "from-[#235347] to-[#163832]",
+    bgGradient: "from-[#235347]/5] to-[#163832]/5]",
   },
 ];
 
@@ -142,161 +173,549 @@ const faqs = [
   },
 ];
 
-// FAQ Item Component
-const ServicesOverviewSection: React.FC = () => (
-  <section
-    id="services-overview"
-    className="relative w-full bg-gradient-to-b from-white to-[#F3F9F4] py-20 overflow-visible"
-  >
-    {/* Floating shapes */}
-    <div className="absolute -top-20 -left-10 w-96 h-96 bg-[#8EB69B]/20 rounded-full filter blur-3xl rotate-45" />
-    <div className="absolute -bottom-32 -right-10 w-[30rem] h-[30rem] bg-[#DAF1DE]/30 rounded-full filter blur-4xl rotate-12" />
+// ServicesOverviewSection Component
+const ServicesOverviewSection: React.FC = () => {
+  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
 
-    {/* Hero */}
-    <div className="w-full flex flex-col lg:flex-row items-center justify-evenly px-4 py-12">
-      <div className="flex-1 space-y-4 text-center lg:text-left lg:px-8">
-        <span className="inline-block bg-gradient-to-r from-[#8EB69B] to-[#DAF1DE] text-white font-semibold px-4 py-1 rounded-full uppercase text-sm tracking-wide">
-          Premium Services
-        </span>
-        <h1 className="text-4xl lg:text-5xl font-bold text-[#051F20] leading-snug">
-          Elevate Your <span className="text-[#8EB69B]">Lifestyle</span>
-        </h1>
-        <p className="text-base lg:text-lg text-[#235347]">
-          Experience top-tier luxury with our curated offerings built for
-          discerning tastes.
-        </p>
-        <Link href="/services">
-          <Button
-            size="lg"
-            className="mt-2 bg-[#8EB69B] hover:bg-[#72a785] text-white rounded-full px-6 py-2 shadow-md transition"
+  // Embla Carousel setup
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "center",
+    skipSnaps: false,
+    dragFree: false,
+    containScroll: "trimSnaps",
+    dragThreshold: 10,
+    inViewThreshold: 0.7,
+    watchDrag: true,
+  });
+
+  // Update current index when carousel slides
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      setCurrentServiceIndex(emblaApi.selectedScrollSnap());
+      setIsAutoPlaying(false);
+      setTimeout(() => setIsAutoPlaying(true), 2000);
+    };
+
+    const onDragStart = () => {
+      setIsDragging(true);
+      setIsAutoPlaying(false);
+    };
+
+    const onDragEnd = () => {
+      setIsDragging(false);
+      setTimeout(() => setIsAutoPlaying(true), 2000);
+    };
+
+    emblaApi.on("select", onSelect);
+    emblaApi.on("pointerDown", onDragStart);
+    emblaApi.on("pointerUp", onDragEnd);
+
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("pointerDown", onDragStart);
+      emblaApi.off("pointerUp", onDragEnd);
+    };
+  }, [emblaApi]);
+
+  // Auto-rotate carousel every 5 seconds (only when auto-playing)
+  useEffect(() => {
+    if (!isAutoPlaying || !emblaApi) return;
+
+    const interval = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [emblaApi, isAutoPlaying]);
+
+  // Navigation functions
+  const goToSlide = (index: number) => {
+    if (emblaApi) {
+      emblaApi.scrollTo(index);
+    }
+  };
+
+  return (
+    <section
+      id="services-overview"
+      className="relative w-full bg-gradient-to-br  overflow-hidden"
+    >
+      {/* Enhanced floating shapes with better positioning */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -left-20 w-96 h-96 bg-gradient-to-br from-[#8EB69B]/10 to-[#DAF1DE]/5 rounded-full filter blur-3xl animate-[breathing_6s_ease-in-out_infinite]" />
+        <div className="absolute -bottom-40 -right-20 w-[35rem] h-[35rem] bg-gradient-to-br from-[#DAF1DE]/8 to-[#8EB69B]/3 rounded-full filter blur-4xl animate-[breathing_8s_ease-in-out_infinite]" />
+        <div className="absolute top-1/4 right-1/4 w-32 h-32 bg-gradient-to-br from-[#8EB69B]/6 to-[#235347]/4 rounded-full animate-[breathing_7s_ease-in-out_infinite]" />
+        <div className="absolute bottom-1/3 left-1/3 w-24 h-24 bg-gradient-to-br from-[#DAF1DE]/8 to-[#8EB69B]/5 rounded-full animate-[breathing_9s_ease-in-out_infinite]" />
+
+        {/* Modern Geometric Shapes */}
+        <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/30 rotate-45 animate-[breathing_5s_ease-in-out_infinite]" />
+        <div className="absolute top-40 right-20 w-16 h-16 bg-gradient-to-br from-[#DAF1DE]/72 to-[#8EB69B]/48 rounded-full animate-[breathing_6.5s_ease-in-out_infinite]" />
+        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-gradient-to-br from-[#235347]/78 to-[#163832]/46 rotate-12 animate-[breathing_7.5s_ease-in-out_infinite]" />
+        <div className="absolute top-1/3 left-1/2 w-12 h-12 bg-gradient-to-br from-[#8EB69B]/90 to-[#DAF1DE]/46 rotate-45 animate-[breathing_8.5s_ease-in-out_infinite]" />
+
+        {/* Large Geometric Elements */}
+        <div className="absolute -top-60 -right-40 w-80 h-80 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/43 rounded-full filter blur-2xl animate-[breathing_10s_ease-in-out_infinite]" />
+        <div className="absolute -bottom-60 -left-40 w-72 h-72 bg-gradient-to-br from-[#DAF1DE]/76 to-[#8EB69B]/54 rounded-full filter blur-2xl animate-[breathing_11s_ease-in-out_infinite]" />
+
+        {/* Triangle Shapes */}
+        <div className="absolute top-1/2 right-10 w-0 h-0 border-l-[30px] border-l-transparent border-b-[52px] border-b-[#8EB69B]/8 border-r-[30px] border-r-transparent animate-[breathing_9s_ease-in-out_infinite]" />
+        <div className="absolute bottom-1/4 right-1/3 w-0 h-0 border-l-[20px] border-l-transparent border-b-[35px] border-b-[#DAF1DE]/10 border-r-[20px] border-r-transparent animate-[breathing_7s_ease-in-out_infinite]" />
+
+        {/* Square Shapes */}
+        <div className="absolute top-1/4 left-20 w-16 h-16 bg-gradient-to-br from-[#235347]/6 to-[#163832]/4 rotate-45 animate-[breathing_8s_ease-in-out_infinite]" />
+        <div className="absolute bottom-1/3 right-1/4 w-12 h-12 bg-gradient-to-br from-[#8EB69B]/8 to-[#72a785]/6 rotate-12 animate-[breathing_6s_ease-in-out_infinite]" />
+      </div>
+
+      {/* Hero Section - Enhanced with better spacing and visual hierarchy */}
+      <div className="relative z-10 w-full flex flex-col lg:flex-row items-center justify-evenly px-6 lg:px-12 py-16 lg:py-20 max-w-7xl mx-auto">
+        <motion.div
+          className="flex-1 space-y-6 text-center lg:text-left lg:pr-12"
+          initial={{ opacity: 0, x: -60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, ease: "easeOut" }}
+        >
+          <motion.span
+            className="inline-block bg-gradient-to-r from-[#8EB69B] to-[#72a785] text-white font-semibold px-6 py-2 rounded-full uppercase text-sm tracking-wider shadow-lg"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            Explore All Services
-            <ArrowRight className="ml-1 w-4 h-4" aria-hidden />
-          </Button>
-        </Link>
-      </div>
-      <div className="flex-1 mt-8 lg:mt-0 rounded-2xl overflow-hidden shadow-lg border border-[#E2F1E8] hover:scale-105 transition-transform">
-        <Carousel slides={carouselSlides} />
-      </div>
-    </div>
+            Premium Services
+          </motion.span>
+          <motion.h1
+            className="text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#051F20] leading-tight"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1, delay: 0.3 }}
+          >
+            Elevate Your{" "}
+            <span className="bg-gradient-to-r from-[#8EB69B] to-[#72a785] bg-clip-text text-transparent">
+              Lifestyle
+            </span>
+          </motion.h1>
+          <motion.p
+            className="text-lg lg:text-xl text-[#235347] max-w-lg leading-relaxed"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            Experience top-tier luxury with our curated offerings built for
+            discerning tastes and exceptional living.
+          </motion.p>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+          >
+            <Link href="/services">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-[#8EB69B] to-[#72a785] text-white rounded-full px-8 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl hover:shadow-[#8EB69B]/25 transition-all duration-300 transform hover:scale-105"
+              >
+                Explore All Services
+                <ArrowRight className="ml-2 w-5 h-5" aria-hidden />
+              </Button>
+            </Link>
+          </motion.div>
+        </motion.div>
 
-    {/* Services Grid */}
-    <div className="w-full px-4 py-12">
-      <h2 className="text-3xl lg:text-4xl font-bold text-[#051F20] text-center mb-8">
-        Our <span className="text-[#8EB69B]">Services</span>
-      </h2>
-      <ul className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-2">
-        {services.map((svc, idx) => (
-          <li key={idx} className="flex">
-            <Card className="group relative w-full bg-white rounded-2xl p-6 shadow-sm hover:shadow-md hover:-translate-y-1 transition-transform border hover:border-[#8EB69B]/20">
-              <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 bg-gradient-to-br from-[#8EB69B] to-[#DAF1DE] p-3 rounded-full text-white shadow-md">
-                <svc.icon className="w-6 h-6" aria-hidden />
-              </div>
-              <CardHeader className="mt-8 text-center">
-                <CardTitle className="text-xl font-medium text-[#051F20]">
-                  {svc.title}
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="text-center mt-2">
-                <p className="text-[#235347] text-sm leading-relaxed mb-4">
-                  {svc.description}
-                </p>
-                <Link href={svc.href}>
-                  <Button
-                    variant="outline"
-                    className="rounded-full border border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white px-4 py-1 text-sm transition"
+        {/* Enhanced Carousel Section */}
+        <motion.div
+          className="flex-1 mt-12 lg:mt-0"
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
+        >
+          <div className="relative w-full h-[450px] lg:h-[500px] max-w-2xl mx-auto">
+            {/* Embla Carousel */}
+            <div
+              className="overflow-hidden rounded-3xl shadow-2xl"
+              ref={emblaRef}
+              style={{
+                touchAction: "manipulation",
+                userSelect: "none",
+                WebkitUserSelect: "none",
+                WebkitTouchCallout: "none",
+              }}
+            >
+              <div className="flex">
+                {carouselSlides.map((slide, index) => (
+                  <div
+                    key={index}
+                    className="flex-[0_0_100%] min-w-0 relative h-[450px] lg:h-[500px]"
                   >
-                    Learn More
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-          </li>
-        ))}
-      </ul>
-    </div>
+                    <Image
+                      src={slide.image}
+                      alt={slide.alt}
+                      fill
+                      className="object-cover object-center select-none"
+                      priority={index === 0}
+                      draggable={false}
+                    />
+                    {/* Enhanced overlay for better contrast */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none" />
 
-    {/* Why Choose */}
-    <div className="w-full px-4 py-12 bg-white">
-      <h2 className="text-3xl lg:text-4xl font-bold text-[#051F20] text-center mb-8">
-        Why <span className="text-[#8EB69B]">Choose</span> Us?
-      </h2>
-      <ul className="w-full grid grid-cols-1 md:grid-cols-3 gap-6 px-2">
-        {whyChoose.map((item, idx) => (
-          <li key={idx} className="text-center flex flex-col items-center p-4">
-            <div className="bg-white p-4 rounded-full shadow-md border border-[#8EB69B]/30">
-              <item.icon className="w-6 h-6 text-[#8EB69B]" aria-hidden />
-            </div>
-            <h3 className="mt-3 text-lg font-semibold text-[#051F20]">
-              {item.title}
-            </h3>
-            <p className="mt-1 text-[#235347] text-sm leading-relaxed">
-              {item.desc}
-            </p>
-          </li>
-        ))}
-      </ul>
-    </div>
+                    {/* Enhanced slide title overlay */}
+                    <div className="absolute bottom-6 left-6 right-6">
+                      <h3 className="text-white text-xl lg:text-2xl font-bold drop-shadow-2xl">
+                        {slide.title}
+                      </h3>
+                    </div>
 
-    {/* How It Works Spotlight */}
-    <div className="w-full px-4 py-12">
-      <h2 className="text-3xl lg:text-4xl font-bold text-[#051F20] text-center mb-6">
-        How It <span className="text-[#8EB69B]">Works</span>
-      </h2>
-      <CardSpotlight className="w-full bg-[#E2F1E8] rounded-2xl p-6 shadow-md border-t-4 border-[#8EB69B]">
-        <ol className="list-decimal list-inside space-y-2 text-[#235347] leading-snug">
-          {howItWorksSteps.map((item, idx) => (
-            <li key={idx}>
-              <span className="font-medium text-base text-[#051F20]">
-                {item.step}
-              </span>
-              {item.note && (
-                <div className="text-sm opacity-80 mt-1">{item.note}</div>
-              )}
-            </li>
-          ))}
-        </ol>
-        <div className="mt-4 text-center">
-          <Button
-            size="sm"
-            className="bg-[#8EB69B] text-white rounded-full px-4 py-1 hover:bg-[#72a785] transition"
-          >
-            Contact Concierge
-          </Button>
-        </div>
-      </CardSpotlight>
-    </div>
-
-    {/* FAQ Section */}
-    <div className="w-full px-4 py-12 bg-white">
-      <h2 className="text-3xl lg:text-4xl font-bold text-[#051F20] text-center mb-6">
-        FAQs
-      </h2>
-      <div className="space-y-2 px-2">
-        {faqs.map((faq, idx) => (
-          <Disclosure key={idx}>
-            {({ open }) => (
-              <div className="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
-                <Disclosure.Button className="w-full flex justify-between items-center px-4 py-2 bg-white hover:bg-gray-50 transition">
-                  <span className="font-medium text-[#051F20] text-sm">
-                    {faq.question}
-                  </span>
-                  {open ? (
-                    <ChevronUp className="w-4 h-4 text-[#8EB69B]" />
-                  ) : (
-                    <ChevronDown className="w-4 h-4 text-gray-400" />
-                  )}
-                </Disclosure.Button>
-                <Disclosure.Panel className="px-4 py-2 bg-[#F9FBFA] text-[#235347] text-sm leading-relaxed">
-                  {faq.answer}
-                </Disclosure.Panel>
+                    {/* Drag indicator */}
+                    {isDragging && (
+                      <div className="absolute top-4 right-4 bg-[#8EB69B] text-white px-3 py-1 rounded-full text-sm font-medium shadow-lg">
+                        ✋ Dragging
+                      </div>
+                    )}
+                  </div>
+                ))}
               </div>
-            )}
-          </Disclosure>
-        ))}
+
+              {/* Enhanced Carousel Indicators */}
+              <div className="absolute -bottom-16 left-1/2 transform -translate-x-1/2 z-50">
+                <div className="flex items-center justify-center gap-3">
+                  {carouselSlides.map((_, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToSlide(index)}
+                      className={`rounded-full transition-all duration-500 ease-in-out transform hover:scale-125
+                                ${
+                                  index === currentServiceIndex
+                                    ? "w-4 h-4 bg-gradient-to-r from-[#8EB69B] to-[#72a785] shadow-lg shadow-[#8EB69B]/30"
+                                    : "w-3 h-3 bg-[#8EB69B]/40 hover:bg-[#8EB69B]/60"
+                                }
+                              `}
+                      aria-label={`Go to slide ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Touch Instructions */}
+          <div className="hidden sm:block lg:hidden mt-6 text-sm text-[#235347] text-center font-medium">
+            Swipe to navigate • Touch to pause auto-play
+          </div>
+        </motion.div>
       </div>
-    </div>
-  </section>
-);
+
+      {/* Services Grid - Enhanced with modern design */}
+      <div className="relative z-10 w-full px-6 lg:px-12 py-20 max-w-7xl mx-auto">
+        {/* Decorative shapes for Services section */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-10 right-10 w-32 h-32 bg-gradient-to-br from-[#8EB69B]/8 to-[#72a785]/5 rounded-full filter blur-xl animate-[breathing_8s_ease-in-out_infinite]" />
+          <div className="absolute bottom-20 left-10 w-24 h-24 bg-gradient-to-br from-[#DAF1DE]/10 to-[#8EB69B]/6 rotate-45 animate-[breathing_7s_ease-in-out_infinite]" />
+          <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-gradient-to-br from-[#235347]/6 to-[#163832]/4 rounded-full animate-[breathing_9s_ease-in-out_infinite]" />
+          <div className="absolute bottom-10 right-1/3 w-20 h-20 bg-gradient-to-br from-[#8EB69B]/7 to-[#DAF1DE]/4 rotate-12 animate-[breathing_6.5s_ease-in-out_infinite]" />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#051F20] mb-6">
+            Our{" "}
+            <span className="bg-gradient-to-r from-[#8EB69B] to-[#72a785] bg-clip-text text-transparent">
+              Services
+            </span>
+          </h2>
+          <p className="text-lg lg:text-xl text-[#235347] max-w-3xl mx-auto leading-relaxed">
+            Premium services designed to elevate your luxury living experience
+            with unparalleled attention to detail
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
+          {services.map((svc, idx) => (
+            <motion.div
+              key={idx}
+              className="group relative"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: idx * 0.1 }}
+              whileHover={{ y: -12, scale: 1.02 }}
+            >
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${svc.bgGradient} rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+              />
+              <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl group-hover:shadow-2xl transition-all duration-500">
+                {/* Animated Icon */}
+                <motion.div
+                  className={`inline-flex p-5 rounded-2xl bg-gradient-to-br ${svc.gradient} mb-6 shadow-lg`}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <svc.icon className="w-7 h-7 text-white" aria-hidden />
+                </motion.div>
+
+                <div className="text-center">
+                  <h3 className="text-2xl font-bold text-[#051F20] mb-4">
+                    {svc.title}
+                  </h3>
+                  <p className="text-[#235347] text-base leading-relaxed mb-6">
+                    {svc.description}
+                  </p>
+                  <Link href={svc.href}>
+                    <Button
+                      variant="outline"
+                      className="rounded-full border-2 border-[#8EB69B] text-[#8EB69B] hover:bg-gradient-to-r hover:from-[#8EB69B] hover:to-[#72a785] hover:text-white px-6 py-2 text-base font-medium transition-all duration-300 transform hover:scale-105"
+                    >
+                      Learn More
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Why Choose - Enhanced with modern cards */}
+      <div className="relative z-10 w-full px-6 lg:px-12 py-20 bg-gradient-to-br from-white via-[#FAFDFA] to-[#F3F9F4]">
+        {/* Decorative shapes for Why Choose section */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-20 left-20 w-40 h-40 bg-gradient-to-br from-[#8EB69B]/6 to-[#72a785]/4 rounded-full filter blur-2xl animate-[breathing_9s_ease-in-out_infinite]" />
+          <div className="absolute bottom-20 right-20 w-36 h-36 bg-gradient-to-br from-[#DAF1DE]/8 to-[#8EB69B]/5 rounded-full filter blur-2xl animate-[breathing_7.5s_ease-in-out_infinite]" />
+          <div className="absolute top-1/2 right-1/4 w-24 h-24 bg-gradient-to-br from-[#235347]/5 to-[#163832]/3 rotate-45 animate-[breathing_8.5s_ease-in-out_infinite]" />
+          <div className="absolute bottom-1/3 left-1/3 w-28 h-28 bg-gradient-to-br from-[#8EB69B]/7 to-[#DAF1DE]/4 rotate-12 animate-[breathing_6s_ease-in-out_infinite]" />
+
+          {/* Triangle shapes */}
+          <div className="absolute top-10 right-10 w-0 h-0 border-l-[25px] border-l-transparent border-b-[43px] border-b-[#8EB69B]/6 border-r-[25px] border-r-transparent animate-[breathing_7s_ease-in-out_infinite]" />
+          <div className="absolute bottom-10 left-10 w-0 h-0 border-l-[20px] border-l-transparent border-b-[35px] border-b-[#DAF1DE]/8 border-r-[20px] border-r-transparent animate-[breathing_8s_ease-in-out_infinite]" />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-center mb-16 max-w-7xl mx-auto"
+        >
+          <h2 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#051F20] mb-6">
+            Why{" "}
+            <span className="bg-gradient-to-r from-[#8EB69B] to-[#72a785] bg-clip-text text-transparent">
+              Choose
+            </span>{" "}
+            Us?
+          </h2>
+          <p className="text-lg lg:text-xl text-[#235347] max-w-3xl mx-auto leading-relaxed">
+            Join thousands of satisfied guests who choose our premium services
+            for their exceptional quality
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 max-w-7xl mx-auto">
+          {whyChoose.map((item, idx) => (
+            <motion.div
+              key={idx}
+              className="group relative"
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: idx * 0.1 }}
+              whileHover={{ y: -12, scale: 1.02 }}
+            >
+              <div
+                className={`absolute inset-0 bg-gradient-to-br ${item.bgGradient} rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
+              />
+              <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-8 text-center shadow-xl group-hover:shadow-2xl transition-all duration-500">
+                <motion.div
+                  className={`inline-flex p-5 rounded-2xl bg-gradient-to-br ${item.gradient} mb-6 shadow-lg`}
+                  whileHover={{ scale: 1.1, rotate: 5 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <item.icon className="w-7 h-7 text-white" aria-hidden />
+                </motion.div>
+                <h3 className="text-2xl font-bold text-[#051F20] mb-4">
+                  {item.title}
+                </h3>
+                <p className="text-[#235347] text-base leading-relaxed">
+                  {item.desc}
+                </p>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* How It Works - Enhanced with modern design */}
+      <div className="relative z-10 w-full px-6 lg:px-12 py-20 max-w-7xl mx-auto">
+        {/* Decorative shapes for How It Works section */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-10 left-10 w-48 h-48 bg-gradient-to-br from-[#8EB69B]/5 to-[#72a785]/3 rounded-full filter blur-3xl animate-[breathing_10s_ease-in-out_infinite]" />
+          <div className="absolute bottom-10 right-10 w-44 h-44 bg-gradient-to-br from-[#DAF1DE]/6 to-[#8EB69B]/4 rounded-full filter blur-3xl animate-[breathing_8.5s_ease-in-out_infinite]" />
+          <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-gradient-to-br from-[#235347]/4 to-[#163832]/3 rotate-45 animate-[breathing_7s_ease-in-out_infinite]" />
+          <div className="absolute bottom-1/4 left-1/4 w-16 h-16 bg-gradient-to-br from-[#8EB69B]/6 to-[#DAF1DE]/4 rotate-12 animate-[breathing_9s_ease-in-out_infinite]" />
+
+          {/* Large geometric elements */}
+          <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-[#8EB69B]/8 to-[#72a785]/5 rounded-full animate-[breathing_6.5s_ease-in-out_infinite]" />
+          <div className="absolute bottom-20 left-20 w-28 h-28 bg-gradient-to-br from-[#DAF1DE]/7 to-[#8EB69B]/5 rotate-45 animate-[breathing_8s_ease-in-out_infinite]" />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#051F20] mb-6">
+            How It{" "}
+            <span className="bg-gradient-to-r from-[#8EB69B] to-[#72a785] bg-clip-text text-transparent">
+              Works
+            </span>
+          </h2>
+          <p className="text-lg lg:text-xl text-[#235347] max-w-3xl mx-auto leading-relaxed">
+            Simple steps to access our premium luxury services and elevate your
+            experience
+          </p>
+        </motion.div>
+
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="relative"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/5 to-[#72a785]/5 rounded-3xl blur-2xl" />
+          <div className="relative bg-gradient-to-br from-white/90 to-[#FAFDFA]/90 backdrop-blur-xl rounded-3xl p-10 lg:p-12 shadow-2xl">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+              <div className="space-y-6">
+                {howItWorksSteps.slice(0, 2).map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: idx * 0.2 }}
+                    className="flex items-start gap-4"
+                  >
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#8EB69B] to-[#72a785] rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                      {idx + 1}
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold text-[#051F20] mb-2">
+                        {item.step}
+                      </h4>
+                      {item.note && (
+                        <p className="text-[#235347] text-base leading-relaxed">
+                          {item.note}
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+              <div className="space-y-6">
+                {howItWorksSteps.slice(2).map((item, idx) => (
+                  <motion.div
+                    key={idx + 2}
+                    initial={{ opacity: 0, x: 30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.6, delay: (idx + 2) * 0.2 }}
+                    className="flex items-start gap-4"
+                  >
+                    <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#8EB69B] to-[#72a785] rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
+                      {idx + 3}
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-bold text-[#051F20] mb-2">
+                        {item.step}
+                      </h4>
+                      {item.note && (
+                        <p className="text-[#235347] text-base leading-relaxed">
+                          {item.note}
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+            <div className="mt-10 text-center">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-[#8EB69B] to-[#72a785] text-white rounded-full px-8 py-4 text-lg font-semibold shadow-xl hover:shadow-2xl hover:shadow-[#8EB69B]/25 transition-all duration-300 transform hover:scale-105"
+              >
+                Contact Concierge
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* FAQ Section - Enhanced with modern design */}
+      <div className="relative z-10 w-full px-6 lg:px-12 py-20 bg-gradient-to-br from-white via-[#FAFDFA] to-[#F3F9F4]">
+        {/* Decorative shapes for FAQ section */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-20 right-20 w-36 h-36 bg-gradient-to-br from-[#8EB69B]/7 to-[#72a785]/5 rounded-full filter blur-2xl animate-[breathing_8s_ease-in-out_infinite]" />
+          <div className="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-br from-[#DAF1DE]/8 to-[#8EB69B]/6 rounded-full filter blur-2xl animate-[breathing_7s_ease-in-out_infinite]" />
+          <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-gradient-to-br from-[#235347]/5 to-[#163832]/4 rotate-45 animate-[breathing_9s_ease-in-out_infinite]" />
+          <div className="absolute bottom-1/3 right-1/4 w-20 h-20 bg-gradient-to-br from-[#8EB69B]/6 to-[#DAF1DE]/4 rotate-12 animate-[breathing_6.5s_ease-in-out_infinite]" />
+
+          {/* Triangle and square shapes */}
+          <div className="absolute top-10 left-10 w-0 h-0 border-l-[20px] border-l-transparent border-b-[35px] border-b-[#8EB69B]/6 border-r-[20px] border-r-transparent animate-[breathing_7.5s_ease-in-out_infinite]" />
+          <div className="absolute bottom-10 right-10 w-16 h-16 bg-gradient-to-br from-[#DAF1DE]/7 to-[#8EB69B]/5 rotate-45 animate-[breathing_8.5s_ease-in-out_infinite]" />
+        </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="text-center mb-16 max-w-7xl mx-auto"
+        >
+          <h2 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#051F20] mb-6">
+            Frequently Asked{" "}
+            <span className="bg-gradient-to-r from-[#8EB69B] to-[#72a785] bg-clip-text text-transparent">
+              Questions
+            </span>
+          </h2>
+          <p className="text-lg lg:text-xl text-[#235347] max-w-3xl mx-auto leading-relaxed">
+            Everything you need to know about our premium services and luxury
+            experiences
+          </p>
+        </motion.div>
+
+        <div className="space-y-4 max-w-4xl mx-auto">
+          {faqs.map((faq, idx) => (
+            <motion.div
+              key={idx}
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: idx * 0.1 }}
+            >
+              <Disclosure>
+                {({ open }) => (
+                  <div className="bg-white/80 backdrop-blur-xl rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
+                    <Disclosure.Button className="w-full flex justify-between items-center px-8 py-6 bg-transparent hover:bg-[#F9FBFA]/50 transition-all duration-300">
+                      <span className="font-semibold text-[#051F20] text-left text-lg">
+                        {faq.question}
+                      </span>
+                      <div className="flex-shrink-0">
+                        {open ? (
+                          <ChevronUp className="w-6 h-6 text-[#8EB69B]" />
+                        ) : (
+                          <ChevronDown className="w-6 h-6 text-[#8EB69B]" />
+                        )}
+                      </div>
+                    </Disclosure.Button>
+                    <Disclosure.Panel className="px-8 pb-6 text-[#235347] text-base leading-relaxed">
+                      {faq.answer}
+                    </Disclosure.Panel>
+                  </div>
+                )}
+              </Disclosure>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 export default ServicesOverviewSection;
