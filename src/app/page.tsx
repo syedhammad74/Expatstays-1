@@ -221,7 +221,7 @@ export default function Home() {
           <div
             ref={heroRef}
             style={{ touchAction: "pan-y pinch-zoom" }}
-            className="relative flex-col w-full lg:w-1/2 h-[350px] sm:h-[400px] lg:h-[480px] flex items-center justify-center mb-6 lg:mb-0 pt-10"
+            className="relative flex-col w-full lg:w-1/2 h-[350px] sm:h-[400px] lg:h-[480px] flex items-center justify-center mb-6 lg:mb-0 pt-10 overflow-y-auto"
           >
             {/* Carousel Container */}
             <div className="relative w-full h-full max-w-lg mx-auto">
