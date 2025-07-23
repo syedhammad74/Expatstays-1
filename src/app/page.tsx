@@ -218,36 +218,40 @@ export default function Home() {
           </div>
         </div>
         {/* Right Panel: Elegant Carousel */}
-        <div
-          ref={heroRef}
-          className="relative flex-col w-full lg:w-1/2 h-[350px] sm:h-[400px] lg:h-[480px] flex items-center justify-center mb-6 lg:mb-0 pt-10"
-        >
-          {/* Carousel Container */}
-          <div className="relative w-full h-full max-w-lg mx-auto">
-            {/* Image Container */}
-            <motion.div
-              className="absolute -left-20 -top-20 -right-20 bottom-1 rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl"
-              key={currentServiceIndex}
-              initial={{ opacity: 0 }}
+           <div
+            ref={heroRef}
+            style={{ touchAction: 'pan-y pinch-zoom' }}
+            className="relative flex-col w-full lg:w-1/2 h-[350px] sm:h-[400px] lg:h-[480px] flex items-center justify-center mb-6 lg:mb-0 pt-10 overflow-y-auto"
+          >
+            {/* Carousel Container */}
+            <div className="relative w-full h-full max-w-lg mx-auto">
+              {/* Image Container */}
+              <motion.div
+                className="absolute -left-20 -top-20 -right-20 bottom-1 rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl"
+                key={currentServiceIndex}
+                initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{
+                exit={{ opacity: 0 }}
+                transition={{
                   duration: 0.4,
-                ease: "easeInOut",
+                  ease: 'easeInOut',
                   opacity: { duration: 0.6 },
-              }}
-              whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
-            >
-              <Image
-                src={carouselSlides[currentServiceIndex].image}
-                alt={carouselSlides[currentServiceIndex].alt}
-                fill
-                className="object-cover object-center"
-                priority
-              />
-              {/* Subtle overlay for better contrast */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-            </motion.div>
+                }}
+                whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
+              >
+                <Image
+                  src={carouselSlides[currentServiceIndex].image}
+                  alt={carouselSlides[currentServiceIndex].alt}
+                  fill
+                  className="object-cover object-center"
+                  priority
+                />
+                {/* Subtle overlay for better contrast, but now touch‑transparent */}
+                <div
+                  className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"
+                />
+              </motion.div>
+            </div>
           </div>
 
           {/* Flat Modern Carousel Indicators - Outside Image Card */}
@@ -267,8 +271,8 @@ export default function Home() {
               />
             ))}
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
 
       {/* Booking Section - Moved to be more prominent */}
       <section className="relative flex flex-col items-center justify-center py-8 lg:py-12 px-4 lg:px-8 max-w-7xl mx-auto bg-gradient-to-br from-white to-[#F9FCFB] rounded-2xl lg:rounded-3xl overflow-hidden mb-16 lg:mb-24">
@@ -1004,7 +1008,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-    </div>
     </>
   );
 }
