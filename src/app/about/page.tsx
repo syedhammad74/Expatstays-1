@@ -211,6 +211,24 @@ export default function AboutPage() {
             delay: 2,
           }}
         />
+
+        {/* Modern Geometric Shapes - Enhanced */}
+        <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/30 rotate-45 animate-[breathing_5s_ease-in-out_infinite]" />
+        <div className="absolute top-40 right-20 w-16 h-16 bg-gradient-to-br from-[#DAF1DE]/72 to-[#8EB69B]/48 rounded-full animate-[breathing_6.5s_ease-in-out_infinite]" />
+        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-gradient-to-br from-[#235347]/78 to-[#163832]/46 rotate-12 animate-[breathing_7.5s_ease-in-out_infinite]" />
+        <div className="absolute top-1/3 left-1/2 w-12 h-12 bg-gradient-to-br from-[#8EB69B]/90 to-[#DAF1DE]/46 rotate-45 animate-[breathing_8.5s_ease-in-out_infinite]" />
+
+        {/* Large Geometric Elements */}
+        <div className="absolute -top-60 -right-40 w-80 h-80 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/43 rounded-full filter blur-2xl animate-[breathing_10s_ease-in-out_infinite]" />
+        <div className="absolute -bottom-60 -left-40 w-72 h-72 bg-gradient-to-br from-[#DAF1DE]/76 to-[#8EB69B]/54 rounded-full filter blur-2xl animate-[breathing_11s_ease-in-out_infinite]" />
+
+        {/* Triangle Shapes */}
+        <div className="absolute top-1/2 right-10 w-0 h-0 border-l-[30px] border-l-transparent border-b-[52px] border-b-[#8EB69B]/8 border-r-[30px] border-r-transparent animate-[breathing_9s_ease-in-out_infinite]" />
+        <div className="absolute bottom-1/4 right-1/3 w-0 h-0 border-l-[20px] border-l-transparent border-b-[35px] border-b-[#DAF1DE]/10 border-r-[20px] border-r-transparent animate-[breathing_7s_ease-in-out_infinite]" />
+
+        {/* Square Shapes */}
+        <div className="absolute top-1/4 left-20 w-16 h-16 bg-gradient-to-br from-[#235347]/6 to-[#163832]/4 rotate-45 animate-[breathing_8s_ease-in-out_infinite]" />
+        <div className="absolute bottom-1/3 right-1/4 w-12 h-12 bg-gradient-to-br from-[#8EB69B]/8 to-[#72a785]/6 rotate-12 animate-[breathing_6s_ease-in-out_infinite]" />
       </div>
 
       {/* HERO SECTION */}

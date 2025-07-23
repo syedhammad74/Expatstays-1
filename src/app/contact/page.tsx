@@ -241,7 +241,7 @@ export default function ContactPage() {
         <Header />
 
         {/* Hero Section - Enhanced */}
-        <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#FAFDFC] to-[#F5F9F8] pt-20 pb-12 sm:pt-24 sm:pb-16 lg:pt-32 lg:pb-24">
+        <section className="relative overflow-hidden bg-gradient-to-br from-white via-[#FAFDFC] to-[#F5F9F8] pb-12  sm:pb-16 lg:pb-24">
           <HeroBlob />
 
           {/* Decorative elements */}
