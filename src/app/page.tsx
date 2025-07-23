@@ -13,8 +13,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 import Image from "next/image";
-import { motion } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { motion, number } from "framer-motion";
+import { useRef, useState, useEffect, useCallback } from "react";
 import Header from "@/components/layout/Header";
 import {
   Popover,
@@ -35,6 +35,7 @@ import { DateRange } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import React from "react";
 import Head from "next/head";
+import useEmblaCarousel from "embla-carousel-react";
 
 export default function Home() {
   // Parallax effect for hero images
@@ -48,6 +49,20 @@ export default function Home() {
   const [calendarOpen, setCalendarOpen] = useState(false);
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [isDragging, setIsDragging] = useState(false);
+
+  // Embla Carousel setup
+  const [emblaRef, emblaApi] = useEmblaCarousel({
+    loop: true,
+    align: "center",
+    skipSnaps: false,
+    dragFree: false,
+    containScroll: "trimSnaps",
+    dragThreshold: 10,
+    inViewThreshold: 0.7,
+    watchDrag: true,
+  });
 
   // Carousel data with diverse images
   const carouselSlides = [
@@ -83,20 +98,53 @@ export default function Home() {
     },
   ];
 
-  // Auto-rotate carousel every 5 seconds (optimized for smooth transitions)
+  // Update current index when carousel slides
   useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => {
+      setCurrentServiceIndex(emblaApi.selectedScrollSnap());
+      setIsAutoPlaying(false);
+      setTimeout(() => setIsAutoPlaying(true), 2000);
+    };
+
+    const onDragStart = () => {
+      setIsDragging(true);
+      setIsAutoPlaying(false);
+    };
+
+    const onDragEnd = () => {
+      setIsDragging(false);
+      setTimeout(() => setIsAutoPlaying(true), 2000);
+    };
+
+    emblaApi.on("select", onSelect);
+    emblaApi.on("pointerDown", onDragStart);
+    emblaApi.on("pointerUp", onDragEnd);
+
+    return () => {
+      emblaApi.off("select", onSelect);
+      emblaApi.off("pointerDown", onDragStart);
+      emblaApi.off("pointerUp", onDragEnd);
+    };
+  }, [emblaApi]);
+
+  // Auto-rotate carousel every 5 seconds (only when auto-playing)
+  useEffect(() => {
+    if (!isAutoPlaying || !emblaApi) return;
+
     const interval = setInterval(() => {
-      setCurrentServiceIndex(
-        (prevIndex) => (prevIndex + 1) % carouselSlides.length
-      );
+      emblaApi.scrollNext();
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [carouselSlides.length]);
+  }, [emblaApi, isAutoPlaying]);
 
   // Navigation functions
   const goToSlide = (index: number) => {
-    setCurrentServiceIndex(index);
+    if (emblaApi) {
+      emblaApi.scrollTo(index);
+    }
   };
 
   // Helper for guests summary
@@ -189,6 +237,26 @@ export default function Home() {
         <Header />
         {/* Hero Section: Split & Layered Visual Immersion */}
         <section className="relative w-full mt-10 min-h-[80vh] flex flex-col lg:flex-row items-center justify-center overflow-hidden mb-8 lg:mb-12 px-4 lg:px-0">
+          {/* Modern Decorative Elements - Hero Background */}
+          <div className="absolute top-16 left-8  pointer-events-none">
+            {/* Large decorative circle */}
+            <div className="w-32 h-32 bg-[#8EB69B] rounded-full     animate-[breathing_4s_ease-in-out_infinite]"></div>
+
+            {/* Medium decorative circle */}
+            <div className="absolute -top-8 -left-8 w-20 h-20 bg-[#8EB69B] rounded-full animate-[breathing_7.5s_ease-in-out_infinite]"></div>
+
+            {/* Small decorative circle */}
+            <div className="absolute top-20 -left-4 w-12 h-12 bg-[#8EB69B] rounded-full animate-[breathing_7s_ease-in-out_infinite]"></div>
+
+            {/* Floating dot */}
+            <div className="absolute top-8 left-24 w-4 h-4 rounded-full bg-[#8EB69B] animate-[breathing_7.5s_ease-in-out_infinite]"></div>
+          </div>
+
+          {/* Additional decorative element - Top right */}
+          <div className="absolute top-24 right-16 z-0 pointer-events-none">
+            <div className="w-24 h-24 bg-gradient-to-br bg-[#8EB69B] rounded-full  animate-[breathing_7.5s_ease-in-out_infinite]"></div>
+            <div className="absolute top-4 right-4 w-6 h-6 bg-[#8EB69B] rounded-full shadow-sm animate-[breathing_6.5s_ease-in-out_infinite]"></div>
+          </div>
           {/* Left Panel */}
           <div className="w-full lg:w-2/5 flex mb-20 flex-col justify-center items-start px-4 lg:px-12 z-10 animate-fade-in-up">
             <Badge className="bg-[#8EB69B]/20 text-[#8EB69B] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
@@ -217,56 +285,83 @@ export default function Home() {
               </Button>
             </div>
           </div>
-          {/* Right Panel: Elegant Carousel */}
+          {/* Right Panel: Sliding Touch Carousel */}
           <div
             ref={heroRef}
-            style={{ touchAction: "pan-y pinch-zoom" }}
-            className="relative flex-col w-full lg:w-1/2 sm:w-1/3 h-[350px] sm:h-[300px] lg:h-[480px] flex items-center justify-center mb-6 lg:mb-0 pt-10 overflow-y-auto"
+            className="relative flex-col w-full lg:w-1/2 sm:w-1/3 h-[300px] sm:h-[400px] lg:h-[400px] flex items-center justify-center mb-16 lg:mb-16 "
           >
             {/* Carousel Container */}
-            <div className="relative w-full h-full max-w-lg mx-auto">
-              {/* Image Container */}
-              <motion.div
-                className="absolute -left-20 -top-20 -right-20 bottom-1 rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl"
-                key={currentServiceIndex}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{
-                  duration: 0.4,
-                  ease: "easeInOut",
-                  opacity: { duration: 0.6 },
+            <div className="relative w-full h-full max-w-xl mx-auto">
+              {/* Embla Carousel */}
+              <div
+                className="overflow-hidden rounded-xl lg:rounded-2xl shadow-2xl"
+                ref={emblaRef}
+                style={{
+                  touchAction: "manipulation",
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                  WebkitTouchCallout: "none",
                 }}
-                whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
               >
-                <Image
-                  src={carouselSlides[currentServiceIndex].image}
-                  alt={carouselSlides[currentServiceIndex].alt}
-                  fill
-                  className="object-cover object-center"
-                  priority
-                />
-                {/* Subtle overlay for better contrast */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
-              </motion.div>
+                <div className="flex">
+                  {carouselSlides.map((slide, index) => (
+                    <div
+                      key={index}
+                      className="flex-[0_0_100%] min-w-0 relative h-[350px] sm:h-[400px] lg:h-[450px]"
+                    >
+                      <Image
+                        src={slide.image}
+                        alt={slide.alt}
+                        fill
+                        className="object-cover object-center select-none"
+                        priority={index === 0}
+                        draggable={false}
+                      />
+                      {/* Subtle overlay for better contrast */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+
+                      {/* Slide title overlay */}
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <h3 className="text-white text-lg font-semibold drop-shadow-lg">
+                          {slide.title}
+                        </h3>
+                      </div>
+
+                      {/* Drag indicator */}
+                      {isDragging && (
+                        <div className="absolute top-4 right-4 bg-green-500 text-white px-2 py-1 rounded text-xs">
+                          ✋ Dragging
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Carousel Indicators - Inside Carousel */}
+                <div className="absolute -bottom-20 left-1/2 transform -translate-x-1/2 z-50">
+                  <div className="flex items-center justify-center gap-2">
+                    {carouselSlides.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => goToSlide(index)}
+                        className={`rounded-full transition-all duration-300 ease-in-out transform hover:scale-110
+                                  ${
+                                    index === currentServiceIndex
+                                      ? "w-3 h-3 bg-green-600 ring-2 ring-green-500/50 ring-offset-1 ring-offset-green-400/20 shadow-lg"
+                                      : "w-2.5 h-2.5 bg-green-600/60 hover:bg-green-400/80 hover:scale-110"
+                                  }
+                                `}
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Flat Modern Carousel Indicators - Outside Image Card */}
-            <div className="flex items-center justify-center gap-3 mt-6">
-              {carouselSlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  className={`rounded-full transition-all duration-500 ease-in-out
-                            ${
-                              index === currentServiceIndex
-                                ? "w-3 h-3 bg-[#28A745] ring-2 ring-[#28A745] ring-offset-2 ring-offset-white shadow-md"
-                                : "w-3 h-3 bg-[#D1D5DB] hover:bg-[#B6B6B6]"
-                            }
-                          `}
-                  aria-label={`Go to slide ${index + 1}`}
-                />
-              ))}
+            {/* Touch Instructions (visible on mobile) */}
+            <div className="hidden sm:block lg:hidden mt-4 text-xs text-gray-500 text-center">
+              Swipe to navigate • Touch to pause auto-play
             </div>
           </div>
         </section>
