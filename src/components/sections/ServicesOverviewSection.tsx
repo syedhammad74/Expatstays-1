@@ -399,12 +399,7 @@ const ServicesOverviewSection: React.FC = () => {
           </div>
 
           {/* Touch Instructions */}
-          <div className="block sm:hidden mt-4 text-xs text-[#235347] text-center font-medium">
-            Swipe to navigate
-          </div>
-          <div className="hidden sm:block lg:hidden mt-4 sm:mt-6 text-sm text-[#235347] text-center font-medium">
-            Swipe to navigate • Touch to pause auto-play
-          </div>
+          
         </motion.div>
       </div>
 
