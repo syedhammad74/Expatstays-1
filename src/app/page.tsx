@@ -236,29 +236,29 @@ export default function Home() {
       <div className="min-h-screen bg-white">
         <Header />
         {/* Hero Section: Split & Layered Visual Immersion */}
-        <section className="relative w-full mt-10 min-h-[80vh] flex flex-col lg:flex-row items-center justify-center overflow-hidden mb-8 lg:mb-12 px-4 lg:px-0">
+        <section className="relative w-full  min-h-[80vh] flex flex-col lg:flex-row items-center justify-center overflow-hidden mb-8 lg:mb-12 px-4 lg:px-0">
           {/* Modern Decorative Elements - Hero Background */}
-          <div className="absolute top-16 left-8  pointer-events-none">
+          <div className="absolute -top-14 left-8 pointer-events-none hidden lg:block">
             {/* Large decorative circle */}
-            <div className="w-32 h-32 bg-[#8EB69B] rounded-full     animate-[breathing_4s_ease-in-out_infinite]"></div>
+            <div className="w-72 h-72 -left-10  bg-[#8EB69B] rounded-full animate-[breathing_4s_ease-in-out_infinite]"></div>
 
             {/* Medium decorative circle */}
-            <div className="absolute -top-8 -left-8 w-20 h-20 bg-[#8EB69B] rounded-full animate-[breathing_7.5s_ease-in-out_infinite]"></div>
+            {/* <div className="absolute -top-8 -left-8 w-40 h-40 bg-[#8EB69B] rounded-full animate-[breathing_7.5s_ease-in-out_infinite]"></div> */}
 
             {/* Small decorative circle */}
-            <div className="absolute top-20 -left-4 w-12 h-12 bg-[#8EB69B] rounded-full animate-[breathing_7s_ease-in-out_infinite]"></div>
+            <div className="absolute top-36 -left-24 w-44 h-44 bg-[#8EB69B] rounded-full animate-[breathing_7s_ease-in-out_infinite]"></div>
 
             {/* Floating dot */}
             <div className="absolute top-8 left-24 w-4 h-4 rounded-full bg-[#8EB69B] animate-[breathing_7.5s_ease-in-out_infinite]"></div>
           </div>
 
           {/* Additional decorative element - Top right */}
-          <div className="absolute top-24 right-16 z-0 pointer-events-none">
-            <div className="w-24 h-24 bg-gradient-to-br bg-[#8EB69B] rounded-full  animate-[breathing_7.5s_ease-in-out_infinite]"></div>
-            <div className="absolute top-4 right-4 w-6 h-6 bg-[#8EB69B] rounded-full shadow-sm animate-[breathing_6.5s_ease-in-out_infinite]"></div>
+          <div className="absolute top-96 right-16 z-0 pointer-events-none hidden lg:block">
+            <div className="w-44 h-44 bg-gradient-to-br bg-[#8EB69B] rounded-full animate-[breathing_7.5s_ease-in-out_infinite]"></div>
+            <div className="absolute top-4 right-4 w-16 h-16 bg-[#8EB69B] rounded-full shadow-sm animate-[breathing_6.5s_ease-in-out_infinite]"></div>
           </div>
           {/* Left Panel */}
-          <div className="w-full lg:w-2/5 flex mb-20 flex-col justify-center items-start px-4 lg:px-12 z-10 animate-fade-in-up">
+          <div className="w-full lg:w-2/5 flex mb-20 mt-20 flex-col justify-center items-start px-4 lg:px-12 z-10 animate-fade-in-up">
             <Badge className="bg-[#8EB69B]/20 text-[#8EB69B] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
               Luxury Rentals
             </Badge>
@@ -288,7 +288,7 @@ export default function Home() {
           {/* Right Panel: Sliding Touch Carousel */}
           <div
             ref={heroRef}
-            className="relative flex-col w-full lg:w-1/2 sm:w-1/3 h-[300px] sm:h-[400px] lg:h-[400px] flex items-center justify-center mb-16 lg:mb-16 "
+            className="relative flex-col mt-10 w-full lg:w-1/2 sm:w-1/3 h-[300px] sm:h-[400px] lg:h-[400px] flex items-center justify-center mb-16 lg:mb-16 "
           >
             {/* Carousel Container */}
             <div className="relative w-full h-full max-w-xl mx-auto">
