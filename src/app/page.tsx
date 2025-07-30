@@ -236,7 +236,7 @@ export default function Home() {
       <div className="min-h-screen bg-white">
         <Header />
         {/* Hero Section: Split & Layered Visual Immersion */}
-        <section className="relative w-full  min-h-[80vh] flex flex-col lg:flex-row items-center justify-center overflow-hidden mb-8 lg:mb-12 px-4 lg:px-0">
+        <section className="relative w-full  min-h-[50vh] flex flex-col lg:flex-row items-center justify-center overflow-hidden mb-0 lg:mb-1 px-4 lg:px-0">
           {/* Modern Decorative Elements - Hero Background */}
           <div className="absolute -top-14 left-8 pointer-events-none hidden lg:block">
             {/* Large decorative circle */}
@@ -258,8 +258,8 @@ export default function Home() {
             <div className="absolute top-4 right-4 w-16 h-16 bg-[#8EB69B] rounded-full shadow-sm animate-[breathing_6.5s_ease-in-out_infinite]"></div>
           </div>
           {/* Left Panel */}
-          <div className="w-full lg:w-2/5 flex mb-20 mt-20 flex-col justify-center items-start px-4 lg:px-12 z-10 animate-fade-in-up">
-            <Badge className="bg-[#8EB69B]/20 text-[#8EB69B] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
+          <div className="w-full lg:w-2/5 flex mb-20 mt-2 flex-col justify-center items-start px-4 lg:px-12 z-10 animate-fade-in-up">
+            <Badge className="bg-[#235347]/20 text-[#235347] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
               Luxury Rentals
             </Badge>
             <h1 className="text-3xl lg:text-4xl xl:text-6xl font-extrabold text-[#051F20] leading-tight mb-4 lg:mb-6">
@@ -288,7 +288,7 @@ export default function Home() {
           {/* Right Panel: Sliding Touch Carousel */}
           <div
             ref={heroRef}
-            className="relative flex-col mt-10 w-full lg:w-1/2 sm:w-1/3 h-[300px] sm:h-[400px] lg:h-[400px] flex items-center justify-center mb-16 lg:mb-16 "
+            className="relative flex-col mt-2 w-full lg:w-1/2 sm:w-1/3 h-[250px] sm:h-[300px] lg:h-[300px] flex items-center justify-center mb-8 lg:mb-8 "
           >
             {/* Carousel Container */}
             <div className="relative w-full h-full max-w-xl mx-auto">
@@ -307,7 +307,7 @@ export default function Home() {
                   {carouselSlides.map((slide, index) => (
                     <div
                       key={index}
-                      className="flex-[0_0_100%] min-w-0 relative h-[350px] sm:h-[400px] lg:h-[450px]"
+                      className="flex-[0_0_100%] min-w-0 relative h-[250px] sm:h-[300px] lg:h-[350px]"
                     >
                       <Image
                         src={slide.image}
@@ -367,7 +367,7 @@ export default function Home() {
         </section>
 
         {/* Booking Section - Moved to be more prominent */}
-        <section className="relative flex flex-col items-center justify-center py-8 lg:py-12 px-4 lg:px-8 max-w-7xl mx-auto bg-gradient-to-br from-white to-[#F9FCFB] rounded-2xl lg:rounded-3xl overflow-hidden mb-16 lg:mb-24">
+        <section className="relative flex flex-col items-center justify-center py-1 lg:py-2 px-4 lg:px-8 max-w-7xl mx-auto bg-gradient-to-br from-white to-[#F0F8F4] rounded-2xl lg:rounded-3xl overflow-hidden mb-16 lg:mb-24">
           {/* Decorative blurred green blob for depth */}
           <div className="absolute -left-16 lg:-left-32 -top-16 lg:-top-32 w-[200px] h-[200px] lg:w-[420px] lg:h-[420px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl z-0" />
 
@@ -592,80 +592,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Trust Metrics Section: Glassy Cards */}
-        <section className="mb-16 lg:mb-24">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-12 lg:mb-16">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
-                Trusted by <span className="text-[#8EB69B]">Thousands</span>
-              </h2>
-              <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
-                Join thousands of satisfied guests who choose Expat Stays for
-                their luxury stays
-              </p>
-            </div>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
-              {[
-                {
-                  icon: Shield,
-                  label: "Verified Properties",
-                  value: "1200+",
-                  desc: "All properties verified and inspected",
-                  color: "from-[#8EB69B] to-[#235347]",
-                },
-                {
-                  icon: Star,
-                  label: "Average Rating",
-                  value: "4.9/5",
-                  desc: "Based on 50,000+ reviews",
-                  color: "from-[#DAF1DE] to-[#8EB69B]",
-                },
-                {
-                  icon: Users,
-                  label: "Happy Guests",
-                  value: "45K+",
-                  desc: "Satisfied customers worldwide",
-                  color: "from-[#235347] to-[#163832]",
-                },
-                {
-                  icon: Clock,
-                  label: "24/7 Support",
-                  value: "Always",
-                  desc: "Round-the-clock assistance",
-                  color: "from-[#8EB69B] to-[#DAF1DE]",
-                },
-              ].map((metric, i) => (
-                <motion.div
-                  key={metric.label}
-                  className="group relative"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  whileHover={{ y: -8 }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/80 to-white/40 rounded-xl lg:rounded-2xl backdrop-blur-xl border border-white/20 shadow-xl group-hover:shadow-2xl transition-all duration-300" />
-                  <div className="relative p-4 lg:p-8 text-center">
-                    <div
-                      className={`inline-flex p-3 lg:p-4 rounded-full bg-gradient-to-br ${metric.color} mb-3 lg:mb-4 shadow-lg`}
-                    >
-                      <metric.icon className="h-5 lg:h-6 w-5 lg:w-6 text-white" />
-                    </div>
-                    <div className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-2">
-                      {metric.value}
-                    </div>
-                    <div className="text-sm lg:text-lg font-semibold text-[#163832] mb-2">
-                      {metric.label}
-                    </div>
-                    <div className="text-xs lg:text-sm text-[#235347]">
-                      {metric.desc}
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* Exclusive Services Section: Animated Icons */}
         <section className="mb-16 lg:mb-24">
@@ -770,7 +697,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Popular Homes Section: Luxury Property Carousel */}
+        {/* Popular Homes Section: Luxury Property Carousel - HIDDEN FOR LATER */}
+        {false && (
         <section className="mb-16 lg:mb-24">
           <div className="max-w-7xl mx-auto px-4">
             <div className="text-center mb-12 lg:mb-16">
@@ -826,7 +754,6 @@ export default function Home() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-all duration-500" />
                   <div className="relative p-6 lg:p-8">
-                    {/* Image */}
                     <div className="relative h-48 lg:h-64 rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6">
                       <Image
                         src={property.img}
@@ -850,7 +777,6 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* Content */}
                     <div className="space-y-3 lg:space-y-4">
                       <div>
                         <div className="flex items-center gap-2 text-[#235347] text-xs lg:text-sm mb-2">
@@ -896,6 +822,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+        )}
 
         {/* AI-Style Testimonials Section */}
         <section className="mb-16 lg:mb-24">
@@ -1027,77 +954,65 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Luxury CTA Footer */}
-        <section className="pb-16 lg:pb-32">
+        {/* About Isa Husain Section */}
+        <section className="py-16 lg:py-32 relative overflow-hidden">
           <div className="max-w-6xl mx-auto px-4">
-            <motion.div
-              className="relative rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl"
-              style={{ minHeight: 300 }}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              {/* Background Image */}
-              <Image
-                src="/media/DSC01806 HDR June 25 2025/DSC01970-HDR.jpg"
-                alt="Luxury CTA Background"
-                fill
-                className="object-cover object-center"
-              />
-
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#163832]/95 via-[#0B2B26]/90 to-[#051F20]/95" />
-
-              {/* Glassy Content */}
-              <div className="relative z-10 flex flex-col items-center text-center justify-center h-full p-6 lg:p-12">
+            <div className="relative">
+              {/* Left: Text */}
+              <div className="lg:w-2/3 z-10 relative">
+                <h2 className="text-3xl lg:text-5xl xl:text-6xl font-extrabold mb-6 leading-tight">
+                  <span className="text-[#235347]">About </span>
+                  <span className="text-[#8EB69B]">Isa Husain</span>
+                </h2>
                 <motion.div
-                  className="bg-white/10 backdrop-blur-xl rounded-xl lg:rounded-2xl p-6 lg:p-8 border border-white/20 max-w-2xl"
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.6, delay: 0.2 }}
+                  initial={{ opacity: 0, x: -50, y: 30 }}
+                  whileInView={{ opacity: 1, x: 0, y: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                  className="bg-[#F0F8F4] rounded-2xl p-6 lg:p-8 shadow-xl mb-4 w-full max-w-2xl relative -ml-4 lg:-ml-8"
                 >
-                  <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-white mb-4 lg:mb-6">
-                    Ready for Your{" "}
-                    <span className="text-[#8EB69B]">Luxury</span> Experience?
-                  </h2>
-                  <p className="text-base lg:text-lg text-[#DAF1DE] mb-6 lg:mb-8 max-w-xl mx-auto leading-relaxed">
-                    Join thousands of guests who have discovered the perfect
-                    blend of luxury, comfort, and exceptional service.
+                  {/* Opening Quote Symbol */}
+                  <motion.div 
+                    className="absolute -top-6 -left-6 lg:-top-8 lg:-left-8 z-20"
+                    initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
+                    whileInView={{ opacity: 0.8, scale: 1, rotate: 0 }}
+                    viewport={{ once: true, amount: 0.4 }}
+                    transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
+                  >
+                    <span className="text-[#8EB69B] text-8xl lg:text-9xl font-bold">"</span>
+                  </motion.div>
+                  
+                  <p className="text-base lg:text-lg text-[#235347] font-medium leading-relaxed pt-6 lg:pt-8">
+                    I'm Isa Hussain, a British Pakistani who moved to Islamabad over 20 years ago—and never looked back. Through Expat Stays, I've combined my love for premium living with my mission to make Pakistan feel like home for every overseas Pakistani.
+                    <br /><br />
+                    I know exactly what it's like to land in Islamabad after a long flight, craving comfort, reliability, and a touch of luxury. That's why I created Expat Stays—a curated collection of modern, fully serviced properties designed with overseas guests in mind. Whether you're visiting for business, family, or just to reconnect with your roots, you deserve more than just a place to sleep. You deserve a space that feels like home the moment you walk in.
+                    <br /><br />
+                    From stylish city apartments to peaceful getaways, every property is handpicked, professionally maintained, and thoughtfully furnished to match international standards—with a uniquely Pakistani warmth.
+                    <br /><br />
+                    <span className="font-semibold">Welcome to your new stay in the homeland.<br />
+                    Welcome to Expat Stays.</span>
                   </p>
-
-                  <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center items-center">
-                    <Button
-                      size="lg"
-                      className="bg-[#8EB69B] text-[#051F20] font-bold px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg hover:bg-[#235347] hover:text-[#DAF1DE] hover:shadow-[0_0_20px_#8EB69B55] transition-all duration-300 w-full sm:w-auto"
-                    >
-                      Start Your Journey
-                    </Button>
-                    <Button
-                      variant="outline"
-                      size="lg"
-                      className="border-[#8EB69B] text-[#8EB69B] font-bold px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg hover:bg-[#8EB69B] hover:text-[#051F20] transition-all duration-300 w-full sm:w-auto"
-                    >
-                      Explore Properties
-                    </Button>
-                  </div>
-
-                  <div className="mt-6 lg:mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 lg:gap-6 text-[#DAF1DE] text-xs lg:text-sm">
-                    <div className="flex items-center gap-2">
-                      <Shield className="h-3 lg:h-4 w-3 lg:w-4 text-[#8EB69B]" />
-                      <span>Secure Booking</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Clock className="h-3 lg:h-4 w-3 lg:w-4 text-[#8EB69B]" />
-                      <span>24/7 Support</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Star className="h-3 lg:h-4 w-3 lg:w-4 text-[#8EB69B]" />
-                      <span>Verified Properties</span>
-                    </div>
-                  </div>
+                  
+                  {/* Closing Quote Symbol */}
+                  <motion.div 
+                    className="absolute -bottom-6 -right-6 lg:-bottom-8 lg:-right-8 z-20"
+                    initial={{ opacity: 0, scale: 0.5, rotate: 10 }}
+                    whileInView={{ opacity: 0.8, scale: 1, rotate: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 1, delay: 0.5, ease: 'easeOut' }}
+                  >
+                    <span className="text-[#8EB69B] text-8xl lg:text-9xl font-bold">"</span>
+                  </motion.div>
                 </motion.div>
               </div>
-            </motion.div>
+              {/* Right: Large Portrait Placeholder - Overlapping */}
+              <div className="absolute top-0 right-0 lg:w-1/2 lg:h-full flex justify-center lg:justify-end items-center">
+                <div className="w-[320px] h-[480px] lg:w-[400px] lg:h-[600px] bg-[#DAF1DE] rounded-2xl shadow-2xl flex items-center justify-center overflow-hidden animate-fade-in transform lg:-translate-y-8 lg:translate-x-8">
+                  {/* Replace src with actual image when available */}
+                  <span className="text-[#8EB69B] text-2xl lg:text-3xl font-bold text-center">Portrait<br/>Placeholder</span>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
       </div>
