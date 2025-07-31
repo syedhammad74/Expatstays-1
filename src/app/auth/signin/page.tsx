@@ -35,7 +35,7 @@ export default function SignInPage() {
     <div className="min-h-screen bg-gradient-to-br from-white via-[#FAFAFA] to-[#DAF1DE]/20 flex flex-col lg:flex-row overflow-y-auto md:overflow-y-hidden">
       {/* Left Side - Hero Image (Hidden on mobile) */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0B2B26]/20 to-[#8EB69B]/10 z-10" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0B2B26]/70 via-[#8EB69B]/55 to-[#DAF1DE]/45 z-10" />
         <Image
           src="/media/DSC01806 HDR June 25 2025/DSC01861-HDR.jpg"
           alt="Sign In Property"
@@ -93,16 +93,17 @@ export default function SignInPage() {
 
       {/* Right Side - Sign In Form */}
       <div className="flex-1 flex flex-col gap-6 items-center justify-center p-3 sm:p-5 lg:p-8">
-        <div className="w-full max-w-[400px] sm:max-w-[500px] lg:max-w-[600px] my-8 flex flex-col justify-center rounded-2xl lg:rounded-3xl shadow-xl border border-[#DAF1DE]/60 bg-white/95 p-4 sm:p-6 lg:p-8 max-h-[90vh] overflow-y-auto">
-          {/* Brand/Logo Accent */}
-          <div className="flex flex-col items-center mb-4">
-            <div className="w-12 h-12 rounded-full bg-[#DAF1DE] flex items-center justify-center mb-2 shadow-md">
-              <Image src="/logo.png" alt="Logo" width={32} height={32} />
-            </div>
-            <span className="text-[#0B2B26] font-bold text-lg tracking-tight">
-              Expat Stays
-            </span>
+        {/* Brand/Logo - Separated above card */}
+        <div className="flex flex-col items-center mb-8">
+          <div className="w-32 h-32 lg:w-40 lg:h-40 rounded-full bg-gradient-to-br from-[#DAF1DE] to-[#8EB69B] flex items-center justify-center shadow-2xl border-4 border-white hover:scale-105 transition-transform duration-300">
+            <Image src="/logo.png" alt="Logo" width={80} height={80} className="w-16 h-16 lg:w-20 lg:h-20 object-contain" />
           </div>
+          <span className="text-[#0B2B26] font-bold text-3xl lg:text-4xl tracking-tight mt-4 drop-shadow-sm">
+            Expat Stays
+          </span>
+        </div>
+        
+        <div className="w-full max-w-[400px] sm:max-w-[500px] lg:max-w-[600px] flex flex-col justify-center rounded-2xl lg:rounded-3xl shadow-xl border border-[#DAF1DE]/60 bg-white/95 p-4 sm:p-6 lg:p-8 max-h-[90vh] overflow-y-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
