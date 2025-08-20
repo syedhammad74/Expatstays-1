@@ -1005,12 +1005,27 @@ export default function Home() {
                   </motion.div>
                 </motion.div>
               </div>
-              {/* Right: Large Portrait Placeholder - Overlapping */}
+              {/* Right: Large Portrait Image - Matching Text Box Size */}
               <div className="absolute top-0 right-0 lg:w-1/2 lg:h-full flex justify-center lg:justify-end items-center">
-                <div className="w-[320px] h-[480px] lg:w-[400px] lg:h-[600px] bg-[#DAF1DE] rounded-2xl shadow-2xl flex items-center justify-center overflow-hidden animate-fade-in transform lg:-translate-y-8 lg:translate-x-8">
-                  {/* Replace src with actual image when available */}
-                  <span className="text-[#8EB69B] text-2xl lg:text-3xl font-bold text-center">Portrait<br/>Placeholder</span>
-                </div>
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.8, x: 50 }}
+                  whileInView={{ opacity: 1, scale: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.3 }}
+                  transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+                  className="w-full max-w-2xl h-auto bg-[#DAF1DE] rounded-2xl shadow-2xl overflow-hidden animate-fade-in transform lg:-translate-y-8 lg:translate-x-8"
+                >
+                  <Image
+                    src="/media/isa.webp"
+                    alt="Isa Husain - Founder of Expat Stays"
+                    width={600}
+                    height={800}
+                    className="w-full h-full object-cover"
+                    priority
+                    quality={95}
+                    placeholder="blur"
+                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+                  />
+                </motion.div>
               </div>
             </div>
           </div>
