@@ -11,6 +11,10 @@ import {
   Clock,
   CalendarIcon,
   ArrowRight,
+  Instagram,
+  ExternalLink,
+  Heart,
+  MessageCircle,
 } from "lucide-react";
 import Image from "next/image";
 import { motion, number } from "framer-motion";
@@ -258,7 +262,7 @@ export default function Home() {
             <div className="absolute top-4 right-4 w-16 h-16 bg-[#8EB69B] rounded-full shadow-sm animate-[breathing_6.5s_ease-in-out_infinite]"></div>
           </div>
           {/* Left Panel */}
-          <div className="w-full lg:w-2/5 flex mb-20 mt-2 flex-col justify-center items-start px-4 lg:px-12 z-10 animate-fade-in-up">
+          <div className="w-full lg:w-2/5 flex mb-20 mt-8 flex-col justify-center items-start px-4 lg:px-12 z-10 animate-fade-in-up">
             <Badge className="bg-[#235347]/20 text-[#235347] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
               Luxury Rentals
             </Badge>
@@ -592,8 +596,6 @@ export default function Home() {
           </div>
         </section>
 
-
-
         {/* Exclusive Services Section: Animated Icons */}
         <section className="mb-16 lg:mb-24">
           <div className="max-w-6xl mx-auto px-4">
@@ -699,129 +701,129 @@ export default function Home() {
 
         {/* Popular Homes Section: Luxury Property Carousel - HIDDEN FOR LATER */}
         {false && (
-        <section className="mb-16 lg:mb-24">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center mb-12 lg:mb-16">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
-                Popular <span className="text-[#8EB69B]">Homes</span>
-              </h2>
-              <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
-                Discover our most sought-after luxury properties, handpicked for
-                exceptional experiences
-              </p>
-            </div>
+          <section className="mb-16 lg:mb-24">
+            <div className="max-w-7xl mx-auto px-4">
+              <div className="text-center mb-12 lg:mb-16">
+                <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
+                  Popular <span className="text-[#8EB69B]">Homes</span>
+                </h2>
+                <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
+                  Discover our most sought-after luxury properties, handpicked
+                  for exceptional experiences
+                </p>
+              </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-              {[
-                {
-                  title: "Marina Vista Villa",
-                  location: "Dubai Marina",
-                  price: "$2,500",
-                  guests: "6 guests",
-                  beds: "3 bedrooms",
-                  rating: "4.9",
-                  img: "/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg",
-                  badge: "Featured",
-                },
-                {
-                  title: "Palm Jumeirah Retreat",
-                  location: "Palm Jumeirah",
-                  price: "$3,200",
-                  guests: "8 guests",
-                  beds: "4 bedrooms",
-                  rating: "4.8",
-                  img: "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
-                  badge: "Popular",
-                },
-                {
-                  title: "Downtown Luxury Loft",
-                  location: "Downtown Dubai",
-                  price: "$1,800",
-                  guests: "4 guests",
-                  beds: "2 bedrooms",
-                  rating: "4.9",
-                  img: "/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg",
-                  badge: "New",
-                },
-              ].map((property, i) => (
-                <motion.div
-                  key={property.title}
-                  className="group relative"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  whileHover={{ y: -12 }}
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-all duration-500" />
-                  <div className="relative p-6 lg:p-8">
-                    <div className="relative h-48 lg:h-64 rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6">
-                      <Image
-                        src={property.img}
-                        alt={property.title}
-                        fill
-                        className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#163832]/60 to-transparent" />
-                      <div className="absolute top-3 lg:top-4 right-3 lg:right-4">
-                        <div className="bg-[#8EB69B] text-[#051F20] px-2 lg:px-3 py-1 rounded-full text-xs font-bold">
-                          {property.badge}
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+                {[
+                  {
+                    title: "Marina Vista Villa",
+                    location: "Dubai Marina",
+                    price: "$2,500",
+                    guests: "6 guests",
+                    beds: "3 bedrooms",
+                    rating: "4.9",
+                    img: "/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg",
+                    badge: "Featured",
+                  },
+                  {
+                    title: "Palm Jumeirah Retreat",
+                    location: "Palm Jumeirah",
+                    price: "$3,200",
+                    guests: "8 guests",
+                    beds: "4 bedrooms",
+                    rating: "4.8",
+                    img: "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
+                    badge: "Popular",
+                  },
+                  {
+                    title: "Downtown Luxury Loft",
+                    location: "Downtown Dubai",
+                    price: "$1,800",
+                    guests: "4 guests",
+                    beds: "2 bedrooms",
+                    rating: "4.9",
+                    img: "/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg",
+                    badge: "New",
+                  },
+                ].map((property, i) => (
+                  <motion.div
+                    key={property.title}
+                    className="group relative"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: i * 0.1 }}
+                    whileHover={{ y: -12 }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-all duration-500" />
+                    <div className="relative p-6 lg:p-8">
+                      <div className="relative h-48 lg:h-64 rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6">
+                        <Image
+                          src={property.img}
+                          alt={property.title}
+                          fill
+                          className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#163832]/60 to-transparent" />
+                        <div className="absolute top-3 lg:top-4 right-3 lg:right-4">
+                          <div className="bg-[#8EB69B] text-[#051F20] px-2 lg:px-3 py-1 rounded-full text-xs font-bold">
+                            {property.badge}
+                          </div>
                         </div>
-                      </div>
-                      <div className="absolute bottom-3 lg:bottom-4 left-3 lg:left-4 right-3 lg:right-4">
-                        <div className="flex items-center gap-2 text-white">
-                          <Star className="h-3 lg:h-4 w-3 lg:w-4 fill-[#8EB69B] text-[#8EB69B]" />
-                          <span className="text-xs lg:text-sm font-semibold">
-                            {property.rating}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-3 lg:space-y-4">
-                      <div>
-                        <div className="flex items-center gap-2 text-[#235347] text-xs lg:text-sm mb-2">
-                          <MapPin className="h-3 lg:h-4 w-3 lg:w-4" />
-                          {property.location}
-                        </div>
-                        <h3 className="text-lg lg:text-xl font-bold text-[#051F20] mb-2">
-                          {property.title}
-                        </h3>
-                        <div className="flex items-center gap-4 text-xs lg:text-sm text-[#235347]">
-                          <span>{property.guests}</span>
-                          <span>•</span>
-                          <span>{property.beds}</span>
+                        <div className="absolute bottom-3 lg:bottom-4 left-3 lg:left-4 right-3 lg:right-4">
+                          <div className="flex items-center gap-2 text-white">
+                            <Star className="h-3 lg:h-4 w-3 lg:w-4 fill-[#8EB69B] text-[#8EB69B]" />
+                            <span className="text-xs lg:text-sm font-semibold">
+                              {property.rating}
+                            </span>
+                          </div>
                         </div>
                       </div>
 
-                      <div className="flex items-center justify-between pt-3 lg:pt-4">
+                      <div className="space-y-3 lg:space-y-4">
                         <div>
-                          <div className="text-xl lg:text-2xl font-bold text-[#8EB69B]">
-                            {property.price}
+                          <div className="flex items-center gap-2 text-[#235347] text-xs lg:text-sm mb-2">
+                            <MapPin className="h-3 lg:h-4 w-3 lg:w-4" />
+                            {property.location}
                           </div>
-                          <div className="text-xs lg:text-sm text-[#235347]">
-                            per night
+                          <h3 className="text-lg lg:text-xl font-bold text-[#051F20] mb-2">
+                            {property.title}
+                          </h3>
+                          <div className="flex items-center gap-4 text-xs lg:text-sm text-[#235347]">
+                            <span>{property.guests}</span>
+                            <span>•</span>
+                            <span>{property.beds}</span>
                           </div>
                         </div>
-                        <Button className="bg-[#163832] text-white hover:bg-[#235347] transition-colors duration-200 text-sm lg:text-base px-3 lg:px-4 py-2 lg:py-2">
-                          Book Now
-                        </Button>
+
+                        <div className="flex items-center justify-between pt-3 lg:pt-4">
+                          <div>
+                            <div className="text-xl lg:text-2xl font-bold text-[#8EB69B]">
+                              {property.price}
+                            </div>
+                            <div className="text-xs lg:text-sm text-[#235347]">
+                              per night
+                            </div>
+                          </div>
+                          <Button className="bg-[#163832] text-white hover:bg-[#235347] transition-colors duration-200 text-sm lg:text-base px-3 lg:px-4 py-2 lg:py-2">
+                            Book Now
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+                  </motion.div>
+                ))}
+              </div>
 
-            <div className="text-center mt-8 lg:mt-12">
-              <Button
-                variant="outline"
-                className="border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-[#051F20] transition-colors duration-200"
-              >
-                View All Properties <ArrowRight className="h-4 w-4 ml-2" />
-              </Button>
+              <div className="text-center mt-8 lg:mt-12">
+                <Button
+                  variant="outline"
+                  className="border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-[#051F20] transition-colors duration-200"
+                >
+                  View All Properties <ArrowRight className="h-4 w-4 ml-2" />
+                </Button>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
         )}
 
         {/* AI-Style Testimonials Section */}
@@ -968,50 +970,74 @@ export default function Home() {
                   initial={{ opacity: 0, x: -50, y: 30 }}
                   whileInView={{ opacity: 1, x: 0, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.8, ease: 'easeOut' }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
                   className="bg-[#F0F8F4] rounded-2xl p-6 lg:p-8 shadow-xl mb-4 w-full max-w-2xl relative -ml-4 lg:-ml-8"
                 >
                   {/* Opening Quote Symbol */}
-                  <motion.div 
+                  <motion.div
                     className="absolute -top-6 -left-6 lg:-top-8 lg:-left-8 z-20"
                     initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
                     whileInView={{ opacity: 0.8, scale: 1, rotate: 0 }}
                     viewport={{ once: true, amount: 0.4 }}
-                    transition={{ duration: 1, delay: 0.3, ease: 'easeOut' }}
+                    transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
                   >
-                    <span className="text-[#8EB69B] text-8xl lg:text-9xl font-bold">"</span>
+                    <span className="text-[#8EB69B] text-8xl lg:text-9xl font-bold">
+                      "
+                    </span>
                   </motion.div>
-                  
+
                   <p className="text-base lg:text-lg text-[#235347] font-medium leading-relaxed pt-6 lg:pt-8">
-                    I'm Isa Hussain, a British Pakistani who moved to Islamabad over 20 years ago—and never looked back. Through Expat Stays, I've combined my love for premium living with my mission to make Pakistan feel like home for every overseas Pakistani.
-                    <br /><br />
-                    I know exactly what it's like to land in Islamabad after a long flight, craving comfort, reliability, and a touch of luxury. That's why I created Expat Stays—a curated collection of modern, fully serviced properties designed with overseas guests in mind. Whether you're visiting for business, family, or just to reconnect with your roots, you deserve more than just a place to sleep. You deserve a space that feels like home the moment you walk in.
-                    <br /><br />
-                    From stylish city apartments to peaceful getaways, every property is handpicked, professionally maintained, and thoughtfully furnished to match international standards—with a uniquely Pakistani warmth.
-                    <br /><br />
-                    <span className="font-semibold">Welcome to your new stay in the homeland.<br />
-                    Welcome to Expat Stays.</span>
+                    I'm Isa Hussain, a British Pakistani who moved to Islamabad
+                    over 20 years ago—and never looked back. Through Expat
+                    Stays, I've combined my love for premium living with my
+                    mission to make Pakistan feel like home for every overseas
+                    Pakistani.
+                    <br />
+                    <br />
+                    I know exactly what it's like to land in Islamabad after a
+                    long flight, craving comfort, reliability, and a touch of
+                    luxury. That's why I created Expat Stays—a curated
+                    collection of modern, fully serviced properties designed
+                    with overseas guests in mind. Whether you're visiting for
+                    business, family, or just to reconnect with your roots, you
+                    deserve more than just a place to sleep. You deserve a space
+                    that feels like home the moment you walk in.
+                    <br />
+                    <br />
+                    From stylish city apartments to peaceful getaways, every
+                    property is handpicked, professionally maintained, and
+                    thoughtfully furnished to match international standards—with
+                    a uniquely Pakistani warmth.
+                    <br />
+                    <br />
+                    <span className="font-semibold">
+                      Welcome to your new stay in the homeland.
+                      <br />
+                      Welcome to Expat Stays.
+                    </span>
                   </p>
-                  
+
                   {/* Closing Quote Symbol */}
-                  <motion.div 
+                  <motion.div
                     className="absolute -bottom-6 -right-6 lg:-bottom-8 lg:-right-8 z-20"
                     initial={{ opacity: 0, scale: 0.5, rotate: 10 }}
                     whileInView={{ opacity: 0.8, scale: 1, rotate: 0 }}
                     viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 1, delay: 0.5, ease: 'easeOut' }}
+                    transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
                   >
-                    <span className="text-[#8EB69B] text-8xl lg:text-9xl font-bold">"</span>
+                    <span className="text-[#8EB69B] text-8xl lg:text-9xl font-bold">
+                      "
+                    </span>
                   </motion.div>
                 </motion.div>
               </div>
               {/* Right: Large Portrait Image - Matching Text Box Size */}
               <div className="absolute top-0 right-0 lg:w-1/2 lg:h-full flex justify-center lg:justify-end items-center">
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, scale: 0.8, x: 50 }}
                   whileInView={{ opacity: 1, scale: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
+                  transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
                   className="w-full max-w-2xl h-auto bg-[#DAF1DE] rounded-2xl shadow-2xl overflow-hidden animate-fade-in transform lg:-translate-y-8 lg:translate-x-8"
                 >
                   <Image
@@ -1028,6 +1054,265 @@ export default function Home() {
                 </motion.div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Instagram Section */}
+        <section className="py-16 lg:py-28 relative overflow-hidden bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC]">
+          <div className="max-w-5xl mx-auto px-4">
+            {/* Enhanced Decorative Elements */}
+            <div className="absolute top-16 left-8 pointer-events-none hidden lg:block">
+              <div className="w-28 h-28 bg-[#8EB69B]/20 rounded-full animate-[breathing_6s_ease-in-out_infinite]"></div>
+            </div>
+            <div className="absolute bottom-16 right-8 pointer-events-none hidden lg:block">
+              <div className="w-20 h-20 bg-[#DAF1DE]/30 rounded-full animate-[breathing_7s_ease-in-out_infinite]"></div>
+            </div>
+            <div className="absolute top-1/2 left-1/4 pointer-events-none hidden lg:block">
+              <div className="w-12 h-12 bg-[#235347]/10 rounded-full animate-[breathing_8s_ease-in-out_infinite]"></div>
+            </div>
+
+            <div className="text-center mb-12 lg:mb-16 relative z-10">
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8 }}
+                className="inline-flex items-center gap-3 mb-4"
+              >
+                <div className="p-3 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full shadow-xl">
+                  <Instagram className="h-6 w-6 text-white" />
+                </div>
+                <Badge className="bg-[#235347]/20 text-[#235347] border-none px-4 py-2 rounded-full text-sm font-semibold">
+                  Social Media
+                </Badge>
+              </motion.div>
+
+              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
+                Follow Our <span className="text-[#8EB69B]">Journey</span>
+              </h2>
+              <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto leading-relaxed">
+                Discover luxury properties, travel tips, and behind-the-scenes
+                moments from our curated Instagram feeds
+              </p>
+            </div>
+
+            {/* Enhanced Modern Instagram Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Left Side: Account Information */}
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="space-y-8"
+              >
+                {/* ExpatStays Account */}
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/98 to-white/95 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/60 shadow-xl group-hover:shadow-2xl transition-all duration-500" />
+                  <div className="relative p-6 lg:p-8">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full flex items-center justify-center shadow-lg overflow-hidden ring-2 ring-white/50">
+                        <Image
+                          src="/media/Close Ups June 25 2025/logo1.png"
+                          alt="ExpatStays Logo"
+                          width={64}
+                          height={64}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-1">
+                          @expatstays
+                        </h3>
+                        <p className="text-sm lg:text-base text-[#235347] mb-2">
+                          Official Expat Stays
+                        </p>
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1">
+                            <Heart className="h-4 w-4 text-red-500 fill-red-500" />
+                            <span className="text-xs text-[#235347] font-semibold">
+                              236
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <MessageCircle className="h-4 w-4 text-[#8EB69B]" />
+                            <span className="text-xs text-[#235347] font-semibold">
+                              4 posts
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p className="text-sm lg:text-base text-[#235347] mb-6 leading-relaxed">
+                      Luxury Short Term Rentals. Curated By Expats, For Expats.
+                      Your gateway to premium accommodations and lifestyle in
+                      Pakistan.
+                    </p>
+
+                    <Button
+                      className="w-full bg-gradient-to-r from-[#8EB69B] to-[#235347] text-white hover:from-[#235347] hover:to-[#163832] transition-all duration-300 py-4 text-base font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02]"
+                      onClick={() =>
+                        window.open(
+                          "https://www.instagram.com/expatstays?igsh=dnJ0ZHg3ZW0xbjV2",
+                          "_blank"
+                        )
+                      }
+                    >
+                      <Instagram className="h-4 w-4 mr-2" />
+                      Follow @expatstays
+                      <ExternalLink className="h-4 w-4 ml-2" />
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Isa Unscripted Account */}
+                <div className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/98 to-white/95 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/60 shadow-xl group-hover:shadow-2xl transition-all duration-500" />
+                  <div className="relative p-6 lg:p-8">
+                    <div className="flex items-center gap-4 mb-6">
+                      <div className="w-16 h-16 bg-gradient-to-br from-[#235347] to-[#163832] rounded-full flex items-center justify-center shadow-lg overflow-hidden ring-2 ring-white/50">
+                        <Image
+                          src="/media/Close Ups June 25 2025/logo2.png"
+                          alt="Isa Unscripted Logo"
+                          width={64}
+                          height={64}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div>
+                        <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-1">
+                          @isa_unscripted
+                        </h3>
+                        <p className="text-sm lg:text-base text-[#235347] mb-2">
+                          Isa's Personal Journey
+                        </p>
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-1">
+                            <Heart className="h-4 w-4 text-red-500 fill-red-500" />
+                            <span className="text-xs text-[#235347] font-semibold">
+                              13.3K
+                            </span>
+                          </div>
+                          <div className="flex items-center gap-1">
+                            <MessageCircle className="h-4 w-4 text-[#8EB69B]" />
+                            <span className="text-xs text-[#235347] font-semibold">
+                              121 posts
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p className="text-sm lg:text-base text-[#235347] mb-6 leading-relaxed">
+                      Digital creator sharing Pakistan beyond the negatives.
+                      Former Miss Universe, based in Islamabad. DM for
+                      collaborations.
+                    </p>
+
+                    <Button
+                      className="w-full bg-gradient-to-r from-[#235347] to-[#163832] text-white hover:from-[#163832] hover:to-[#051F20] transition-all duration-300 py-4 text-base font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02]"
+                      onClick={() =>
+                        window.open(
+                          "https://www.instagram.com/isa_unscripted?igsh=bTBxbjN5OXkxaWdn",
+                          "_blank"
+                        )
+                      }
+                    >
+                      <Instagram className="h-4 w-4 mr-2" />
+                      Follow @isa_unscripted
+                      <ExternalLink className="h-4 w-4 ml-2" />
+                    </Button>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Right Side: Instagram Image */}
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="relative"
+              >
+                <div className="relative">
+                  {/* Instagram Image Container */}
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: 0.6 }}
+                    className="group relative"
+                    whileHover={{ y: -8 }}
+                  >
+                    <div className="w-full max-w-sm mx-auto">
+                      <div
+                        className="relative aspect-[4/5] rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-[#8EB69B] to-[#235347] p-1 cursor-pointer"
+                        onClick={() =>
+                          window.open(
+                            "https://www.instagram.com/isa_unscripted?igsh=bTBxbjN5OXkxaWdn",
+                            "_blank",
+                            "noopener,noreferrer"
+                          )
+                        }
+                      >
+                        <div className="w-full h-full rounded-xl lg:rounded-2xl overflow-hidden relative">
+                          <div className="w-full h-full relative">
+                            <img
+                              src="/media/Close Ups June 25 2025/account-pic.png"
+                              alt="Isa Unscripted Instagram"
+                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                            />
+                          </div>
+
+                          {/* Instagram overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+
+                          {/* Instagram icon overlay */}
+                          <div className="absolute top-4 right-4 bg-white/20 backdrop-blur-sm rounded-full p-2">
+                            <Instagram className="h-5 w-5 text-white" />
+                          </div>
+
+                          {/* Click to view overlay */}
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
+                              <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
+                                <Instagram className="h-6 w-6 text-[#8EB69B]" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Image Label */}
+                      <div className="absolute -bottom-2 -right-2 bg-[#8EB69B] text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg ring-2 ring-white/50">
+                        @isa_unscripted
+                      </div>
+                    </div>
+                  </motion.div>
+
+                  {/* Decorative Element */}
+                  <div className="absolute -top-6 -right-6 w-20 h-20 bg-[#DAF1DE]/30 rounded-full animate-[breathing_8s_ease-in-out_infinite] pointer-events-none"></div>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Enhanced Call to Action */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.8, delay: 1 }}
+              className="text-center mt-16 lg:mt-20"
+            >
+              <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#DAF1DE] to-[#8EB69B] px-8 lg:px-12 py-4 lg:py-6 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+                <Instagram className="h-6 w-6 text-[#051F20]" />
+                <span className="text-[#051F20] font-bold text-lg">
+                  Join our Instagram community
+                </span>
+                <ArrowRight className="h-5 w-5 text-[#051F20]" />
+              </div>
+            </motion.div>
           </div>
         </section>
       </div>
