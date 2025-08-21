@@ -33,7 +33,7 @@ const Footer = () => {
   const contactInfo = [
     { icon: MapPin, text: "123 Luxury Lane, Dubai, UAE" },
     { icon: Phone, text: "+971 (0)0 000 0000" },
-    { icon: Mail, text: "info@expatstays.com" },
+    { icon: Mail, text: "contact@myexpatstays.com" },
   ];
 
   return (

@@ -218,8 +218,8 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: "Email",
-      content: "hello@expatluxe.com",
-      link: "mailto:hello@expatluxe.com",
+      content: "contact@myexpatstays.com",
+      link: "mailto:contact@myexpatstays.com",
     },
     {
       icon: MapPin,
