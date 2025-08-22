@@ -609,93 +609,52 @@ export default function Home() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 0.6 }}
-              className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl  overflow-hidden hover:shadow-2xl transition-all duration-500"
+              className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500"
             >
-              <div className="p-8 lg:p-12">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-                  {/* Left: Content */}
-                  <div className="space-y-6">
+              <div className="p-6 lg:p-8">
+                <div className="flex flex-col gap-6">
+                  {/* Top Row: Logo and Title on Left, Button on Right */}
+                  <div className="flex justify-between items-start">
+                    {/* Left: Logo and Title */}
                     <motion.div
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
                       viewport={{ once: true, amount: 0.3 }}
                       transition={{ duration: 0.6, delay: 0.2 }}
-                      className="flex items-center gap-3 mb-6"
+                      className="flex items-center gap-3 flex-shrink-0"
                     >
-                      <div className="p-2.5 ">
+                      <div className="p-2">
                         <Image
                           src="/media/Close Ups June 25 2025/airbnb.png"
                           alt="Airbnb Logo"
                           width={20}
                           height={20}
-                          className="w-20 h-18 object-contain"
+                          className="w-16 h-14 object-contain"
                         />
                       </div>
-                      <Badge className="bg-[#235347]/10 text-[#235347] border border-[#235347]/20 px-3 py-1.5 rounded-lg text-sm font-medium">
-                        Airbnb Booking
-                      </Badge>
-                    </motion.div>
-
-                    <motion.h2
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.6, delay: 0.3 }}
-                      className="text-2xl lg:text-3xl font-bold text-[#051F20] leading-tight"
-                    >
-                      Book via <span className="text-[#235347]">Airbnb</span>
-                    </motion.h2>
-
-                    <motion.p
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.6, delay: 0.4 }}
-                      className="text-[#235347] text-sm lg:text-base leading-relaxed"
-                    >
-                      Secure booking with instant confirmation and 24/7 support.
-                    </motion.p>
-
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.6, delay: 0.5 }}
-                      className="space-y-2.5"
-                    >
-                      {[
-                        "Instant booking confirmation",
-                        "Secure payment protection",
-                        "24/7 customer support",
-                        "Verified properties",
-                      ].map((feature, index) => (
-                        <motion.div
-                          key={index}
-                          initial={{ opacity: 0, x: -20 }}
-                          whileInView={{ opacity: 1, x: 0 }}
+                      <div className="text-left">
+                        <motion.h2
+                          initial={{ opacity: 0, y: 20 }}
+                          whileInView={{ opacity: 1, y: 0 }}
                           viewport={{ once: true, amount: 0.3 }}
-                          transition={{
-                            duration: 0.4,
-                            delay: 0.6 + index * 0.1,
-                          }}
-                          className="flex items-center gap-3 group hover:bg-[#F0F8F4]/60 rounded-lg p-2.5 transition-all duration-300"
+                          transition={{ duration: 0.6, delay: 0.3 }}
+                          className="text-xl lg:text-2xl font-bold text-[#051F20] leading-tight"
                         >
-                          <div className="w-1.5 h-1.5 rounded-full bg-[#235347] group-hover:scale-110 transition-transform duration-300" />
-                          <span className="text-sm text-[#235347] group-hover:text-[#051F20] transition-colors duration-300">
-                            {feature}
-                          </span>
-                        </motion.div>
-                      ))}
+                          Book via <span className="text-[#235347]">Airbnb</span>
+                        </motion.h2>
+                      </div>
                     </motion.div>
 
+                    {/* Right: Button */}
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.3 }}
                       transition={{ duration: 0.6, delay: 0.8 }}
+                      className="flex-shrink-0"
                     >
                       <Button
-                        className="w-full bg-gradient-to-r from-[#235347] to-[#163832] text-white hover:from-[#163832] hover:to-[#051F20] transition-all duration-300 py-3.5 text-base font-semibold shadow-lg hover:shadow-xl hover:scale-[1.01] rounded-xl border-0"
+                        className="bg-gradient-to-r from-[#235347] to-[#163832] text-white hover:from-[#163832] hover:to-[#051F20] transition-all duration-300 py-3 px-6 text-sm font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] rounded-xl border-0"
                         onClick={() =>
                           window.open(
                             "https://www.airbnb.com/l/WGJzruZA",
@@ -711,52 +670,49 @@ export default function Home() {
                     </motion.div>
                   </div>
 
-                  {/* Right: Visual */}
+                  {/* Middle: Description */}
                   <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                    className="flex justify-center lg:justify-end"
+                    transition={{ duration: 0.6, delay: 0.4 }}
+                    className="text-center"
                   >
-                    <div className="relative group">
-                      <motion.div
-                        whileHover={{ y: -2, scale: 1.01 }}
-                        transition={{ duration: 0.3 }}
-                        className="w-32 h-32 lg:w-40 lg:h-40 bg-gradient-to-br from-[#235347]/8 to-[#163832]/8 rounded-2xl flex items-center justify-center shadow-lg border border-white/40 backdrop-blur-sm"
-                      >
-                        <motion.div
-                          animate={{ rotate: [0, 2, -2, 0] }}
-                          transition={{
-                            duration: 8,
-                            repeat: Infinity,
-                            ease: "easeInOut",
-                          }}
-                          className="w-20 h-20 lg:w-24 lg:h-24 bg-white rounded-xl flex items-center justify-center shadow-lg group-hover:shadow-xl transition-all duration-300 border border-[#DAF1DE]/60"
-                        >
-                          <Image
-                            src="/media/Close Ups June 25 2025/airbnb.png"
-                            alt="Airbnb Logo"
-                            width={40}
-                            height={40}
-                            className="w-10 h-10 lg:w-12 lg:h-12 object-contain"
-                          />
-                        </motion.div>
-                      </motion.div>
+                    <p className="text-[#235347] text-sm leading-relaxed">
+                      Secure booking with instant confirmation and 24/7 support.
+                    </p>
+                  </motion.div>
 
+                  {/* Bottom: Features in horizontal line */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: 0.5 }}
+                    className="flex flex-wrap justify-center items-center gap-4 lg:gap-6"
+                  >
+                    {[
+                      "Instant booking confirmation",
+                      "Secure payment protection",
+                      "24/7 customer support",
+                    ].map((feature, index) => (
                       <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        whileInView={{ opacity: 1, scale: 1 }}
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.6, delay: 1 }}
-                        className="absolute -top-2 -right-2 bg-white/95 backdrop-blur-sm rounded-lg p-1.5 shadow-md border border-white/50"
+                        transition={{
+                          duration: 0.4,
+                          delay: 0.6 + index * 0.1,
+                        }}
+                        className="flex items-center gap-2 group hover:bg-[#F0F8F4]/60 rounded-lg px-2 py-1 transition-all duration-300"
                       >
-                        <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse" />
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#235347] group-hover:scale-110 transition-transform duration-300" />
+                        <span className="text-xs lg:text-sm text-[#235347] group-hover:text-[#051F20] transition-colors duration-300 whitespace-nowrap">
+                          {feature}
+                        </span>
                       </motion.div>
-
-                      {/* Subtle glow effect */}
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#235347]/8 to-[#163832]/8 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    </div>
+                    ))}
                   </motion.div>
                 </div>
               </div>
@@ -1415,7 +1371,7 @@ export default function Home() {
                   >
                     <div className="w-full max-w-sm mx-auto">
                       <div
-                        className="relative aspect-[4/5] rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-[#8EB69B] to-[#235347] p-1 cursor-pointer"
+                        className="relative aspect-[9/16] rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-[#8EB69B] to-[#235347] p-1 cursor-pointer"
                         onClick={() =>
                           window.open(
                             "https://www.instagram.com/isa_unscripted?igsh=bTBxbjN5OXkxaWdn",
@@ -1427,7 +1383,7 @@ export default function Home() {
                         <div className="w-full h-full rounded-xl lg:rounded-2xl overflow-hidden relative">
                           <div className="w-full h-full relative">
                             <img
-                              src="/media/Close Ups June 25 2025/account-pic.png"
+                              src="/media/Close Ups June 25 2025/IMG_1017.PNG"
                               alt="Isa Unscripted Instagram"
                               className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                             />
