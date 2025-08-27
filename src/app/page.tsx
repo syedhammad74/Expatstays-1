@@ -613,9 +613,9 @@ export default function Home() {
             >
               <div className="p-6 lg:p-8">
                 <div className="flex flex-col gap-6">
-                  {/* Top Row: Logo and Title on Left, Button on Right */}
-                  <div className="flex justify-between items-start">
-                    {/* Left: Logo and Title */}
+                  {/* Top Row: Logo and Title */}
+                  <div className="flex justify-center items-start">
+                    {/* Logo and Title */}
                     <motion.div
                       initial={{ opacity: 0, x: -20 }}
                       whileInView={{ opacity: 1, x: 0 }}
@@ -643,30 +643,6 @@ export default function Home() {
                           Book via <span className="text-[#235347]">Airbnb</span>
                         </motion.h2>
                       </div>
-                    </motion.div>
-
-                    {/* Right: Button */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.6, delay: 0.8 }}
-                      className="flex-shrink-0"
-                    >
-                      <Button
-                        className="bg-gradient-to-r from-[#235347] to-[#163832] text-white hover:from-[#163832] hover:to-[#051F20] transition-all duration-300 py-3 px-6 text-sm font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] rounded-xl border-0"
-                        onClick={() =>
-                          window.open(
-                            "https://www.airbnb.com/l/WGJzruZA",
-                            "_blank",
-                            "noopener,noreferrer"
-                          )
-                        }
-                      >
-                        <HomeIcon className="h-4 w-4 mr-2" />
-                        Book Now
-                        <ExternalLink className="h-4 w-4 ml-2" />
-                      </Button>
                     </motion.div>
                   </div>
 
@@ -713,6 +689,30 @@ export default function Home() {
                         </span>
                       </motion.div>
                     ))}
+                  </motion.div>
+
+                  {/* Book Now Button - Centered at Bottom */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, delay: 0.8 }}
+                    className="flex justify-center pt-4"
+                  >
+                    <Button
+                      className="bg-gradient-to-r from-[#235347] to-[#163832] text-white hover:from-[#163832] hover:to-[#051F20] transition-all duration-300 py-3 px-6 text-sm font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] rounded-xl border-0"
+                      onClick={() =>
+                        window.open(
+                          "https://www.airbnb.com/l/WGJzruZA",
+                          "_blank",
+                          "noopener,noreferrer"
+                        )
+                      }
+                    >
+                      <HomeIcon className="h-4 w-4 mr-2" />
+                      Book Now
+                      <ExternalLink className="h-4 w-4 ml-2" />
+                    </Button>
                   </motion.div>
                 </div>
               </div>
