@@ -318,6 +318,7 @@ export default function Home() {
                         src={slide.image}
                         alt={slide.alt}
                         fill
+                        sizes="(max-width: 1024px) 100vw, 50vw"
                         className="object-cover object-center select-none"
                         priority={index === 0}
                         draggable={false}
@@ -599,108 +600,56 @@ export default function Home() {
 
         {/* Airbnb Booking Section */}
         <section className="py-16 lg:py-20 bg-gradient-to-br from-[#F0F8F4] to-[#E6F2EC] relative overflow-hidden">
-          {/* Subtle decorative elements */}
-          <div className="absolute top-12 left-72 w-16 h-16 bg-[#235347]/90 rounded-full animate-pulse" />
-          <div className="absolute bottom-8 right-8 w-12 h-12 bg-[#163832]/90 rounded-full animate-pulse delay-1000" />
-
           <div className="max-w-4xl mx-auto px-4 relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.6 }}
-              className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-500"
-            >
+            <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/50">
               <div className="p-6 lg:p-8">
                 <div className="flex flex-col gap-6">
                   {/* Top Row: Logo and Title */}
-                  <div className="flex justify-center items-start">
-                    {/* Logo and Title */}
-                    <motion.div
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.6, delay: 0.2 }}
-                      className="flex items-center gap-3 flex-shrink-0"
-                    >
-                      <div className="p-2">
-                        <Image
-                          src="/media/Close Ups June 25 2025/airbnb.png"
-                          alt="Airbnb Logo"
-                          width={20}
-                          height={20}
-                          className="w-16 h-14 object-contain"
-                        />
-                      </div>
-                      <div className="text-left">
-                        <motion.h2
-                          initial={{ opacity: 0, y: 20 }}
-                          whileInView={{ opacity: 1, y: 0 }}
-                          viewport={{ once: true, amount: 0.3 }}
-                          transition={{ duration: 0.6, delay: 0.3 }}
-                          className="text-xl lg:text-2xl font-bold text-[#051F20] leading-tight"
-                        >
-                          Book via <span className="text-[#235347]">Airbnb</span>
-                        </motion.h2>
-                      </div>
-                    </motion.div>
+                  <div className="flex justify-center items-center gap-3">
+                    <div className="p-2">
+                      <Image
+                        src="/media/Close Ups June 25 2025/airbnb.png"
+                        alt="Airbnb Logo"
+                        width={64}
+                        height={56}
+                        className="w-16 h-14 object-contain"
+                      />
+                    </div>
+                    <h2 className="text-xl lg:text-2xl font-bold text-[#051F20] leading-tight">
+                      Book via <span className="text-[#235347]">Airbnb</span>
+                    </h2>
                   </div>
 
                   {/* Middle: Description */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    className="text-center"
-                  >
+                  <div className="text-center">
                     <p className="text-[#235347] text-sm leading-relaxed">
                       Secure booking with instant confirmation and 24/7 support.
                     </p>
-                  </motion.div>
+                  </div>
 
                   {/* Bottom: Features in horizontal line */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6, delay: 0.5 }}
-                    className="flex flex-wrap justify-center items-center gap-4 lg:gap-6"
-                  >
+                  <div className="flex flex-wrap justify-center items-center gap-4 lg:gap-6">
                     {[
                       "Instant booking confirmation",
                       "Secure payment protection",
                       "24/7 customer support",
                     ].map((feature, index) => (
-                      <motion.div
+                      <div
                         key={index}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{
-                          duration: 0.4,
-                          delay: 0.6 + index * 0.1,
-                        }}
-                        className="flex items-center gap-2 group hover:bg-[#F0F8F4]/60 rounded-lg px-2 py-1 transition-all duration-300"
+                        className="flex items-center gap-2 rounded-lg px-2 py-1"
                       >
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#235347] group-hover:scale-110 transition-transform duration-300" />
-                        <span className="text-xs lg:text-sm text-[#235347] group-hover:text-[#051F20] transition-colors duration-300 whitespace-nowrap">
+                        <div className="w-1.5 h-1.5 rounded-full bg-[#235347]" />
+                        <span className="text-xs lg:text-sm text-[#235347] whitespace-nowrap">
                           {feature}
                         </span>
-                      </motion.div>
+                      </div>
                     ))}
-                  </motion.div>
+                  </div>
 
                   {/* Book Now Button - Centered at Bottom */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6, delay: 0.8 }}
-                    className="flex justify-center pt-4"
-                  >
+                  <div className="flex justify-center pt-2">
                     <Button
-                      className="bg-gradient-to-r from-[#235347] to-[#163832] text-white hover:from-[#163832] hover:to-[#051F20] transition-all duration-300 py-3 px-6 text-sm font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02] rounded-xl border-0"
+                      className="bg-gradient-to-r from-[#235347] to-[#163832] text-white hover:from-[#163832] hover:to-[#051F20] transition-colors duration-200 py-3 px-6 text-sm font-semibold shadow-md rounded-xl border-0"
                       onClick={() =>
                         window.open(
                           "https://www.airbnb.com/l/WGJzruZA",
@@ -713,10 +662,10 @@ export default function Home() {
                       Book Now
                       <ExternalLink className="h-4 w-4 ml-2" />
                     </Button>
-                  </motion.div>
+                  </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
 
@@ -968,7 +917,7 @@ export default function Home() {
                 {
                   quote:
                     "Absolutely stunning property and seamless service. The attention to detail was incredible. Will definitely book again!",
-                  author: "Sarah W.",
+                  author: "Ayesha K.",
                   location: "Dubai Marina Villa",
                   rating: "5.0",
                   avatar: "/media/DSC01806 HDR June 25 2025/DSC01909-HDR.jpg",
@@ -976,8 +925,8 @@ export default function Home() {
                 },
                 {
                   quote:
-                    "The most minimal, beautiful rental experience I&apos;ve ever had. Everything was perfect from start to finish.",
-                  author: "Alex J.",
+                    "The most minimal, beautiful rental experience I've ever had. Everything was perfect from start to finish.",
+                  author: "Usman A.",
                   location: "Palm Jumeirah Retreat",
                   rating: "5.0",
                   avatar: "/media/DSC01806 HDR June 25 2025/DSC01919-HDR.jpg",
@@ -1086,7 +1035,7 @@ export default function Home() {
             <div className="relative">
               {/* Left: Text */}
               <div className="lg:w-2/3 z-10 relative">
-                <h2 className="text-3xl lg:text-5xl xl:text-6xl font-extrabold mb-6 leading-tight">
+                <h2 className="text-2xl lg:text-5xl xl:text-6xl font-extrabold mb-6 leading-tight">
                   <span className="text-[#235347]">About </span>
                   <span className="text-[#8EB69B]">Isa Husain</span>
                 </h2>
@@ -1095,7 +1044,7 @@ export default function Home() {
                   whileInView={{ opacity: 1, x: 0, y: 0 }}
                   viewport={{ once: true, amount: 0.3 }}
                   transition={{ duration: 0.8, ease: "easeOut" }}
-                  className="bg-[#F0F8F4] rounded-2xl p-6 lg:p-8 shadow-xl mb-4 w-full max-w-2xl relative -ml-4 lg:-ml-8"
+                  className="bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl p-5 lg:p-7 shadow-xl border border-[#DAF1DE]/70 mb-4 w-full max-w-xl lg:max-w-2xl relative -ml-2 lg:-ml-8"
                 >
                   {/* Opening Quote Symbol */}
                   <motion.div
@@ -1105,7 +1054,7 @@ export default function Home() {
                     viewport={{ once: true, amount: 0.4 }}
                     transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
                   >
-                    <span className="text-[#8EB69B] text-8xl lg:text-9xl font-bold">
+                    <span className="text-[#8EB69B] text-6xl lg:text-9xl font-bold">
                       "
                     </span>
                   </motion.div>
@@ -1149,14 +1098,28 @@ export default function Home() {
                     viewport={{ once: true, amount: 0.5 }}
                     transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
                   >
-                    <span className="text-[#8EB69B] text-8xl lg:text-9xl font-bold">
+                    <span className="text-[#8EB69B] text-6xl lg:text-9xl font-bold">
                       "
                     </span>
                   </motion.div>
                 </motion.div>
+                {/* Mobile About image */}
+                <div className="mt-6 lg:hidden">
+                  <div className="w-full max-w-md mx-auto bg-[#DAF1DE] rounded-2xl shadow-xl overflow-hidden">
+                    <Image
+                      src="/media/isa.webp"
+                      alt="Isa Husain - Founder of Expat Stays"
+                      width={480}
+                      height={640}
+                      className="w-full h-full object-cover"
+                      quality={85}
+                      sizes="100vw"
+                    />
+                  </div>
+                </div>
               </div>
               {/* Right: Large Portrait Image - Matching Text Box Size */}
-              <div className="absolute top-0 right-0 lg:w-1/2 lg:h-full flex justify-center lg:justify-end items-center">
+              <div className="absolute top-0 right-0 lg:w-1/2 lg:h-full hidden lg:flex justify-center lg:justify-end items-center">
                 <motion.div
                   initial={{ opacity: 0, scale: 0.8, x: 50 }}
                   whileInView={{ opacity: 1, scale: 1, x: 0 }}
@@ -1170,9 +1133,9 @@ export default function Home() {
                     width={600}
                     height={800}
                     className="w-full h-full object-cover"
-                    priority
                     quality={95}
                     placeholder="blur"
+                    sizes="50vw"
                     blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
                   />
                 </motion.div>
