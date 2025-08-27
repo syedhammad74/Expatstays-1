@@ -16,6 +16,7 @@ import {
   Heart,
   MessageCircle,
   HomeIcon,
+  CheckCircle,
 } from "lucide-react";
 import Image from "next/image";
 import { motion, number } from "framer-motion";
@@ -1033,112 +1034,109 @@ export default function Home() {
         <section className="py-16 lg:py-32 relative overflow-hidden">
           <div className="max-w-6xl mx-auto px-4">
             <div className="relative">
-              {/* Left: Text */}
-              <div className="lg:w-2/3 z-10 relative">
-                <h2 className="text-2xl lg:text-5xl xl:text-6xl font-extrabold mb-6 leading-tight">
-                  <span className="text-[#235347]">About </span>
-                  <span className="text-[#8EB69B]">Isa Husain</span>
-                </h2>
-                <motion.div
-                  initial={{ opacity: 0, x: -50, y: 30 }}
-                  whileInView={{ opacity: 1, x: 0, y: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.8, ease: "easeOut" }}
-                  className="bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl p-5 lg:p-7 shadow-xl border border-[#DAF1DE]/70 mb-4 w-full max-w-xl lg:max-w-2xl relative -ml-2 lg:-ml-8"
-                >
-                  {/* Opening Quote Symbol */}
-                  <motion.div
-                    className="absolute -top-6 -left-6 lg:-top-8 lg:-left-8 z-20"
-                    initial={{ opacity: 0, scale: 0.5, rotate: -10 }}
-                    whileInView={{ opacity: 0.8, scale: 1, rotate: 0 }}
-                    viewport={{ once: true, amount: 0.4 }}
-                    transition={{ duration: 1, delay: 0.3, ease: "easeOut" }}
-                  >
-                    <span className="text-[#8EB69B] text-6xl lg:text-9xl font-bold">
-                      "
-                    </span>
-                  </motion.div>
+              <div className="bg-white/95 rounded-2xl border border-[#DAF1DE]/70 shadow-xl overflow-hidden">
+                <div className="grid grid-cols-1 lg:grid-cols-2">
+                  {/* Left: Image with badge */}
+                  <div className="relative bg-[#F0F8F4] p-6 lg:p-8 lg:border-r lg:border-[#DAF1DE]">
+                    <Badge className="absolute top-4 left-4 bg-white text-[#163832] border border-[#DAF1DE] shadow-sm px-3 py-1 rounded-full text-xs font-semibold">
+                      Founder
+                    </Badge>
+                    <div className="rounded-xl overflow-hidden aspect-[4/5]">
+                      <Image
+                        src="/media/isa.webp"
+                        alt="Isa Husain - Founder of Expat Stays"
+                        width={800}
+                        height={1000}
+                        className="w-full h-full object-cover"
+                        quality={90}
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                    </div>
+                  </div>
 
-                  <p className="text-base lg:text-lg text-[#235347] font-medium leading-relaxed pt-6 lg:pt-8">
-                    I'm Isa Hussain, a British Pakistani who moved to Islamabad
-                    over 20 years ago—and never looked back. Through Expat
-                    Stays, I've combined my love for premium living with my
-                    mission to make Pakistan feel like home for every overseas
-                    Pakistani.
-                    <br />
-                    <br />
-                    I know exactly what it's like to land in Islamabad after a
-                    long flight, craving comfort, reliability, and a touch of
-                    luxury. That's why I created Expat Stays—a curated
-                    collection of modern, fully serviced properties designed
-                    with overseas guests in mind. Whether you're visiting for
-                    business, family, or just to reconnect with your roots, you
-                    deserve more than just a place to sleep. You deserve a space
-                    that feels like home the moment you walk in.
-                    <br />
-                    <br />
-                    From stylish city apartments to peaceful getaways, every
-                    property is handpicked, professionally maintained, and
-                    thoughtfully furnished to match international standards—with
-                    a uniquely Pakistani warmth.
-                    <br />
-                    <br />
-                    <span className="font-semibold">
-                      Welcome to your new stay in the homeland.
-                      <br />
-                      Welcome to Expat Stays.
-                    </span>
-                  </p>
+                  {/* Right: Content */}
+                  <div className="p-7 lg:p-10 bg-white flex flex-col gap-4 lg:gap-6">
+                    <div>
+                      <h3 className="text-3xl lg:text-4xl font-extrabold text-[#051F20]">
+                        Isa Husain
+                      </h3>
+                      <p className="text-[#235347] text-sm lg:text-base">
+                        Founder, Expat Stays
+                      </p>
+                    </div>
 
-                  {/* Closing Quote Symbol */}
-                  <motion.div
-                    className="absolute -bottom-6 -right-6 lg:-bottom-8 lg:-right-8 z-20"
-                    initial={{ opacity: 0, scale: 0.5, rotate: 10 }}
-                    whileInView={{ opacity: 0.8, scale: 1, rotate: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-                  >
-                    <span className="text-[#8EB69B] text-6xl lg:text-9xl font-bold">
-                      "
-                    </span>
-                  </motion.div>
-                </motion.div>
-                {/* Mobile About image */}
-                <div className="mt-6 lg:hidden">
-                  <div className="w-full max-w-md mx-auto bg-[#DAF1DE] rounded-2xl shadow-xl overflow-hidden">
-                    <Image
-                      src="/media/isa.webp"
-                      alt="Isa Husain - Founder of Expat Stays"
-                      width={480}
-                      height={640}
-                      className="w-full h-full object-cover"
-                      quality={85}
-                      sizes="100vw"
-                    />
+                    <div className="space-y-4 text-[#235347] text-sm lg:text-base leading-relaxed">
+                      <p>
+                        I'm Isa Hussain, a British Pakistani who moved to
+                        Islamabad over 20 years ago—and never looked back.
+                        Through Expat Stays, I've combined my love for premium
+                        living with my mission to make Pakistan feel like home
+                        for every overseas Pakistani.
+                      </p>
+                      <p>
+                        I know exactly what it's like to land in Islamabad after
+                        a long flight, craving comfort, reliability, and a touch
+                        of luxury. That's why I created Expat Stays—a curated
+                        collection of modern, fully serviced properties designed
+                        with overseas guests in mind. Whether you're visiting
+                        for business, family, or just to reconnect with your
+                        roots, you deserve more than just a place to sleep. You
+                        deserve a space that feels like home the moment you walk
+                        in.
+                      </p>
+                      <p>
+                        From stylish city apartments to peaceful getaways, every
+                        property is handpicked, professionally maintained, and
+                        thoughtfully furnished to match international
+                        standards—with a uniquely Pakistani warmth.
+                      </p>
+                      <p className="font-semibold text-[#051F20]">
+                        Welcome to your new stay in the homeland. <br /> Welcome
+                        to Expat Stays.
+                      </p>
+                    </div>
+
+                    {/* Social */}
+                    <div className="flex items-center gap-3 pt-1">
+                      <Button
+                        variant="outline"
+                        className="border-[#DAF1DE] text-[#163832] hover:bg-[#DAF1DE] hover:text-[#051F20] rounded-full h-9 px-4"
+                        onClick={() =>
+                          window.open(
+                            "https://www.instagram.com/isa_unscripted?igsh=bTBxbjN5OXkxaWdn",
+                            "_blank",
+                            "noopener,noreferrer"
+                          )
+                        }
+                      >
+                        <Instagram className="h-4 w-4 mr-2" /> Instagram
+                      </Button>
+                    </div>
+
+                    <div className="h-px bg-[#DAF1DE] my-2 lg:my-4" />
+
+                    {/* Experience */}
+                    <div className="pt-1">
+                      <h4 className="text-sm lg:text-base font-bold text-[#051F20] mb-3">
+                        Experience
+                      </h4>
+                      <div className="space-y-2">
+                        {[
+                          "20+ years living in Islamabad with the expat lens",
+                          "Curated, fully serviced modern properties for overseas guests",
+                          "International standards with uniquely Pakistani warmth",
+                        ].map((item) => (
+                          <div key={item} className="flex items-start gap-2">
+                            <CheckCircle className="h-4 w-4 text-[#8EB69B] mt-0.5" />
+                            <span className="text-sm lg:text-base text-[#235347]">
+                              {item}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              {/* Right: Large Portrait Image - Matching Text Box Size */}
-              <div className="absolute top-0 right-0 lg:w-1/2 lg:h-full hidden lg:flex justify-center lg:justify-end items-center">
-                <motion.div
-                  initial={{ opacity: 0, scale: 0.8, x: 50 }}
-                  whileInView={{ opacity: 1, scale: 1, x: 0 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                  className="w-full max-w-2xl h-auto bg-[#DAF1DE] rounded-2xl shadow-2xl overflow-hidden animate-fade-in transform lg:-translate-y-8 lg:translate-x-8"
-                >
-                  <Image
-                    src="/media/isa.webp"
-                    alt="Isa Husain - Founder of Expat Stays"
-                    width={600}
-                    height={800}
-                    className="w-full h-full object-cover"
-                    quality={95}
-                    placeholder="blur"
-                    sizes="50vw"
-                    blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
-                  />
-                </motion.div>
               </div>
             </div>
           </div>
