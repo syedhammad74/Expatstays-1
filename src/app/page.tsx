@@ -1034,6 +1034,8 @@ export default function Home() {
         <section className="py-16 lg:py-32 relative overflow-hidden">
           <div className="max-w-6xl mx-auto px-4">
             <div className="relative">
+              <div className="hidden lg:block pointer-events-none absolute -top-8 -left-10 w-64 h-64 bg-gradient-to-br from-[#DAF1DE] to-[#8EB69B]/50 blur-3xl rounded-full" />
+              <div className="hidden lg:block pointer-events-none absolute -bottom-10 -right-10 w-72 h-72 bg-gradient-to-br from-[#8EB69B]/40 to-[#163832]/30 blur-3xl rounded-full" />
               <div className="bg-white/95 rounded-2xl border border-[#DAF1DE]/70 shadow-xl overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                   {/* Left: Image with badge */}
@@ -1060,6 +1062,7 @@ export default function Home() {
                       <h3 className="text-3xl lg:text-4xl font-extrabold text-[#051F20]">
                         Isa Husain
                       </h3>
+                      <div className="hidden lg:block h-1 w-20 bg-gradient-to-r from-[#8EB69B] to-[#235347] rounded-full mt-2" />
                       <p className="text-[#235347] text-sm lg:text-base">
                         Founder, Expat Stays
                       </p>
