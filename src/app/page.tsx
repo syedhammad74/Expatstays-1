@@ -22,6 +22,7 @@ import Image from "next/image";
 import { motion, number } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import Header from "@/components/layout/Header";
+import InViewVideo from "@/components/InViewVideo";
 import {
   Popover,
   PopoverContent,
@@ -1346,10 +1347,17 @@ export default function Home() {
                       >
                         <div className="w-full h-full rounded-xl lg:rounded-2xl overflow-hidden relative">
                           <div className="w-full h-full relative">
-                            <img
-                              src="/media/Close Ups June 25 2025/IMG_1017.PNG"
-                              alt="Isa Unscripted Instagram"
+                            <InViewVideo
+                              src="/media/Video.mp4"
+                              poster="/media/Close Ups June 25 2025/IMG_1017.PNG"
                               className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                              onClick={() =>
+                                window.open(
+                                  "https://www.instagram.com/isa_unscripted?igsh=bTBxbjN5OXkxaWdn",
+                                  "_blank",
+                                  "noopener,noreferrer"
+                                )
+                              }
                             />
                           </div>
 
