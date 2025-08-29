@@ -1349,6 +1349,8 @@ export default function Home() {
                           <div className="w-full h-full relative">
                             <InViewVideo
                               src="/media/Video.mp4"
+                              muted={false}
+                              enableMuteToggle
                               poster="/media/Close Ups June 25 2025/IMG_1017.PNG"
                               className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                               onClick={() =>
