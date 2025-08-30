@@ -600,76 +600,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Airbnb Booking Section */}
-        <section className="py-16 lg:py-20 bg-gradient-to-br from-[#F0F8F4] to-[#E6F2EC] relative overflow-hidden">
-          <div className="max-w-4xl mx-auto px-4 relative z-10">
-            <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden border border-white/50">
-              <div className="p-6 lg:p-8">
-                <div className="flex flex-col gap-6">
-                  {/* Top Row: Logo and Title */}
-                  <div className="flex justify-center items-center gap-3">
-                    <div className="p-2">
-                      <Image
-                        src="/media/Close Ups June 25 2025/airbnb.png"
-                        alt="Airbnb Logo"
-                        width={64}
-                        height={56}
-                        className="w-16 h-14 object-contain"
-                      />
-                    </div>
-                    <h2 className="text-xl lg:text-2xl font-bold text-[#051F20] leading-tight">
-                      Book via <span className="text-[#235347]">Airbnb</span>
-                    </h2>
-                  </div>
 
-                  {/* Middle: Description */}
-                  <div className="text-center">
-                    <p className="text-[#235347] text-sm leading-relaxed">
-                      Secure booking with instant confirmation and 24/7 support.
-                    </p>
-                  </div>
-
-                  {/* Bottom: Features in horizontal line */}
-                  <div className="flex flex-wrap justify-center items-center gap-4 lg:gap-6">
-                    {[
-                      "Instant booking confirmation",
-                      "Secure payment protection",
-                      "24/7 customer support",
-                    ].map((feature, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center gap-2 rounded-lg px-2 py-1"
-                      >
-                        <div className="w-1.5 h-1.5 rounded-full bg-[#235347]" />
-                        <span className="text-xs lg:text-sm text-[#235347] whitespace-nowrap">
-                          {feature}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Book Now Button - Centered at Bottom */}
-                  <div className="flex justify-center pt-2">
-                    <Button
-                      className="bg-gradient-to-r from-[#235347] to-[#163832] text-white hover:from-[#163832] hover:to-[#051F20] transition-colors duration-200 py-3 px-6 text-sm font-semibold shadow-md rounded-xl border-0"
-                      onClick={() =>
-                        window.open(
-                          "https://www.airbnb.com/l/WGJzruZA",
-                          "_blank",
-                          "noopener,noreferrer"
-                        )
-                      }
-                    >
-                      <HomeIcon className="h-4 w-4 mr-2" />
-                      Book Now
-                      <ExternalLink className="h-4 w-4 ml-2" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Exclusive Services Section: Animated Icons */}
         <section className="mb-16 lg:mb-24">
