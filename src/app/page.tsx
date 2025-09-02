@@ -1347,9 +1347,14 @@ export default function Home() {
                       >
                         <div className="w-full h-full rounded-xl lg:rounded-2xl overflow-hidden relative">
                           <div className="w-full h-full relative">
+                            {/* Debug info */}
+                            <div className="absolute top-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded z-30">
+                              Video: /media/Video.mp4
+                            </div>
+                            
                             <InViewVideo
                               src="/media/Video.mp4"
-                              muted={false}
+                              muted={true}
                               enableMuteToggle
                               poster="/media/Close Ups June 25 2025/IMG_1017.PNG"
                               className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"

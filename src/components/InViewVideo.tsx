@@ -26,33 +26,164 @@ export default function InViewVideo({
 }: InViewVideoProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isMuted, setIsMuted] = useState<boolean>(muted);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [hasUserInteracted, setHasUserInteracted] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const videoEl = videoRef.current;
     if (!videoEl) return;
 
+    // Log video element properties for debugging
+    console.log("Video element created:", {
+      src: videoEl.src,
+      muted: videoEl.muted,
+      loop: videoEl.loop,
+      playsInline: videoEl.playsInline,
+      preload: videoEl.preload,
+    });
+
+    // Handle video events
+    const handlePlay = () => {
+      setIsPlaying(true);
+      console.log("Video started playing");
+    };
+
+    const handlePause = () => {
+      setIsPlaying(false);
+      console.log("Video paused");
+    };
+
+    const handleEnded = () => {
+      setIsPlaying(false);
+      console.log("Video ended");
+    };
+
+    const handleUserInteraction = () => {
+      setHasUserInteracted(true);
+      console.log("User interacted with video");
+    };
+
+    const handleError = (e: Event) => {
+      console.error("Video error:", e);
+      const target = e.target as HTMLVideoElement;
+      if (target.error) {
+        console.error("Video error details:", {
+          code: target.error.code,
+          message: target.error.message,
+        });
+
+        // Handle specific error codes
+        switch (target.error.code) {
+          case MediaError.MEDIA_ERR_ABORTED:
+            console.log("Video loading was aborted");
+            break;
+          case MediaError.MEDIA_ERR_NETWORK:
+            console.log("Network error occurred while loading video");
+            break;
+          case MediaError.MEDIA_ERR_DECODE:
+            console.log("Video decoding error - format may not be supported");
+            break;
+          case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
+            console.log("Video format not supported by browser");
+            break;
+          default:
+            console.log("Unknown video error occurred");
+        }
+      }
+      setHasError(true);
+      setIsPlaying(false);
+      setIsLoading(false);
+    };
+
+    const handleLoadedData = () => {
+      console.log("Video data loaded");
+      setIsLoading(false);
+      setHasError(false);
+    };
+
+    const handleCanPlay = () => {
+      console.log("Video can play");
+      setIsLoading(false);
+    };
+
+    const handleLoadStart = () => {
+      console.log("Video load started");
+    };
+
+    const handleProgress = () => {
+      console.log("Video loading progress");
+    };
+
+    videoEl.addEventListener("play", handlePlay);
+    videoEl.addEventListener("pause", handlePause);
+    videoEl.addEventListener("ended", handleEnded);
+    videoEl.addEventListener("click", handleUserInteraction);
+    videoEl.addEventListener("touchstart", handleUserInteraction);
+    videoEl.addEventListener("error", handleError);
+    videoEl.addEventListener("loadeddata", handleLoadedData);
+    videoEl.addEventListener("canplay", handleCanPlay);
+    videoEl.addEventListener("loadstart", handleLoadStart);
+    videoEl.addEventListener("progress", handleProgress);
+
     const handleIntersect: IntersectionObserverCallback = (entries) => {
       const entry = entries[0];
       if (!entry || !videoEl) return;
+
+      console.log(
+        "Video intersection:",
+        entry.isIntersecting,
+        "threshold:",
+        entry.intersectionRatio
+      );
+
       if (entry.isIntersecting) {
-        const playPromise = videoEl.play();
-        if (playPromise && typeof playPromise.then === "function") {
-          playPromise.catch(() => {});
+        // Only attempt to play if user has interacted or if muted
+        if (hasUserInteracted || isMuted) {
+          console.log("Attempting to play video");
+          const playPromise = videoEl.play();
+          if (playPromise && typeof playPromise.then === "function") {
+            playPromise.catch((error) => {
+              console.log("Video play failed:", error);
+              // If autoplay fails, set muted and try again
+              if (!isMuted) {
+                console.log("Retrying with muted video");
+                videoEl.muted = true;
+                setIsMuted(true);
+                videoEl.play().catch(console.error);
+              }
+            });
+          }
+        } else {
+          console.log("Video not playing - waiting for user interaction");
         }
       } else {
+        console.log("Video out of view, pausing");
         videoEl.pause();
       }
     };
 
     const observer = new IntersectionObserver(handleIntersect, {
-      threshold: 0.35,
+      threshold: 0.1, // Lower threshold for better detection
+      rootMargin: "50px", // Add margin for earlier detection
     });
     observer.observe(videoEl);
 
     return () => {
       observer.disconnect();
+      videoEl.removeEventListener("play", handlePlay);
+      videoEl.removeEventListener("pause", handlePause);
+      videoEl.removeEventListener("ended", handleEnded);
+      videoEl.removeEventListener("click", handleUserInteraction);
+      videoEl.removeEventListener("touchstart", handleUserInteraction);
+      videoEl.removeEventListener("error", handleError);
+      videoEl.removeEventListener("loadeddata", handleLoadedData);
+      videoEl.removeEventListener("canplay", handleCanPlay);
+      videoEl.removeEventListener("loadstart", handleLoadStart);
+      videoEl.removeEventListener("progress", handleProgress);
     };
-  }, []);
+  }, [isMuted, hasUserInteracted]);
 
   useEffect(() => {
     setIsMuted(muted);
@@ -62,19 +193,72 @@ export default function InViewVideo({
     e.stopPropagation();
     const videoEl = videoRef.current;
     if (!videoEl) return;
+
     const nextMuted = !isMuted;
     setIsMuted(nextMuted);
     videoEl.muted = nextMuted;
+
+    // Mark user interaction
+    setHasUserInteracted(true);
+
+    // Try to play if unmuting
     if (!nextMuted) {
       const playPromise = videoEl.play();
       if (playPromise && typeof playPromise.then === "function") {
-        playPromise.catch(() => {});
+        playPromise.catch((error) => {
+          console.log("Video play failed after unmute:", error);
+        });
       }
     }
   };
 
+  const handleVideoClick = (e: React.MouseEvent<HTMLVideoElement>) => {
+    e.stopPropagation();
+    setHasUserInteracted(true);
+
+    if (onClick) {
+      onClick();
+    } else {
+      // Toggle play/pause if no onClick handler
+      const videoEl = videoRef.current;
+      if (videoEl) {
+        if (isPlaying) {
+          videoEl.pause();
+        } else {
+          videoEl.play().catch(console.error);
+        }
+      }
+    }
+  };
+
+  // Show loading state or error fallback
+  if (hasError) {
+    return (
+      <div
+        className={`${className} bg-gray-200 flex items-center justify-center`}
+      >
+        <div className="text-center text-gray-500">
+          <p>Video unavailable</p>
+          {poster && (
+            <img
+              src={poster}
+              alt="Video poster"
+              className="w-full h-full object-cover"
+            />
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="relative">
+      {isLoading && (
+        <div className="absolute inset-0 bg-gray-200 flex items-center justify-center z-10">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-600"></div>
+        </div>
+      )}
+
       <video
         ref={videoRef}
         src={src}
@@ -85,13 +269,20 @@ export default function InViewVideo({
         className={className}
         controls={false}
         preload="metadata"
-        onClick={onClick}
+        onClick={handleVideoClick}
+        onLoadedMetadata={() => {
+          // Set initial muted state
+          if (videoRef.current) {
+            videoRef.current.muted = isMuted;
+          }
+        }}
       />
+
       {enableMuteToggle && (
         <button
           type="button"
           onClick={handleToggleMute}
-          className="absolute bottom-3 right-3 bg-black/50 hover:bg-black/60 text-white rounded-full p-2 transition-colors"
+          className="absolute bottom-3 right-3 bg-black/50 hover:bg-black/60 text-white rounded-full p-2 transition-colors z-20"
           aria-label={isMuted ? "Unmute video" : "Mute video"}
         >
           {isMuted ? (
