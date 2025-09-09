@@ -410,7 +410,7 @@ export default function PropertiesPage() {
       <Header />
 
       {/* Hero Section - Split Layout */}
-      <section className="relative pt-6 pb-12 lg:pb-20 overflow-hidden">
+      <section className="relative pb-12 lg:pb-20 overflow-hidden">
         {/* Decorative Background */}
         <div className="absolute inset-0">
           {/* Green gradient blob behind right side */}
@@ -419,7 +419,7 @@ export default function PropertiesPage() {
           <div className="absolute top-10 left-10 w-48 lg:w-96 h-48 lg:h-96 bg-gradient-to-br from-[#DAF1DE]/3 to-transparent rounded-full blur-2xl"></div>
         </div>
 
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-28 relative z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-20 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left Column - Content */}
             <motion.div
@@ -435,7 +435,7 @@ export default function PropertiesPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.2 }}
                 >
-                  Your Home{" "}
+                  Your Home <br />
                   <span className="text-[#8EB69B]">Away From Home</span>
                 </motion.h1>
 
