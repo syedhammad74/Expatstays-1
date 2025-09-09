@@ -435,8 +435,8 @@ export default function PropertiesPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.2 }}
                 >
-                  Discover Curated{" "}
-                  <span className="text-[#8EB69B]">Luxury Residences</span>
+                  Your Home{" "}
+                  <span className="text-[#8EB69B]">Away From Home</span>
                 </motion.h1>
 
                 <motion.p
@@ -445,8 +445,9 @@ export default function PropertiesPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.4 }}
                 >
-                  Explore a world of handpicked villas, penthouses, and estates
-                  tailored for premium comfort and exclusivity.
+                  Settle into comfort with carefully selected residences
+                  designed to make every stay feel familiar, welcoming, and
+                  truly yours.
                 </motion.p>
               </div>
 
@@ -805,7 +806,7 @@ export default function PropertiesPage() {
               Why Choose <span className="text-[#8EB69B]">Expat Stays</span>
             </h2>
             <p className="text-base lg:text-lg text-[#4A4A4A] max-w-2xl mx-auto font-light">
-              Trusted by thousands of guests worldwide for exceptional luxury
+              Trusted by Hundreds of guests worldwide for exceptional luxury
               experiences
             </p>
           </motion.div>

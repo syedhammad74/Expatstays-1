@@ -26,7 +26,11 @@ const Footer = () => {
   const socialIcons = [
     { href: "#", icon: Facebook, label: "Facebook" },
     { href: "#", icon: Twitter, label: "Twitter" },
-    { href: "#", icon: Instagram, label: "Instagram" },
+    {
+      href: "https://www.instagram.com/expatstays?igsh=dnJ0ZHg3ZW0xbjV2",
+      icon: Instagram,
+      label: "Instagram",
+    },
     { href: "#", icon: Linkedin, label: "LinkedIn" },
   ];
 
