@@ -281,6 +281,7 @@ export default function PropertiesPage() {
     if (from && to) {
       filterPropertiesByAvailability();
     } else {
+      // Always show properties immediately, even without search criteria
       setFilteredProperties(properties);
     }
   }, [properties, dateRange, filterPropertiesByAvailability, from, to]);
@@ -337,7 +338,8 @@ export default function PropertiesPage() {
       // Ensure minimum 6 properties are displayed
       const finalFiltered = ensureMinimumProperties(filtered);
       setFilteredProperties(finalFiltered);
-    } else if (!from || !to) {
+    } else {
+      // Always show all properties when no search query
       setFilteredProperties(properties);
     }
   }, [debouncedSearchQuery, properties, dateRange, trackInteraction, from, to]);
@@ -421,13 +423,23 @@ export default function PropertiesPage() {
     views: Math.floor(Math.random() * 100) + 10, // Mock views count
   });
 
-  // Always use VirtualGrid for property lists, but keep the view toggle for user control
+  // Enhanced renderProperties with better UI
   const renderProperties = () => {
     if (loading) {
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {Array.from({ length: 6 }, (_, i) => (
-            <div key={i} className="h-96 bg-card rounded-xl animate-pulse" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {Array.from({ length: 8 }, (_, i) => (
+            <div
+              key={i}
+              className="h-96 bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border border-[#DAF1DE]/50 animate-pulse"
+            >
+              <div className="h-48 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-t-3xl"></div>
+              <div className="p-6 space-y-4">
+                <div className="h-4 bg-gradient-to-r from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-full"></div>
+                <div className="h-3 bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/10 rounded-full w-3/4"></div>
+                <div className="h-3 bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/10 rounded-full w-1/2"></div>
+              </div>
+            </div>
           ))}
         </div>
       );
@@ -438,15 +450,15 @@ export default function PropertiesPage() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center py-16"
+          className="text-center py-20"
         >
-          <div className="w-24 h-24 mx-auto mb-6 bg-muted rounded-full flex items-center justify-center">
-            <Search className="w-10 h-10 text-muted-foreground" />
+          <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-[#8EB69B]/10 to-[#DAF1DE]/20 rounded-full flex items-center justify-center">
+            <Search className="w-16 h-16 text-[#8EB69B]" />
           </div>
-          <h3 className="text-2xl font-bold text-card-foreground mb-4">
+          <h3 className="text-3xl font-bold text-[#051F20] mb-4">
             No Properties Found
           </h3>
-          <p className="text-card-foreground/60 mb-6">
+          <p className="text-lg text-[#8EB69B] mb-8 max-w-md mx-auto">
             Try adjusting your search criteria or browse all available
             properties.
           </p>
@@ -457,6 +469,7 @@ export default function PropertiesPage() {
               setFilteredProperties(properties);
               trackInteraction("clear-search");
             }}
+            className="bg-[#8EB69B] text-white hover:bg-[#235347] px-8 py-3 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
           >
             Clear Filters
           </Button>
@@ -475,18 +488,18 @@ export default function PropertiesPage() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-6 p-4 bg-[#F8FBF9] border border-[#DAF1DE]/50 rounded-xl"
+            className="mb-8 p-6 bg-white/80 backdrop-blur-sm border border-[#DAF1DE]/50 rounded-2xl shadow-lg"
           >
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 bg-[#8EB69B]/20 rounded-full flex items-center justify-center">
-                <Search className="h-4 w-4 text-[#8EB69B]" />
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-2xl flex items-center justify-center">
+                <Search className="h-6 w-6 text-[#8EB69B]" />
               </div>
               <div>
-                <p className="text-sm font-medium text-[#051F20]">
+                <p className="text-base font-semibold text-[#051F20]">
                   Limited results found. Showing {filteredProperties.length}{" "}
                   properties with additional recommendations.
                 </p>
-                <p className="text-xs text-[#8EB69B] mt-1">
+                <p className="text-sm text-[#8EB69B] mt-1">
                   Try adjusting your search criteria for more specific results.
                 </p>
               </div>
@@ -499,10 +512,12 @@ export default function PropertiesPage() {
           renderItem={(property) => (
             <MemoizedPropertyCard key={property.slug} {...property} />
           )}
-          itemHeight={450}
+          itemHeight={480}
           itemsPerRow={
             typeof window !== "undefined"
-              ? window.innerWidth >= 1024
+              ? window.innerWidth >= 1280
+                ? 4
+                : window.innerWidth >= 1024
                 ? 3
                 : window.innerWidth >= 768
                 ? 2
@@ -510,8 +525,8 @@ export default function PropertiesPage() {
               : 1
           }
           className="mt-8"
-          gap={24}
-          containerHeight={800}
+          gap={32}
+          containerHeight={900}
         />
       </div>
     );
@@ -867,52 +882,87 @@ export default function PropertiesPage() {
       </section>
 
       {/* Properties Grid Section */}
-      <section className="py-12 lg:py-20">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="py-12 lg:py-20 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Results Header */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 space-y-4 md:space-y-0"
+            className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 space-y-6 md:space-y-0"
           >
-            <div>
-              <h2 className="text-3xl font-bold text-card-foreground mb-2">
+            <div className="text-center md:text-left">
+              <h2 className="text-4xl lg:text-5xl font-bold text-[#051F20] mb-4">
                 {searchQuery
                   ? `Search Results for "${searchQuery}"`
-                  : "Available Properties"}
+                  : "Discover Your Perfect Stay"}
               </h2>
-              <p className="text-card-foreground/60">
+              <p className="text-lg text-[#8EB69B] font-medium">
                 {loading
-                  ? "Loading..."
-                  : `${filteredProperties.length} properties found`}
+                  ? "Loading amazing properties..."
+                  : `${filteredProperties.length} premium properties available`}
                 {useVirtualScrolling && " (Virtual Scrolling Active)"}
               </p>
             </div>
 
-            {/* View Toggle */}
-            <div className="flex items-center space-x-2">
-              <Button
-                variant={useVirtualScrolling ? "outline" : "default"}
-                size="sm"
-                onClick={() => setUseVirtualScrolling(false)}
-              >
-                <Grid className="w-4 h-4 mr-2" />
-                Grid
-              </Button>
-              <Button
-                variant={useVirtualScrolling ? "default" : "outline"}
-                size="sm"
-                onClick={() => setUseVirtualScrolling(true)}
-                disabled={filteredProperties.length <= 20}
-              >
-                <List className="w-4 h-4 mr-2" />
-                Virtual
-              </Button>
+            {/* Search and View Controls */}
+            <div className="flex flex-col lg:flex-row items-center gap-4">
+              {/* Search Input */}
+              <div className="relative">
+                <div className="flex items-center bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-[#DAF1DE]/50 px-4 py-3">
+                  <Search className="h-5 w-5 text-[#8EB69B] mr-3" />
+                  <input
+                    type="text"
+                    placeholder="Search properties, locations..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className="bg-transparent border-none outline-none text-[#051F20] placeholder-[#8EB69B]/60 font-medium w-64 lg:w-80"
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      className="ml-2 text-[#8EB69B] hover:text-[#235347] transition-colors"
+                    >
+                      ✕
+                    </button>
+                  )}
+                </div>
+              </div>
+
+              {/* View Toggle */}
+              <div className="flex items-center space-x-3 bg-white/80 backdrop-blur-sm rounded-2xl p-2 shadow-lg border border-[#DAF1DE]/50">
+                <Button
+                  variant={useVirtualScrolling ? "ghost" : "default"}
+                  size="sm"
+                  onClick={() => setUseVirtualScrolling(false)}
+                  className={`rounded-xl px-4 py-2 font-semibold transition-all duration-300 ${
+                    !useVirtualScrolling
+                      ? "bg-[#8EB69B] text-white shadow-md"
+                      : "text-[#8EB69B] hover:bg-[#8EB69B]/10"
+                  }`}
+                >
+                  <Grid className="w-4 h-4 mr-2" />
+                  Grid View
+                </Button>
+                <Button
+                  variant={useVirtualScrolling ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setUseVirtualScrolling(true)}
+                  disabled={filteredProperties.length <= 20}
+                  className={`rounded-xl px-4 py-2 font-semibold transition-all duration-300 ${
+                    useVirtualScrolling
+                      ? "bg-[#8EB69B] text-white shadow-md"
+                      : "text-[#8EB69B] hover:bg-[#8EB69B]/10"
+                  }`}
+                >
+                  <List className="w-4 h-4 mr-2" />
+                  Virtual View
+                </Button>
+              </div>
             </div>
           </motion.div>
 
           {/* Properties Grid */}
-          {renderProperties()}
+          <div className="relative">{renderProperties()}</div>
         </div>
       </section>
 
