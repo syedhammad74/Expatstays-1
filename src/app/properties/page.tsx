@@ -130,7 +130,7 @@ export default function PropertiesPage() {
           country: "Pakistan",
           coordinates: { lat: 33.6844, lng: 73.0479 },
         },
-        propertyType: "apartment",
+        propertyType: "apartment" as const,
         capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
         amenities: [
           "WiFi",
@@ -279,6 +279,7 @@ export default function PropertiesPage() {
     if (from && to) {
       filterPropertiesByAvailability();
     } else {
+      // Show all properties by default, no date filtering required
       setFilteredProperties(properties);
     }
   }, [properties, dateRange, filterPropertiesByAvailability, from, to]);
@@ -309,7 +310,8 @@ export default function PropertiesPage() {
             .includes(debouncedSearchQuery.toLowerCase())
       );
       setFilteredProperties(filtered);
-    } else if (!from || !to) {
+    } else {
+      // Show all properties when no search query and no date filter
       setFilteredProperties(properties);
     }
   }, [debouncedSearchQuery, properties, dateRange, trackInteraction, from, to]);
@@ -687,12 +689,10 @@ export default function PropertiesPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      className="text-xs lg:text-sm"
+                      className="text-xs lg:text-sm bg-[#8EB69B] text-white hover:bg-[#235347] rounded-lg px-4 py-2"
                       onClick={() => {
                         setHoveredDate(undefined);
-                        if (dateRange?.from && dateRange?.to) {
-                          setCalendarOpen(false);
-                        }
+                        setCalendarOpen(false);
                       }}
                     >
                       Done

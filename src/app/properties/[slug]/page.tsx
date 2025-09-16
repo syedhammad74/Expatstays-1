@@ -65,9 +65,11 @@ export default function Page({ params }: { params: { slug: string } }) {
           const islamabadProperty: Property = {
             id: "prop_islamabad_dam_view",
             title: "2-Bedroom Apartment with Stunning Dam View",
-            description: "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
+            description:
+              "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
             location: {
-              address: "D-17 Islamabad farming cooperative society margalla gardens Islamabad",
+              address:
+                "D-17 Islamabad farming cooperative society margalla gardens Islamabad",
               city: "Islamabad",
               state: "Islamabad Capital Territory",
               country: "Pakistan",
@@ -102,7 +104,6 @@ export default function Page({ params }: { params: { slug: string } }) {
             },
             availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
             rating: 4.8,
-            reviewCount: 23,
             owner: {
               uid: "owner_islamabad",
               name: "Ahmed Khan",
@@ -249,55 +250,66 @@ export default function Page({ params }: { params: { slug: string } }) {
 
       <div className="mt-6 lg:mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
         <div className="lg:col-span-2 order-2 lg:order-1">
-          <Card className="shadow-lg bg-card">
-            <CardHeader className="p-4 lg:p-6">
-              <CardTitle className="text-2xl lg:text-3xl xl:text-4xl font-headline text-primary">
+          <Card className="shadow-xl bg-white/95 border border-[#EBEBEB]/70 rounded-3xl overflow-hidden">
+            <CardHeader className="p-6 lg:p-8">
+              <CardTitle className="text-3xl lg:text-4xl xl:text-5xl font-extrabold text-[#051F20] leading-tight">
                 {property.title}
               </CardTitle>
-              <div className="flex items-center text-muted-foreground mt-2">
-                <MapPin className="w-4 lg:w-5 h-4 lg:h-5 mr-2 text-accent" />
-                <span className="text-sm lg:text-base">
+              <div className="flex items-center text-[#8EB69B] mt-3">
+                <MapPin className="w-5 lg:w-6 h-5 lg:h-6 mr-3" />
+                <span className="text-base lg:text-lg font-medium">
                   {property.location.city}, {property.location.country}
                 </span>
               </div>
-              <div className="flex flex-wrap items-center gap-2 lg:gap-4 mt-2">
-                <Badge variant="secondary" className="text-xs lg:text-sm">
+              <div className="flex flex-wrap items-center gap-3 lg:gap-4 mt-4">
+                <Badge className="bg-[#DAF1DE]/60 text-[#235347] border-[#8EB69B]/20 text-sm lg:text-base px-4 py-2">
                   {property.capacity.bedrooms} Bedrooms
                 </Badge>
-                <Badge variant="secondary" className="text-xs lg:text-sm">
+                <Badge className="bg-[#DAF1DE]/60 text-[#235347] border-[#8EB69B]/20 text-sm lg:text-base px-4 py-2">
                   {property.capacity.bathrooms} Bathrooms
                 </Badge>
-                <Badge variant="secondary" className="text-xs lg:text-sm">
+                <Badge className="bg-[#DAF1DE]/60 text-[#235347] border-[#8EB69B]/20 text-sm lg:text-base px-4 py-2">
                   Up to {property.capacity.maxGuests} Guests
                 </Badge>
               </div>
             </CardHeader>
-            <CardContent className="p-4 lg:p-6">
-              <p className="text-foreground/80 leading-relaxed mb-4 lg:mb-6 text-sm lg:text-base">
+            <CardContent className="p-6 lg:p-8">
+              <p className="text-[#4A4A4A] leading-relaxed mb-6 lg:mb-8 text-base lg:text-lg font-medium">
                 {property.description}
               </p>
 
-              <h3 className="text-xl lg:text-2xl font-headline text-foreground mb-3 lg:mb-4">
+              <h3 className="text-2xl lg:text-3xl font-extrabold text-[#051F20] mb-4 lg:mb-6">
                 Amenities
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4 mb-6 lg:mb-8">
-                {propertyFeatures.map((feature) => (
-                  <AmenityIcon
-                    key={feature.label}
-                    IconComponent={feature.icon}
-                    label={feature.label}
-                  />
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mb-8 lg:mb-10">
+                {property.amenities.map((amenity) => (
+                  <div
+                    key={amenity}
+                    className="flex items-center space-x-3 p-3 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50"
+                  >
+                    <div className="w-8 h-8 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center">
+                      <div className="w-4 h-4 bg-[#8EB69B] rounded-full"></div>
+                    </div>
+                    <span className="text-sm lg:text-base font-medium text-[#051F20]">
+                      {amenity}
+                    </span>
+                  </div>
                 ))}
               </div>
 
-              <h3 className="text-xl lg:text-2xl font-headline text-foreground mb-3 lg:mb-4">
+              <h3 className="text-2xl lg:text-3xl font-extrabold text-[#051F20] mb-4 lg:mb-6">
                 Location
               </h3>
-              <div className="aspect-video bg-muted rounded-components mb-6 lg:mb-8 flex items-center justify-center">
-                {/* Placeholder for Google Maps embed */}
-                <p className="text-muted-foreground text-sm lg:text-base">
-                  Google Maps Embed Placeholder (Property Location)
-                </p>
+              <div className="aspect-video bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl mb-6 lg:mb-8 flex items-center justify-center border border-[#DAF1DE]/50">
+                <div className="text-center">
+                  <MapPin className="w-12 h-12 text-[#8EB69B] mx-auto mb-3" />
+                  <p className="text-[#235347] text-base lg:text-lg font-medium">
+                    {property.location.address}
+                  </p>
+                  <p className="text-[#8EB69B] text-sm lg:text-base mt-1">
+                    {property.location.city}, {property.location.country}
+                  </p>
+                </div>
               </div>
 
               <h3 className="text-xl lg:text-2xl font-headline text-foreground mb-3 lg:mb-4">
@@ -334,10 +346,12 @@ export default function Page({ params }: { params: { slug: string } }) {
         {/* Firebase Booking Form */}
         <div className="lg:col-span-1 order-1 lg:order-2">
           <div className="lg:sticky lg:top-24">
-            <BookingForm
-              property={{ ...property, name: property.title }}
-              onBookingComplete={handleBookingComplete}
-            />
+            <Card className="shadow-xl bg-white/95 border border-[#EBEBEB]/70 rounded-3xl overflow-hidden">
+              <BookingForm
+                property={{ ...property, name: property.title }}
+                onBookingComplete={handleBookingComplete}
+              />
+            </Card>
           </div>
         </div>
       </div>

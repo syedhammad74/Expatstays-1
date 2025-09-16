@@ -59,9 +59,9 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
       imageError || hasError ? "/placeholder-property.jpg" : optimizedImageUrl;
 
     return (
-      <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border-0 shadow-lg bg-white">
+      <Card className="group transition-all duration-300 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl rounded-3xl overflow-hidden border border-[#EBEBEB]/70 hover:border-[#8EB69B]/50 px-0 pb-0">
         <CardHeader className="p-0 relative">
-          <div className="relative aspect-[4/3] overflow-hidden">
+          <div className="relative w-full aspect-[16/9] overflow-hidden rounded-3xl">
             {/* Loading skeleton */}
             {!isLoaded && !hasError && (
               <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse" />
@@ -71,7 +71,7 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
               src={displayImageUrl}
               alt={title}
               fill
-              className={`object-cover transition-all duration-500 group-hover:scale-105 ${
+              className={`object-cover rounded-3xl shadow-md group-hover:shadow-2xl border-2 border-transparent group-hover:border-[#DAF1DE] group-focus:border-[#8EB69B] transition-all duration-300 ${
                 !isLoaded ? "opacity-0" : "opacity-100"
               }`}
               data-ai-hint={imageHint || "luxury property exterior"}
@@ -86,9 +86,9 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
             <div className="absolute inset-0 bg-gradient-to-t from-card/50 to-transparent" />
 
             {/* Floating rating badge */}
-            <div className="absolute top-4 right-4 bg-card/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1 shadow-modern border border-border/20 transition-all duration-300 group-hover:bg-card">
+            <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 flex items-center space-x-1 shadow-lg border border-[#DAF1DE]/50 transition-all duration-300 group-hover:bg-white">
               <Star className="w-4 h-4 text-yellow-400 fill-current" />
-              <span className="text-sm font-semibold text-card-foreground">
+              <span className="text-sm font-semibold text-[#051F20]">
                 {rating}
               </span>
             </div>
@@ -98,80 +98,66 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
               <Button
                 size="sm"
                 variant="ghost"
-                className="rounded-full bg-card/90 text-card-foreground hover:bg-secondary hover:text-secondary-foreground shadow-modern transition-all duration-300 group-hover:bg-card"
+                className="h-8 w-8 rounded-full bg-white/90 backdrop-blur-sm hover:bg-white border border-[#DAF1DE]/50 shadow-lg transition-all duration-300 group-hover:scale-110"
               >
-                <Heart className="h-4 w-4" />
+                <Heart className="h-4 w-4 text-[#051F20]/70 group-hover:text-red-500 transition-colors duration-300" />
               </Button>
             </div>
 
             {/* Price tag */}
             {price && (
-              <div className="absolute bottom-4 left-4 bg-card/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-modern border border-border/20 transition-all duration-300 group-hover:bg-card">
-                <span className="text-lg font-bold text-secondary">
+              <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 shadow-lg border border-[#DAF1DE]/50 transition-all duration-300 group-hover:bg-white">
+                <span className="text-lg font-bold text-[#8EB69B]">
                   {price}
                 </span>
-                <span className="text-sm text-card-foreground/60 ml-1">
-                  / night
-                </span>
+                <span className="text-sm text-[#051F20]/60 ml-1">/ night</span>
               </div>
             )}
           </div>
         </CardHeader>
 
-        <CardContent className="p-6 flex-grow relative">
-          <CardTitle className="text-xl font-bold mb-3 text-gray-900 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2">
-            {title}
-          </CardTitle>
-
-          <div className="space-y-3 text-sm mb-4">
-            <div className="flex items-center">
-              <div className="bg-blue-50 rounded-lg p-2 mr-3">
-                <MapPin className="w-4 h-4 text-blue-600" />
-              </div>
-              <span className="text-gray-600 truncate">
-                {location}
-              </span>
+        <CardContent className="p-5 lg:p-7">
+          <div className="flex items-center gap-2 lg:gap-3 mb-2 lg:mb-3">
+            <div className="flex items-center gap-1 lg:gap-2 text-xs text-[#8EB69B] font-medium">
+              <MapPin className="h-3 lg:h-4 w-3 lg:w-4" />
+              {location}
             </div>
-
-            <div className="flex items-center">
-              <div className="bg-green-50 rounded-lg p-2 mr-3">
-                <BedDouble className="w-4 h-4 text-green-600" />
-              </div>
-              <span className="text-gray-600">
-                {bedrooms} Bedroom{bedrooms > 1 ? "s" : ""}
-              </span>
+            <span className="text-[#DAF1DE]">•</span>
+            <div className="flex items-center gap-1 lg:gap-2 text-xs text-[#8EB69B] font-medium">
+              <BedDouble className="h-3 lg:h-4 w-3 lg:w-4" />
+              {bedrooms} Bedroom{bedrooms > 1 ? "s" : ""}
             </div>
-
-            <div className="flex items-center">
-              <div className="bg-purple-50 rounded-lg p-2 mr-3">
-                <Users className="w-4 h-4 text-purple-600" />
-              </div>
-              <span className="text-gray-600">
-                Up to {guests} Guest{guests > 1 ? "s" : ""}
-              </span>
+            <span className="text-[#DAF1DE]">•</span>
+            <div className="text-xs text-[#8EB69B] font-medium">
+              Up to {guests} Guest{guests > 1 ? "s" : ""}
             </div>
           </div>
 
-          {/* Price and availability */}
-          <div className="flex items-center justify-between mb-4">
+          <CardTitle className="text-lg lg:text-xl font-extrabold tracking-tight text-[#051F20] group-hover:text-[#8EB69B] transition-colors mb-2 leading-snug">
+            {title}
+          </CardTitle>
+
+          <div className="flex items-center justify-between mb-3 lg:mb-4">
             <div className="flex items-center space-x-2">
-              <span className="text-2xl font-bold text-gray-900">{price}</span>
-              <span className="text-sm text-gray-500">/night</span>
+              <span className="text-xl lg:text-2xl font-bold text-[#051F20]">
+                {price}
+              </span>
+              <span className="text-sm text-[#8EB69B]">/night</span>
             </div>
-            <Badge className="bg-green-100 text-green-800 border-green-200">
+            <Badge className="bg-[#DAF1DE]/60 text-[#235347] border-[#8EB69B]/20">
               Available
             </Badge>
           </div>
         </CardContent>
 
-        <CardFooter className="p-6 pt-0">
+        <CardFooter className="p-5 lg:p-7 pt-0">
           <Button
             asChild
-            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-300 group-hover:scale-[1.02] transform shadow-lg hover:shadow-xl"
+            className="mt-2 rounded-full bg-gradient-to-r from-[#8EB69B] to-[#235347] text-white hover:from-[#235347] hover:to-[#8EB69B] shadow-lg shadow-[#8EB69B]/20 hover:shadow-xl hover:shadow-[#8EB69B]/30 transition-all duration-300 px-5 lg:px-7 py-2 text-sm lg:text-base font-semibold flex items-center justify-center tracking-wide w-full"
           >
             <Link href={`/properties/${slug}`}>
-              <CreditCard className="w-4 h-4 mr-2" />
               View Details
+              <CreditCard className="h-4 lg:h-5 w-4 lg:w-5 ml-2 transition-transform group-hover:translate-x-1" />
             </Link>
           </Button>
         </CardFooter>
