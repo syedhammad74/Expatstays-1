@@ -50,9 +50,14 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = ({
 
   return (
     <>
-      <Card className="overflow-hidden shadow-xl bg-white border border-[#EBEBEB]/70 rounded-2xl">
-        <CardContent className="p-0">
-          <div className="relative aspect-[16/9] w-full overflow-hidden group">
+      <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl border border-[#EBEBEB]/70 overflow-hidden relative">
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9]/20 to-[#E6F2EC]/10 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#8EB69B]/5 to-[#DAF1DE]/3 rounded-full blur-2xl"></div>
+
+        <div className="relative z-10">
+          {/* Main Image Container - Smaller and more contained */}
+          <div className="relative aspect-[4/3] w-full overflow-hidden group">
             <Image
               src={images[currentIndex].src}
               alt={images[currentIndex].alt}
@@ -63,12 +68,12 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = ({
               }
             />
 
-            {/* Gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
             {/* Image counter */}
             <div className="absolute top-4 left-4">
-              <Badge className="bg-white/90 backdrop-blur-sm text-[#051F20] border-0 shadow-md text-sm font-semibold px-3 py-1">
+              <Badge className="bg-white/95 backdrop-blur-sm text-[#051F20] border-0 shadow-lg text-sm font-semibold px-3 py-1 rounded-full">
                 {currentIndex + 1} / {images.length}
               </Badge>
             </div>
@@ -78,7 +83,7 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 w-8 rounded-full bg-white/90 backdrop-blur-sm hover:bg-white border-0 shadow-md"
+                className="h-9 w-9 rounded-full bg-white/95 backdrop-blur-sm hover:bg-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
                 onClick={() => setIsFullscreen(true)}
               >
                 <Maximize2 className="h-4 w-4 text-[#051F20]" />
@@ -86,7 +91,7 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = ({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 w-8 rounded-full bg-white/90 backdrop-blur-sm hover:bg-white border-0 shadow-md"
+                className="h-9 w-9 rounded-full bg-white/95 backdrop-blur-sm hover:bg-white border-0 shadow-lg hover:shadow-xl transition-all duration-300"
               >
                 <Share2 className="h-4 w-4 text-[#051F20]" />
               </Button>
@@ -99,46 +104,46 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = ({
                   variant="ghost"
                   size="icon"
                   onClick={goToPrevious}
-                  className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-black/30 hover:bg-black/50 rounded-full h-12 w-12 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                  className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-black/40 hover:bg-black/60 rounded-full h-10 w-10 opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg"
                   aria-label="Previous image"
                 >
-                  <ChevronLeft className="h-6 w-6" />
+                  <ChevronLeft className="h-5 w-5" />
                 </Button>
                 <Button
                   variant="ghost"
                   size="icon"
                   onClick={goToNext}
-                  className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-black/30 hover:bg-black/50 rounded-full h-12 w-12 opacity-0 group-hover:opacity-100 transition-all duration-300"
+                  className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-black/40 hover:bg-black/60 rounded-full h-10 w-10 opacity-0 group-hover:opacity-100 transition-all duration-300 shadow-lg"
                   aria-label="Next image"
                 >
-                  <ChevronRight className="h-6 w-6" />
+                  <ChevronRight className="h-5 w-5" />
                 </Button>
               </>
             )}
           </div>
 
-          {/* Thumbnail strip */}
+          {/* Enhanced Thumbnail Gallery */}
           {images.length > 1 && (
-            <div className="p-4 bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC]">
-              <div className="flex justify-center space-x-2 overflow-x-auto pb-1">
+            <div className="p-6 bg-gradient-to-r from-[#F8FBF9]/50 to-[#E6F2EC]/30">
+              <div className="flex justify-center space-x-3 overflow-x-auto pb-2">
                 {images.map((image, index) => (
                   <button
                     key={index}
                     onClick={() => goToSlide(index)}
-                    className={`h-16 w-16 lg:h-20 lg:w-20 rounded-xl overflow-hidden transition-all duration-200 border-2 flex-shrink-0
+                    className={`h-14 w-14 lg:h-16 lg:w-16 rounded-2xl overflow-hidden transition-all duration-300 border-2 flex-shrink-0 group/thumb
                       ${
                         currentIndex === index
-                          ? "border-[#8EB69B] scale-105 shadow-lg"
-                          : "border-transparent opacity-70 hover:opacity-100 hover:border-[#8EB69B]/50"
+                          ? "border-[#8EB69B] scale-110 shadow-lg shadow-[#8EB69B]/20"
+                          : "border-[#DAF1DE]/50 opacity-80 hover:opacity-100 hover:border-[#8EB69B]/70 hover:scale-105"
                       }`}
                     aria-label={`View image ${index + 1}`}
                   >
                     <Image
                       src={image.src}
                       alt={`Thumbnail ${image.alt}`}
-                      width={80}
-                      height={80}
-                      className="h-full w-full object-cover"
+                      width={64}
+                      height={64}
+                      className="h-full w-full object-cover group-hover/thumb:scale-110 transition-transform duration-300"
                       data-ai-hint={image.hint || "property detail thumbnail"}
                     />
                   </button>
@@ -146,8 +151,8 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = ({
               </div>
             </div>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </div>
 
       {/* Fullscreen modal */}
       {isFullscreen && (
