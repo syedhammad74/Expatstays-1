@@ -191,11 +191,11 @@ const achievements = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white relative overflow-x-hidden will-change-transform">
+    <div className="bg-white relative will-change-transform">
       <Header />
 
       {/* Animated Futuristic Background */}
-      <div className="absolute inset-0 -z-10 pointer-events-none">
+      <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
         <motion.div
           className="absolute top-24 left-10 w-[600px] h-[600px] bg-gradient-to-br from-[#8EB69B]/20 to-[#235347]/10 rounded-full blur-3xl"
           animate={{ scale: [1, 1.1, 1], opacity: [0.12, 0.18, 0.12] }}

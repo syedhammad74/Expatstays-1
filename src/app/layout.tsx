@@ -74,9 +74,9 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-sans antialiased flex flex-col min-h-screen">
+      <body className="font-sans antialiased">
         <AuthProvider>
-          <main className="">{children}</main>
+          <main className="min-h-screen">{children}</main>
           <ConditionalFooter />
           <Toaster />
         </AuthProvider>
