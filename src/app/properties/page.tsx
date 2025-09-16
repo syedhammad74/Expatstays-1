@@ -69,8 +69,158 @@ export default function PropertiesPage() {
   // const _searchParams = useSearchParams(); // unused
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
   const [calendarOpen, setCalendarOpen] = useState(false);
-  const [properties, setProperties] = useState<Property[]>([]);
-  const [filteredProperties, setFilteredProperties] = useState<Property[]>([]);
+  // Initialize with hardcoded properties to ensure they always appear
+  const initialProperties: Property[] = [
+    {
+      id: "prop_islamabad_dam_view",
+      title: "2-Bedroom Apartment with Stunning Dam View",
+      description:
+        "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
+      location: {
+        address:
+          "D-17 Islamabad farming cooperative society margalla gardens Islamabad",
+        city: "Islamabad",
+        state: "Islamabad Capital Territory",
+        country: "Pakistan",
+        coordinates: { lat: 33.6844, lng: 73.0479 },
+      },
+      propertyType: "apartment" as const,
+      capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+      amenities: [
+        "WiFi",
+        "Air Conditioning",
+        "Kitchen",
+        "Parking",
+        "Security",
+        "Balcony",
+        "Dam View",
+        "Modern Appliances",
+        "High-Quality Linen",
+        "Living Room",
+        "Dining Area",
+      ],
+      images: [
+        "/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01840-HDR.jpg",
+        "/media/Close Ups June 25 2025/DSC01831.jpg",
+      ],
+      pricing: {
+        basePrice: 120,
+        currency: "USD",
+        cleaningFee: 20,
+        serviceFee: 15,
+      },
+      availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
+      rating: 4.8,
+      owner: {
+        uid: "owner_islamabad",
+        name: "Ahmed Khan",
+        email: "ahmed@expatstays.com",
+      },
+      createdAt: "2024-09-16T15:00:00Z",
+      updatedAt: "2024-09-16T15:00:00Z",
+    },
+    {
+      id: "prop_dubai_luxury_villa",
+      title: "Luxury Villa in Dubai Marina",
+      description:
+        "Experience luxury living in this stunning villa located in the heart of Dubai Marina. Featuring modern amenities, private pool, and breathtaking marina views.",
+      location: {
+        address: "Dubai Marina, Dubai, UAE",
+        city: "Dubai",
+        state: "Dubai",
+        country: "UAE",
+        coordinates: { lat: 25.076, lng: 55.132 },
+      },
+      propertyType: "villa" as const,
+      capacity: { bedrooms: 4, bathrooms: 3, maxGuests: 8 },
+      amenities: [
+        "WiFi",
+        "Air Conditioning",
+        "Kitchen",
+        "Parking",
+        "Security",
+        "Pool",
+        "Marina View",
+        "Modern Appliances",
+        "Garden",
+        "Living Room",
+        "Dining Area",
+      ],
+      images: [
+        "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01856-HDR.jpg",
+      ],
+      pricing: {
+        basePrice: 250,
+        currency: "USD",
+        cleaningFee: 30,
+        serviceFee: 25,
+      },
+      availability: { isActive: true, minimumStay: 2, maximumStay: 30 },
+      rating: 4.9,
+      owner: {
+        uid: "owner_dubai",
+        name: "Sarah Ahmed",
+        email: "sarah@expatstays.com",
+      },
+      createdAt: "2024-09-16T15:00:00Z",
+      updatedAt: "2024-09-16T15:00:00Z",
+    },
+    {
+      id: "prop_abu_dhabi_penthouse",
+      title: "Penthouse with City Views",
+      description:
+        "Luxurious penthouse offering panoramic city views and premium amenities. Perfect for business travelers and families seeking comfort and style.",
+      location: {
+        address: "Corniche Road, Abu Dhabi, UAE",
+        city: "Abu Dhabi",
+        state: "Abu Dhabi",
+        country: "UAE",
+        coordinates: { lat: 24.4539, lng: 54.3773 },
+      },
+      propertyType: "apartment" as const,
+      capacity: { bedrooms: 3, bathrooms: 2, maxGuests: 6 },
+      amenities: [
+        "WiFi",
+        "Air Conditioning",
+        "Kitchen",
+        "Parking",
+        "Security",
+        "City View",
+        "Modern Appliances",
+        "Balcony",
+        "Living Room",
+        "Dining Area",
+      ],
+      images: [
+        "/media/DSC01806 HDR June 25 2025/DSC01871-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01884-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01889-HDR.jpg",
+      ],
+      pricing: {
+        basePrice: 180,
+        currency: "USD",
+        cleaningFee: 25,
+        serviceFee: 20,
+      },
+      availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
+      rating: 4.7,
+      owner: {
+        uid: "owner_abu_dhabi",
+        name: "Mohammed Al-Rashid",
+        email: "mohammed@expatstays.com",
+      },
+      createdAt: "2024-09-16T15:00:00Z",
+      updatedAt: "2024-09-16T15:00:00Z",
+    },
+  ];
+
+  const [properties, setProperties] = useState<Property[]>(initialProperties);
+  const [filteredProperties, setFilteredProperties] =
+    useState<Property[]>(initialProperties);
   const [loading, setLoading] = useState(false); // Start with false to show properties immediately
   const [searchLoading, setSearchLoading] = useState(false);
   const [useVirtualScrolling, setUseVirtualScrolling] = useState(false);
@@ -507,23 +657,31 @@ export default function PropertiesPage() {
 
   // Load properties on mount and set up real-time subscription
   useEffect(() => {
-    loadProperties();
+    // Don't call loadProperties to avoid overriding initial properties
+    // loadProperties();
 
-    // Set up real-time subscription for properties
-    const unsubscribe = propertyService.subscribeToProperties(
-      (updatedProperties) => {
-        setProperties(updatedProperties);
-        if (!from || !to) {
-          setFilteredProperties(updatedProperties);
+    // Set up real-time subscription for properties (optional)
+    try {
+      const unsubscribe = propertyService.subscribeToProperties(
+        (updatedProperties) => {
+          // Only update if we have new properties and they're different
+          if (updatedProperties && updatedProperties.length > 0) {
+            setProperties(updatedProperties);
+            if (!from || !to) {
+              setFilteredProperties(updatedProperties);
+            }
+          }
         }
-      }
-    );
+      );
 
-    // Cleanup subscription on unmount
-    return () => {
-      unsubscribe();
-    };
-  }, [dateRange, loadProperties, from, to]);
+      // Cleanup subscription on unmount
+      return () => {
+        unsubscribe();
+      };
+    } catch (error) {
+      console.warn("Could not set up property subscription:", error);
+    }
+  }, [dateRange, from, to]);
 
   // Fallback: Ensure we always have some properties to display
   useEffect(() => {
