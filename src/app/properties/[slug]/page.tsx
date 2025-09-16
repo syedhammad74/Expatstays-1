@@ -262,140 +262,164 @@ export default function Page({ params }: { params: { slug: string } }) {
         )}
       </Head>
 
-      {/* Property Image Gallery */}
-      <PropertyImageGallery images={galleryImages} />
+      {/* Hero Section with Image Gallery */}
+      <div className="relative">
+        <PropertyImageGallery images={galleryImages} />
 
-      {/* Property Header Section */}
-      <div className="mt-6 lg:mt-8">
-        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
-          <div className="flex-1">
-            <div className="flex items-center gap-3 mb-4">
-              <Badge className="bg-[#8EB69B]/10 text-[#8EB69B] border-[#8EB69B]/20 text-sm font-semibold px-3 py-1">
-                {property.propertyType.charAt(0).toUpperCase() +
-                  property.propertyType.slice(1)}
-              </Badge>
-              <Badge className="bg-green-100 text-green-700 border-green-200 text-sm font-semibold px-3 py-1 flex items-center gap-1">
-                <Shield className="h-3 w-3" />
-                Verified
-              </Badge>
-              <Badge className="bg-blue-100 text-blue-700 border-blue-200 text-sm font-semibold px-3 py-1 flex items-center gap-1">
-                <Star className="h-3 w-3" />
-                {property.rating} (23 reviews)
-              </Badge>
-            </div>
-
-            <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] leading-tight mb-4">
-              {property.title}
-            </h1>
-
-            <div className="flex items-center text-[#8EB69B] mb-6">
-              <MapPin className="w-5 h-5 mr-2" />
-              <span className="text-lg font-medium">
-                {property.location.city}, {property.location.country}
-              </span>
-            </div>
-
-            {/* Property Highlights */}
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-              <div className="flex items-center gap-3 p-4 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50">
-                <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center">
-                  <BedDouble className="h-5 w-5 text-[#8EB69B]" />
+        {/* Floating Property Info Overlay */}
+        <div className="absolute bottom-6 left-6 right-6 z-10">
+          <div className="bg-white/95 backdrop-blur-sm rounded-2xl p-6 shadow-2xl border border-white/20">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-3">
+                  <Badge className="bg-[#8EB69B]/10 text-[#8EB69B] border-[#8EB69B]/20 text-sm font-semibold px-3 py-1">
+                    {property.propertyType.charAt(0).toUpperCase() +
+                      property.propertyType.slice(1)}
+                  </Badge>
+                  <Badge className="bg-green-100 text-green-700 border-green-200 text-sm font-semibold px-3 py-1 flex items-center gap-1">
+                    <Shield className="h-3 w-3" />
+                    Verified
+                  </Badge>
+                  <Badge className="bg-blue-100 text-blue-700 border-blue-200 text-sm font-semibold px-3 py-1 flex items-center gap-1">
+                    <Star className="h-3 w-3" />
+                    {property.rating} (23 reviews)
+                  </Badge>
                 </div>
-                <div>
-                  <div className="text-2xl font-bold text-[#051F20]">
+
+                <h1 className="text-2xl lg:text-3xl xl:text-4xl font-bold text-[#051F20] leading-tight mb-2">
+                  {property.title}
+                </h1>
+
+                <div className="flex items-center text-[#8EB69B] mb-4">
+                  <MapPin className="w-4 h-4 mr-2" />
+                  <span className="text-base font-medium">
+                    {property.location.city}, {property.location.country}
+                  </span>
+                </div>
+
+                {/* Quick Stats */}
+                <div className="flex items-center gap-6">
+                  <div className="flex items-center gap-2">
+                    <BedDouble className="h-4 w-4 text-[#8EB69B]" />
+                    <span className="text-sm font-medium text-[#051F20]">
+                      {property.capacity.bedrooms} bedrooms
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Bath className="h-4 w-4 text-[#8EB69B]" />
+                    <span className="text-sm font-medium text-[#051F20]">
+                      {property.capacity.bathrooms} bathrooms
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Users className="h-4 w-4 text-[#8EB69B]" />
+                    <span className="text-sm font-medium text-[#051F20]">
+                      Up to {property.capacity.maxGuests} guests
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="rounded-xl border-[#8EB69B]/30 text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white px-6"
+                >
+                  <Heart className="h-5 w-5 mr-2" />
+                  Save
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="rounded-xl border-[#8EB69B]/30 text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white px-6"
+                >
+                  <Share2 className="h-5 w-5 mr-2" />
+                  Share
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          {/* Left Column - Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Property Highlights */}
+            <div className="bg-white rounded-3xl shadow-lg border border-[#EBEBEB]/70 p-8">
+              <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
+                Property Highlights
+              </h2>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
+                <div className="text-center p-6 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl border border-[#DAF1DE]/50">
+                  <div className="w-16 h-16 bg-[#8EB69B]/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <BedDouble className="h-8 w-8 text-[#8EB69B]" />
+                  </div>
+                  <div className="text-3xl font-bold text-[#051F20] mb-1">
                     {property.capacity.bedrooms}
                   </div>
                   <div className="text-sm text-[#8EB69B] font-medium">
                     Bedrooms
                   </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-3 p-4 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50">
-                <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center">
-                  <Bath className="h-5 w-5 text-[#8EB69B]" />
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-[#051F20]">
+                <div className="text-center p-6 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl border border-[#DAF1DE]/50">
+                  <div className="w-16 h-16 bg-[#8EB69B]/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Bath className="h-8 w-8 text-[#8EB69B]" />
+                  </div>
+                  <div className="text-3xl font-bold text-[#051F20] mb-1">
                     {property.capacity.bathrooms}
                   </div>
                   <div className="text-sm text-[#8EB69B] font-medium">
                     Bathrooms
                   </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-3 p-4 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50">
-                <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center">
-                  <Users className="h-5 w-5 text-[#8EB69B]" />
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-[#051F20]">
+                <div className="text-center p-6 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl border border-[#DAF1DE]/50">
+                  <div className="w-16 h-16 bg-[#8EB69B]/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Users className="h-8 w-8 text-[#8EB69B]" />
+                  </div>
+                  <div className="text-3xl font-bold text-[#051F20] mb-1">
                     {property.capacity.maxGuests}
                   </div>
                   <div className="text-sm text-[#8EB69B] font-medium">
-                    Guests
+                    Max Guests
                   </div>
                 </div>
-              </div>
 
-              <div className="flex items-center gap-3 p-4 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50">
-                <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center">
-                  <Home className="h-5 w-5 text-[#8EB69B]" />
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-[#051F20]">2</div>
+                <div className="text-center p-6 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl border border-[#DAF1DE]/50">
+                  <div className="w-16 h-16 bg-[#8EB69B]/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <Home className="h-8 w-8 text-[#8EB69B]" />
+                  </div>
+                  <div className="text-3xl font-bold text-[#051F20] mb-1">
+                    2
+                  </div>
                   <div className="text-sm text-[#8EB69B] font-medium">
                     Floors
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Action Buttons */}
-          <div className="flex gap-3">
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-xl border-[#8EB69B]/30 text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white px-6"
-            >
-              <Heart className="h-5 w-5 mr-2" />
-              Save
-            </Button>
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-xl border-[#8EB69B]/30 text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white px-6"
-            >
-              <Share2 className="h-5 w-5 mr-2" />
-              Share
-            </Button>
-          </div>
-        </div>
-      </div>
-
-      {/* Main Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-        <div className="lg:col-span-2 order-2 lg:order-1 space-y-8">
-          {/* Description */}
-          <Card className="shadow-lg bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
-            <CardHeader className="p-6 lg:p-8">
-              <CardTitle className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-4">
+            {/* About Section */}
+            <div className="bg-white rounded-3xl shadow-lg border border-[#EBEBEB]/70 p-8">
+              <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
                 About this property
-              </CardTitle>
-              <p className="text-[#4A4A4A] leading-relaxed text-base lg:text-lg">
+              </h2>
+              <p className="text-[#4A4A4A] leading-relaxed text-lg">
                 {property.description}
               </p>
-            </CardHeader>
-          </Card>
+            </div>
 
-          {/* Amenities */}
-          <Card className="shadow-lg bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
-            <CardHeader className="p-6 lg:p-8">
-              <CardTitle className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
+            {/* Amenities */}
+            <div className="bg-white rounded-3xl shadow-lg border border-[#EBEBEB]/70 p-8">
+              <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
                 What this place offers
-              </CardTitle>
+              </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {property.amenities.map((amenity) => {
                   const getIcon = (amenity: string) => {
@@ -424,90 +448,87 @@ export default function Page({ params }: { params: { slug: string } }) {
                   return (
                     <div
                       key={amenity}
-                      className="flex items-center gap-3 p-3 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50"
+                      className="flex items-center gap-4 p-4 bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC] rounded-2xl border border-[#DAF1DE]/50 hover:shadow-md transition-all duration-300"
                     >
-                      <div className="w-8 h-8 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center text-[#8EB69B]">
+                      <div className="w-12 h-12 bg-[#8EB69B]/20 rounded-xl flex items-center justify-center text-[#8EB69B]">
                         {getIcon(amenity)}
                       </div>
-                      <span className="text-sm lg:text-base font-medium text-[#051F20]">
+                      <span className="text-base font-medium text-[#051F20]">
                         {amenity}
                       </span>
                     </div>
                   );
                 })}
               </div>
-            </CardHeader>
-          </Card>
+            </div>
 
-          {/* Location */}
-          <Card className="shadow-lg bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
-            <CardHeader className="p-6 lg:p-8">
-              <CardTitle className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
+            {/* Location */}
+            <div className="bg-white rounded-3xl shadow-lg border border-[#EBEBEB]/70 p-8">
+              <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
                 Where you'll be
-              </CardTitle>
-              <div className="aspect-video bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl mb-6 flex items-center justify-center border border-[#DAF1DE]/50">
-                <div className="text-center">
-                  <MapPin className="w-12 h-12 text-[#8EB69B] mx-auto mb-3" />
-                  <p className="text-[#235347] text-base lg:text-lg font-medium">
+              </h2>
+              <div className="aspect-video bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl flex items-center justify-center border border-[#DAF1DE]/50 relative overflow-hidden">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/10 to-[#DAF1DE]/20"></div>
+                <div className="text-center relative z-10">
+                  <div className="w-20 h-20 bg-[#8EB69B]/20 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                    <MapPin className="w-10 h-10 text-[#8EB69B]" />
+                  </div>
+                  <p className="text-[#235347] text-lg font-semibold mb-2">
                     {property.location.address}
                   </p>
-                  <p className="text-[#8EB69B] text-sm lg:text-base mt-1">
+                  <p className="text-[#8EB69B] text-base">
                     {property.location.city}, {property.location.country}
                   </p>
                 </div>
               </div>
-            </CardHeader>
-          </Card>
+            </div>
 
-          {/* Availability Calendar */}
-          <Card className="shadow-lg bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
-            <CardHeader className="p-6 lg:p-8">
-              <CardTitle className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
+            {/* Availability Calendar */}
+            <div className="bg-white rounded-3xl shadow-lg border border-[#EBEBEB]/70 p-8">
+              <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
                 Availability
-              </CardTitle>
+              </h2>
               <AvailabilityCalendar
                 propertyId={property.id}
                 mode="view"
                 className="w-full"
               />
-            </CardHeader>
-          </Card>
+            </div>
 
-          {/* Video Reviews */}
-          <Card className="shadow-lg bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
-            <CardHeader className="p-6 lg:p-8">
-              <CardTitle className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
+            {/* Guest Reviews */}
+            <div className="bg-white rounded-3xl shadow-lg border border-[#EBEBEB]/70 p-8">
+              <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
                 Guest reviews
-              </CardTitle>
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
+              </h2>
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {testimonials.map((video) => (
                   <div
                     key={video.id}
-                    className="aspect-video rounded-xl overflow-hidden shadow-md"
+                    className="aspect-video rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300"
                   >
                     <Image
                       src={video.embedUrl}
                       alt={video.title}
                       fill
                       data-ai-hint={video.hint}
-                      className="object-cover"
+                      className="object-cover hover:scale-105 transition-transform duration-300"
                     />
                   </div>
                 ))}
               </div>
-            </CardHeader>
-          </Card>
-        </div>
+            </div>
+          </div>
 
-        {/* Booking Form Sidebar */}
-        <div className="lg:col-span-1 order-1 lg:order-2">
-          <div className="lg:sticky lg:top-24">
-            <Card className="shadow-xl bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
-              <BookingForm
-                property={{ ...property, name: property.title }}
-                onBookingComplete={handleBookingComplete}
-              />
-            </Card>
+          {/* Right Column - Booking Form */}
+          <div className="lg:col-span-1">
+            <div className="lg:sticky lg:top-8">
+              <div className="bg-white rounded-3xl shadow-2xl border border-[#EBEBEB]/70 overflow-hidden">
+                <BookingForm
+                  property={{ ...property, name: property.title }}
+                  onBookingComplete={handleBookingComplete}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
