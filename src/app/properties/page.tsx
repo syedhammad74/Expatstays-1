@@ -11,7 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
@@ -44,6 +43,9 @@ import { useToast } from "@/hooks/use-toast";
 import { usePerformanceMonitor, useDebounce } from "@/hooks/use-performance";
 import { VirtualGrid } from "@/components/ui/virtual-grid";
 import dynamic from "next/dynamic";
+const Calendar = dynamic(() =>
+  import("@/components/ui/calendar").then((m) => m.Calendar)
+);
 
 // Memoize PropertyCard for performance
 const MemoizedPropertyCard = dynamic(
@@ -86,13 +88,15 @@ export default function PropertiesPage() {
       setLoading(true);
       // performanceMonitor.markStart("load-properties"); // Removed performanceMonitor
 
-      // Debug configuration
-      console.log("🔍 Properties Page - Configuration Check:");
-      console.log("  - USE_MOCK_DATA:", process.env.USE_MOCK_DATA);
-      console.log(
-        "  - Firebase Project:",
-        process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
-      );
+      // Debug configuration (guarded for non-production)
+      if (process.env.NODE_ENV !== "production") {
+        console.log("🔍 Properties Page - Configuration Check:");
+        console.log("  - USE_MOCK_DATA:", process.env.USE_MOCK_DATA);
+        console.log(
+          "  - Firebase Project:",
+          process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
+        );
+      }
 
       // Try to get cached properties first
       // const cachedProperties = CacheManager.getCachedProperties(); // Removed CacheManager
@@ -112,17 +116,19 @@ export default function PropertiesPage() {
 
       const allProperties = await propertyService.getAllProperties();
 
-      console.log("🏠 Properties Page - Loaded Properties:");
-      console.log(`  - Total properties: ${allProperties.length}`);
-      if (allProperties.length > 0) {
-        console.log(`  - First property: ${allProperties[0].title}`);
-        console.log(
-          `  - Data source: ${
-            allProperties[0].id.startsWith("prop_")
-              ? "MOCK DATA"
-              : "REAL DATABASE"
-          }`
-        );
+      if (process.env.NODE_ENV !== "production") {
+        console.log("🏠 Properties Page - Loaded Properties:");
+        console.log(`  - Total properties: ${allProperties.length}`);
+        if (allProperties.length > 0) {
+          console.log(`  - First property: ${allProperties[0].title}`);
+          console.log(
+            `  - Data source: ${
+              allProperties[0].id.startsWith("prop_")
+                ? "MOCK DATA"
+                : "REAL DATABASE"
+            }`
+          );
+        }
       }
 
       // Cache the properties for faster future loads

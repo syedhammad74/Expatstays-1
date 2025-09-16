@@ -40,6 +40,27 @@ export class MockPropertyService {
     return property || null;
   }
 
+  async createProperty(
+    propertyData: Omit<Property, "id" | "createdAt" | "updatedAt">
+  ): Promise<string> {
+    await delay(500); // Simulate network delay
+
+    const newProperty: Property = {
+      ...propertyData,
+      id: `mock_property_${Date.now()}`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    // Add to mock database
+    mockDatabase.properties.push(newProperty);
+
+    console.log(
+      `🏠 Mock: Created property "${newProperty.title}" with ID: ${newProperty.id}`
+    );
+    return newProperty.id;
+  }
+
   async getFilteredProperties(filters: {
     location?: string;
     checkIn?: string;
@@ -350,7 +371,9 @@ export const mockUserService = new MockUserService();
 export const mockAdminService = new MockAdminService();
 
 // Export a flag to easily switch between mock and real services
-export const USE_MOCK_DATA = process.env.USE_MOCK_DATA === "true";
+export const USE_MOCK_DATA =
+  process.env.USE_MOCK_DATA === "true" ||
+  process.env.NODE_ENV === "development";
 
 export const SKIP_STRIPE_PAYMENT =
   process.env.NODE_ENV === "development" &&

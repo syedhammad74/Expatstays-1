@@ -35,7 +35,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Calendar } from "@/components/ui/calendar";
+import dynamic from "next/dynamic";
+const Calendar = dynamic(() =>
+  import("@/components/ui/calendar").then((m) => m.Calendar)
+);
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { DateRange } from "react-day-picker";
@@ -599,8 +602,6 @@ export default function Home() {
             </div>
           </div>
         </section>
-
-
 
         {/* Exclusive Services Section: Animated Icons */}
         <section className="mb-16 lg:mb-24">
@@ -1278,11 +1279,6 @@ export default function Home() {
                       >
                         <div className="w-full h-full rounded-xl lg:rounded-2xl overflow-hidden relative">
                           <div className="w-full h-full relative">
-                            {/* Debug info */}
-                            <div className="absolute top-2 left-2 bg-black/70 text-white text-xs px-2 py-1 rounded z-30">
-                              Video: /media/Video.mp4
-                            </div>
-                            
                             <InViewVideo
                               src="/media/Video.mp4"
                               muted={true}

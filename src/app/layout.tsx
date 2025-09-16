@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "../../index.css";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
@@ -77,9 +76,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased flex flex-col min-h-screen">
         <AuthProvider>
-          <main className="">
-            {children}
-          </main>
+          <main className="">{children}</main>
           <ConditionalFooter />
           <Toaster />
         </AuthProvider>

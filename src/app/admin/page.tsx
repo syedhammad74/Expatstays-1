@@ -364,6 +364,11 @@ export default function AdminDashboard() {
     }
   }, [toast]);
 
+  // Load admin data on component mount
+  useEffect(() => {
+    loadAdminData();
+  }, [loadAdminData]);
+
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",

@@ -6,9 +6,10 @@ export const lazyLoadComponent = (
   options = {}
 ) => {
   return dynamic(importFunc, {
-    loading: () => (
-      <div className="animate-pulse h-full w-full bg-muted/20 rounded-components"></div>
-    ),
+    loading: () =>
+      React.createElement("div", {
+        className: "animate-pulse h-full w-full bg-muted/20 rounded",
+      }),
     ssr: true,
     ...options,
   });

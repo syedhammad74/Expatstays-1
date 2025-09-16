@@ -191,7 +191,7 @@ const achievements = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white relative overflow-x-hidden">
+    <div className="min-h-screen bg-white relative overflow-x-hidden will-change-transform">
       <Header />
 
       {/* Animated Futuristic Background */}
@@ -216,7 +216,7 @@ export default function AboutPage() {
         <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/30 rotate-45 animate-[breathing_5s_ease-in-out_infinite]" />
         <div className="absolute top-40 right-20 w-16 h-16 bg-gradient-to-br from-[#DAF1DE]/72 to-[#8EB69B]/48 rounded-full animate-[breathing_6.5s_ease-in-out_infinite]" />
         <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-gradient-to-br from-[#235347]/78 to-[#163832]/46 rotate-12 animate-[breathing_7.5s_ease-in-out_infinite]" />
-        <div className="absolute top-1/3 left-1/2 w-12 h-12 bg-gradient-to-br from-[#8EB69B]/90 to-[#DAF1DE]/46 rotate-45 animate-[breathing_8.5s_ease-in-out_infinite]" />
+        <div className="absolute top-1/3 left-1/2 w-12 h-12 bg-gradient-to-br from-[#8EB69B]/90 to-[#DAF1DE]/46 rotate-45 animate-[breathing_8.5s_ease-in-out_infinite] will-change-transform" />
 
         {/* Large Geometric Elements */}
         <div className="absolute -top-60 -right-40 w-80 h-80 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/43 rounded-full filter blur-2xl animate-[breathing_10s_ease-in-out_infinite]" />
@@ -412,15 +412,17 @@ export default function AboutPage() {
               <Image
                 src="/media/Close Ups June 25 2025/DSC01831.jpg"
                 alt="Luxury Interior"
-                width={300}
-                height={350}
+                width={600}
+                height={700}
+                sizes="(max-width: 1024px) 50vw, 25vw"
                 className="rounded-xl lg:rounded-2xl shadow-xl object-cover border-2 border-[#8EB69B]/20 w-full h-[150px] sm:h-[200px] lg:h-[250px] xl:h-[300px]"
               />
               <Image
                 src="/media/Close Ups June 25 2025/DSC01832.jpg"
                 alt="Premium Service"
-                width={300}
-                height={350}
+                width={600}
+                height={700}
+                sizes="(max-width: 1024px) 50vw, 25vw"
                 className="rounded-xl lg:rounded-2xl shadow-xl object-cover border-2 border-[#235347]/20 mt-4 lg:mt-8 w-full h-[150px] sm:h-[200px] lg:h-[250px] xl:h-[300px]"
               />
             </div>

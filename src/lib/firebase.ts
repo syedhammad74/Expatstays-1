@@ -20,13 +20,24 @@ import {
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
-  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
-  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
-  databaseURL: process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL,
+  apiKey:
+    process.env.NEXT_PUBLIC_FIREBASE_API_KEY ||
+    "AIzaSyBZRL9A9mGT6WNvR96Bqvrz5ygCh25JLOo",
+  authDomain:
+    process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ||
+    "expatstays-551fb.firebaseapp.com",
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || "expatstays-551fb",
+  storageBucket:
+    process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ||
+    "expatstays-551fb.firebasestorage.app",
+  messagingSenderId:
+    process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || "295694900014",
+  appId:
+    process.env.NEXT_PUBLIC_FIREBASE_APP_ID ||
+    "1:295694900014:web:f2ea2df4263d159cb738bf",
+  databaseURL:
+    process.env.NEXT_PUBLIC_FIREBASE_DATABASE_URL ||
+    "https://expatstays-551fb-default-rtdb.asia-southeast1.firebasedatabase.app",
 };
 
 // Validate required configuration
@@ -80,9 +91,10 @@ if (typeof window !== "undefined" && process.env.NODE_ENV === "development") {
   }
 }
 
-// Data Connect integration (if enabled)
+// Data Connect integration (disabled to prevent build errors)
 export let dataConnect: unknown = null;
-if (process.env.NEXT_PUBLIC_USE_DATA_CONNECT === "true") {
+// Data Connect is disabled - uncomment and configure when needed
+if (false) {
   try {
     // Import Data Connect SDK properly
     import("firebase/data-connect")

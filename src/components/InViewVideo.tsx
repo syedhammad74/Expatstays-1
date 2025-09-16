@@ -35,61 +35,75 @@ export default function InViewVideo({
     const videoEl = videoRef.current;
     if (!videoEl) return;
 
-    // Log video element properties for debugging
-    console.log("Video element created:", {
-      src: videoEl.src,
-      muted: videoEl.muted,
-      loop: videoEl.loop,
-      playsInline: videoEl.playsInline,
-      preload: videoEl.preload,
-    });
+    // Log video element properties for debugging (dev only)
+    if (process.env.NODE_ENV !== "production") {
+      console.log("Video element created:", {
+        src: videoEl.src,
+        muted: videoEl.muted,
+        loop: videoEl.loop,
+        playsInline: videoEl.playsInline,
+        preload: videoEl.preload,
+      });
+    }
 
     // Handle video events
     const handlePlay = () => {
       setIsPlaying(true);
-      console.log("Video started playing");
+      if (process.env.NODE_ENV !== "production") {
+        console.log("Video started playing");
+      }
     };
 
     const handlePause = () => {
       setIsPlaying(false);
-      console.log("Video paused");
+      if (process.env.NODE_ENV !== "production") {
+        console.log("Video paused");
+      }
     };
 
     const handleEnded = () => {
       setIsPlaying(false);
-      console.log("Video ended");
+      if (process.env.NODE_ENV !== "production") {
+        console.log("Video ended");
+      }
     };
 
     const handleUserInteraction = () => {
       setHasUserInteracted(true);
-      console.log("User interacted with video");
+      if (process.env.NODE_ENV !== "production") {
+        console.log("User interacted with video");
+      }
     };
 
     const handleError = (e: Event) => {
-      console.error("Video error:", e);
+      if (process.env.NODE_ENV !== "production") {
+        console.error("Video error:", e);
+      }
       const target = e.target as HTMLVideoElement;
       if (target.error) {
-        console.error("Video error details:", {
-          code: target.error.code,
-          message: target.error.message,
-        });
+        if (process.env.NODE_ENV !== "production") {
+          console.error("Video error details:", {
+            code: target.error.code,
+            message: target.error.message,
+          });
+        }
 
         // Handle specific error codes
         switch (target.error.code) {
           case MediaError.MEDIA_ERR_ABORTED:
-            console.log("Video loading was aborted");
+            if (process.env.NODE_ENV !== "production") console.log("Video loading was aborted");
             break;
           case MediaError.MEDIA_ERR_NETWORK:
-            console.log("Network error occurred while loading video");
+            if (process.env.NODE_ENV !== "production") console.log("Network error occurred while loading video");
             break;
           case MediaError.MEDIA_ERR_DECODE:
-            console.log("Video decoding error - format may not be supported");
+            if (process.env.NODE_ENV !== "production") console.log("Video decoding error - format may not be supported");
             break;
           case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED:
-            console.log("Video format not supported by browser");
+            if (process.env.NODE_ENV !== "production") console.log("Video format not supported by browser");
             break;
           default:
-            console.log("Unknown video error occurred");
+            if (process.env.NODE_ENV !== "production") console.log("Unknown video error occurred");
         }
       }
       setHasError(true);
@@ -98,22 +112,31 @@ export default function InViewVideo({
     };
 
     const handleLoadedData = () => {
-      console.log("Video data loaded");
+      if (process.env.NODE_ENV !== "production") {
+        console.log("Video data loaded");
+      }
       setIsLoading(false);
       setHasError(false);
     };
 
     const handleCanPlay = () => {
-      console.log("Video can play");
+      if (process.env.NODE_ENV !== "production") {
+        console.log("Video can play");
+      }
       setIsLoading(false);
     };
 
     const handleLoadStart = () => {
-      console.log("Video load started");
+      if (process.env.NODE_ENV !== "production") {
+        console.log("Video load started");
+      }
     };
 
     const handleProgress = () => {
-      console.log("Video loading progress");
+      // noisy in prod; keep silent
+      if (process.env.NODE_ENV !== "production") {
+        console.log("Video loading progress");
+      }
     };
 
     videoEl.addEventListener("play", handlePlay);
@@ -131,24 +154,36 @@ export default function InViewVideo({
       const entry = entries[0];
       if (!entry || !videoEl) return;
 
-      console.log(
-        "Video intersection:",
-        entry.isIntersecting,
-        "threshold:",
-        entry.intersectionRatio
-      );
+      if (process.env.NODE_ENV !== "production") {
+        console.log(
+          "Video intersection:",
+          entry.isIntersecting,
+          "threshold:",
+          entry.intersectionRatio
+        );
+      }
 
       if (entry.isIntersecting) {
+        // Preload aggressively when nearing viewport for faster start
+        try {
+          videoEl.preload = "auto";
+        } catch {}
         // Only attempt to play if user has interacted or if muted
         if (hasUserInteracted || isMuted) {
-          console.log("Attempting to play video");
+          if (process.env.NODE_ENV !== "production") {
+            console.log("Attempting to play video");
+          }
           const playPromise = videoEl.play();
           if (playPromise && typeof playPromise.then === "function") {
             playPromise.catch((error) => {
-              console.log("Video play failed:", error);
+              if (process.env.NODE_ENV !== "production") {
+                console.log("Video play failed:", error);
+              }
               // If autoplay fails, set muted and try again
               if (!isMuted) {
-                console.log("Retrying with muted video");
+                if (process.env.NODE_ENV !== "production") {
+                  console.log("Retrying with muted video");
+                }
                 videoEl.muted = true;
                 setIsMuted(true);
                 videoEl.play().catch(console.error);
@@ -156,17 +191,21 @@ export default function InViewVideo({
             });
           }
         } else {
-          console.log("Video not playing - waiting for user interaction");
+          if (process.env.NODE_ENV !== "production") {
+            console.log("Video not playing - waiting for user interaction");
+          }
         }
       } else {
-        console.log("Video out of view, pausing");
+        if (process.env.NODE_ENV !== "production") {
+          console.log("Video out of view, pausing");
+        }
         videoEl.pause();
       }
     };
 
     const observer = new IntersectionObserver(handleIntersect, {
-      threshold: 0.1, // Lower threshold for better detection
-      rootMargin: "50px", // Add margin for earlier detection
+      threshold: 0.15,
+      rootMargin: "300px 0px", // start preloading earlier for smoother start
     });
     observer.observe(videoEl);
 
