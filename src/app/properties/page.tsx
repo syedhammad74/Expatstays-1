@@ -130,7 +130,7 @@ export default function PropertiesPage() {
           country: "Pakistan",
           coordinates: { lat: 33.6844, lng: 73.0479 },
         },
-        propertyType: "apartment",
+        propertyType: "apartment" as const,
         capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
         amenities: [
           "WiFi",
@@ -382,7 +382,15 @@ export default function PropertiesPage() {
     bedrooms: property.capacity.bedrooms,
     guests: property.capacity.maxGuests,
     location: `${property.location.city}, ${property.location.country}`,
-    price: `$${property.pricing.basePrice} / night`,
+    price: `$${property.pricing.basePrice}`,
+    rating: property.rating || 4.8,
+    bathrooms: property.capacity.bathrooms,
+    propertyType: property.propertyType,
+    amenities: property.amenities || [],
+    isVerified: true,
+    isAvailable: property.availability?.isActive || true,
+    discount: 0,
+    views: Math.floor(Math.random() * 100) + 10, // Mock views count
   });
 
   // Always use VirtualGrid for property lists, but keep the view toggle for user control

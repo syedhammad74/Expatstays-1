@@ -13,9 +13,24 @@ import {
   Waves,
   MapPin,
   BedDouble,
-} from "lucide-react"; // Wind for AC, Car for Parking
+  Bath,
+  Users,
+  Car,
+  Shield,
+  Star,
+  Heart,
+  Share2,
+  Calendar,
+  Clock,
+  CheckCircle,
+  Award,
+  Home,
+  Mountain,
+  Eye,
+} from "lucide-react";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { getLocalImage } from "@/lib/imageUtils";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
@@ -246,61 +261,191 @@ export default function Page({ params }: { params: { slug: string } }) {
           />
         )}
       </Head>
+
+      {/* Property Image Gallery */}
       <PropertyImageGallery images={galleryImages} />
 
-      <div className="mt-6 lg:mt-8 grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-        <div className="lg:col-span-2 order-2 lg:order-1">
-          <Card className="shadow-xl bg-white/95 border border-[#EBEBEB]/70 rounded-3xl overflow-hidden">
+      {/* Property Header Section */}
+      <div className="mt-6 lg:mt-8">
+        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-6 mb-8">
+          <div className="flex-1">
+            <div className="flex items-center gap-3 mb-4">
+              <Badge className="bg-[#8EB69B]/10 text-[#8EB69B] border-[#8EB69B]/20 text-sm font-semibold px-3 py-1">
+                {property.propertyType.charAt(0).toUpperCase() +
+                  property.propertyType.slice(1)}
+              </Badge>
+              <Badge className="bg-green-100 text-green-700 border-green-200 text-sm font-semibold px-3 py-1 flex items-center gap-1">
+                <Shield className="h-3 w-3" />
+                Verified
+              </Badge>
+              <Badge className="bg-blue-100 text-blue-700 border-blue-200 text-sm font-semibold px-3 py-1 flex items-center gap-1">
+                <Star className="h-3 w-3" />
+                {property.rating} (23 reviews)
+              </Badge>
+            </div>
+
+            <h1 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] leading-tight mb-4">
+              {property.title}
+            </h1>
+
+            <div className="flex items-center text-[#8EB69B] mb-6">
+              <MapPin className="w-5 h-5 mr-2" />
+              <span className="text-lg font-medium">
+                {property.location.city}, {property.location.country}
+              </span>
+            </div>
+
+            {/* Property Highlights */}
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+              <div className="flex items-center gap-3 p-4 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50">
+                <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center">
+                  <BedDouble className="h-5 w-5 text-[#8EB69B]" />
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-[#051F20]">
+                    {property.capacity.bedrooms}
+                  </div>
+                  <div className="text-sm text-[#8EB69B] font-medium">
+                    Bedrooms
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-4 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50">
+                <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center">
+                  <Bath className="h-5 w-5 text-[#8EB69B]" />
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-[#051F20]">
+                    {property.capacity.bathrooms}
+                  </div>
+                  <div className="text-sm text-[#8EB69B] font-medium">
+                    Bathrooms
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-4 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50">
+                <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center">
+                  <Users className="h-5 w-5 text-[#8EB69B]" />
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-[#051F20]">
+                    {property.capacity.maxGuests}
+                  </div>
+                  <div className="text-sm text-[#8EB69B] font-medium">
+                    Guests
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-4 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50">
+                <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center">
+                  <Home className="h-5 w-5 text-[#8EB69B]" />
+                </div>
+                <div>
+                  <div className="text-2xl font-bold text-[#051F20]">2</div>
+                  <div className="text-sm text-[#8EB69B] font-medium">
+                    Floors
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="flex gap-3">
+            <Button
+              variant="outline"
+              size="lg"
+              className="rounded-xl border-[#8EB69B]/30 text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white px-6"
+            >
+              <Heart className="h-5 w-5 mr-2" />
+              Save
+            </Button>
+            <Button
+              variant="outline"
+              size="lg"
+              className="rounded-xl border-[#8EB69B]/30 text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white px-6"
+            >
+              <Share2 className="h-5 w-5 mr-2" />
+              Share
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+        <div className="lg:col-span-2 order-2 lg:order-1 space-y-8">
+          {/* Description */}
+          <Card className="shadow-lg bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
             <CardHeader className="p-6 lg:p-8">
-              <CardTitle className="text-3xl lg:text-4xl xl:text-5xl font-extrabold text-[#051F20] leading-tight">
-                {property.title}
+              <CardTitle className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-4">
+                About this property
               </CardTitle>
-              <div className="flex items-center text-[#8EB69B] mt-3">
-                <MapPin className="w-5 lg:w-6 h-5 lg:h-6 mr-3" />
-                <span className="text-base lg:text-lg font-medium">
-                  {property.location.city}, {property.location.country}
-                </span>
-              </div>
-              <div className="flex flex-wrap items-center gap-3 lg:gap-4 mt-4">
-                <Badge className="bg-[#DAF1DE]/60 text-[#235347] border-[#8EB69B]/20 text-sm lg:text-base px-4 py-2">
-                  {property.capacity.bedrooms} Bedrooms
-                </Badge>
-                <Badge className="bg-[#DAF1DE]/60 text-[#235347] border-[#8EB69B]/20 text-sm lg:text-base px-4 py-2">
-                  {property.capacity.bathrooms} Bathrooms
-                </Badge>
-                <Badge className="bg-[#DAF1DE]/60 text-[#235347] border-[#8EB69B]/20 text-sm lg:text-base px-4 py-2">
-                  Up to {property.capacity.maxGuests} Guests
-                </Badge>
-              </div>
-            </CardHeader>
-            <CardContent className="p-6 lg:p-8">
-              <p className="text-[#4A4A4A] leading-relaxed mb-6 lg:mb-8 text-base lg:text-lg font-medium">
+              <p className="text-[#4A4A4A] leading-relaxed text-base lg:text-lg">
                 {property.description}
               </p>
+            </CardHeader>
+          </Card>
 
-              <h3 className="text-2xl lg:text-3xl font-extrabold text-[#051F20] mb-4 lg:mb-6">
-                Amenities
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6 mb-8 lg:mb-10">
-                {property.amenities.map((amenity) => (
-                  <div
-                    key={amenity}
-                    className="flex items-center space-x-3 p-3 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50"
-                  >
-                    <div className="w-8 h-8 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center">
-                      <div className="w-4 h-4 bg-[#8EB69B] rounded-full"></div>
+          {/* Amenities */}
+          <Card className="shadow-lg bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
+            <CardHeader className="p-6 lg:p-8">
+              <CardTitle className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
+                What this place offers
+              </CardTitle>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {property.amenities.map((amenity) => {
+                  const getIcon = (amenity: string) => {
+                    switch (amenity.toLowerCase()) {
+                      case "wifi":
+                        return <Wifi className="h-5 w-5" />;
+                      case "parking":
+                        return <Car className="h-5 w-5" />;
+                      case "air conditioning":
+                        return (
+                          <div className="h-5 w-5 bg-[#8EB69B] rounded-full" />
+                        );
+                      case "kitchen":
+                        return <UtensilsCrossed className="h-5 w-5" />;
+                      case "security":
+                        return <Shield className="h-5 w-5" />;
+                      case "balcony":
+                        return <Eye className="h-5 w-5" />;
+                      case "dam view":
+                        return <Mountain className="h-5 w-5" />;
+                      default:
+                        return <CheckCircle className="h-5 w-5" />;
+                    }
+                  };
+
+                  return (
+                    <div
+                      key={amenity}
+                      className="flex items-center gap-3 p-3 bg-[#F8FBF9] rounded-xl border border-[#DAF1DE]/50"
+                    >
+                      <div className="w-8 h-8 bg-[#8EB69B]/20 rounded-lg flex items-center justify-center text-[#8EB69B]">
+                        {getIcon(amenity)}
+                      </div>
+                      <span className="text-sm lg:text-base font-medium text-[#051F20]">
+                        {amenity}
+                      </span>
                     </div>
-                    <span className="text-sm lg:text-base font-medium text-[#051F20]">
-                      {amenity}
-                    </span>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
+            </CardHeader>
+          </Card>
 
-              <h3 className="text-2xl lg:text-3xl font-extrabold text-[#051F20] mb-4 lg:mb-6">
-                Location
-              </h3>
-              <div className="aspect-video bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl mb-6 lg:mb-8 flex items-center justify-center border border-[#DAF1DE]/50">
+          {/* Location */}
+          <Card className="shadow-lg bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
+            <CardHeader className="p-6 lg:p-8">
+              <CardTitle className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
+                Where you'll be
+              </CardTitle>
+              <div className="aspect-video bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl mb-6 flex items-center justify-center border border-[#DAF1DE]/50">
                 <div className="text-center">
                   <MapPin className="w-12 h-12 text-[#8EB69B] mx-auto mb-3" />
                   <p className="text-[#235347] text-base lg:text-lg font-medium">
@@ -311,42 +456,53 @@ export default function Page({ params }: { params: { slug: string } }) {
                   </p>
                 </div>
               </div>
+            </CardHeader>
+          </Card>
 
-              <h3 className="text-xl lg:text-2xl font-headline text-foreground mb-3 lg:mb-4">
-                Availability Calendar
-              </h3>
+          {/* Availability Calendar */}
+          <Card className="shadow-lg bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
+            <CardHeader className="p-6 lg:p-8">
+              <CardTitle className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
+                Availability
+              </CardTitle>
               <AvailabilityCalendar
                 propertyId={property.id}
                 mode="view"
-                className="w-full mb-6 lg:mb-8"
+                className="w-full"
               />
+            </CardHeader>
+          </Card>
 
-              <h3 className="text-xl lg:text-2xl font-headline text-foreground mb-3 lg:mb-4">
-                Video Reviews
-              </h3>
+          {/* Video Reviews */}
+          <Card className="shadow-lg bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
+            <CardHeader className="p-6 lg:p-8">
+              <CardTitle className="text-2xl lg:text-3xl font-bold text-[#051F20] mb-6">
+                Guest reviews
+              </CardTitle>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-6">
                 {testimonials.map((video) => (
                   <div
                     key={video.id}
-                    className="aspect-video rounded-components overflow-hidden shadow-minimal"
+                    className="aspect-video rounded-xl overflow-hidden shadow-md"
                   >
                     <Image
                       src={video.embedUrl}
                       alt={video.title}
                       fill
                       data-ai-hint={video.hint}
+                      className="object-cover"
                     />
                   </div>
                 ))}
               </div>
-            </CardContent>
+            </CardHeader>
           </Card>
         </div>
 
-        {/* Firebase Booking Form */}
+        {/* Booking Form Sidebar */}
         <div className="lg:col-span-1 order-1 lg:order-2">
           <div className="lg:sticky lg:top-24">
-            <Card className="shadow-xl bg-white/95 border border-[#EBEBEB]/70 rounded-3xl overflow-hidden">
+            <Card className="shadow-xl bg-white border border-[#EBEBEB]/70 rounded-2xl overflow-hidden">
               <BookingForm
                 property={{ ...property, name: property.title }}
                 onBookingComplete={handleBookingComplete}
