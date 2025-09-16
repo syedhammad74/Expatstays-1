@@ -488,39 +488,39 @@ export default function PropertiesPage() {
             >
               <div className="space-y-4 lg:space-y-6">
                 <motion.h1
-                  className="text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-[#051F20] leading-tight tracking-tight"
+                  className="text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl font-bold text-gray-900 leading-tight tracking-tight"
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.2 }}
                 >
-                  Your Home <br />
-                  <span className="text-[#8EB69B]">Away From Home</span>
+                  Discover Your <br />
+                  <span className="text-blue-600">Perfect Stay</span>
                 </motion.h1>
 
                 <motion.p
-                  className="text-base lg:text-xl text-[#4A4A4A] max-w-[540px] leading-relaxed font-light"
+                  className="text-lg lg:text-xl text-gray-600 max-w-[600px] leading-relaxed"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1, delay: 0.4 }}
                 >
-                  Settle into comfort with carefully selected residences
-                  designed to make every stay feel familiar, welcoming, and
-                  truly yours.
+                  Experience luxury accommodations in prime locations. From cozy
+                  apartments to spacious villas, find your ideal home away from
+                  home.
                 </motion.p>
               </div>
 
               <motion.div
-                className="flex flex-col sm:flex-row gap-3 lg:gap-4"
+                className="flex flex-col sm:flex-row gap-4 lg:gap-6"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.6 }}
               >
-                <Button className="bg-[#0B2B26] text-white hover:bg-[#235347] transition-all duration-300 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full shadow-lg hover:shadow-xl w-full sm:w-auto">
+                <Button className="bg-blue-600 text-white hover:bg-blue-700 transition-all duration-300 px-8 lg:px-10 py-4 lg:py-5 text-lg lg:text-xl font-semibold rounded-xl shadow-lg hover:shadow-xl w-full sm:w-auto">
                   Browse All Properties
                 </Button>
                 <Button
-                  variant="ghost"
-                  className="border-2 border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition-all duration-300 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full w-full sm:w-auto"
+                  variant="outline"
+                  className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white transition-all duration-300 px-8 lg:px-10 py-4 lg:py-5 text-lg lg:text-xl font-semibold rounded-xl w-full sm:w-auto"
                 >
                   Schedule a Consultation
                 </Button>
@@ -593,15 +593,16 @@ export default function PropertiesPage() {
             Book Your Next Stay in Seconds
           </h2>
           {/* Removed error state */}
-          <div className="w-full bg-white rounded-xl lg:rounded-full shadow-xl py-4 lg:py-3 px-4 lg:px-5 flex flex-col lg:flex-row items-center gap-4">
+          <div className="w-full bg-white rounded-2xl lg:rounded-full shadow-2xl py-6 lg:py-4 px-6 lg:px-8 flex flex-col lg:flex-row items-center gap-6 border border-gray-200">
             {/* Location Field */}
-            <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-all duration-300">
-              <MapPin className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
+            <div className="flex items-center w-full lg:min-w-[180px] h-14 lg:h-16 bg-gray-50 border border-gray-200 rounded-xl lg:rounded-2xl px-4 lg:px-5 gap-3 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all duration-300">
+              <MapPin className="h-5 lg:h-6 w-5 lg:w-6 text-blue-600" />
               <Select value={location} onValueChange={setLocation}>
                 <SelectTrigger className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium focus:ring-0 focus:border-none h-12 lg:h-14">
                   <SelectValue placeholder="Location" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border border-[#DAF1DE] rounded-xl shadow-lg">
+                <SelectContent className="bg-white border border-gray-200 rounded-xl shadow-lg">
+                  <SelectItem value="Islamabad">Islamabad</SelectItem>
                   <SelectItem value="Dubai">Dubai</SelectItem>
                   <SelectItem value="Abu Dhabi">Abu Dhabi</SelectItem>
                   <SelectItem value="Palm Jumeirah">Palm Jumeirah</SelectItem>
@@ -612,8 +613,8 @@ export default function PropertiesPage() {
               </Select>
             </div>
             {/* Date Field */}
-            <div className="flex items-center w-full lg:min-w-[250px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-all duration-300">
-              <CalendarIcon className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
+            <div className="flex items-center w-full lg:min-w-[280px] h-14 lg:h-16 bg-gray-50 border border-gray-200 rounded-xl lg:rounded-2xl px-4 lg:px-5 gap-3 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all duration-300">
+              <CalendarIcon className="h-5 lg:h-6 w-5 lg:w-6 text-blue-600" />
               <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                 <PopoverTrigger asChild>
                   <Button
@@ -702,8 +703,8 @@ export default function PropertiesPage() {
               </Popover>
             </div>
             {/* Guests Field */}
-            <div className="flex items-center w-full lg:min-w-[120px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-all duration-300">
-              <Users className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
+            <div className="flex items-center w-full lg:min-w-[140px] h-14 lg:h-16 bg-gray-50 border border-gray-200 rounded-xl lg:rounded-2xl px-4 lg:px-5 gap-3 focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20 transition-all duration-300">
+              <Users className="h-5 lg:h-6 w-5 lg:w-6 text-blue-600" />
               <Popover open={guestsOpen} onOpenChange={setGuestsOpen}>
                 <PopoverTrigger asChild>
                   <Button
@@ -785,7 +786,7 @@ export default function PropertiesPage() {
             {/* Search Button */}
             <div className="flex-shrink-0 w-full lg:w-auto">
               <Button
-                className="h-12 lg:h-14 px-6 lg:px-8 bg-[#8EB69B] text-[#051F20] font-semibold rounded-lg lg:rounded-full shadow-md hover:bg-[#235347] hover:text-[#DAF1DE] hover:scale-105 transition-all duration-300 flex items-center gap-2 w-full lg:w-auto text-sm lg:text-base disabled:opacity-50"
+                className="h-14 lg:h-16 px-8 lg:px-12 bg-blue-600 text-white font-semibold rounded-xl lg:rounded-full shadow-lg hover:bg-blue-700 hover:scale-105 transition-all duration-300 flex items-center gap-3 w-full lg:w-auto text-base lg:text-lg disabled:opacity-50"
                 onClick={handleFind}
                 disabled={searchLoading}
               >

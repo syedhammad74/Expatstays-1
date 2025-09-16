@@ -59,9 +59,9 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
       imageError || hasError ? "/placeholder-property.jpg" : optimizedImageUrl;
 
     return (
-      <Card className="dashboard-card-hover group relative overflow-hidden transition-all duration-300 hover:shadow-lg">
+      <Card className="group relative overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 border-0 shadow-lg bg-white">
         <CardHeader className="p-0 relative">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-t-xl">
+          <div className="relative aspect-[4/3] overflow-hidden">
             {/* Loading skeleton */}
             {!isLoaded && !hasError && (
               <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse" />
@@ -119,42 +119,46 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
         </CardHeader>
 
         <CardContent className="p-6 flex-grow relative">
-          <CardTitle className="text-xl font-bold mb-4 text-card-foreground group-hover:text-secondary transition-colors duration-300 line-clamp-2">
+          <CardTitle className="text-xl font-bold mb-3 text-gray-900 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2">
             {title}
           </CardTitle>
 
-          <div className="space-y-3 text-sm">
-            <div className="flex items-center group/item">
-              <div className="bg-secondary/10 rounded-xl p-2 mr-3 group-hover/item:bg-secondary/20 transition-colors duration-300">
-                <MapPin className="w-4 h-4 text-secondary" />
+          <div className="space-y-3 text-sm mb-4">
+            <div className="flex items-center">
+              <div className="bg-blue-50 rounded-lg p-2 mr-3">
+                <MapPin className="w-4 h-4 text-blue-600" />
               </div>
-              <span className="text-card-foreground/80 group-hover:text-card-foreground transition-colors duration-300 truncate">
+              <span className="text-gray-600 truncate">
                 {location}
               </span>
             </div>
 
-            <div className="flex items-center group/item">
-              <div className="bg-secondary/10 rounded-xl p-2 mr-3 group-hover/item:bg-secondary/20 transition-colors duration-300">
-                <BedDouble className="w-4 h-4 text-secondary" />
+            <div className="flex items-center">
+              <div className="bg-green-50 rounded-lg p-2 mr-3">
+                <BedDouble className="w-4 h-4 text-green-600" />
               </div>
-              <span className="text-card-foreground/80 group-hover:text-card-foreground transition-colors duration-300">
+              <span className="text-gray-600">
                 {bedrooms} Bedroom{bedrooms > 1 ? "s" : ""}
               </span>
             </div>
 
-            <div className="flex items-center group/item">
-              <div className="bg-secondary/10 rounded-xl p-2 mr-3 group-hover/item:bg-secondary/20 transition-colors duration-300">
-                <Users className="w-4 h-4 text-secondary" />
+            <div className="flex items-center">
+              <div className="bg-purple-50 rounded-lg p-2 mr-3">
+                <Users className="w-4 h-4 text-purple-600" />
               </div>
-              <span className="text-card-foreground/80 group-hover:text-card-foreground transition-colors duration-300">
+              <span className="text-gray-600">
                 Up to {guests} Guest{guests > 1 ? "s" : ""}
               </span>
             </div>
           </div>
 
-          {/* Availability badge */}
-          <div className="mt-4">
-            <Badge className="bg-secondary/20 text-secondary border-secondary/30 transition-all duration-300 group-hover:bg-secondary/30">
+          {/* Price and availability */}
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex items-center space-x-2">
+              <span className="text-2xl font-bold text-gray-900">{price}</span>
+              <span className="text-sm text-gray-500">/night</span>
+            </div>
+            <Badge className="bg-green-100 text-green-800 border-green-200">
               Available
             </Badge>
           </div>
@@ -163,11 +167,11 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
         <CardFooter className="p-6 pt-0">
           <Button
             asChild
-            className="w-full rounded-buttons bg-primary text-primary-foreground font-semibold shadow-modern hover:bg-secondary hover:text-secondary-foreground hover:shadow-modern-hover transition-smooth text-base py-3 group-hover:scale-[1.02] transform"
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-all duration-300 group-hover:scale-[1.02] transform shadow-lg hover:shadow-xl"
           >
-            <Link href={`/properties/${slug}/book`}>
-              <CreditCard className="w-4 h-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
-              Book Now
+            <Link href={`/properties/${slug}`}>
+              <CreditCard className="w-4 h-4 mr-2" />
+              View Details
             </Link>
           </Button>
         </CardFooter>
