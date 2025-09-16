@@ -236,11 +236,13 @@ export default function PropertiesPage() {
         (property) => property.capacity.maxGuests >= totalGuests
       );
 
-      setFilteredProperties(capacityFiltered);
+      // Ensure minimum 6 properties are displayed
+      const finalFiltered = ensureMinimumProperties(capacityFiltered);
+      setFilteredProperties(finalFiltered);
 
       toast({
         title: "Search Complete",
-        description: `Found ${capacityFiltered.length} available properties`,
+        description: `Found ${finalFiltered.length} available properties`,
       });
     } catch (error) {
       console.error("Error filtering properties:", error);
@@ -292,6 +294,29 @@ export default function PropertiesPage() {
     return label;
   };
 
+  // Function to ensure minimum 6 properties are displayed
+  const ensureMinimumProperties = (filteredList: Property[]): Property[] => {
+    const MIN_PROPERTIES = 6;
+
+    if (filteredList.length >= MIN_PROPERTIES) {
+      return filteredList;
+    }
+
+    // If we have less than 6 properties, add more from the original list
+    const remainingProperties = properties.filter(
+      (property) =>
+        !filteredList.some((filtered) => filtered.id === property.id)
+    );
+
+    // Add remaining properties until we reach minimum
+    const additionalProperties = remainingProperties.slice(
+      0,
+      MIN_PROPERTIES - filteredList.length
+    );
+
+    return [...filteredList, ...additionalProperties];
+  };
+
   // Enhanced search with debouncing
   useEffect(() => {
     if (debouncedSearchQuery) {
@@ -308,7 +333,10 @@ export default function PropertiesPage() {
             ?.toLowerCase()
             .includes(debouncedSearchQuery.toLowerCase())
       );
-      setFilteredProperties(filtered);
+
+      // Ensure minimum 6 properties are displayed
+      const finalFiltered = ensureMinimumProperties(filtered);
+      setFilteredProperties(finalFiltered);
     } else if (!from || !to) {
       setFilteredProperties(properties);
     }
@@ -436,27 +464,56 @@ export default function PropertiesPage() {
       );
     }
 
+    // If we have fewer than 6 properties, show a message about limited results
+    const showLimitedResultsMessage =
+      filteredProperties.length < 6 && (debouncedSearchQuery || (from && to));
+
     // Always use VirtualGrid for smoother performance
     return (
-      <VirtualGrid
-        items={filteredProperties.map(convertToPropertyCard)}
-        renderItem={(property) => (
-          <MemoizedPropertyCard key={property.slug} {...property} />
+      <div>
+        {showLimitedResultsMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mb-6 p-4 bg-[#F8FBF9] border border-[#DAF1DE]/50 rounded-xl"
+          >
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-8 bg-[#8EB69B]/20 rounded-full flex items-center justify-center">
+                <Search className="h-4 w-4 text-[#8EB69B]" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-[#051F20]">
+                  Limited results found. Showing {filteredProperties.length}{" "}
+                  properties with additional recommendations.
+                </p>
+                <p className="text-xs text-[#8EB69B] mt-1">
+                  Try adjusting your search criteria for more specific results.
+                </p>
+              </div>
+            </div>
+          </motion.div>
         )}
-        itemHeight={450}
-        itemsPerRow={
-          typeof window !== "undefined"
-            ? window.innerWidth >= 1024
-              ? 3
-              : window.innerWidth >= 768
-              ? 2
+
+        <VirtualGrid
+          items={filteredProperties.map(convertToPropertyCard)}
+          renderItem={(property) => (
+            <MemoizedPropertyCard key={property.slug} {...property} />
+          )}
+          itemHeight={450}
+          itemsPerRow={
+            typeof window !== "undefined"
+              ? window.innerWidth >= 1024
+                ? 3
+                : window.innerWidth >= 768
+                ? 2
+                : 1
               : 1
-            : 1
-        }
-        className="mt-8"
-        gap={24}
-        containerHeight={800}
-      />
+          }
+          className="mt-8"
+          gap={24}
+          containerHeight={800}
+        />
+      </div>
     );
   };
 
