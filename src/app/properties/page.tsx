@@ -116,26 +116,78 @@ export default function PropertiesPage() {
 
       const allProperties = await propertyService.getAllProperties();
 
+      // Add hardcoded Islamabad property for now
+      const islamabadProperty = {
+        id: "prop_islamabad_dam_view",
+        title: "2-Bedroom Apartment with Stunning Dam View",
+        description:
+          "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
+        location: {
+          address:
+            "D-17 Islamabad farming cooperative society margalla gardens Islamabad",
+          city: "Islamabad",
+          state: "Islamabad Capital Territory",
+          country: "Pakistan",
+          coordinates: { lat: 33.6844, lng: 73.0479 },
+        },
+        propertyType: "apartment",
+        capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+        amenities: [
+          "WiFi",
+          "Air Conditioning",
+          "Kitchen",
+          "Parking",
+          "Security",
+          "Balcony",
+          "Dam View",
+          "Modern Appliances",
+          "High-Quality Linen",
+          "Living Room",
+          "Dining Area",
+        ],
+        images: [
+          "/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg",
+          "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
+          "/media/DSC01806 HDR June 25 2025/DSC01840-HDR.jpg",
+          "/media/Close Ups June 25 2025/DSC01831.jpg",
+        ],
+        pricing: {
+          basePrice: 120,
+          currency: "USD",
+          cleaningFee: 20,
+          serviceFee: 15,
+        },
+        availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
+        rating: 4.8,
+        reviewCount: 23,
+        owner: {
+          uid: "owner_islamabad",
+          name: "Ahmed Khan",
+          email: "ahmed@expatstays.com",
+        },
+        createdAt: "2024-09-16T15:00:00Z",
+        updatedAt: "2024-09-16T15:00:00Z",
+      };
+
+      // Add Islamabad property to the beginning of the list
+      const propertiesWithIslamabad = [islamabadProperty, ...allProperties];
+
       if (process.env.NODE_ENV !== "production") {
         console.log("🏠 Properties Page - Loaded Properties:");
-        console.log(`  - Total properties: ${allProperties.length}`);
-        if (allProperties.length > 0) {
-          console.log(`  - First property: ${allProperties[0].title}`);
+        console.log(`  - Total properties: ${propertiesWithIslamabad.length}`);
+        console.log(`  - Islamabad property added: ${islamabadProperty.title}`);
+        if (propertiesWithIslamabad.length > 0) {
           console.log(
-            `  - Data source: ${
-              allProperties[0].id.startsWith("prop_")
-                ? "MOCK DATA"
-                : "REAL DATABASE"
-            }`
+            `  - First property: ${propertiesWithIslamabad[0].title}`
           );
         }
       }
 
       // Cache the properties for faster future loads
-      // CacheManager.cacheProperties(allProperties); // Removed CacheManager
+      // CacheManager.cacheProperties(propertiesWithIslamabad); // Removed CacheManager
 
-      setProperties(allProperties);
-      setFilteredProperties(allProperties);
+      setProperties(propertiesWithIslamabad);
+      setFilteredProperties(propertiesWithIslamabad);
 
       // performanceMonitor.markEnd("load-properties"); // Removed performanceMonitor
       // const loadTime = performanceMonitor.getMeasure("load-properties"); // Removed performanceMonitor
