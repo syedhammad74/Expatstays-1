@@ -270,411 +270,258 @@ export default function Page({ params }: { params: { slug: string } }) {
         )}
       </Head>
 
-      {/* Hero Section with Compact Layout */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-          {/* Left Column - Image Gallery (Smaller) */}
+      {/* Hero Section - Minimalist Layout */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          {/* Left Column - Image Gallery */}
           <div className="lg:col-span-2">
             <PropertyImageGallery images={galleryImages} />
           </div>
 
           {/* Right Column - Property Info */}
           <div className="lg:col-span-1">
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl border border-[#EBEBEB]/70 p-8 relative overflow-hidden">
-              {/* Decorative background elements */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9]/20 to-[#E6F2EC]/10 pointer-events-none"></div>
-              <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#8EB69B]/5 to-[#DAF1DE]/3 rounded-full blur-xl"></div>
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-6">
+              {/* Property Badges - Minimalist */}
+              <div className="flex items-center gap-2 mb-4">
+                <Badge className="bg-[#8EB69B]/10 text-[#8EB69B] border-0 text-xs font-medium px-2 py-1 rounded-full">
+                  {property.propertyType.charAt(0).toUpperCase() +
+                    property.propertyType.slice(1)}
+                </Badge>
+                <Badge className="bg-green-50 text-green-700 border-0 text-xs font-medium px-2 py-1 rounded-full flex items-center gap-1">
+                  <Shield className="h-3 w-3" />
+                  Verified
+                </Badge>
+              </div>
 
-              <div className="relative z-10">
-                {/* Property Badges */}
-                <div className="flex flex-wrap items-center gap-2 mb-6">
-                  <Badge className="bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/10 text-[#8EB69B] border-[#8EB69B]/20 text-sm font-semibold px-3 py-1 rounded-full shadow-sm">
-                    {property.propertyType.charAt(0).toUpperCase() +
-                      property.propertyType.slice(1)}
-                  </Badge>
-                  <Badge className="bg-gradient-to-r from-green-50 to-emerald-50 text-green-700 border-green-200 text-sm font-semibold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
-                    <Shield className="h-3 w-3" />
-                    Verified
-                  </Badge>
-                  <Badge className="bg-gradient-to-r from-blue-50 to-sky-50 text-blue-700 border-blue-200 text-sm font-semibold px-3 py-1 rounded-full shadow-sm flex items-center gap-1">
-                    <Star className="h-3 w-3 fill-current" />
-                    {property.rating} (23 reviews)
-                  </Badge>
-                </div>
+              {/* Property Title */}
+              <h1 className="text-xl font-bold text-gray-900 leading-tight mb-3">
+                {property.title}
+              </h1>
 
-                {/* Property Title */}
-                <h1 className="text-2xl lg:text-3xl font-bold text-[#051F20] leading-tight mb-4 tracking-tight">
-                  {property.title}
-                </h1>
+              {/* Location */}
+              <div className="flex items-center text-gray-600 mb-4">
+                <MapPin className="w-4 h-4 mr-2" />
+                <span className="text-sm">
+                  {property.location.city}, {property.location.country}
+                </span>
+              </div>
 
-                {/* Location */}
-                <div className="flex items-center text-[#8EB69B] mb-6">
-                  <div className="w-8 h-8 bg-[#8EB69B]/10 rounded-full flex items-center justify-center mr-3">
-                    <MapPin className="w-4 h-4" />
-                  </div>
-                  <span className="text-base font-medium">
-                    {property.location.city}, {property.location.country}
+              {/* Rating */}
+              <div className="flex items-center gap-2 mb-4">
+                <div className="flex items-center">
+                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                  <span className="ml-1 text-sm font-medium text-gray-900">
+                    {property.rating}
                   </span>
                 </div>
+                <span className="text-sm text-gray-500">(23 reviews)</span>
+              </div>
 
-                {/* Quick Stats */}
-                <div className="grid grid-cols-3 gap-3 mb-6">
-                  <div className="text-center p-4 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl border border-[#DAF1DE]/50">
-                    <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-xl flex items-center justify-center mx-auto mb-2">
-                      <BedDouble className="h-5 w-5 text-[#8EB69B]" />
-                    </div>
-                    <div className="text-lg font-bold text-[#051F20]">
-                      {property.capacity.bedrooms}
-                    </div>
-                    <div className="text-xs text-[#8EB69B] font-medium">
-                      Bedrooms
-                    </div>
+              {/* Quick Stats - Minimalist */}
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="text-center">
+                  <div className="text-lg font-semibold text-gray-900">
+                    {property.capacity.bedrooms}
                   </div>
-                  <div className="text-center p-4 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl border border-[#DAF1DE]/50">
-                    <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-xl flex items-center justify-center mx-auto mb-2">
-                      <Bath className="h-5 w-5 text-[#8EB69B]" />
-                    </div>
-                    <div className="text-lg font-bold text-[#051F20]">
-                      {property.capacity.bathrooms}
-                    </div>
-                    <div className="text-xs text-[#8EB69B] font-medium">
-                      Bathrooms
-                    </div>
-                  </div>
-                  <div className="text-center p-4 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-2xl border border-[#DAF1DE]/50">
-                    <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-xl flex items-center justify-center mx-auto mb-2">
-                      <Users className="h-5 w-5 text-[#8EB69B]" />
-                    </div>
-                    <div className="text-lg font-bold text-[#051F20]">
-                      {property.capacity.maxGuests}
-                    </div>
-                    <div className="text-xs text-[#8EB69B] font-medium">
-                      Max Guests
-                    </div>
-                  </div>
+                  <div className="text-xs text-gray-500">Bedrooms</div>
                 </div>
+                <div className="text-center">
+                  <div className="text-lg font-semibold text-gray-900">
+                    {property.capacity.bathrooms}
+                  </div>
+                  <div className="text-xs text-gray-500">Bathrooms</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-semibold text-gray-900">
+                    {property.capacity.maxGuests}
+                  </div>
+                  <div className="text-xs text-gray-500">Guests</div>
+                </div>
+              </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="flex-1 rounded-2xl border-[#8EB69B]/30 text-[#8EB69B] hover:bg-gradient-to-r hover:from-[#8EB69B] hover:to-[#235347] hover:text-white hover:border-transparent py-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    <Heart className="h-4 w-4 mr-2" />
-                    Save
-                  </Button>
-                  <Button
-                    variant="outline"
-                    size="lg"
-                    className="flex-1 rounded-2xl border-[#8EB69B]/30 text-[#8EB69B] hover:bg-gradient-to-r hover:from-[#8EB69B] hover:to-[#235347] hover:text-white hover:border-transparent py-3 font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
-                  >
-                    <Share2 className="h-4 w-4 mr-2" />
-                    Share
-                  </Button>
-                </div>
+              {/* Action Buttons - Minimalist */}
+              <div className="flex gap-2 mb-6">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50"
+                >
+                  <Heart className="h-4 w-4 mr-2" />
+                  Save
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50"
+                >
+                  <Share2 className="h-4 w-4 mr-2" />
+                  Share
+                </Button>
+              </div>
+
+              {/* Booking Form */}
+              <div className="border-t pt-4">
+                <BookingForm
+                  property={{ ...property, name: property.title }}
+                  onBookingComplete={() => {}}
+                />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
-        {/* Decorative Background */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-gradient-to-br from-[#8EB69B]/5 to-[#DAF1DE]/3 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 right-1/4 w-80 h-80 bg-gradient-to-br from-[#DAF1DE]/5 to-[#8EB69B]/3 rounded-full blur-3xl"></div>
-        </div>
-
-        {/* Professional Navigation Tabs */}
+      {/* Main Content - Minimalist */}
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Navigation Tabs - Minimalist */}
         <div className="mb-8">
-          <div className="bg-white/95 backdrop-blur-sm rounded-2xl shadow-lg border border-[#EBEBEB]/70 p-2 inline-flex">
-            <nav className="flex space-x-1">
-              <button className="px-6 py-3 text-sm font-semibold text-[#8EB69B] bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/10 rounded-xl transition-all duration-300">
-                Overview
-              </button>
-              <button className="px-6 py-3 text-sm font-semibold text-[#051F20] hover:text-[#8EB69B] hover:bg-gradient-to-r hover:from-[#8EB69B]/5 hover:to-[#DAF1DE]/5 rounded-xl transition-all duration-300">
-                Amenities
-              </button>
-              <button className="px-6 py-3 text-sm font-semibold text-[#051F20] hover:text-[#8EB69B] hover:bg-gradient-to-r hover:from-[#8EB69B]/5 hover:to-[#DAF1DE]/5 rounded-xl transition-all duration-300">
-                Location
-              </button>
-              <button className="px-6 py-3 text-sm font-semibold text-[#051F20] hover:text-[#8EB69B] hover:bg-gradient-to-r hover:from-[#8EB69B]/5 hover:to-[#DAF1DE]/5 rounded-xl transition-all duration-300">
-                Reviews
-              </button>
-            </nav>
-          </div>
+          <nav className="flex space-x-8 border-b border-gray-200">
+            <button className="pb-3 text-sm font-medium text-[#8EB69B] border-b-2 border-[#8EB69B]">
+              Overview
+            </button>
+            <button className="pb-3 text-sm font-medium text-gray-500 hover:text-gray-700">
+              Amenities
+            </button>
+            <button className="pb-3 text-sm font-medium text-gray-500 hover:text-gray-700">
+              Location
+            </button>
+            <button className="pb-3 text-sm font-medium text-gray-500 hover:text-gray-700">
+              Reviews
+            </button>
+          </nav>
         </div>
 
-        <div className="relative grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-          {/* Left Column - Main Content */}
-          <div className="lg:col-span-2 space-y-6">
-            {/* Property Highlights */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl border border-[#EBEBEB]/70 p-8 relative overflow-hidden">
-              {/* Subtle background pattern */}
-              <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9]/30 to-[#E6F2EC]/20 pointer-events-none"></div>
+        <div className="space-y-8">
+          {/* Property Highlights - Minimalist */}
+          <div className="bg-white rounded-xl border border-gray-100 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Property Highlights
+            </h2>
 
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-2xl flex items-center justify-center">
-                    <Award className="h-6 w-6 text-[#8EB69B]" />
-                  </div>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20]">
-                    Property Highlights
-                  </h2>
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <div className="text-2xl font-bold text-gray-900 mb-1">
+                  {property.capacity.bedrooms}
                 </div>
-
-                <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="group text-center p-6 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-3xl border border-[#DAF1DE]/50 hover:shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative z-10">
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-                        <BedDouble className="h-8 w-8 text-[#8EB69B]" />
-                      </div>
-                      <div className="text-3xl font-bold text-[#051F20] mb-1">
-                        {property.capacity.bedrooms}
-                      </div>
-                      <div className="text-sm text-[#8EB69B] font-medium">
-                        Bedrooms
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="group text-center p-6 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-3xl border border-[#DAF1DE]/50 hover:shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative z-10">
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-                        <Bath className="h-8 w-8 text-[#8EB69B]" />
-                      </div>
-                      <div className="text-3xl font-bold text-[#051F20] mb-1">
-                        {property.capacity.bathrooms}
-                      </div>
-                      <div className="text-sm text-[#8EB69B] font-medium">
-                        Bathrooms
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="group text-center p-6 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-3xl border border-[#DAF1DE]/50 hover:shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative z-10">
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-                        <Users className="h-8 w-8 text-[#8EB69B]" />
-                      </div>
-                      <div className="text-3xl font-bold text-[#051F20] mb-1">
-                        {property.capacity.maxGuests}
-                      </div>
-                      <div className="text-sm text-[#8EB69B] font-medium">
-                        Max Guests
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="group text-center p-6 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-3xl border border-[#DAF1DE]/50 hover:shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                    <div className="relative z-10">
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-                        <Home className="h-8 w-8 text-[#8EB69B]" />
-                      </div>
-                      <div className="text-3xl font-bold text-[#051F20] mb-1">
-                        2
-                      </div>
-                      <div className="text-sm text-[#8EB69B] font-medium">
-                        Floors
-                      </div>
-                    </div>
-                  </div>
+                <div className="text-sm text-gray-600">Bedrooms</div>
+              </div>
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <div className="text-2xl font-bold text-gray-900 mb-1">
+                  {property.capacity.bathrooms}
                 </div>
+                <div className="text-sm text-gray-600">Bathrooms</div>
+              </div>
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <div className="text-2xl font-bold text-gray-900 mb-1">
+                  {property.capacity.maxGuests}
+                </div>
+                <div className="text-sm text-gray-600">Max Guests</div>
+              </div>
+              <div className="text-center p-4 bg-gray-50 rounded-lg">
+                <div className="text-2xl font-bold text-gray-900 mb-1">4</div>
+                <div className="text-sm text-gray-600">Floors</div>
               </div>
             </div>
+          </div>
 
-            {/* About Section */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl border border-[#EBEBEB]/70 p-8 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9]/20 to-[#E6F2EC]/10 pointer-events-none"></div>
+          {/* About Section - Minimalist */}
+          <div className="bg-white rounded-xl border border-gray-100 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              About this property
+            </h2>
+            <p className="text-gray-700 leading-relaxed">
+              {property.description}
+            </p>
+          </div>
 
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-2xl flex items-center justify-center">
-                    <Home className="h-6 w-6 text-[#8EB69B]" />
+          {/* Amenities - Minimalist */}
+          <div className="bg-white rounded-xl border border-gray-100 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              What this place offers
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {property.amenities.map((amenity) => {
+                const getIcon = (amenity: string) => {
+                  switch (amenity.toLowerCase()) {
+                    case "wifi":
+                    case "high-speed wifi":
+                      return <Wifi className="h-4 w-4" />;
+                    case "parking":
+                    case "private parking":
+                      return <Car className="h-4 w-4" />;
+                    case "air conditioning":
+                    case "central air conditioning":
+                      return (
+                        <div className="h-4 w-4 bg-[#8EB69B] rounded-full" />
+                      );
+                    case "kitchen":
+                    case "gourmet kitchen":
+                      return <UtensilsCrossed className="h-4 w-4" />;
+                    case "security":
+                    case "24/7 security":
+                      return <Shield className="h-4 w-4" />;
+                    case "balcony":
+                    case "private balcony":
+                      return <Eye className="h-4 w-4" />;
+                    case "dam view":
+                    case "panoramic dam views":
+                      return <Mountain className="h-4 w-4" />;
+                    case "swimming pool":
+                    case "private swimming pool":
+                      return <Waves className="h-4 w-4" />;
+                    case "gym":
+                    case "fully equipped gym":
+                      return <Dumbbell className="h-4 w-4" />;
+                    default:
+                      return <CheckCircle className="h-4 w-4" />;
+                  }
+                };
+
+                return (
+                  <div
+                    key={amenity}
+                    className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
+                  >
+                    <div className="w-8 h-8 bg-[#8EB69B]/10 rounded-lg flex items-center justify-center text-[#8EB69B]">
+                      {getIcon(amenity)}
+                    </div>
+                    <span className="text-sm font-medium text-gray-700">
+                      {amenity}
+                    </span>
                   </div>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20]">
-                    About this property
-                  </h2>
-                </div>
-                <p className="text-[#4A4A4A] leading-relaxed text-lg">
-                  {property.description}
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Location - Minimalist */}
+          <div className="bg-white rounded-xl border border-gray-100 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Where you'll be
+            </h2>
+            <div className="flex items-start gap-3">
+              <MapPin className="h-5 w-5 text-[#8EB69B] mt-0.5" />
+              <div>
+                <p className="text-gray-900 font-medium">
+                  {property.location.address}
+                </p>
+                <p className="text-gray-600 text-sm">
+                  {property.location.city}, {property.location.country}
                 </p>
               </div>
             </div>
-
-            {/* Amenities */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl border border-[#EBEBEB]/70 p-8 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9]/20 to-[#E6F2EC]/10 pointer-events-none"></div>
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-2xl flex items-center justify-center">
-                    <CheckCircle className="h-6 w-6 text-[#8EB69B]" />
-                  </div>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20]">
-                    What this place offers
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  {property.amenities.map((amenity) => {
-                    const getIcon = (amenity: string) => {
-                      switch (amenity.toLowerCase()) {
-                        case "wifi":
-                          return <Wifi className="h-5 w-5" />;
-                        case "parking":
-                          return <Car className="h-5 w-5" />;
-                        case "air conditioning":
-                          return (
-                            <div className="h-5 w-5 bg-[#8EB69B] rounded-full" />
-                          );
-                        case "kitchen":
-                          return <UtensilsCrossed className="h-5 w-5" />;
-                        case "security":
-                          return <Shield className="h-5 w-5" />;
-                        case "balcony":
-                          return <Eye className="h-5 w-5" />;
-                        case "dam view":
-                          return <Mountain className="h-5 w-5" />;
-                        default:
-                          return <CheckCircle className="h-5 w-5" />;
-                      }
-                    };
-
-                    return (
-                      <div
-                        key={amenity}
-                        className="group flex items-center gap-4 p-5 bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC] rounded-2xl border border-[#DAF1DE]/50 hover:shadow-lg hover:scale-105 transition-all duration-300 relative overflow-hidden"
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-r from-[#8EB69B]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <div className="relative z-10 flex items-center gap-4">
-                          <div className="w-12 h-12 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-xl flex items-center justify-center text-[#8EB69B] shadow-sm">
-                            {getIcon(amenity)}
-                          </div>
-                          <span className="text-base font-medium text-[#051F20]">
-                            {amenity}
-                          </span>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-
-            {/* Location */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl border border-[#EBEBEB]/70 p-8 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9]/20 to-[#E6F2EC]/10 pointer-events-none"></div>
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-2xl flex items-center justify-center">
-                    <MapPin className="h-6 w-6 text-[#8EB69B]" />
-                  </div>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20]">
-                    Where you'll be
-                  </h2>
-                </div>
-
-                <div className="aspect-video bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-3xl flex items-center justify-center border border-[#DAF1DE]/50 relative overflow-hidden shadow-lg">
-                  <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/10 to-[#DAF1DE]/20"></div>
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"></div>
-                  <div className="text-center relative z-10">
-                    <div className="w-24 h-24 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-lg">
-                      <MapPin className="w-12 h-12 text-[#8EB69B]" />
-                    </div>
-                    <p className="text-[#235347] text-xl font-bold mb-3">
-                      {property.location.address}
-                    </p>
-                    <p className="text-[#8EB69B] text-lg font-medium">
-                      {property.location.city}, {property.location.country}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Availability Calendar */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl border border-[#EBEBEB]/70 p-8 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9]/20 to-[#E6F2EC]/10 pointer-events-none"></div>
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-2xl flex items-center justify-center">
-                    <Calendar className="h-6 w-6 text-[#8EB69B]" />
-                  </div>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20]">
-                    Availability
-                  </h2>
-                </div>
-                <AvailabilityCalendar
-                  propertyId={property.id}
-                  mode="view"
-                  className="w-full"
-                />
-              </div>
-            </div>
-
-            {/* Guest Reviews */}
-            <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl border border-[#EBEBEB]/70 p-8 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9]/20 to-[#E6F2EC]/10 pointer-events-none"></div>
-
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-12 h-12 bg-gradient-to-br from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-2xl flex items-center justify-center">
-                    <Star className="h-6 w-6 text-[#8EB69B]" />
-                  </div>
-                  <h2 className="text-2xl lg:text-3xl font-bold text-[#051F20]">
-                    Guest reviews
-                  </h2>
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {testimonials.map((video) => (
-                    <div
-                      key={video.id}
-                      className="group aspect-video rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 relative"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/10 to-[#DAF1DE]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10"></div>
-                      <Image
-                        src={video.embedUrl}
-                        alt={video.title}
-                        fill
-                        data-ai-hint={video.hint}
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
           </div>
 
-          {/* Right Column - Booking Form */}
-          <div className="lg:col-span-1">
-            <div className="lg:sticky lg:top-8">
-              <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl border border-[#EBEBEB]/70 overflow-hidden relative">
-                {/* Subtle background pattern */}
-                <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9]/30 to-[#E6F2EC]/20 pointer-events-none"></div>
-
-                {/* Decorative elements */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-[#8EB69B]/5 to-[#DAF1DE]/3 rounded-full blur-2xl"></div>
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-br from-[#DAF1DE]/5 to-[#8EB69B]/3 rounded-full blur-xl"></div>
-
-                <div className="relative z-10">
-                  <BookingForm
-                    property={{ ...property, name: property.title }}
-                    onBookingComplete={handleBookingComplete}
-                  />
-                </div>
-              </div>
-            </div>
+          {/* Availability Calendar - Minimalist */}
+          <div className="bg-white rounded-xl border border-gray-100 p-6">
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">
+              Availability
+            </h2>
+            <AvailabilityCalendar
+              propertyId={property.id}
+              mode="view"
+              className="w-full"
+            />
           </div>
         </div>
       </div>
