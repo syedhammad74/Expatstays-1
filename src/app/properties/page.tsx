@@ -71,38 +71,44 @@ export default function PropertiesPage() {
   // const _searchParams = useSearchParams(); // unused
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
   const [calendarOpen, setCalendarOpen] = useState(false);
-  // Initialize with hardcoded properties to ensure they always appear
+  // Initialize with the premium Famhouse property
   const initialProperties: Property[] = [
     {
       id: "famhouse_islamabad_dam_view",
-      title: "2-Bedroom Apartment with Stunning Dam View",
+      title: "Luxury 5-Bedroom Farmhouse with Panoramic Dam Views",
       description:
-        "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
+        "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Rawal Dam. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area. Perfect for large families and groups seeking an exclusive retreat with world-class amenities including a private swimming pool, fully equipped gym, and extensive walking tracks through the garden.",
       location: {
         address:
-          "D-17 Islamabad farming cooperative society margalla gardens Islamabad",
+          "D-17 Islamabad Farming Cooperative Society, Margalla Gardens, Islamabad",
         city: "Islamabad",
         state: "Islamabad Capital Territory",
         country: "Pakistan",
         coordinates: { lat: 33.6844, lng: 73.0479 },
       },
-      propertyType: "apartment" as const,
-      capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+      propertyType: "house" as const,
+      capacity: { bedrooms: 5, bathrooms: 4, maxGuests: 12 },
       amenities: [
-        "WiFi",
-        "Air Conditioning",
-        "Kitchen",
-        "Parking",
-        "Security",
-        "Balcony",
-        "Dam View",
-        "Modern Appliances",
-        "High-Quality Linen",
-        "Living Room",
-        "Dining Area",
-        "Mountain View",
-        "Child-friendly",
-        "Pet-friendly",
+        "High-Speed WiFi",
+        "Central Air Conditioning",
+        "Gourmet Kitchen",
+        "Private Parking",
+        "24/7 Security",
+        "Private Swimming Pool",
+        "Fully Equipped Gym",
+        "Extensive Garden",
+        "Walking Track",
+        "Panoramic Dam Views",
+        "Premium Appliances",
+        "Luxury Bedding",
+        "Spacious Living Room",
+        "Formal Dining Area",
+        "Mountain Views",
+        "Family-Friendly",
+        "Pet-Friendly",
+        "Concierge Service",
+        "Multi-Level Living",
+        "Basement Storage",
       ],
       images: [
         "/media/famhouse/DSC02227.jpg",
@@ -110,112 +116,17 @@ export default function PropertiesPage() {
         "/media/famhouse/DSC02235.jpg",
       ],
       pricing: {
-        basePrice: 120,
+        basePrice: 350,
         currency: "USD",
-        cleaningFee: 20,
-        serviceFee: 15,
-      },
-      availability: { isActive: true, minimumStay: 2, maximumStay: 30 },
-      rating: 4.8,
-      owner: {
-        uid: "owner_famhouse_islamabad",
-        name: "Ahmed Khan",
-        email: "ahmed@expatstays.com",
-      },
-      createdAt: "2024-09-16T15:00:00Z",
-      updatedAt: "2024-09-16T15:00:00Z",
-    },
-    {
-      id: "prop_dubai_luxury_villa",
-      title: "Luxury Villa in Dubai Marina",
-      description:
-        "Experience luxury living in this stunning villa located in the heart of Dubai Marina. Featuring modern amenities, private pool, and breathtaking marina views.",
-      location: {
-        address: "Dubai Marina, Dubai, UAE",
-        city: "Dubai",
-        state: "Dubai",
-        country: "UAE",
-        coordinates: { lat: 25.076, lng: 55.132 },
-      },
-      propertyType: "villa" as const,
-      capacity: { bedrooms: 4, bathrooms: 3, maxGuests: 8 },
-      amenities: [
-        "WiFi",
-        "Air Conditioning",
-        "Kitchen",
-        "Parking",
-        "Security",
-        "Pool",
-        "Marina View",
-        "Modern Appliances",
-        "Garden",
-        "Living Room",
-        "Dining Area",
-      ],
-      images: [
-        "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
-        "/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg",
-        "/media/DSC01806 HDR June 25 2025/DSC01856-HDR.jpg",
-      ],
-      pricing: {
-        basePrice: 250,
-        currency: "USD",
-        cleaningFee: 30,
-        serviceFee: 25,
+        cleaningFee: 50,
+        serviceFee: 35,
       },
       availability: { isActive: true, minimumStay: 2, maximumStay: 30 },
       rating: 4.9,
       owner: {
-        uid: "owner_dubai",
-        name: "Sarah Ahmed",
-        email: "sarah@expatstays.com",
-      },
-      createdAt: "2024-09-16T15:00:00Z",
-      updatedAt: "2024-09-16T15:00:00Z",
-    },
-    {
-      id: "prop_abu_dhabi_penthouse",
-      title: "Penthouse with City Views",
-      description:
-        "Luxurious penthouse offering panoramic city views and premium amenities. Perfect for business travelers and families seeking comfort and style.",
-      location: {
-        address: "Corniche Road, Abu Dhabi, UAE",
-        city: "Abu Dhabi",
-        state: "Abu Dhabi",
-        country: "UAE",
-        coordinates: { lat: 24.4539, lng: 54.3773 },
-      },
-      propertyType: "apartment" as const,
-      capacity: { bedrooms: 3, bathrooms: 2, maxGuests: 6 },
-      amenities: [
-        "WiFi",
-        "Air Conditioning",
-        "Kitchen",
-        "Parking",
-        "Security",
-        "City View",
-        "Modern Appliances",
-        "Balcony",
-        "Living Room",
-        "Dining Area",
-      ],
-      images: [
-        "/media/DSC01806 HDR June 25 2025/DSC01871-HDR.jpg",
-        "/media/DSC01806 HDR June 25 2025/DSC01884-HDR.jpg",
-        "/media/DSC01806 HDR June 25 2025/DSC01889-HDR.jpg",
-      ],
-      pricing: {
-        basePrice: 180,
-        currency: "USD",
-        cleaningFee: 25,
-        serviceFee: 20,
-      },
-      availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
-      rating: 4.7,
-      owner: {
-        uid: "owner_abu_dhabi",
-        name: "Mohammed Al-Rashid",
-        email: "mohammed@expatstays.com",
+        uid: "owner_famhouse_islamabad",
+        name: "Ahmed Khan",
+        email: "ahmed@expatstays.com",
       },
       createdAt: "2024-09-16T15:00:00Z",
       updatedAt: "2024-09-16T15:00:00Z",
@@ -280,38 +191,44 @@ export default function PropertiesPage() {
         allProperties = [];
       }
 
-      // Create multiple hardcoded properties to ensure we always have properties to display
+      // Create the premium Famhouse property
       const hardcodedProperties: Property[] = [
         {
           id: "famhouse_islamabad_dam_view",
-          title: "2-Bedroom Apartment with Stunning Dam View",
+          title: "Luxury 5-Bedroom Farmhouse with Panoramic Dam Views",
           description:
-            "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
+            "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Rawal Dam. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area. Perfect for large families and groups seeking an exclusive retreat with world-class amenities including a private swimming pool, fully equipped gym, and extensive walking tracks through the garden.",
           location: {
             address:
-              "D-17 Islamabad farming cooperative society margalla gardens Islamabad",
+              "D-17 Islamabad Farming Cooperative Society, Margalla Gardens, Islamabad",
             city: "Islamabad",
             state: "Islamabad Capital Territory",
             country: "Pakistan",
             coordinates: { lat: 33.6844, lng: 73.0479 },
           },
-          propertyType: "apartment" as const,
-          capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+          propertyType: "house" as const,
+          capacity: { bedrooms: 5, bathrooms: 4, maxGuests: 12 },
           amenities: [
-            "WiFi",
-            "Air Conditioning",
-            "Kitchen",
-            "Parking",
-            "Security",
-            "Balcony",
-            "Dam View",
-            "Modern Appliances",
-            "High-Quality Linen",
-            "Living Room",
-            "Dining Area",
-            "Mountain View",
-            "Child-friendly",
-            "Pet-friendly",
+            "High-Speed WiFi",
+            "Central Air Conditioning",
+            "Gourmet Kitchen",
+            "Private Parking",
+            "24/7 Security",
+            "Private Swimming Pool",
+            "Fully Equipped Gym",
+            "Extensive Garden",
+            "Walking Track",
+            "Panoramic Dam Views",
+            "Premium Appliances",
+            "Luxury Bedding",
+            "Spacious Living Room",
+            "Formal Dining Area",
+            "Mountain Views",
+            "Family-Friendly",
+            "Pet-Friendly",
+            "Concierge Service",
+            "Multi-Level Living",
+            "Basement Storage",
           ],
           images: [
             "/media/famhouse/DSC02227.jpg",
@@ -319,256 +236,17 @@ export default function PropertiesPage() {
             "/media/famhouse/DSC02235.jpg",
           ],
           pricing: {
-            basePrice: 120,
+            basePrice: 350,
             currency: "USD",
-            cleaningFee: 20,
-            serviceFee: 15,
+            cleaningFee: 50,
+            serviceFee: 35,
           },
           availability: { isActive: true, minimumStay: 2, maximumStay: 30 },
-          rating: 4.8,
+          rating: 4.9,
           owner: {
             uid: "owner_famhouse_islamabad",
             name: "Ahmed Khan",
             email: "ahmed@expatstays.com",
-          },
-          createdAt: "2024-09-16T15:00:00Z",
-          updatedAt: "2024-09-16T15:00:00Z",
-        },
-        {
-          id: "prop_dubai_luxury_villa",
-          title: "Luxury Villa in Dubai Marina",
-          description:
-            "Experience luxury living in this stunning villa located in the heart of Dubai Marina. Featuring modern amenities, private pool, and breathtaking marina views.",
-          location: {
-            address: "Dubai Marina, Dubai, UAE",
-            city: "Dubai",
-            state: "Dubai",
-            country: "UAE",
-            coordinates: { lat: 25.076, lng: 55.132 },
-          },
-          propertyType: "villa" as const,
-          capacity: { bedrooms: 4, bathrooms: 3, maxGuests: 8 },
-          amenities: [
-            "WiFi",
-            "Air Conditioning",
-            "Kitchen",
-            "Parking",
-            "Security",
-            "Pool",
-            "Marina View",
-            "Modern Appliances",
-            "Garden",
-            "Living Room",
-            "Dining Area",
-          ],
-          images: [
-            "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01856-HDR.jpg",
-          ],
-          pricing: {
-            basePrice: 250,
-            currency: "USD",
-            cleaningFee: 30,
-            serviceFee: 25,
-          },
-          availability: { isActive: true, minimumStay: 2, maximumStay: 30 },
-          rating: 4.9,
-          owner: {
-            uid: "owner_dubai",
-            name: "Sarah Ahmed",
-            email: "sarah@expatstays.com",
-          },
-          createdAt: "2024-09-16T15:00:00Z",
-          updatedAt: "2024-09-16T15:00:00Z",
-        },
-        {
-          id: "prop_abu_dhabi_penthouse",
-          title: "Penthouse with City Views",
-          description:
-            "Luxurious penthouse offering panoramic city views and premium amenities. Perfect for business travelers and families seeking comfort and style.",
-          location: {
-            address: "Corniche Road, Abu Dhabi, UAE",
-            city: "Abu Dhabi",
-            state: "Abu Dhabi",
-            country: "UAE",
-            coordinates: { lat: 24.4539, lng: 54.3773 },
-          },
-          propertyType: "apartment" as const,
-          capacity: { bedrooms: 3, bathrooms: 2, maxGuests: 6 },
-          amenities: [
-            "WiFi",
-            "Air Conditioning",
-            "Kitchen",
-            "Parking",
-            "Security",
-            "City View",
-            "Modern Appliances",
-            "Balcony",
-            "Living Room",
-            "Dining Area",
-          ],
-          images: [
-            "/media/DSC01806 HDR June 25 2025/DSC01871-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01884-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01889-HDR.jpg",
-          ],
-          pricing: {
-            basePrice: 180,
-            currency: "USD",
-            cleaningFee: 25,
-            serviceFee: 20,
-          },
-          availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
-          rating: 4.7,
-          owner: {
-            uid: "owner_abu_dhabi",
-            name: "Mohammed Al-Rashid",
-            email: "mohammed@expatstays.com",
-          },
-          createdAt: "2024-09-16T15:00:00Z",
-          updatedAt: "2024-09-16T15:00:00Z",
-        },
-        {
-          id: "prop_palm_jumeirah_beachfront",
-          title: "Beachfront Villa on Palm Jumeirah",
-          description:
-            "Exclusive beachfront villa on the iconic Palm Jumeirah. Features private beach access, infinity pool, and world-class amenities.",
-          location: {
-            address: "Palm Jumeirah, Dubai, UAE",
-            city: "Dubai",
-            state: "Dubai",
-            country: "UAE",
-            coordinates: { lat: 25.1124, lng: 55.139 },
-          },
-          propertyType: "villa" as const,
-          capacity: { bedrooms: 5, bathrooms: 4, maxGuests: 10 },
-          amenities: [
-            "WiFi",
-            "Air Conditioning",
-            "Kitchen",
-            "Parking",
-            "Security",
-            "Pool",
-            "Beach Access",
-            "Modern Appliances",
-            "Garden",
-            "Living Room",
-            "Dining Area",
-            "Private Beach",
-          ],
-          images: [
-            "/media/DSC01806 HDR June 25 2025/DSC01897-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01902-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01904-HDR.jpg",
-          ],
-          pricing: {
-            basePrice: 400,
-            currency: "USD",
-            cleaningFee: 50,
-            serviceFee: 40,
-          },
-          availability: { isActive: true, minimumStay: 3, maximumStay: 30 },
-          rating: 4.9,
-          owner: {
-            uid: "owner_palm",
-            name: "Fatima Al-Zahra",
-            email: "fatima@expatstays.com",
-          },
-          createdAt: "2024-09-16T15:00:00Z",
-          updatedAt: "2024-09-16T15:00:00Z",
-        },
-        {
-          id: "prop_jlt_modern_apartment",
-          title: "Modern Apartment in JLT",
-          description:
-            "Contemporary apartment in Jumeirah Lake Towers with stunning lake views and modern amenities. Perfect for professionals and families.",
-          location: {
-            address: "Jumeirah Lake Towers, Dubai, UAE",
-            city: "Dubai",
-            state: "Dubai",
-            country: "UAE",
-            coordinates: { lat: 25.0657, lng: 55.1713 },
-          },
-          propertyType: "apartment" as const,
-          capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
-          amenities: [
-            "WiFi",
-            "Air Conditioning",
-            "Kitchen",
-            "Parking",
-            "Security",
-            "Lake View",
-            "Modern Appliances",
-            "Balcony",
-            "Living Room",
-            "Dining Area",
-          ],
-          images: [
-            "/media/DSC01806 HDR June 25 2025/DSC01909-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01914-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01919-HDR.jpg",
-          ],
-          pricing: {
-            basePrice: 150,
-            currency: "USD",
-            cleaningFee: 20,
-            serviceFee: 15,
-          },
-          availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
-          rating: 4.6,
-          owner: {
-            uid: "owner_jlt",
-            name: "Ahmed Hassan",
-            email: "ahmed.hassan@expatstays.com",
-          },
-          createdAt: "2024-09-16T15:00:00Z",
-          updatedAt: "2024-09-16T15:00:00Z",
-        },
-        {
-          id: "prop_emirates_hills_mansion",
-          title: "Luxury Mansion in Emirates Hills",
-          description:
-            "Spacious mansion in Emirates Hills with private garden, pool, and premium finishes. Ideal for large families and luxury seekers.",
-          location: {
-            address: "Emirates Hills, Dubai, UAE",
-            city: "Dubai",
-            state: "Dubai",
-            country: "UAE",
-            coordinates: { lat: 25.0657, lng: 55.1713 },
-          },
-          propertyType: "villa" as const,
-          capacity: { bedrooms: 6, bathrooms: 5, maxGuests: 12 },
-          amenities: [
-            "WiFi",
-            "Air Conditioning",
-            "Kitchen",
-            "Parking",
-            "Security",
-            "Pool",
-            "Garden",
-            "Modern Appliances",
-            "Living Room",
-            "Dining Area",
-            "Study Room",
-          ],
-          images: [
-            "/media/DSC01806 HDR June 25 2025/DSC01929-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01934-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg",
-          ],
-          pricing: {
-            basePrice: 350,
-            currency: "USD",
-            cleaningFee: 40,
-            serviceFee: 35,
-          },
-          availability: { isActive: true, minimumStay: 2, maximumStay: 30 },
-          rating: 4.8,
-          owner: {
-            uid: "owner_emirates_hills",
-            name: "Khalid Al-Mansouri",
-            email: "khalid@expatstays.com",
           },
           createdAt: "2024-09-16T15:00:00Z",
           updatedAt: "2024-09-16T15:00:00Z",
@@ -875,11 +553,11 @@ export default function PropertiesPage() {
     amenities: property.amenities || [],
     isVerified: true,
     isAvailable: property.availability?.isActive || true,
-    discount: property.id === "famhouse_islamabad_dam_view" ? 15 : 0, // Special discount for famhouse
+    discount: property.id === "famhouse_islamabad_dam_view" ? 20 : 0, // Special discount for luxury farmhouse
     views:
       property.id === "famhouse_islamabad_dam_view"
-        ? 156
-        : Math.floor(Math.random() * 100) + 10, // Higher views for famhouse
+        ? 234
+        : Math.floor(Math.random() * 100) + 10, // Higher views for premium farmhouse
     isFeatured: property.id === "famhouse_islamabad_dam_view", // Mark famhouse as featured
   });
 
@@ -887,21 +565,23 @@ export default function PropertiesPage() {
   const renderProperties = () => {
     if (loading) {
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {Array.from({ length: 8 }, (_, i) => (
-            <div
-              key={i}
-              className="h-[420px] bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-[#DAF1DE]/50 animate-pulse"
-            >
-              <div className="h-48 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-t-xl"></div>
-              <div className="p-3 space-y-3">
-                <div className="h-3 bg-gradient-to-r from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-full"></div>
-                <div className="h-3 bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/10 rounded-full w-3/4"></div>
-                <div className="h-3 bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/10 rounded-full w-1/2"></div>
-                <div className="h-8 bg-gradient-to-r from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-lg mt-4"></div>
+        <div className="flex justify-center mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl">
+            {Array.from({ length: 1 }, (_, i) => (
+              <div
+                key={i}
+                className="h-[480px] bg-white/80 backdrop-blur-sm rounded-2xl shadow-sm border border-[#E5E7EB]/60 animate-pulse"
+              >
+                <div className="h-48 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-t-2xl"></div>
+                <div className="p-4 space-y-3">
+                  <div className="h-3 bg-gradient-to-r from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-full"></div>
+                  <div className="h-4 bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/10 rounded-full w-3/4"></div>
+                  <div className="h-3 bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/10 rounded-full w-1/2"></div>
+                  <div className="h-10 bg-gradient-to-r from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-xl mt-4"></div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       );
     }
@@ -968,27 +648,16 @@ export default function PropertiesPage() {
           </motion.div>
         )}
 
-        <VirtualGrid
-          items={filteredProperties.map(convertToPropertyCard)}
-          renderItem={(property) => (
-            <MemoizedPropertyCard key={property.slug} {...property} />
-          )}
-          itemHeight={420}
-          itemsPerRow={
-            typeof window !== "undefined"
-              ? window.innerWidth >= 1280
-                ? 4
-                : window.innerWidth >= 1024
-                ? 3
-                : window.innerWidth >= 768
-                ? 2
-                : 1
-              : 1
-          }
-          className="mt-8"
-          gap={24}
-          containerHeight={800}
-        />
+        <div className="flex justify-center mt-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl">
+            {filteredProperties.map((property) => (
+              <MemoizedPropertyCard
+                key={property.id}
+                {...convertToPropertyCard(property)}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     );
   };

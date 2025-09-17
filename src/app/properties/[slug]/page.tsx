@@ -75,59 +75,67 @@ export default function Page({ params }: { params: { slug: string } }) {
   useEffect(() => {
     const loadProperty = async () => {
       try {
-        // Check if it's the hardcoded Islamabad property
-        if (slug === "prop_islamabad_dam_view") {
-          const islamabadProperty: Property = {
-            id: "prop_islamabad_dam_view",
-            title: "2-Bedroom Apartment with Stunning Dam View",
+        // Check if it's the hardcoded Famhouse property
+        if (slug === "famhouse_islamabad_dam_view") {
+          const famhouseProperty: Property = {
+            id: "famhouse_islamabad_dam_view",
+            title: "Luxury 5-Bedroom Farmhouse with Panoramic Dam Views",
             description:
-              "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
+              "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Rawal Dam. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area. Perfect for large families and groups seeking an exclusive retreat with world-class amenities including a private swimming pool, fully equipped gym, and extensive walking tracks through the garden. The farmhouse features a fully equipped gourmet kitchen with premium appliances, spacious living areas with floor-to-ceiling windows, and elegantly appointed bedrooms with high-end furnishings. Located in the prestigious Margalla Gardens community, this property provides easy access to Islamabad's finest attractions while maintaining complete privacy and tranquility.",
             location: {
               address:
-                "D-17 Islamabad farming cooperative society margalla gardens Islamabad",
+                "D-17 Islamabad Farming Cooperative Society, Margalla Gardens, Islamabad",
               city: "Islamabad",
               state: "Islamabad Capital Territory",
               country: "Pakistan",
               coordinates: { lat: 33.6844, lng: 73.0479 },
             },
-            propertyType: "apartment",
-            capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+            propertyType: "house",
+            capacity: { bedrooms: 5, bathrooms: 4, maxGuests: 12 },
             amenities: [
-              "WiFi",
-              "Air Conditioning",
-              "Kitchen",
-              "Parking",
-              "Security",
-              "Balcony",
-              "Dam View",
-              "Modern Appliances",
-              "High-Quality Linen",
-              "Living Room",
-              "Dining Area",
+              "High-Speed WiFi",
+              "Central Air Conditioning",
+              "Gourmet Kitchen",
+              "Private Parking",
+              "24/7 Security",
+              "Private Swimming Pool",
+              "Fully Equipped Gym",
+              "Extensive Garden",
+              "Walking Track",
+              "Panoramic Dam Views",
+              "Premium Appliances",
+              "Luxury Bedding",
+              "Spacious Living Room",
+              "Formal Dining Area",
+              "Mountain Views",
+              "Family-Friendly",
+              "Pet-Friendly",
+              "Concierge Service",
+              "Multi-Level Living",
+              "Basement Storage",
             ],
             images: [
-              "/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg",
-              "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
-              "/media/DSC01806 HDR June 25 2025/DSC01840-HDR.jpg",
-              "/media/Close Ups June 25 2025/DSC01831.jpg",
+              "/media/famhouse/DSC02227.jpg",
+              "/media/famhouse/DSC02228.jpg",
+              "/media/famhouse/DSC02235.jpg",
             ],
             pricing: {
-              basePrice: 120,
+              basePrice: 350,
               currency: "USD",
-              cleaningFee: 20,
-              serviceFee: 15,
+              cleaningFee: 50,
+              serviceFee: 35,
             },
-            availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
-            rating: 4.8,
+            availability: { isActive: true, minimumStay: 2, maximumStay: 30 },
+            rating: 4.9,
             owner: {
-              uid: "owner_islamabad",
+              uid: "owner_famhouse_islamabad",
               name: "Ahmed Khan",
               email: "ahmed@expatstays.com",
             },
             createdAt: "2024-09-16T15:00:00Z",
             updatedAt: "2024-09-16T15:00:00Z",
           };
-          setProperty(islamabadProperty);
+          setProperty(famhouseProperty);
           setLoading(false);
           return;
         }
