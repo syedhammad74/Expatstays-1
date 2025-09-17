@@ -1,0 +1,272 @@
+{
+  "properties": [
+    {
+      "id": "famhouse_islamabad_dam_view",
+      "title": "2-Bedroom Apartment with Stunning Dam View",
+      "description": "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
+      "shortDescription": "Stunning 2-bedroom apartment with dam view, perfect for families seeking peace and relaxation.",
+      "location": {
+        "address": "D-17 Islamabad farming cooperative society margalla gardens Islamabad",
+        "city": "Islamabad",
+        "state": "Islamabad Capital Territory",
+        "country": "Pakistan",
+        "postalCode": "44000",
+        "coordinates": {
+          "lat": 33.6844,
+          "lng": 73.0479
+        },
+        "neighborhood": "Margalla Gardens",
+        "landmarks": [
+          "Rawal Dam",
+          "Margalla Hills National Park",
+          "Islamabad International Airport"
+        ]
+      },
+      "propertyType": "apartment",
+      "propertyCategory": "family-friendly",
+      "capacity": {
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "maxGuests": 4,
+        "maxAdults": 4,
+        "maxChildren": 2,
+        "beds": {
+          "queen": 1,
+          "single": 2
+        }
+      },
+      "amenities": [
+        "WiFi",
+        "Air Conditioning",
+        "Heating",
+        "Kitchen",
+        "Refrigerator",
+        "Microwave",
+        "Dishwasher",
+        "Coffee Maker",
+        "Parking",
+        "Security",
+        "Balcony",
+        "Dam View",
+        "Mountain View",
+        "Modern Appliances",
+        "High-Quality Linen",
+        "Living Room",
+        "Dining Area",
+        "Washing Machine",
+        "Dryer",
+        "Iron",
+        "Hair Dryer",
+        "TV",
+        "Cable TV",
+        "Workspace",
+        "Child-friendly",
+        "Pet-friendly"
+      ],
+      "images": [
+        {
+          "url": "/media/famhouse/DSC02227.jpg",
+          "alt": "Living room with dam view",
+          "caption": "Spacious living room with stunning dam view",
+          "isPrimary": true,
+          "category": "interior"
+        },
+        {
+          "url": "/media/famhouse/DSC02228.jpg",
+          "alt": "Modern kitchen",
+          "caption": "Fully equipped modern kitchen",
+          "isPrimary": false,
+          "category": "interior"
+        },
+        {
+          "url": "/media/famhouse/DSC02235.jpg",
+          "alt": "Master bedroom",
+          "caption": "Comfortable master bedroom with quality linen",
+          "isPrimary": false,
+          "category": "interior"
+        }
+      ],
+      "pricing": {
+        "basePrice": 120,
+        "currency": "USD",
+        "cleaningFee": 20,
+        "serviceFee": 15,
+        "securityDeposit": 200,
+        "extraGuestFee": 25,
+        "weekendMultiplier": 1.2,
+        "seasonalPricing": {
+          "peak": {
+            "multiplier": 1.5,
+            "periods": ["2024-12-20", "2025-01-05", "2024-07-01", "2024-08-31"]
+          },
+          "offPeak": {
+            "multiplier": 0.8,
+            "periods": ["2024-11-01", "2024-12-19", "2024-01-06", "2024-06-30"]
+          }
+        }
+      },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 2,
+        "maximumStay": 30,
+        "checkInTime": "15:00",
+        "checkOutTime": "11:00",
+        "advanceBookingDays": 365,
+        "lastMinuteBooking": true,
+        "blockedDates": [],
+        "specialAvailability": {
+          "instantBooking": true,
+          "sameDayBooking": false
+        }
+      },
+      "houseRules": [
+        "No smoking inside the apartment",
+        "No parties or events",
+        "Quiet hours from 10 PM to 7 AM",
+        "Maximum 4 guests",
+        "Pets allowed with prior approval",
+        "Check-in after 3 PM, check-out before 11 AM"
+      ],
+      "cancellationPolicy": {
+        "type": "moderate",
+        "description": "Free cancellation up to 5 days before check-in. 50% refund for cancellations made 2-5 days before check-in. No refund for cancellations made less than 2 days before check-in.",
+        "freeCancellationDays": 5,
+        "partialRefundDays": 2
+      },
+      "owner": {
+        "uid": "owner_famhouse_islamabad",
+        "name": "Ahmed Khan",
+        "email": "ahmed@expatstays.com",
+        "phone": "+92-300-1234567",
+        "responseTime": "within an hour",
+        "hostSince": "2023-01-15",
+        "isSuperhost": true,
+        "languages": ["English", "Urdu", "Punjabi"]
+      },
+      "rating": {
+        "overall": 4.8,
+        "cleanliness": 4.9,
+        "communication": 4.8,
+        "checkIn": 4.7,
+        "accuracy": 4.9,
+        "location": 4.8,
+        "value": 4.7
+      },
+      "reviews": {
+        "total": 23,
+        "recent": [
+          {
+            "id": "review_001",
+            "guestName": "Sarah M.",
+            "rating": 5,
+            "comment": "Absolutely stunning view and perfect for families. The apartment was spotless and had everything we needed.",
+            "date": "2024-09-10",
+            "response": "Thank you Sarah! We're so glad you enjoyed your stay and the dam view."
+          },
+          {
+            "id": "review_002",
+            "guestName": "Michael R.",
+            "rating": 4,
+            "comment": "Great location and very comfortable. The kitchen was well-equipped and the bedrooms were cozy.",
+            "date": "2024-09-05",
+            "response": "Thank you Michael! We appreciate your feedback."
+          }
+        ]
+      },
+      "features": {
+        "highlights": [
+          "Stunning dam view",
+          "Family-friendly",
+          "Modern amenities",
+          "Peaceful location",
+          "High-quality linen"
+        ],
+        "safety": [
+          "Smoke detectors",
+          "First aid kit",
+          "Fire extinguisher",
+          "Security cameras (exterior)",
+          "Safe neighborhood"
+        ],
+        "accessibility": {
+          "wheelchairAccessible": false,
+          "elevator": true,
+          "groundFloor": false
+        }
+      },
+      "nearbyAttractions": [
+        {
+          "name": "Rawal Dam",
+          "type": "natural",
+          "distance": "0.5 km",
+          "description": "Beautiful dam perfect for morning walks and picnics"
+        },
+        {
+          "name": "Margalla Hills National Park",
+          "type": "nature",
+          "distance": "2 km",
+          "description": "Hiking trails and scenic viewpoints"
+        },
+        {
+          "name": "Islamabad International Airport",
+          "type": "transportation",
+          "distance": "15 km",
+          "description": "Easy access to the airport"
+        },
+        {
+          "name": "Centaurus Mall",
+          "type": "shopping",
+          "distance": "8 km",
+          "description": "Large shopping mall with restaurants and entertainment"
+        }
+      ],
+      "transportation": {
+        "parking": {
+          "available": true,
+          "type": "free",
+          "spaces": 1,
+          "description": "Free parking space available"
+        },
+        "publicTransport": {
+          "busStop": "500m",
+          "metroStation": "2km",
+          "taxiService": "available"
+        }
+      },
+      "createdAt": "2024-09-16T15:00:00Z",
+      "updatedAt": "2024-09-16T15:00:00Z",
+      "featured": true,
+      "verified": true,
+      "instantBook": true,
+      "superhost": true,
+      "tags": [
+        "dam-view",
+        "family-friendly",
+        "modern",
+        "peaceful",
+        "islamabad",
+        "margalla-gardens",
+        "apartment",
+        "2-bedroom"
+      ],
+      "seo": {
+        "metaTitle": "2-Bedroom Apartment with Dam View - Islamabad | ExpatStays",
+        "metaDescription": "Stunning 2-bedroom apartment with dam view in Islamabad. Perfect for families. Modern amenities, peaceful location in Margalla Gardens.",
+        "keywords": [
+          "islamabad apartment",
+          "dam view",
+          "family accommodation",
+          "margalla gardens",
+          "2 bedroom apartment",
+          "islamabad rental"
+        ]
+      }
+    }
+  ],
+  "metadata": {
+    "totalProperties": 1,
+    "lastUpdated": "2024-09-16T15:00:00Z",
+    "version": "1.0",
+    "source": "ExpatStays Property Database"
+  }
+}

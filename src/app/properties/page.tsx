@@ -39,6 +39,8 @@ import { useRouter } from "next/navigation";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { bookingService } from "@/lib/services/bookings";
+import { extendedPropertyService } from "@/lib/services/property-extended";
+import { ExtendedProperty } from "@/lib/types/property-extended";
 import { useToast } from "@/hooks/use-toast";
 import { usePerformanceMonitor, useDebounce } from "@/hooks/use-performance";
 import { VirtualGrid } from "@/components/ui/virtual-grid";
@@ -72,7 +74,7 @@ export default function PropertiesPage() {
   // Initialize with hardcoded properties to ensure they always appear
   const initialProperties: Property[] = [
     {
-      id: "prop_islamabad_dam_view",
+      id: "famhouse_islamabad_dam_view",
       title: "2-Bedroom Apartment with Stunning Dam View",
       description:
         "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
@@ -98,12 +100,14 @@ export default function PropertiesPage() {
         "High-Quality Linen",
         "Living Room",
         "Dining Area",
+        "Mountain View",
+        "Child-friendly",
+        "Pet-friendly",
       ],
       images: [
-        "/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg",
-        "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
-        "/media/DSC01806 HDR June 25 2025/DSC01840-HDR.jpg",
-        "/media/Close Ups June 25 2025/DSC01831.jpg",
+        "/media/famhouse/DSC02227.jpg",
+        "/media/famhouse/DSC02228.jpg",
+        "/media/famhouse/DSC02235.jpg",
       ],
       pricing: {
         basePrice: 120,
@@ -111,10 +115,10 @@ export default function PropertiesPage() {
         cleaningFee: 20,
         serviceFee: 15,
       },
-      availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
+      availability: { isActive: true, minimumStay: 2, maximumStay: 30 },
       rating: 4.8,
       owner: {
-        uid: "owner_islamabad",
+        uid: "owner_famhouse_islamabad",
         name: "Ahmed Khan",
         email: "ahmed@expatstays.com",
       },
@@ -279,7 +283,7 @@ export default function PropertiesPage() {
       // Create multiple hardcoded properties to ensure we always have properties to display
       const hardcodedProperties: Property[] = [
         {
-          id: "prop_islamabad_dam_view",
+          id: "famhouse_islamabad_dam_view",
           title: "2-Bedroom Apartment with Stunning Dam View",
           description:
             "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
@@ -305,12 +309,14 @@ export default function PropertiesPage() {
             "High-Quality Linen",
             "Living Room",
             "Dining Area",
+            "Mountain View",
+            "Child-friendly",
+            "Pet-friendly",
           ],
           images: [
-            "/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
-            "/media/DSC01806 HDR June 25 2025/DSC01840-HDR.jpg",
-            "/media/Close Ups June 25 2025/DSC01831.jpg",
+            "/media/famhouse/DSC02227.jpg",
+            "/media/famhouse/DSC02228.jpg",
+            "/media/famhouse/DSC02235.jpg",
           ],
           pricing: {
             basePrice: 120,
@@ -318,10 +324,10 @@ export default function PropertiesPage() {
             cleaningFee: 20,
             serviceFee: 15,
           },
-          availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
+          availability: { isActive: true, minimumStay: 2, maximumStay: 30 },
           rating: 4.8,
           owner: {
-            uid: "owner_islamabad",
+            uid: "owner_famhouse_islamabad",
             name: "Ahmed Khan",
             email: "ahmed@expatstays.com",
           },
@@ -869,25 +875,30 @@ export default function PropertiesPage() {
     amenities: property.amenities || [],
     isVerified: true,
     isAvailable: property.availability?.isActive || true,
-    discount: 0,
-    views: Math.floor(Math.random() * 100) + 10, // Mock views count
+    discount: property.id === "famhouse_islamabad_dam_view" ? 15 : 0, // Special discount for famhouse
+    views:
+      property.id === "famhouse_islamabad_dam_view"
+        ? 156
+        : Math.floor(Math.random() * 100) + 10, // Higher views for famhouse
+    isFeatured: property.id === "famhouse_islamabad_dam_view", // Mark famhouse as featured
   });
 
   // Enhanced renderProperties with better UI
   const renderProperties = () => {
     if (loading) {
       return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {Array.from({ length: 8 }, (_, i) => (
             <div
               key={i}
-              className="h-96 bg-white/80 backdrop-blur-sm rounded-3xl shadow-lg border border-[#DAF1DE]/50 animate-pulse"
+              className="h-[420px] bg-white/80 backdrop-blur-sm rounded-xl shadow-md border border-[#DAF1DE]/50 animate-pulse"
             >
-              <div className="h-48 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-t-3xl"></div>
-              <div className="p-6 space-y-4">
-                <div className="h-4 bg-gradient-to-r from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-full"></div>
+              <div className="h-48 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-t-xl"></div>
+              <div className="p-3 space-y-3">
+                <div className="h-3 bg-gradient-to-r from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-full"></div>
                 <div className="h-3 bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/10 rounded-full w-3/4"></div>
                 <div className="h-3 bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/10 rounded-full w-1/2"></div>
+                <div className="h-8 bg-gradient-to-r from-[#8EB69B]/20 to-[#DAF1DE]/20 rounded-lg mt-4"></div>
               </div>
             </div>
           ))}
@@ -962,7 +973,7 @@ export default function PropertiesPage() {
           renderItem={(property) => (
             <MemoizedPropertyCard key={property.slug} {...property} />
           )}
-          itemHeight={480}
+          itemHeight={420}
           itemsPerRow={
             typeof window !== "undefined"
               ? window.innerWidth >= 1280
@@ -975,8 +986,8 @@ export default function PropertiesPage() {
               : 1
           }
           className="mt-8"
-          gap={32}
-          containerHeight={900}
+          gap={24}
+          containerHeight={800}
         />
       </div>
     );
