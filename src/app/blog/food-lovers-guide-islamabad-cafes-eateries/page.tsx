@@ -6,38 +6,42 @@ import { CalendarDays, UserCircle, Tag } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { getLocalImage } from "@/lib/imageUtils";
 import { motion } from "framer-motion";
 
-// Mock blog post data
 const blogPost = {
-  id: "top-5-luxury-experiences-dubai",
-  title: "Top 5 Luxury Experiences in Dubai You Can&apos;t Miss",
+  id: "food-lovers-guide-islamabad-cafes-eateries",
+  title: "A Food Lover's Guide to Islamabad: Best Cafés and Eateries",
   excerpt:
-    "Discover the pinnacle of opulence with our curated list of must-try luxury experiences in the dazzling city of Dubai.",
+    "Islamabad may be known for its calm atmosphere and greenery, but it's also a city that surprises visitors with its vibrant food culture. Discover the best dining spots.",
   content: `
-    <p>Dubai has established itself as the global capital of luxury, offering experiences that redefine opulence and sophistication. Whether you&apos;re visiting for business or pleasure, these five luxury experiences will create memories that last a lifetime.</p>
+    <p>Islamabad may be known for its calm atmosphere and greenery, but it's also a city that surprises visitors with its vibrant food culture. From authentic international flavors to cozy local cafés, the capital offers a rich culinary experience for every kind of foodie.</p>
     
-    <h2>1. Private Yacht Charter in Dubai Marina</h2>
-    <p>Nothing says luxury quite like cruising the pristine waters of the Arabian Gulf aboard your own private yacht. Dubai Marina offers some of the most spectacular yacht charters in the world.</p>
+    <p>If you're visiting Islamabad or an expat looking for the city's best dining spots, here's your guide to the best cafés and eateries in Islamabad.</p>
     
-    <h2>2. Desert Safari with Luxury Camping</h2>
-    <p>Experience the magic of the Arabian desert with our exclusive luxury desert safari. From thrilling dune bashing to stargazing in premium desert camps, this adventure combines excitement with unparalleled comfort.</p>
+    <h2>1. Fuoco</h2>
+    <p>For a true Italian dining experience, Fuoco is unmatched. With handcrafted pastas, wood fired pizzas, and an elegant ambiance, it captures the essence of Italy right in Islamabad. The restaurant's attention to detail makes it a top choice for those who appreciate authentic Italian cuisine.</p>
     
-    <h2>3. Helicopter Tour of Iconic Landmarks</h2>
-    <p>See Dubai from a bird&apos;s eye view with a private helicopter tour. Marvel at the Burj Khalifa, Palm Jumeirah, and the World Islands from above.</p>
+    <h2>2. The Last Tribe</h2>
+    <p>A new and exciting addition to Islamabad's dining scene, The Last Tribe blends creativity with flavor. Known for its eclectic menu and stylish atmosphere, it's quickly becoming a favorite for those who enjoy modern dining experiences with a cultural edge.</p>
     
-    <h2>4. Private Shopping Experience at Dubai Mall</h2>
-    <p>Enjoy VIP treatment with a personal shopping assistant who will guide you through the world's largest shopping mall, ensuring access to exclusive collections and personalized service.</p>
+    <h2>3. MêZ Turkish</h2>
+    <p>Bringing the heart of Turkey to Islamabad, MêZ Turkish is famous for its flavorful lamb shank, mezze platters, and coal fired specialties. With warm hospitality and rich flavors, it's a go to spot for families, friends, and expats craving authentic Turkish cuisine.</p>
     
-    <h2>5. Fine Dining at Michelin-Starred Restaurants</h2>
-    <p>Dubai&apos;s culinary scene rivals any major city in the world. Experience world-class cuisine at restaurants helmed by celebrity chefs and award-winning culinary teams.</p>
+    <h2>4. The Carnivore</h2>
+    <p>The Carnivore is renowned for its baked meat: slow cooked, oven baked cuts that come out tender, juicy, and deeply flavorful. It's a hearty, shareable experience perfect with classic sides and a must-try for anyone seeking the best baked meat in Islamabad.</p>
+    
+    <h2>5. Omer Khayyam</h2>
+    <p>A longstanding favorite, Omer Khayyam offers a mix of Pakistani and continental dishes in a comfortable, welcoming setting. Known for its generous portions and consistency, it has built a loyal following among locals and expats alike.</p>
+    
+    <h2>From the Italian finesse of Fuoco, to the creativity of The Last Tribe, the Turkish warmth of MêZ, the bold flavors of The Carnivore, and the comfort of Omer Khayyam, Islamabad's food culture is rich, diverse, and full of flavor.</h2>
+    
+    <p>At Expat Stays, we know that discovering a city through its food is one of the best ways to feel at home. That's why our residences are always close to the city's best cafés and eateries so you can explore, indulge, and come back to comfort.</p>
   `,
-  publishedDate: "October 26, 2023",
-  author: "Jane Doe",
-  category: "Travel Guides",
-  featuredImageUrl: getLocalImage("luxury", 1),
-  readTime: "8 min read",
+  publishedDate: "November 28, 2024",
+  author: "Expat Stays Team",
+  category: "Food & Dining",
+  featuredImageUrl: "/media/blogs/EX-4.JPG",
+  readTime: "9 min read",
 };
 
 export default function BlogPostDetailPage() {
@@ -105,13 +109,27 @@ export default function BlogPostDetailPage() {
             <span className="text-xs lg:text-sm font-semibold text-foreground">
               Tags:
             </span>
-            {/* Add tags based on post.tags */}
+            <Badge variant="outline" className="text-xs">
+              Food
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              Restaurants
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              Islamabad
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              Dining
+            </Badge>
+            <Badge variant="outline" className="text-xs">
+              Cafés
+            </Badge>
           </div>
           <div className="flex items-center space-x-3 p-3 lg:p-4 bg-card rounded-lg lg:rounded-components shadow">
             <Avatar className="h-12 lg:h-16 w-12 lg:w-16">
               <AvatarImage
-                src="https://ui-avatars.com/api/?name=JD&size=100&background=235347&color=ffffff&bold=true"
-                alt="Jane Doe"
+                src="https://ui-avatars.com/api/?name=ES&size=100&background=235347&color=ffffff&bold=true"
+                alt="Expat Stays Team"
               />
               <AvatarFallback className="text-xs lg:text-base">
                 {post.author.substring(0, 2).toUpperCase()}
@@ -131,14 +149,3 @@ export default function BlogPostDetailPage() {
     </div>
   );
 }
-
-// Add basic styling for prose content in globals.css or here if needed
-// For example:
-// .prose h2 { @apply text-2xl font-bold mb-4 text-primary; }
-// .prose p { @apply mb-4 leading-relaxed; }
-// .prose figure { @apply my-6; }
-// .prose img { @apply rounded-lg shadow-md mx-auto; }
-// .prose figcaption { @apply text-center text-sm text-muted-foreground mt-2; }
-// This is handled by Tailwind Typography plugin (prose classes) which assumes you have it installed.
-// For this project, I've added basic Tailwind classes to the HTML string directly for simplicity as the plugin is not part of default scaffold.
-// If Tailwind Typography is installed, the classes in HTML string for typography can be removed and `prose` classes would work.
