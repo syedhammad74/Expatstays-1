@@ -8,10 +8,17 @@ import PerformanceLayout from "@/components/PerformanceLayout";
 export const metadata: Metadata = {
   title: {
     default: "Expat Stays - Luxury Property Rentals",
-    template: "%s | Expat Stays"
+    template: "%s | Expat Stays",
   },
-  description: "High-end luxury property rental and management with modern glass morphism design. Premium accommodations in Islamabad with world-class amenities.",
-  keywords: ["luxury rentals", "property management", "Islamabad", "expat stays", "premium accommodations"],
+  description:
+    "High-end luxury property rental and management with modern glass morphism design. Premium accommodations in Islamabad with world-class amenities.",
+  keywords: [
+    "luxury rentals",
+    "property management",
+    "Islamabad",
+    "expat stays",
+    "premium accommodations",
+  ],
   authors: [{ name: "Expat Stays Team" }],
   creator: "Expat Stays",
   publisher: "Expat Stays",
@@ -20,31 +27,33 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://myexpatstays.com'),
+  metadataBase: new URL("https://myexpatstays.com"),
   alternates: {
-    canonical: '/',
+    canonical: "/",
   },
   openGraph: {
-    type: 'website',
-    locale: 'en_US',
-    url: 'https://myexpatstays.com',
-    title: 'Expat Stays - Luxury Property Rentals',
-    description: 'High-end luxury property rental and management with modern glass morphism design.',
-    siteName: 'Expat Stays',
+    type: "website",
+    locale: "en_US",
+    url: "https://myexpatstays.com",
+    title: "Expat Stays - Luxury Property Rentals",
+    description:
+      "High-end luxury property rental and management with modern glass morphism design.",
+    siteName: "Expat Stays",
     images: [
       {
-        url: '/og-image.jpg',
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: 'Expat Stays - Luxury Property Rentals',
+        alt: "Expat Stays - Luxury Property Rentals",
       },
     ],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Expat Stays - Luxury Property Rentals',
-    description: 'High-end luxury property rental and management with modern glass morphism design.',
-    images: ['/og-image.jpg'],
+    card: "summary_large_image",
+    title: "Expat Stays - Luxury Property Rentals",
+    description:
+      "High-end luxury property rental and management with modern glass morphism design.",
+    images: ["/og-image.jpg"],
   },
   robots: {
     index: true,
@@ -52,42 +61,45 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   verification: {
-    google: 'your-google-verification-code',
+    google: "your-google-verification-code",
   },
 };
 
 export const viewport: Viewport = {
-  width: 'device-width',
+  width: "device-width",
   initialScale: 1,
   maximumScale: 5,
   userScalable: true,
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#8EB69B' },
-    { media: '(prefers-color-scheme: dark)', color: '#235347' },
+    { media: "(prefers-color-scheme: light)", color: "#8EB69B" },
+    { media: "(prefers-color-scheme: dark)", color: "#235347" },
   ],
 };
 
 // Critical CSS for above-the-fold content
 const criticalCSS = `
   * {
-    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
   }
+  
   body {
-    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+  
   .min-h-screen {
     min-height: 100vh;
   }
+  
   .bg-gradient-to-br {
     background: linear-gradient(to bottom right, #F8FBF9, #E6F2EC);
   }
@@ -105,37 +117,36 @@ export default function RootLayout({
         <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
-        
+
         {/* DNS prefetch for performance */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-        <link rel="dns-prefetch" href="https://firebasestorage.googleapis.com" />
-        
+        <link
+          rel="dns-prefetch"
+          href="https://firebasestorage.googleapis.com"
+        />
+
         {/* Preconnect for critical resources */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
-        {/* Font preload for critical fonts */}
         <link
-          rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
-          as="style"
-          onLoad="this.onload=null;this.rel='stylesheet'"
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
         />
-        <noscript>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
-            rel="stylesheet"
-          />
-        </noscript>
-        
+
+        {/* Font loading */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+          rel="stylesheet"
+        />
+
         {/* Critical CSS */}
         <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
-        
+
         {/* Preload critical images */}
         <link rel="preload" href="/logo.png" as="image" />
         <link rel="preload" href="/media/famhouse/DSC02226.jpg" as="image" />
-        
+
         {/* Structured data */}
         <script
           type="application/ld+json"
@@ -143,22 +154,22 @@ export default function RootLayout({
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Organization",
-              "name": "Expat Stays",
-              "url": "https://myexpatstays.com",
-              "logo": "https://myexpatstays.com/logo.png",
-              "description": "High-end luxury property rental and management",
-              "address": {
+              name: "Expat Stays",
+              url: "https://myexpatstays.com",
+              logo: "https://myexpatstays.com/logo.png",
+              description: "High-end luxury property rental and management",
+              address: {
                 "@type": "PostalAddress",
-                "addressLocality": "Islamabad",
-                "addressCountry": "Pakistan"
-              }
-            })
+                addressLocality: "Islamabad",
+                addressCountry: "Pakistan",
+              },
+            }),
           }}
         />
       </head>
       <body className="font-sans antialiased">
         <PerformanceLayout
-          preloadRoutes={['/properties', '/blog', '/about']}
+          preloadRoutes={["/properties", "/blog", "/about"]}
           criticalCSS={criticalCSS}
         >
           <AuthProvider>

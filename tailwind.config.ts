@@ -25,9 +25,30 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ["Inter", "Poppins", "Manrope", "sans-serif"],
-        body: ["Inter", "Poppins", "Manrope", "sans-serif"],
-        headline: ["Inter", "Poppins", "Manrope", "sans-serif"],
+        sans: [
+          "Nunito Sans",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
+        body: [
+          "Nunito Sans",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
+        headline: [
+          "Nunito Sans",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
         code: ["Fira Mono", "monospace"],
       },
       colors: {
