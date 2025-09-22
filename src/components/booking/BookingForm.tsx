@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
-import { Calendar, Loader2, AlertCircle } from "lucide-react";
+import { Calendar, Loader2, AlertCircle, Users, CheckCircle } from "lucide-react";
 import { Booking } from "@/lib/types/firebase";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { AvailabilityCalendar } from "@/components/AvailabilityCalendar";
@@ -234,180 +234,229 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
 
   return (
     <>
-      <Card className="w-full max-w-md">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Calendar className="h-5 w-5" />
-            Book Your Stay
-          </CardTitle>
-          <CardDescription>
-            ${property.pricing.basePrice} / night
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          {error && (
-            <Alert variant="destructive">
-              <AlertCircle className="h-4 w-4" />
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
-
-          <form onSubmit={handleSubmit} className="space-y-4">
-            {/* Availability Calendar */}
-            <div className="mb-6">
-              <AvailabilityCalendar
-                propertyId={property.id}
-                selectedDates={{
-                  checkIn: formData.checkIn,
-                  checkOut: formData.checkOut,
-                }}
-                onDateSelect={(dates) => {
-                  if (dates.checkIn) {
-                    handleInputChange("checkIn", dates.checkIn);
-                  }
-                  if (dates.checkOut) {
-                    handleInputChange("checkOut", dates.checkOut);
-                  }
-                }}
-                mode="select"
-                className="w-full"
-              />
+      <div className="w-full max-w-md mx-auto lg:mx-0">
+        {/* Header Section */}
+        <div className="bg-white rounded-2xl shadow-lg border border-[#DAF1DE]/50 overflow-hidden">
+          <div className="bg-gradient-to-r from-[#8EB69B] to-[#235347] p-6 text-white">
+            <div className="flex items-center gap-3 mb-2">
+              <Calendar className="h-6 w-6" />
+              <h3 className="text-xl font-bold">Book Your Stay</h3>
             </div>
-
-            <div className="grid grid-cols-3 gap-4">
-              <div>
-                <Label htmlFor="adults">Adults</Label>
-                <Input
-                  id="adults"
-                  type="number"
-                  value={formData.adults}
-                  onChange={(e) =>
-                    handleInputChange("adults", parseInt(e.target.value))
-                  }
-                  min="1"
-                  max={property.capacity.maxGuests}
-                  required
-                />
-              </div>
-              <div>
-                <Label htmlFor="children">Children</Label>
-                <Input
-                  id="children"
-                  type="number"
-                  value={formData.children}
-                  onChange={(e) =>
-                    handleInputChange("children", parseInt(e.target.value))
-                  }
-                  min="0"
-                  max={property.capacity.maxGuests - formData.adults}
-                />
-              </div>
-              <div>
-                <Label htmlFor="infants">Infants</Label>
-                <Input
-                  id="infants"
-                  type="number"
-                  value={formData.infants}
-                  onChange={(e) =>
-                    handleInputChange("infants", parseInt(e.target.value))
-                  }
-                  min="0"
-                  max={
-                    property.capacity.maxGuests -
-                    formData.adults -
-                    formData.children
-                  }
-                />
-              </div>
+            <div className="flex items-baseline gap-2">
+              <span className="text-3xl font-bold">${property.pricing.basePrice}</span>
+              <span className="text-lg opacity-90">/ night</span>
             </div>
+          </div>
 
-            <div>
-              <Label htmlFor="specialRequests">Special Requests</Label>
-              <textarea
-                id="specialRequests"
-                className="w-full p-2 border rounded-md"
-                value={formData.specialRequests}
-                onChange={(e) =>
-                  handleInputChange("specialRequests", e.target.value)
-                }
-                placeholder="Any special requests or notes..."
-                rows={3}
-              />
-            </div>
-
-            {/* Availability Status */}
-            {formData.checkIn && formData.checkOut && (
-              <div className="p-3 border rounded-md">
-                {checkingAvailability ? (
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                    <Loader2 className="h-4 w-4 animate-spin" />
-                    {"Checking availability..." as React.ReactNode}
-                  </div>
-                ) : isAvailable === true ? (
-                  <div className="text-green-600 text-sm font-medium">
-                    {"Available for selected dates" as React.ReactNode}
-                  </div>
-                ) : isAvailable === false ? (
-                  <div className="text-red-600 text-sm font-medium">
-                    {"Not available for selected dates" as React.ReactNode}
-                  </div>
-                ) : null}
-              </div>
+          <div className="p-6 space-y-6">
+            {error && (
+              <Alert variant="destructive" className="border-red-200 bg-red-50">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription className="text-red-800">{error}</AlertDescription>
+              </Alert>
             )}
 
-            {/* Pricing Breakdown */}
-            {pricing && (
-              <div className="border rounded-md p-4 space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span>
-                    ${property.pricing.basePrice} ×{" "}
-                    {(pricing as { nights: number }).nights} nights
-                  </span>
-                  <span>${(pricing as { subtotal: number }).subtotal}</span>
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {/* Date Selection Section */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Calendar className="h-5 w-5 text-[#8EB69B]" />
+                  <h4 className="text-lg font-semibold text-[#051F20]">Select Dates</h4>
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span>Cleaning fee</span>
-                  <span>
-                    ${(pricing as { cleaningFee: number }).cleaningFee}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Service fee</span>
-                  <span>${(pricing as { serviceFee: number }).serviceFee}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Taxes</span>
-                  <span>${(pricing as { taxes: number }).taxes}</span>
-                </div>
-                <Separator />
-                <div className="flex justify-between font-semibold">
-                  <span>Total</span>
-                  <span>${(pricing as { total: number }).total}</span>
+                
+                <div className="bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-xl p-4 border border-[#DAF1DE]/50">
+                  <AvailabilityCalendar
+                    propertyId={property.id}
+                    selectedDates={{
+                      checkIn: formData.checkIn,
+                      checkOut: formData.checkOut,
+                    }}
+                    onDateSelect={(dates) => {
+                      if (dates.checkIn) {
+                        handleInputChange("checkIn", dates.checkIn);
+                      }
+                      if (dates.checkOut) {
+                        handleInputChange("checkOut", dates.checkOut);
+                      }
+                    }}
+                    mode="select"
+                    className="w-full border-0 shadow-none bg-transparent"
+                  />
                 </div>
               </div>
-            )}
 
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={
-                loading || checkingAvailability || isAvailable === false
-              }
-            >
-              {loading ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating Booking...
-                </>
-              ) : user ? (
-                "Book Now"
-              ) : (
-                "Sign In to Book"
+              {/* Guest Selection Section */}
+              <div className="space-y-4">
+                <h4 className="text-lg font-semibold text-[#051F20] flex items-center gap-2">
+                  <Users className="h-5 w-5 text-[#8EB69B]" />
+                  Guests
+                </h4>
+                
+                <div className="grid grid-cols-3 gap-3">
+                  <div className="space-y-2">
+                    <Label htmlFor="adults" className="text-sm font-medium text-[#4A4A4A]">
+                      Adults
+                    </Label>
+                    <Input
+                      id="adults"
+                      type="number"
+                      value={formData.adults}
+                      onChange={(e) =>
+                        handleInputChange("adults", parseInt(e.target.value))
+                      }
+                      min="1"
+                      max={property.capacity.maxGuests}
+                      required
+                      className="border-[#DAF1DE] focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 rounded-lg"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="children" className="text-sm font-medium text-[#4A4A4A]">
+                      Children
+                    </Label>
+                    <Input
+                      id="children"
+                      type="number"
+                      value={formData.children}
+                      onChange={(e) =>
+                        handleInputChange("children", parseInt(e.target.value))
+                      }
+                      min="0"
+                      max={property.capacity.maxGuests - formData.adults}
+                      className="border-[#DAF1DE] focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 rounded-lg"
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="infants" className="text-sm font-medium text-[#4A4A4A]">
+                      Infants
+                    </Label>
+                    <Input
+                      id="infants"
+                      type="number"
+                      value={formData.infants}
+                      onChange={(e) =>
+                        handleInputChange("infants", parseInt(e.target.value))
+                      }
+                      min="0"
+                      max={
+                        property.capacity.maxGuests -
+                        formData.adults -
+                        formData.children
+                      }
+                      className="border-[#DAF1DE] focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 rounded-lg"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Special Requests Section */}
+              <div className="space-y-3">
+                <Label htmlFor="specialRequests" className="text-sm font-medium text-[#4A4A4A]">
+                  Special Requests (Optional)
+                </Label>
+                <textarea
+                  id="specialRequests"
+                  className="w-full p-3 border border-[#DAF1DE] rounded-lg focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 resize-none"
+                  value={formData.specialRequests}
+                  onChange={(e) =>
+                    handleInputChange("specialRequests", e.target.value)
+                  }
+                  placeholder="Any special requests or notes..."
+                  rows={3}
+                />
+              </div>
+
+              {/* Availability Status */}
+              {formData.checkIn && formData.checkOut && (
+                <div className="p-4 border border-[#DAF1DE] rounded-lg bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC]">
+                  {checkingAvailability ? (
+                    <div className="flex items-center gap-3 text-[#4A4A4A]">
+                      <Loader2 className="h-5 w-5 animate-spin text-[#8EB69B]" />
+                      <span className="font-medium">Checking availability...</span>
+                    </div>
+                  ) : isAvailable === true ? (
+                    <div className="flex items-center gap-3 text-green-700">
+                      <CheckCircle className="h-5 w-5" />
+                      <span className="font-medium">Available for selected dates</span>
+                    </div>
+                  ) : isAvailable === false ? (
+                    <div className="flex items-center gap-3 text-red-700">
+                      <AlertCircle className="h-5 w-5" />
+                      <span className="font-medium">Not available for selected dates</span>
+                    </div>
+                  ) : null}
+                </div>
               )}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+
+              {/* Pricing Breakdown */}
+              {pricing && (
+                <div className="bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] border border-[#DAF1DE] rounded-xl p-5 space-y-3">
+                  <h4 className="text-lg font-semibold text-[#051F20] mb-4">Price Breakdown</h4>
+                  
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-[#4A4A4A]">
+                        ${property.pricing.basePrice} ×{" "}
+                        {(pricing as { nights: number }).nights} nights
+                      </span>
+                      <span className="font-medium text-[#051F20]">
+                        ${(pricing as { subtotal: number }).subtotal}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-[#4A4A4A]">Cleaning fee</span>
+                      <span className="font-medium text-[#051F20]">
+                        ${(pricing as { cleaningFee: number }).cleaningFee}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-[#4A4A4A]">Service fee</span>
+                      <span className="font-medium text-[#051F20]">
+                        ${(pricing as { serviceFee: number }).serviceFee}
+                      </span>
+                    </div>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-[#4A4A4A]">Taxes</span>
+                      <span className="font-medium text-[#051F20]">
+                        ${(pricing as { taxes: number }).taxes}
+                      </span>
+                    </div>
+                  </div>
+                  
+                  <Separator className="bg-[#DAF1DE]" />
+                  
+                  <div className="flex justify-between items-center">
+                    <span className="text-lg font-bold text-[#051F20]">Total</span>
+                    <span className="text-2xl font-bold text-[#8EB69B]">
+                      ${(pricing as { total: number }).total}
+                    </span>
+                  </div>
+                </div>
+              )}
+
+              {/* Book Now Button */}
+              <Button
+                type="submit"
+                className="w-full bg-gradient-to-r from-[#8EB69B] to-[#235347] hover:from-[#235347] hover:to-[#8EB69B] text-white font-semibold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                disabled={
+                  loading || checkingAvailability || isAvailable === false
+                }
+              >
+                {loading ? (
+                  <>
+                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    Creating Booking...
+                  </>
+                ) : user ? (
+                  "Book Now"
+                ) : (
+                  "Sign In to Book"
+                )}
+              </Button>
+            </form>
+          </div>
+        </div>
+      </div>
 
       <AuthModal
         isOpen={showAuthModal}

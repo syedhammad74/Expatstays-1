@@ -270,128 +270,136 @@ export default function Page({ params }: { params: { slug: string } }) {
         )}
       </Head>
 
-      {/* Hero Section - Minimalist Layout */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-          {/* Left Column - Image Gallery */}
-          <div className="lg:col-span-2">
-            <PropertyImageGallery images={galleryImages} />
-          </div>
-
-          {/* Right Column - Property Info */}
-          <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-6">
-              {/* Property Badges - Minimalist */}
-              <div className="flex items-center gap-2 mb-4">
-                <Badge className="bg-[#8EB69B]/10 text-[#8EB69B] border-0 text-xs font-medium px-2 py-1 rounded-full">
-                  {property.propertyType.charAt(0).toUpperCase() +
-                    property.propertyType.slice(1)}
-                </Badge>
-                <Badge className="bg-green-50 text-green-700 border-0 text-xs font-medium px-2 py-1 rounded-full flex items-center gap-1">
-                  <Shield className="h-3 w-3" />
-                  Verified
-                </Badge>
+      {/* Hero Section - Responsive Layout */}
+      <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC]">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
+          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
+            {/* Left Column - Image Gallery */}
+            <div className="xl:col-span-2 order-1 xl:order-1">
+              <div className="bg-white rounded-2xl shadow-lg border border-[#DAF1DE]/50 overflow-hidden">
+                <PropertyImageGallery images={galleryImages} />
               </div>
+            </div>
 
-              {/* Property Title */}
-              <h1 className="text-xl font-bold text-gray-900 leading-tight mb-3">
-                {property.title}
-              </h1>
-
-              {/* Location */}
-              <div className="flex items-center text-gray-600 mb-4">
-                <MapPin className="w-4 h-4 mr-2" />
-                <span className="text-sm">
-                  {property.location.city}, {property.location.country}
-                </span>
-              </div>
-
-              {/* Rating */}
-              <div className="flex items-center gap-2 mb-4">
-                <div className="flex items-center">
-                  <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                  <span className="ml-1 text-sm font-medium text-gray-900">
-                    {property.rating}
-                  </span>
-                </div>
-                <span className="text-sm text-gray-500">(23 reviews)</span>
-              </div>
-
-              {/* Quick Stats - Minimalist */}
-              <div className="grid grid-cols-3 gap-4 mb-6">
-                <div className="text-center">
-                  <div className="text-lg font-semibold text-gray-900">
-                    {property.capacity.bedrooms}
+            {/* Right Column - Property Info & Booking */}
+            <div className="xl:col-span-1 order-2 xl:order-2">
+              <div className="space-y-6">
+                {/* Property Info Card */}
+                <div className="bg-white rounded-2xl shadow-lg border border-[#DAF1DE]/50 p-6">
+                  {/* Property Badges */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <Badge className="bg-[#8EB69B]/10 text-[#8EB69B] border-0 text-xs font-medium px-3 py-1 rounded-full">
+                      {property.propertyType.charAt(0).toUpperCase() +
+                        property.propertyType.slice(1)}
+                    </Badge>
+                    <Badge className="bg-green-50 text-green-700 border-0 text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
+                      <Shield className="h-3 w-3" />
+                      Verified
+                    </Badge>
                   </div>
-                  <div className="text-xs text-gray-500">Bedrooms</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-lg font-semibold text-gray-900">
-                    {property.capacity.bathrooms}
-                  </div>
-                  <div className="text-xs text-gray-500">Bathrooms</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-lg font-semibold text-gray-900">
-                    {property.capacity.maxGuests}
-                  </div>
-                  <div className="text-xs text-gray-500">Guests</div>
-                </div>
-              </div>
 
-              {/* Action Buttons - Minimalist */}
-              <div className="flex gap-2 mb-6">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50"
-                >
-                  <Heart className="h-4 w-4 mr-2" />
-                  Save
-                </Button>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex-1 border-gray-200 text-gray-600 hover:bg-gray-50"
-                >
-                  <Share2 className="h-4 w-4 mr-2" />
-                  Share
-                </Button>
-              </div>
+                  {/* Property Title */}
+                  <h1 className="text-2xl lg:text-3xl font-bold text-[#051F20] leading-tight mb-4">
+                    {property.title}
+                  </h1>
 
-              {/* Booking Form */}
-              <div className="border-t pt-4">
-                <BookingForm
-                  property={{ ...property, name: property.title }}
-                  onBookingComplete={() => {}}
-                />
+                  {/* Location */}
+                  <div className="flex items-center text-[#4A4A4A] mb-4">
+                    <MapPin className="w-4 h-4 mr-2 text-[#8EB69B]" />
+                    <span className="text-sm font-medium">
+                      {property.location.city}, {property.location.country}
+                    </span>
+                  </div>
+
+                  {/* Rating */}
+                  <div className="flex items-center gap-2 mb-6">
+                    <div className="flex items-center">
+                      <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                      <span className="ml-1 text-sm font-semibold text-[#051F20]">
+                        {property.rating}
+                      </span>
+                    </div>
+                    <span className="text-sm text-[#4A4A4A]">(23 reviews)</span>
+                  </div>
+
+                  {/* Quick Stats */}
+                  <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC] rounded-xl border border-[#DAF1DE]/50">
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#8EB69B]">
+                        {property.capacity.bedrooms}
+                      </div>
+                      <div className="text-xs text-[#4A4A4A] font-medium">Bedrooms</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#8EB69B]">
+                        {property.capacity.bathrooms}
+                      </div>
+                      <div className="text-xs text-[#4A4A4A] font-medium">Bathrooms</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-2xl font-bold text-[#8EB69B]">
+                        {property.capacity.maxGuests}
+                      </div>
+                      <div className="text-xs text-[#4A4A4A] font-medium">Guests</div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1 border-[#DAF1DE] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition-colors rounded-lg"
+                    >
+                      <Heart className="h-4 w-4 mr-2" />
+                      Save
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex-1 border-[#DAF1DE] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition-colors rounded-lg"
+                    >
+                      <Share2 className="h-4 w-4 mr-2" />
+                      Share
+                    </Button>
+                  </div>
+                </div>
+
+                {/* Booking Form - Sticky on larger screens */}
+                <div className="sticky top-6">
+                  <BookingForm
+                    property={{ ...property, name: property.title }}
+                    onBookingComplete={() => {}}
+                  />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Main Content - Minimalist */}
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Navigation Tabs - Minimalist */}
-        <div className="mb-8">
-          <nav className="flex space-x-8 border-b border-gray-200">
-            <button className="pb-3 text-sm font-medium text-[#8EB69B] border-b-2 border-[#8EB69B]">
-              Overview
-            </button>
-            <button className="pb-3 text-sm font-medium text-gray-500 hover:text-gray-700">
-              Amenities
-            </button>
-            <button className="pb-3 text-sm font-medium text-gray-500 hover:text-gray-700">
-              Location
-            </button>
-            <button className="pb-3 text-sm font-medium text-gray-500 hover:text-gray-700">
-              Reviews
-            </button>
-          </nav>
-        </div>
+      {/* Main Content - Professional Theme */}
+      <div className="bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          {/* Navigation Tabs - Professional */}
+          <div className="mb-12">
+            <nav className="flex flex-wrap gap-2 sm:gap-8 border-b border-[#DAF1DE]">
+              <button className="pb-4 text-sm font-semibold text-[#8EB69B] border-b-2 border-[#8EB69B] transition-colors">
+                Overview
+              </button>
+              <button className="pb-4 text-sm font-medium text-[#4A4A4A] hover:text-[#8EB69B] transition-colors">
+                Amenities
+              </button>
+              <button className="pb-4 text-sm font-medium text-[#4A4A4A] hover:text-[#8EB69B] transition-colors">
+                Location
+              </button>
+              <button className="pb-4 text-sm font-medium text-[#4A4A4A] hover:text-[#8EB69B] transition-colors">
+                Reviews
+              </button>
+            </nav>
+          </div>
 
-        <div className="space-y-8">
+          <div className="space-y-8">
           {/* Property Highlights - Minimalist */}
           <div className="bg-white rounded-xl border border-gray-100 p-6">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">
@@ -522,6 +530,7 @@ export default function Page({ params }: { params: { slug: string } }) {
               mode="view"
               className="w-full"
             />
+          </div>
           </div>
         </div>
       </div>

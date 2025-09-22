@@ -224,114 +224,125 @@ export function AvailabilityCalendar({
   }
 
   return (
-    <Card className={className}>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <CalendarDays className="h-5 w-5" />
-          {mode === "select" ? "Select Dates" : "Availability Calendar"}
-        </CardTitle>
-        {mode === "select" && (
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Info className="h-4 w-4" />
-            {selectingCheckIn
-              ? "Select check-in date"
-              : "Select check-out date"}
+    <div className={className}>
+      {/* Selected Dates Display */}
+      {mode === "select" && (tempCheckIn || tempCheckOut) && (
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 p-4 bg-gradient-to-r from-[#DAF1DE]/40 to-[#8EB69B]/10 rounded-xl border border-[#DAF1DE]/50 mb-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6">
+            {tempCheckIn && (
+              <div className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4 text-[#8EB69B]" />
+                <span className="text-sm font-semibold text-[#051F20]">
+                  Check-in: {format(parseISO(tempCheckIn), "MMM dd, yyyy")}
+                </span>
+              </div>
+            )}
+            {tempCheckOut && (
+              <div className="flex items-center gap-2">
+                <CheckCircle className="h-4 w-4 text-[#8EB69B]" />
+                <span className="text-sm font-semibold text-[#051F20]">
+                  Check-out: {format(parseISO(tempCheckOut), "MMM dd, yyyy")}
+                </span>
+              </div>
+            )}
           </div>
-        )}
-      </CardHeader>
-      <CardContent>
-        <div className="space-y-4">
-          {/* Selected Dates Display */}
-          {mode === "select" && (tempCheckIn || tempCheckOut) && (
-            <div className="flex items-center justify-between p-3 bg-[#DAF1DE]/30 rounded-lg">
-              <div className="flex items-center gap-4">
-                {tempCheckIn && (
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-600" />
-                    <span className="text-sm font-medium">
-                      Check-in: {format(parseISO(tempCheckIn), "MMM dd, yyyy")}
-                    </span>
-                  </div>
-                )}
-                {tempCheckOut && (
-                  <div className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-600" />
-                    <span className="text-sm font-medium">
-                      Check-out:{" "}
-                      {format(parseISO(tempCheckOut), "MMM dd, yyyy")}
-                    </span>
-                  </div>
-                )}
-              </div>
-              <Button variant="outline" size="sm" onClick={clearSelection}>
-                Clear
-              </Button>
-            </div>
-          )}
-
-          {/* Calendar */}
-          <Calendar
-            mode="single"
-            selected={tempCheckIn ? parseISO(tempCheckIn) : undefined}
-            onSelect={(date) => date && handleDateClick(date)}
-            modifiers={
-              Object.fromEntries(
-                Object.entries(modifiers).filter(
-                  ([, value]) => value !== undefined && value !== null
-                )
-              ) as import("react-day-picker").DayModifiers
-            }
-            modifiersStyles={modifiersStyles}
-            disabled={mode === "view"}
-            className="rounded-md border"
-          />
-
-          {/* Legend */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-green-100 border border-green-200 rounded"></div>
-              <span>Available</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-red-100 border border-red-200 rounded"></div>
-              <span>Blocked</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-[#8EB69B] border border-[#8EB69B] rounded"></div>
-              <span>Selected</span>
-            </div>
-            <div className="flex items-center gap-2">
-              <div className="w-3 h-3 bg-gray-100 border border-gray-200 rounded"></div>
-              <span>Past</span>
-            </div>
-          </div>
-
-          {/* Booking Info */}
-          {mode === "select" && tempCheckIn && tempCheckOut && (
-            <div className="p-3 bg-[#F4F4F4] rounded-lg">
-              <div className="flex items-center gap-2 mb-2">
-                <Clock className="h-4 w-4 text-[#8EB69B]" />
-                <span className="text-sm font-medium">Selected Stay</span>
-              </div>
-              <div className="text-sm text-muted-foreground">
-                {format(parseISO(tempCheckIn), "MMM dd, yyyy")} -{" "}
-                {format(parseISO(tempCheckOut), "MMM dd, yyyy")}
-                <br />
-                {(() => {
-                  const checkIn = parseISO(tempCheckIn);
-                  const checkOut = parseISO(tempCheckOut);
-                  const nights = Math.ceil(
-                    (checkOut.getTime() - checkIn.getTime()) /
-                      (1000 * 60 * 60 * 24)
-                  );
-                  return `${nights} night${nights > 1 ? "s" : ""}`;
-                })()}
-              </div>
-            </div>
-          )}
+          <Button 
+            variant="outline" 
+            size="sm" 
+            onClick={clearSelection}
+            className="border-[#DAF1DE] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition-colors"
+          >
+            Clear
+          </Button>
         </div>
-      </CardContent>
-    </Card>
+      )}
+
+      {/* Calendar */}
+      <div className="bg-white rounded-xl border border-[#DAF1DE]/50 overflow-hidden">
+        <Calendar
+          mode="single"
+          selected={tempCheckIn ? parseISO(tempCheckIn) : undefined}
+          onSelect={(date) => date && handleDateClick(date)}
+          modifiers={
+            Object.fromEntries(
+              Object.entries(modifiers).filter(
+                ([, value]) => value !== undefined && value !== null
+              )
+            ) as import("react-day-picker").DayModifiers
+          }
+          modifiersStyles={modifiersStyles}
+          disabled={mode === "view"}
+          className="w-full"
+          classNames={{
+            months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
+            month: "space-y-4",
+            caption: "flex justify-center pt-1 relative items-center",
+            caption_label: "text-sm font-medium text-[#051F20]",
+            nav: "space-x-1 flex items-center",
+            nav_button: "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 text-[#8EB69B] hover:text-[#235347]",
+            nav_button_previous: "absolute left-1",
+            nav_button_next: "absolute right-1",
+            table: "w-full border-collapse space-y-1",
+            head_row: "flex",
+            head_cell: "text-[#4A4A4A] rounded-md w-9 font-normal text-[0.8rem]",
+            row: "flex w-full mt-2",
+            cell: "h-9 w-9 text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-[#F8FBF9] [&:has([aria-selected].day-outside)]:text-[#4A4A4A] [&:has([aria-selected])]:bg-[#8EB69B] [&:has([aria-selected])]:text-white first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md focus-within:relative focus-within:z-20",
+            day: "h-9 w-9 p-0 font-normal aria-selected:opacity-100 hover:bg-[#DAF1DE] hover:text-[#051F20] rounded-md transition-colors",
+            day_range_end: "day-range-end",
+            day_selected: "bg-[#8EB69B] text-white hover:bg-[#8EB69B] hover:text-white focus:bg-[#8EB69B] focus:text-white",
+            day_today: "bg-[#F8FBF9] text-[#8EB69B] font-semibold",
+            day_outside: "day-outside text-[#4A4A4A] opacity-50 aria-selected:bg-[#F8FBF9] aria-selected:text-[#4A4A4A] aria-selected:opacity-30",
+            day_disabled: "text-[#4A4A4A] opacity-50",
+            day_range_middle: "aria-selected:bg-[#DAF1DE] aria-selected:text-[#051F20]",
+            day_hidden: "invisible",
+          }}
+        />
+      </div>
+
+      {/* Legend */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mt-4 text-xs">
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-[#DAF1DE] border border-[#8EB69B]/30 rounded"></div>
+          <span className="text-[#4A4A4A] font-medium">Available</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-red-100 border border-red-200 rounded"></div>
+          <span className="text-[#4A4A4A] font-medium">Blocked</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-[#8EB69B] border border-[#8EB69B] rounded"></div>
+          <span className="text-[#4A4A4A] font-medium">Selected</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <div className="w-3 h-3 bg-gray-100 border border-gray-200 rounded"></div>
+          <span className="text-[#4A4A4A] font-medium">Past</span>
+        </div>
+      </div>
+
+      {/* Booking Info */}
+      {mode === "select" && tempCheckIn && tempCheckOut && (
+        <div className="p-4 bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC] rounded-xl border border-[#DAF1DE]/50 mt-4">
+          <div className="flex items-center gap-2 mb-2">
+            <Clock className="h-4 w-4 text-[#8EB69B]" />
+            <span className="text-sm font-semibold text-[#051F20]">Selected Stay</span>
+          </div>
+          <div className="text-sm text-[#4A4A4A]">
+            {format(parseISO(tempCheckIn), "MMM dd, yyyy")} -{" "}
+            {format(parseISO(tempCheckOut), "MMM dd, yyyy")}
+            <br />
+            {(() => {
+              const checkIn = parseISO(tempCheckIn);
+              const checkOut = parseISO(tempCheckOut);
+              const nights = Math.ceil(
+                (checkOut.getTime() - checkIn.getTime()) /
+                  (1000 * 60 * 60 * 24)
+              );
+              return `${nights} night${nights > 1 ? "s" : ""}`;
+            })()}
+          </div>
+        </div>
+      )}
+    </div>
   );
 }
 
