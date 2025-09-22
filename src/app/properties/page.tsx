@@ -703,7 +703,7 @@ export default function PropertiesPage() {
     if (loading) {
       return (
         <div className="flex justify-center mt-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl">
             {Array.from({ length: 1 }, (_, i) => (
               <div
                 key={i}
@@ -786,7 +786,7 @@ export default function PropertiesPage() {
         )}
 
         <div className="flex justify-center mt-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 max-w-7xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl">
             {filteredProperties.map((property) => (
               <MemoizedPropertyCard
                 key={property.id}

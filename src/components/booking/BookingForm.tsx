@@ -15,7 +15,13 @@ import {
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Separator } from "@/components/ui/separator";
-import { Calendar, Loader2, AlertCircle, Users, CheckCircle } from "lucide-react";
+import {
+  Calendar,
+  Loader2,
+  AlertCircle,
+  Users,
+  CheckCircle,
+} from "lucide-react";
 import { Booking } from "@/lib/types/firebase";
 import { AuthModal } from "@/components/auth/AuthModal";
 import { AvailabilityCalendar } from "@/components/AvailabilityCalendar";
@@ -234,37 +240,43 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
 
   return (
     <>
-      <div className="w-full max-w-md mx-auto lg:mx-0">
+      <div className="w-full max-w-sm mx-auto lg:mx-0">
         {/* Header Section */}
-        <div className="bg-white rounded-2xl shadow-lg border border-[#DAF1DE]/50 overflow-hidden">
-          <div className="bg-gradient-to-r from-[#8EB69B] to-[#235347] p-6 text-white">
-            <div className="flex items-center gap-3 mb-2">
-              <Calendar className="h-6 w-6" />
-              <h3 className="text-xl font-bold">Book Your Stay</h3>
+        <div className="bg-white rounded-xl shadow-md border border-[#DAF1DE]/50 overflow-hidden">
+          <div className="bg-gradient-to-r from-[#8EB69B] to-[#235347] p-4 text-white">
+            <div className="flex items-center gap-2 mb-2">
+              <Calendar className="h-5 w-5" />
+              <h3 className="text-lg font-bold">Book Your Stay</h3>
             </div>
             <div className="flex items-baseline gap-2">
-              <span className="text-3xl font-bold">${property.pricing.basePrice}</span>
-              <span className="text-lg opacity-90">/ night</span>
+              <span className="text-2xl font-bold">
+                ${property.pricing.basePrice}
+              </span>
+              <span className="text-sm opacity-90">/ night</span>
             </div>
           </div>
 
-          <div className="p-6 space-y-6">
+          <div className="p-4 space-y-4">
             {error && (
               <Alert variant="destructive" className="border-red-200 bg-red-50">
                 <AlertCircle className="h-4 w-4" />
-                <AlertDescription className="text-red-800">{error}</AlertDescription>
+                <AlertDescription className="text-red-800">
+                  {error}
+                </AlertDescription>
               </Alert>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Date Selection Section */}
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 mb-3">
-                  <Calendar className="h-5 w-5 text-[#8EB69B]" />
-                  <h4 className="text-lg font-semibold text-[#051F20]">Select Dates</h4>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 mb-2">
+                  <Calendar className="h-4 w-4 text-[#8EB69B]" />
+                  <h4 className="text-base font-semibold text-[#051F20]">
+                    Select Dates
+                  </h4>
                 </div>
-                
-                <div className="bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-xl p-4 border border-[#DAF1DE]/50">
+
+                <div className="bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] rounded-lg p-3 border border-[#DAF1DE]/50">
                   <AvailabilityCalendar
                     propertyId={property.id}
                     selectedDates={{
@@ -286,15 +298,18 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
               </div>
 
               {/* Guest Selection Section */}
-              <div className="space-y-4">
-                <h4 className="text-lg font-semibold text-[#051F20] flex items-center gap-2">
-                  <Users className="h-5 w-5 text-[#8EB69B]" />
+              <div className="space-y-3">
+                <h4 className="text-base font-semibold text-[#051F20] flex items-center gap-2">
+                  <Users className="h-4 w-4 text-[#8EB69B]" />
                   Guests
                 </h4>
-                
-                <div className="grid grid-cols-3 gap-3">
+
+                <div className="grid grid-cols-3 gap-2">
                   <div className="space-y-2">
-                    <Label htmlFor="adults" className="text-sm font-medium text-[#4A4A4A]">
+                    <Label
+                      htmlFor="adults"
+                      className="text-sm font-medium text-[#4A4A4A]"
+                    >
                       Adults
                     </Label>
                     <Input
@@ -311,7 +326,10 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="children" className="text-sm font-medium text-[#4A4A4A]">
+                    <Label
+                      htmlFor="children"
+                      className="text-sm font-medium text-[#4A4A4A]"
+                    >
                       Children
                     </Label>
                     <Input
@@ -327,7 +345,10 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="infants" className="text-sm font-medium text-[#4A4A4A]">
+                    <Label
+                      htmlFor="infants"
+                      className="text-sm font-medium text-[#4A4A4A]"
+                    >
                       Infants
                     </Label>
                     <Input
@@ -350,39 +371,48 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
               </div>
 
               {/* Special Requests Section */}
-              <div className="space-y-3">
-                <Label htmlFor="specialRequests" className="text-sm font-medium text-[#4A4A4A]">
+              <div className="space-y-2">
+                <Label
+                  htmlFor="specialRequests"
+                  className="text-sm font-medium text-[#4A4A4A]"
+                >
                   Special Requests (Optional)
                 </Label>
                 <textarea
                   id="specialRequests"
-                  className="w-full p-3 border border-[#DAF1DE] rounded-lg focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 resize-none"
+                  className="w-full p-2.5 border border-[#DAF1DE] rounded-lg focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 resize-none text-sm"
                   value={formData.specialRequests}
                   onChange={(e) =>
                     handleInputChange("specialRequests", e.target.value)
                   }
                   placeholder="Any special requests or notes..."
-                  rows={3}
+                  rows={2}
                 />
               </div>
 
               {/* Availability Status */}
               {formData.checkIn && formData.checkOut && (
-                <div className="p-4 border border-[#DAF1DE] rounded-lg bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC]">
+                <div className="p-3 border border-[#DAF1DE] rounded-lg bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC]">
                   {checkingAvailability ? (
-                    <div className="flex items-center gap-3 text-[#4A4A4A]">
-                      <Loader2 className="h-5 w-5 animate-spin text-[#8EB69B]" />
-                      <span className="font-medium">Checking availability...</span>
+                    <div className="flex items-center gap-2 text-[#4A4A4A]">
+                      <Loader2 className="h-4 w-4 animate-spin text-[#8EB69B]" />
+                      <span className="text-sm font-medium">
+                        Checking availability...
+                      </span>
                     </div>
                   ) : isAvailable === true ? (
-                    <div className="flex items-center gap-3 text-green-700">
-                      <CheckCircle className="h-5 w-5" />
-                      <span className="font-medium">Available for selected dates</span>
+                    <div className="flex items-center gap-2 text-green-700">
+                      <CheckCircle className="h-4 w-4" />
+                      <span className="text-sm font-medium">
+                        Available for selected dates
+                      </span>
                     </div>
                   ) : isAvailable === false ? (
-                    <div className="flex items-center gap-3 text-red-700">
-                      <AlertCircle className="h-5 w-5" />
-                      <span className="font-medium">Not available for selected dates</span>
+                    <div className="flex items-center gap-2 text-red-700">
+                      <AlertCircle className="h-4 w-4" />
+                      <span className="text-sm font-medium">
+                        Not available for selected dates
+                      </span>
                     </div>
                   ) : null}
                 </div>
@@ -390,10 +420,12 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
 
               {/* Pricing Breakdown */}
               {pricing && (
-                <div className="bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] border border-[#DAF1DE] rounded-xl p-5 space-y-3">
-                  <h4 className="text-lg font-semibold text-[#051F20] mb-4">Price Breakdown</h4>
-                  
-                  <div className="space-y-3">
+                <div className="bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] border border-[#DAF1DE] rounded-lg p-4 space-y-2">
+                  <h4 className="text-base font-semibold text-[#051F20] mb-3">
+                    Price Breakdown
+                  </h4>
+
+                  <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="text-[#4A4A4A]">
                         ${property.pricing.basePrice} ×{" "}
@@ -422,12 +454,14 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
                       </span>
                     </div>
                   </div>
-                  
+
                   <Separator className="bg-[#DAF1DE]" />
-                  
+
                   <div className="flex justify-between items-center">
-                    <span className="text-lg font-bold text-[#051F20]">Total</span>
-                    <span className="text-2xl font-bold text-[#8EB69B]">
+                    <span className="text-base font-bold text-[#051F20]">
+                      Total
+                    </span>
+                    <span className="text-xl font-bold text-[#8EB69B]">
                       ${(pricing as { total: number }).total}
                     </span>
                   </div>
@@ -437,14 +471,14 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
               {/* Book Now Button */}
               <Button
                 type="submit"
-                className="w-full bg-gradient-to-r from-[#8EB69B] to-[#235347] hover:from-[#235347] hover:to-[#8EB69B] text-white font-semibold py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
+                className="w-full bg-gradient-to-r from-[#8EB69B] to-[#235347] hover:from-[#235347] hover:to-[#8EB69B] text-white font-semibold py-3 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={
                   loading || checkingAvailability || isAvailable === false
                 }
               >
                 {loading ? (
                   <>
-                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Creating Booking...
                   </>
                 ) : user ? (

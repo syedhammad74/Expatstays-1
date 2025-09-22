@@ -346,41 +346,41 @@ export default function Page({ params }: { params: { slug: string } }) {
         )}
       </Head>
 
-      {/* Hero Section - Responsive Layout */}
-      <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8">
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 lg:gap-8">
+      {/* Hero Section - Compact Professional Layout */}
+      <div className="bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC]">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Left Column - Image Gallery */}
-            <div className="xl:col-span-2 order-1 xl:order-1">
-              <div className="bg-white rounded-2xl shadow-lg border border-[#DAF1DE]/50 overflow-hidden">
+            <div className="lg:col-span-2">
+              <div className="bg-white rounded-xl shadow-md border border-[#DAF1DE]/50 overflow-hidden">
                 <PropertyImageGallery images={galleryImages} />
               </div>
             </div>
 
             {/* Right Column - Property Info & Booking */}
-            <div className="xl:col-span-1 order-2 xl:order-2">
-              <div className="space-y-6">
+            <div className="lg:col-span-1">
+              <div className="space-y-4">
                 {/* Property Info Card */}
-                <div className="bg-white rounded-2xl shadow-lg border border-[#DAF1DE]/50 p-6">
+                <div className="bg-white rounded-xl shadow-md border border-[#DAF1DE]/50 p-5">
                   {/* Property Badges */}
-                  <div className="flex items-center gap-2 mb-4">
-                    <Badge className="bg-[#8EB69B]/10 text-[#8EB69B] border-0 text-xs font-medium px-3 py-1 rounded-full">
+                  <div className="flex items-center gap-2 mb-3">
+                    <Badge className="bg-[#8EB69B]/10 text-[#8EB69B] border-0 text-xs font-medium px-2.5 py-1 rounded-full">
                       {property.propertyType.charAt(0).toUpperCase() +
                         property.propertyType.slice(1)}
                     </Badge>
-                    <Badge className="bg-green-50 text-green-700 border-0 text-xs font-medium px-3 py-1 rounded-full flex items-center gap-1">
+                    <Badge className="bg-green-50 text-green-700 border-0 text-xs font-medium px-2.5 py-1 rounded-full flex items-center gap-1">
                       <Shield className="h-3 w-3" />
                       Verified
                     </Badge>
                   </div>
 
                   {/* Property Title */}
-                  <h1 className="text-2xl lg:text-3xl font-bold text-[#051F20] leading-tight mb-4">
+                  <h1 className="text-xl lg:text-2xl font-bold text-[#051F20] leading-tight mb-3">
                     {property.title}
                   </h1>
 
                   {/* Location */}
-                  <div className="flex items-center text-[#4A4A4A] mb-4">
+                  <div className="flex items-center text-[#4A4A4A] mb-3">
                     <MapPin className="w-4 h-4 mr-2 text-[#8EB69B]" />
                     <span className="text-sm font-medium">
                       {property.location.city}, {property.location.country}
@@ -388,7 +388,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                   </div>
 
                   {/* Rating */}
-                  <div className="flex items-center gap-2 mb-6">
+                  <div className="flex items-center gap-2 mb-4">
                     <div className="flex items-center">
                       <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                       <span className="ml-1 text-sm font-semibold text-[#051F20]">
@@ -399,9 +399,9 @@ export default function Page({ params }: { params: { slug: string } }) {
                   </div>
 
                   {/* Quick Stats */}
-                  <div className="grid grid-cols-3 gap-4 mb-6 p-4 bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC] rounded-xl border border-[#DAF1DE]/50">
+                  <div className="grid grid-cols-3 gap-3 mb-4 p-3 bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC] rounded-lg border border-[#DAF1DE]/50">
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#8EB69B]">
+                      <div className="text-xl font-bold text-[#8EB69B]">
                         {property.capacity.bedrooms}
                       </div>
                       <div className="text-xs text-[#4A4A4A] font-medium">
@@ -409,7 +409,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                       </div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#8EB69B]">
+                      <div className="text-xl font-bold text-[#8EB69B]">
                         {property.capacity.bathrooms}
                       </div>
                       <div className="text-xs text-[#4A4A4A] font-medium">
@@ -417,7 +417,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                       </div>
                     </div>
                     <div className="text-center">
-                      <div className="text-2xl font-bold text-[#8EB69B]">
+                      <div className="text-xl font-bold text-[#8EB69B]">
                         {property.capacity.maxGuests}
                       </div>
                       <div className="text-xs text-[#4A4A4A] font-medium">
@@ -427,28 +427,28 @@ export default function Page({ params }: { params: { slug: string } }) {
                   </div>
 
                   {/* Action Buttons */}
-                  <div className="flex gap-3">
+                  <div className="flex gap-2">
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1 border-[#DAF1DE] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition-colors rounded-lg"
+                      className="flex-1 border-[#DAF1DE] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition-colors rounded-lg text-xs"
                     >
-                      <Heart className="h-4 w-4 mr-2" />
+                      <Heart className="h-3.5 w-3.5 mr-1.5" />
                       Save
                     </Button>
                     <Button
                       variant="outline"
                       size="sm"
-                      className="flex-1 border-[#DAF1DE] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition-colors rounded-lg"
+                      className="flex-1 border-[#DAF1DE] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition-colors rounded-lg text-xs"
                     >
-                      <Share2 className="h-4 w-4 mr-2" />
+                      <Share2 className="h-3.5 w-3.5 mr-1.5" />
                       Share
                     </Button>
                   </div>
                 </div>
 
                 {/* Booking Form - Sticky on larger screens */}
-                <div className="sticky top-6">
+                <div className="sticky top-4">
                   <BookingForm
                     property={{ ...property, name: property.title }}
                     onBookingComplete={() => {}}
@@ -460,31 +460,31 @@ export default function Page({ params }: { params: { slug: string } }) {
         </div>
       </div>
 
-      {/* Main Content - Professional Theme */}
+      {/* Main Content - Compact Professional Theme */}
       <div className="bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          {/* Navigation Tabs - Professional */}
-          <div className="mb-12">
-            <nav className="flex flex-wrap gap-2 sm:gap-8 border-b border-[#DAF1DE]">
-              <button className="pb-4 text-sm font-semibold text-[#8EB69B] border-b-2 border-[#8EB69B] transition-colors">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          {/* Navigation Tabs - Compact */}
+          <div className="mb-8">
+            <nav className="flex flex-wrap gap-2 sm:gap-6 border-b border-[#DAF1DE]">
+              <button className="pb-3 text-sm font-semibold text-[#8EB69B] border-b-2 border-[#8EB69B] transition-colors">
                 Overview
               </button>
-              <button className="pb-4 text-sm font-medium text-[#4A4A4A] hover:text-[#8EB69B] transition-colors">
+              <button className="pb-3 text-sm font-medium text-[#4A4A4A] hover:text-[#8EB69B] transition-colors">
                 Amenities
               </button>
-              <button className="pb-4 text-sm font-medium text-[#4A4A4A] hover:text-[#8EB69B] transition-colors">
+              <button className="pb-3 text-sm font-medium text-[#4A4A4A] hover:text-[#8EB69B] transition-colors">
                 Location
               </button>
-              <button className="pb-4 text-sm font-medium text-[#4A4A4A] hover:text-[#8EB69B] transition-colors">
+              <button className="pb-3 text-sm font-medium text-[#4A4A4A] hover:text-[#8EB69B] transition-colors">
                 Reviews
               </button>
             </nav>
           </div>
 
-          <div className="space-y-8">
-            {/* Property Highlights - Minimalist */}
-            <div className="bg-white rounded-xl border border-gray-100 p-6">
-              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          <div className="space-y-6">
+            {/* Property Highlights - Compact */}
+            <div className="bg-white rounded-lg border border-gray-100 p-5">
+              <h2 className="text-lg font-semibold text-gray-900 mb-3">
                 Property Highlights
               </h2>
 
