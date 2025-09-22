@@ -66,7 +66,7 @@ const blogPost = {
   publishedDate: "December 10, 2024",
   author: "Expat Stays Team",
   category: "Travel Guides",
-  featuredImageUrl: "/media/blogs/EX-2.JPG",
+  featuredImageUrl: "/media/blogs-appartments/EX-2.JPG",
   readTime: "8 min read",
 };
 

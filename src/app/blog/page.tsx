@@ -33,7 +33,7 @@ const blogPosts = [
     date: "December 15, 2024",
     excerpt:
       "Islamabad, the capital of Pakistan, is often described as one of the most beautiful capitals in the world. Discover the top 5 experiences that will make your trip unforgettable...",
-    imageUrl: "/media/blogs/EX-1.JPG",
+    imageUrl: "/media/blogs-appartments/EX-1.JPG",
     imageHint: "Faisal Mosque Islamabad",
     author: "Expat Stays Team",
     category: "Travel Guides",
@@ -45,7 +45,7 @@ const blogPosts = [
     date: "December 10, 2024",
     excerpt:
       "Islamabad is perfectly located for travelers who love nature, cool weather, and scenic getaways. Explore the best day trips from the capital to nearby hill stations...",
-    imageUrl: "/media/blogs/EX-2.JPG",
+    imageUrl: "/media/blogs-appartments/EX-2.JPG",
     imageHint: "Murree hill station view",
     author: "Expat Stays Team",
     category: "Travel Guides",
@@ -57,7 +57,7 @@ const blogPosts = [
     date: "December 5, 2024",
     excerpt:
       "Moving abroad can be both exciting and overwhelming. With the right mindset and practical steps, you can quickly create a lifestyle that feels welcoming and familiar...",
-    imageUrl: "/media/blogs/EX-3.JPG",
+    imageUrl: "/media/blogs-appartments/EX-3.JPG",
     imageHint: "expat living comfort",
     author: "Expat Stays Team",
     category: "Lifestyle",
@@ -69,7 +69,7 @@ const blogPosts = [
     date: "November 28, 2024",
     excerpt:
       "Islamabad may be known for its calm atmosphere and greenery, but it's also a city that surprises visitors with its vibrant food culture. Discover the best dining spots...",
-    imageUrl: "/media/blogs/EX-4.JPG",
+    imageUrl: "/media/blogs-appartments/EX-4.JPG",
     imageHint: "Islamabad restaurant dining",
     author: "Expat Stays Team",
     category: "Food & Dining",

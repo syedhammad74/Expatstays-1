@@ -1,10 +1,25 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Basic configuration for optimal performance
+  // Performance optimizations
   reactStrictMode: true,
+  poweredByHeader: false,
+  
+  // Experimental features for performance
+  experimental: {
+    optimizeCss: true,
+    scrollRestoration: true,
+    optimizePackageImports: [
+      'lucide-react',
+      'framer-motion',
+      '@radix-ui/react-icons',
+      'react-hook-form',
+      '@hookform/resolvers',
+      'zod'
+    ],
+  },
 
-  // Image optimization
+  // Advanced image optimization
   images: {
     remotePatterns: [
       {
@@ -24,19 +39,22 @@ const nextConfig: NextConfig = {
         hostname: "storage.googleapis.com",
       },
     ],
-    formats: ["image/webp", "image/avif"],
+    formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
-    minimumCacheTTL: 60,
+    minimumCacheTTL: 31536000, // 1 year
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     unoptimized: false,
+    loader: 'default',
+    quality: 85,
   },
 
-  // Compression
+  // Compression and optimization
   compress: true,
+  swcMinify: true,
 
-  // Headers for better caching
+  // Advanced headers for maximum performance
   async headers() {
     return [
       {
@@ -49,6 +67,14 @@ const nextConfig: NextConfig = {
           {
             key: "X-Content-Type-Options",
             value: "nosniff",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
           },
         ],
       },
@@ -75,27 +101,60 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=86400",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/api/(.*)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=300, s-maxage=300",
           },
         ],
       },
     ];
   },
 
-  // Webpack optimizations
+  // Advanced webpack optimizations
   webpack: (config, { dev, isServer }) => {
-    // Optimize for production
+    // Production optimizations
     if (!dev && !isServer) {
       config.optimization = {
         ...config.optimization,
         splitChunks: {
           chunks: "all",
+          minSize: 20000,
+          maxSize: 244000,
           cacheGroups: {
             vendor: {
               test: /[\\/]node_modules[\\/]/,
               name: "vendors",
               chunks: "all",
               priority: 10,
+              maxSize: 244000,
+            },
+            firebase: {
+              test: /[\\/]node_modules[\\/](firebase|@firebase)[\\/]/,
+              name: "firebase",
+              chunks: "all",
+              priority: 20,
+              maxSize: 244000,
+            },
+            framer: {
+              test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+              name: "framer-motion",
+              chunks: "all",
+              priority: 20,
+              maxSize: 244000,
+            },
+            radix: {
+              test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
+              name: "radix-ui",
+              chunks: "all",
+              priority: 20,
+              maxSize: 244000,
             },
             commons: {
               name: "commons",
@@ -103,10 +162,31 @@ const nextConfig: NextConfig = {
               chunks: "all",
               priority: 5,
               reuseExistingChunk: true,
+              maxSize: 244000,
             },
           },
         },
+        runtimeChunk: {
+          name: "runtime",
+        },
+        usedExports: true,
+        sideEffects: false,
       };
+
+      // Tree shaking optimization
+      config.optimization.providedExports = true;
+      config.optimization.usedExports = true;
+    }
+
+    // Bundle analyzer in development
+    if (dev && process.env.ANALYZE === 'true') {
+      const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+      config.plugins.push(
+        new BundleAnalyzerPlugin({
+          analyzerMode: 'server',
+          openAnalyzer: true,
+        })
+      );
     }
 
     return config;
@@ -115,13 +195,20 @@ const nextConfig: NextConfig = {
   // Output configuration
   output: "standalone",
 
-  // ESLint and TypeScript
+  // Build optimizations
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
+  },
+
+  // Performance monitoring
+  onDemandEntries: {
+    maxInactiveAge: 25 * 1000,
+    pagesBufferLength: 2,
   },
 };
 
 export default nextConfig;
+

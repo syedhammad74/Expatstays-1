@@ -115,6 +115,77 @@ export default function Page({ params }: { params: { slug: string } }) {
           return;
         }
 
+        // Hardcoded apartment property
+        if (slug === "apartment_dam_view_islamabad") {
+          const apartmentProperty: Property = {
+            id: "apartment_dam_view_islamabad",
+            title: "Stunning 2-Bedroom Apartment with Dam View",
+            description:
+              "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen. Located in the beautiful Margalla Hills area of Islamabad, this apartment provides easy access to the city's attractions while offering a tranquil retreat with breathtaking views of the dam and surrounding mountains.",
+            location: {
+              address: "Margalla Hills, Islamabad",
+              city: "Islamabad",
+              state: "Islamabad Capital Territory",
+              country: "Pakistan",
+              coordinates: { lat: 33.6844, lng: 73.0479 },
+            },
+            propertyType: "apartment",
+            capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+            amenities: [
+              "High-Speed WiFi",
+              "Air Conditioning",
+              "Modern Kitchen",
+              "Private Parking",
+              "24/7 Security",
+              "Elevator Access",
+              "Gym Access",
+              "Swimming Pool Access",
+              "Dam View",
+              "Mountain Views",
+              "Family-Friendly",
+              "Pet-Friendly",
+              "Concierge Service",
+              "Laundry Service",
+              "Housekeeping",
+            ],
+            images: [
+              "/media/blogs-appartments/EX-1.JPG",
+              "/media/blogs-appartments/EX-2.JPG",
+              "/media/blogs-appartments/EX-3.JPG",
+              "/media/blogs-appartments/EX-4.JPG",
+              "/media/blogs-appartments/ex-5.JPG",
+              "/media/blogs-appartments/ex-6.JPG",
+              "/media/blogs-appartments/EX-7.JPG",
+              "/media/blogs-appartments/EX-8.JPG",
+              "/media/blogs-appartments/EX-9.JPG",
+              "/media/blogs-appartments/IMG_6740.JPG",
+            ],
+            pricing: {
+              basePrice: 120,
+              currency: "USD",
+              cleaningFee: 25,
+              serviceFee: 15,
+            },
+            availability: {
+              isActive: true,
+              minimumStay: 1,
+              maximumStay: 30,
+            },
+            rating: 4.7,
+            reviews: 89,
+            owner: {
+              uid: "owner_apartment_islamabad",
+              name: "Fatima Ali",
+              email: "fatima@expatstays.com",
+            },
+            createdAt: "2024-09-15T10:00:00Z",
+            updatedAt: "2024-09-15T10:00:00Z",
+          };
+          setProperty(apartmentProperty);
+          setLoading(false);
+          return;
+        }
+
         // Try to load from Firebase
         const fetchedProperty = await propertyService.getPropertyById(slug);
         if (fetchedProperty) {
@@ -144,16 +215,16 @@ export default function Page({ params }: { params: { slug: string } }) {
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-20">
-        <div className="container mx-auto px-4 py-8">
-          <div className="animate-pulse space-y-6">
-            <div className="aspect-video bg-gray-200 rounded-lg"></div>
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2 space-y-3">
-                <div className="h-6 bg-gray-200 rounded"></div>
-                <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-                <div className="h-20 bg-gray-200 rounded"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="animate-pulse space-y-8">
+            <div className="aspect-[4/3] bg-gray-200 rounded-2xl"></div>
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+              <div className="lg:col-span-2 space-y-6">
+                <div className="h-8 bg-gray-200 rounded-xl w-3/4"></div>
+                <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                <div className="h-24 bg-gray-200 rounded-xl"></div>
               </div>
-              <div className="h-80 bg-gray-200 rounded"></div>
+              <div className="h-96 bg-gray-200 rounded-2xl"></div>
             </div>
           </div>
         </div>
@@ -164,17 +235,22 @@ export default function Page({ params }: { params: { slug: string } }) {
   if (!property) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-20">
-        <div className="container mx-auto px-4 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center">
-            <h1 className="text-2xl font-bold text-gray-900 mb-4">
-              Property Not Found
-            </h1>
-            <p className="text-gray-600 mb-8">
-              The property you're looking for doesn't exist.
-            </p>
-            <Button onClick={() => router.push("/properties")}>
-              Back to Properties
-            </Button>
+            <div className="max-w-md mx-auto">
+              <h1 className="text-3xl font-bold text-[#051F20] mb-4">
+                Property Not Found
+              </h1>
+              <p className="text-[#4A4A4A] mb-8 text-lg">
+                The property you're looking for doesn't exist.
+              </p>
+              <Button
+                onClick={() => router.push("/properties")}
+                className="bg-[#8EB69B] hover:bg-[#235347] text-white px-8 py-3 rounded-xl text-base font-semibold"
+              >
+                Back to Properties
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -189,11 +265,11 @@ export default function Page({ params }: { params: { slug: string } }) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-20">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Left Column - Image Gallery */}
           <div className="lg:col-span-2">
-            <Card className="border border-[#DAF1DE]/50 shadow-lg">
+            <Card className="border-0 shadow-xl rounded-2xl overflow-hidden bg-white">
               <CardContent className="p-0">
                 <PropertyImageGallery
                   images={galleryImages}
@@ -205,35 +281,35 @@ export default function Page({ params }: { params: { slug: string } }) {
 
           {/* Right Column - Property Info */}
           <div className="lg:col-span-1">
-            <Card className="border border-[#DAF1DE]/50 shadow-lg">
-              <CardHeader>
-                <div className="flex items-center gap-2 mb-3">
-                  <Badge className="bg-[#8EB69B]/10 text-[#8EB69B] border-0 text-xs font-medium px-2.5 py-1 rounded-full">
+            <Card className="border-0 shadow-xl rounded-2xl bg-white sticky top-24">
+              <CardHeader className="pb-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <Badge className="bg-[#8EB69B]/15 text-[#235347] border-0 text-xs font-semibold px-3 py-1.5 rounded-full">
                     {property.propertyType.charAt(0).toUpperCase() +
                       property.propertyType.slice(1)}
                   </Badge>
-                  <Badge className="bg-[#235347]/10 text-[#235347] border-0 text-xs font-medium px-2.5 py-1 rounded-full">
+                  <Badge className="bg-[#235347]/10 text-[#235347] border-0 text-xs font-semibold px-3 py-1.5 rounded-full">
                     Verified
                   </Badge>
                 </div>
-                <CardTitle className="text-xl font-bold text-[#051F20] leading-tight">
+                <CardTitle className="text-2xl font-bold text-[#051F20] leading-tight mb-2">
                   {property.title}
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6">
                 {/* Location */}
-                <div className="flex items-center gap-2 text-[#4A4A4A] text-sm">
-                  <MapPin className="h-4 w-4 text-[#8EB69B]" />
-                  <span>
+                <div className="flex items-center gap-3 text-[#4A4A4A]">
+                  <MapPin className="h-5 w-5 text-[#8EB69B] flex-shrink-0" />
+                  <span className="text-sm font-medium">
                     {property.location.city}, {property.location.country}
                   </span>
                 </div>
 
                 {/* Rating */}
-                <div className="flex items-center gap-2">
-                  <div className="flex items-center gap-1">
-                    <Star className="h-4 w-4 fill-[#FFD700] text-[#FFD700]" />
-                    <span className="text-sm font-medium text-[#051F20]">
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2">
+                    <Star className="h-5 w-5 fill-[#FFD700] text-[#FFD700]" />
+                    <span className="text-base font-semibold text-[#051F20]">
                       {property.rating}
                     </span>
                   </div>
@@ -243,46 +319,58 @@ export default function Page({ params }: { params: { slug: string } }) {
                 </div>
 
                 {/* Property Specs */}
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="flex items-center gap-2 text-sm text-[#4A4A4A]">
-                    <BedDouble className="h-4 w-4 text-[#8EB69B]" />
-                    <span>{property.capacity.bedrooms} bedrooms</span>
+                <div className="grid grid-cols-1 gap-4">
+                  <div className="flex items-center gap-3 text-[#4A4A4A]">
+                    <BedDouble className="h-5 w-5 text-[#8EB69B] flex-shrink-0" />
+                    <span className="text-sm font-medium">
+                      {property.capacity.bedrooms} bedrooms
+                    </span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-[#4A4A4A]">
-                    <Bath className="h-4 w-4 text-[#8EB69B]" />
-                    <span>{property.capacity.bathrooms} bathrooms</span>
+                  <div className="flex items-center gap-3 text-[#4A4A4A]">
+                    <Bath className="h-5 w-5 text-[#8EB69B] flex-shrink-0" />
+                    <span className="text-sm font-medium">
+                      {property.capacity.bathrooms} bathrooms
+                    </span>
                   </div>
-                  <div className="flex items-center gap-2 text-sm text-[#4A4A4A]">
-                    <Users className="h-4 w-4 text-[#8EB69B]" />
-                    <span>Up to {property.capacity.maxGuests} guests</span>
+                  <div className="flex items-center gap-3 text-[#4A4A4A]">
+                    <Users className="h-5 w-5 text-[#8EB69B] flex-shrink-0" />
+                    <span className="text-sm font-medium">
+                      Up to {property.capacity.maxGuests} guests
+                    </span>
                   </div>
                 </div>
 
                 {/* Price */}
-                <div className="border-t border-[#E5E7EB] pt-4">
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-2xl font-bold text-[#051F20]">
+                <div className="border-t border-[#E5E7EB] pt-6">
+                  <div className="flex items-baseline gap-2 mb-2">
+                    <span className="text-3xl font-bold text-[#051F20]">
                       ${property.pricing.basePrice}
                     </span>
-                    <span className="text-[#4A4A4A] text-sm">per night</span>
+                    <span className="text-[#4A4A4A] text-base">per night</span>
                   </div>
-                  <p className="text-xs text-[#4A4A4A] mt-1">
+                  <p className="text-sm text-[#4A4A4A]">
                     + ${property.pricing.cleaningFee} cleaning fee + $
                     {property.pricing.serviceFee} service fee
                   </p>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="space-y-2">
-                  <Button className="w-full bg-[#8EB69B] hover:bg-[#235347] text-white">
+                <div className="space-y-3">
+                  <Button className="w-full bg-[#8EB69B] hover:bg-[#235347] text-white h-12 text-base font-semibold rounded-xl">
                     Book Now
                   </Button>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" className="flex-1">
+                  <div className="flex gap-3">
+                    <Button
+                      variant="outline"
+                      className="flex-1 h-10 border-[#8EB69B]/30 text-[#8EB69B] hover:bg-[#8EB69B]/10 rounded-xl"
+                    >
                       <Heart className="h-4 w-4 mr-2" />
                       Save
                     </Button>
-                    <Button variant="outline" size="sm" className="flex-1">
+                    <Button
+                      variant="outline"
+                      className="flex-1 h-10 border-[#8EB69B]/30 text-[#8EB69B] hover:bg-[#8EB69B]/10 rounded-xl"
+                    >
                       <Share2 className="h-4 w-4 mr-2" />
                       Share
                     </Button>
@@ -294,39 +382,39 @@ export default function Page({ params }: { params: { slug: string } }) {
         </div>
 
         {/* Property Details Section */}
-        <div className="mt-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
           {/* Left Column - Description & Amenities */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-8">
             {/* Description */}
-            <Card className="border border-[#DAF1DE]/50 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-[#051F20]">
+            <Card className="border-0 shadow-xl rounded-2xl bg-white">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-2xl font-bold text-[#051F20]">
                   About this place
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-[#4A4A4A] leading-relaxed">
+                <p className="text-[#4A4A4A] leading-relaxed text-base">
                   {property.description}
                 </p>
               </CardContent>
             </Card>
 
             {/* Amenities */}
-            <Card className="border border-[#DAF1DE]/50 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-[#051F20]">
+            <Card className="border-0 shadow-xl rounded-2xl bg-white">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-2xl font-bold text-[#051F20]">
                   What this place offers
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {property.amenities.map((amenity, index) => (
                     <div
                       key={index}
-                      className="flex items-center gap-2 text-sm text-[#4A4A4A]"
+                      className="flex items-center gap-3 text-[#4A4A4A] py-2"
                     >
-                      <div className="w-2 h-2 bg-[#8EB69B] rounded-full"></div>
-                      <span>{amenity}</span>
+                      <div className="w-2 h-2 bg-[#8EB69B] rounded-full flex-shrink-0"></div>
+                      <span className="text-sm font-medium">{amenity}</span>
                     </div>
                   ))}
                 </div>
@@ -336,24 +424,26 @@ export default function Page({ params }: { params: { slug: string } }) {
 
           {/* Right Column - Additional Info */}
           <div className="lg:col-span-1">
-            <Card className="border border-[#DAF1DE]/50 shadow-lg">
-              <CardHeader>
-                <CardTitle className="text-[#051F20]">
+            <Card className="border-0 shadow-xl rounded-2xl bg-white">
+              <CardHeader className="pb-4">
+                <CardTitle className="text-2xl font-bold text-[#051F20]">
                   Property Details
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h4 className="font-medium text-[#051F20] mb-2">
+              <CardContent className="space-y-6">
+                <div className="border-b border-[#E5E7EB] pb-4">
+                  <h4 className="font-semibold text-[#051F20] mb-2 text-base">
                     Stay Duration
                   </h4>
                   <p className="text-sm text-[#4A4A4A]">
-                    Minimum: {property.availability.minimumStay} nights |
+                    Minimum: {property.availability.minimumStay} nights
+                  </p>
+                  <p className="text-sm text-[#4A4A4A]">
                     Maximum: {property.availability.maximumStay} nights
                   </p>
                 </div>
-                <div>
-                  <h4 className="font-medium text-[#051F20] mb-2">
+                <div className="border-b border-[#E5E7EB] pb-4">
+                  <h4 className="font-semibold text-[#051F20] mb-2 text-base">
                     Property Type
                   </h4>
                   <p className="text-sm text-[#4A4A4A] capitalize">
@@ -361,7 +451,9 @@ export default function Page({ params }: { params: { slug: string } }) {
                   </p>
                 </div>
                 <div>
-                  <h4 className="font-medium text-[#051F20] mb-2">Host</h4>
+                  <h4 className="font-semibold text-[#051F20] mb-2 text-base">
+                    Host
+                  </h4>
                   <p className="text-sm text-[#4A4A4A]">
                     {property.owner.name}
                   </p>
