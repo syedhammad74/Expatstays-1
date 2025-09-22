@@ -40,8 +40,6 @@ export default function Page({ params }: { params: { slug: string } }) {
   useEffect(() => {
     const loadProperty = async () => {
       try {
-        console.log("Loading property for slug:", slug);
-
         // Hardcoded farmhouse property
         if (slug === "famhouse_islamabad_dam_view") {
           const farmhouseProperty: Property = {

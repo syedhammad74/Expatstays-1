@@ -28,7 +28,6 @@ import {
 } from "lucide-react";
 import { useState, memo, useMemo, useCallback, useRef, useEffect } from "react";
 import { optimizeImageUrl, useImageLoad } from "@/lib/performance";
-import { useSwipe } from "@/hooks/use-swipe";
 
 export interface PropertyCardProps {
   slug: string;
@@ -129,49 +128,20 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
       [isHovered, allImages.length]
     );
 
-    // Add swipe support for mobile
-    const swipeHandlers = useSwipe({
-      onSwipeLeft: () => {
-        if (allImages.length > 1) {
-          setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
-        }
-      },
-      onSwipeRight: () => {
-        if (allImages.length > 1) {
-          setCurrentImageIndex(
-            (prev) => (prev - 1 + allImages.length) % allImages.length
-          );
-        }
-      },
-      threshold: 50,
-    });
-
     // Add wheel event listener
     useEffect(() => {
       const container = imageContainerRef.current;
       if (!container) return;
 
       container.addEventListener("wheel", handleWheel, { passive: false });
-      container.addEventListener("touchstart", swipeHandlers.onTouchStart, {
-        passive: true,
-      });
-      container.addEventListener("touchmove", swipeHandlers.onTouchMove, {
-        passive: false,
-      });
-      container.addEventListener("touchend", swipeHandlers.onTouchEnd, {
-        passive: true,
-      });
 
       return () => {
         container.removeEventListener("wheel", handleWheel);
-        container.removeEventListener("touchstart", swipeHandlers.onTouchStart);
-        container.removeEventListener("touchmove", swipeHandlers.onTouchMove);
-        container.removeEventListener("touchend", swipeHandlers.onTouchEnd);
         if (scrollTimeoutRef.current) {
           clearTimeout(scrollTimeoutRef.current);
         }
       };
-    }, [handleWheel, swipeHandlers]);
+    }, [handleWheel]);
 
     // Memoize amenity icons to prevent recalculation
     const getIcon = useCallback((amenity: string) => {

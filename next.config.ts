@@ -3,15 +3,26 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   // Basic configuration for optimal performance
   reactStrictMode: true,
-  swcMinify: true,
 
   // Image optimization
   images: {
-    domains: [
-      "localhost",
-      "myexpatstays.com",
-      "firebasestorage.googleapis.com",
-      "storage.googleapis.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "localhost",
+      },
+      {
+        protocol: "https",
+        hostname: "myexpatstays.com",
+      },
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+      },
+      {
+        protocol: "https",
+        hostname: "storage.googleapis.com",
+      },
     ],
     formats: ["image/webp", "image/avif"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
