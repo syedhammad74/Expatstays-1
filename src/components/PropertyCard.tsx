@@ -27,7 +27,6 @@ import {
   Dumbbell,
 } from "lucide-react";
 import { useState, memo, useMemo, useCallback, useRef, useEffect } from "react";
-import { optimizeImageUrl, useImageLoad } from "@/lib/performance";
 
 export interface PropertyCardProps {
   slug: string;
@@ -77,28 +76,11 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
 
     // Use images array if available, otherwise fallback to single imageUrl
     const allImages = images.length > 0 ? images : [imageUrl];
-    const { isLoaded, hasError } = useImageLoad(allImages[currentImageIndex]);
-
-    // Memoize optimized image URLs for all images
-    const optimizedImageUrls = useMemo(
-      () =>
-        allImages.map((img) =>
-          optimizeImageUrl(img, {
-            width: 400,
-            height: 300,
-            quality: 85,
-          })
-        ),
-      [allImages]
-    );
-
-    // Memoize current display image URL
+    // Simplified image handling for better performance
     const displayImageUrl = useMemo(() => {
-      const currentImage = optimizedImageUrls[currentImageIndex];
-      return imageError || hasError
-        ? "/placeholder-property.jpg"
-        : currentImage;
-    }, [imageError, hasError, optimizedImageUrls, currentImageIndex]);
+      const currentImage = allImages[currentImageIndex];
+      return imageError ? "/placeholder-property.jpg" : currentImage;
+    }, [imageError, allImages, currentImageIndex]);
 
     // Handle wheel scroll for image navigation
     const handleWheel = useCallback(
@@ -112,21 +94,40 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
           clearTimeout(scrollTimeoutRef.current);
         }
 
-        // Debounce scroll events
-        scrollTimeoutRef.current = setTimeout(() => {
-          if (e.deltaY > 0) {
-            // Scroll down - next image
-            setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
-          } else {
-            // Scroll up - previous image
-            setCurrentImageIndex(
-              (prev) => (prev - 1 + allImages.length) % allImages.length
-            );
-          }
-        }, 50);
+        // Immediate response for better UX
+        if (e.deltaY > 0) {
+          // Scroll down - next image
+          setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+        } else {
+          // Scroll up - previous image
+          setCurrentImageIndex(
+            (prev) => (prev - 1 + allImages.length) % allImages.length
+          );
+        }
       },
       [isHovered, allImages.length]
     );
+
+    // Preload adjacent images for smoother transitions
+    useEffect(() => {
+      const preloadImages = () => {
+        const nextIndex = (currentImageIndex + 1) % allImages.length;
+        const prevIndex =
+          (currentImageIndex - 1 + allImages.length) % allImages.length;
+
+        // Preload next and previous images
+        if (allImages[nextIndex]) {
+          const img = new window.Image();
+          img.src = allImages[nextIndex];
+        }
+        if (allImages[prevIndex]) {
+          const img = new window.Image();
+          img.src = allImages[prevIndex];
+        }
+      };
+
+      preloadImages();
+    }, [currentImageIndex, allImages]);
 
     // Add wheel event listener
     useEffect(() => {
@@ -192,24 +193,15 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
-            {/* Loading skeleton */}
-            {!isLoaded && !hasError && (
-              <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] animate-pulse" />
-            )}
-
             <Image
               src={displayImageUrl}
               alt={title}
               fill
-              className={`object-cover transition-all duration-700 ease-out group-hover:scale-110 ${
-                !isLoaded ? "opacity-0" : "opacity-100"
-              }`}
+              className="object-cover transition-opacity duration-150 ease-out group-hover:scale-105"
               data-ai-hint={imageHint || "luxury property exterior"}
               onError={() => setImageError(true)}
               priority={false}
               loading="lazy"
-              placeholder="blur"
-              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
 
