@@ -35,7 +35,7 @@ import { getLocalImage } from "@/lib/imageUtils";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Head from "next/head";
 
 // Mock property data - In production, this would come from Firebase
@@ -71,6 +71,10 @@ export default function Page({ params }: { params: { slug: string } }) {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // Get initial image index from URL parameters
+  const initialImageIndex = parseInt(searchParams.get("imageIndex") || "0", 10);
 
   useEffect(() => {
     const loadProperty = async () => {
@@ -115,9 +119,14 @@ export default function Page({ params }: { params: { slug: string } }) {
               "Basement Storage",
             ],
             images: [
+              "/media/famhouse/DSC02226.jpg",
               "/media/famhouse/DSC02227.jpg",
               "/media/famhouse/DSC02228.jpg",
+              "/media/famhouse/DSC02229.jpg",
+              "/media/famhouse/DSC02231.jpg",
+              "/media/famhouse/DSC02232.jpg",
               "/media/famhouse/DSC02235.jpg",
+              "/media/famhouse/DSC02239 (1).jpg",
             ],
             pricing: {
               basePrice: 350,
@@ -353,7 +362,10 @@ export default function Page({ params }: { params: { slug: string } }) {
             {/* Left Column - Image Gallery */}
             <div className="lg:col-span-2">
               <div className="bg-white rounded-xl shadow-md border border-[#DAF1DE]/50 overflow-hidden">
-                <PropertyImageGallery images={galleryImages} />
+                <PropertyImageGallery
+                  images={galleryImages}
+                  initialImageIndex={initialImageIndex}
+                />
               </div>
             </div>
 

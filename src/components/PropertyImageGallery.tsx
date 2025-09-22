@@ -16,16 +16,18 @@ import { Badge } from "@/components/ui/badge";
 
 interface PropertyImageGalleryProps {
   images: { src: string; alt: string; hint?: string }[];
+  initialImageIndex?: number;
 }
 
 const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = ({
   images,
+  initialImageIndex = 0,
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(initialImageIndex);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [preloadedImages, setPreloadedImages] = useState<Set<number>>(
-    new Set([0])
+    new Set([initialImageIndex])
   );
   const galleryRef = useRef<HTMLDivElement>(null);
   const transitionTimeoutRef = useRef<NodeJS.Timeout>();

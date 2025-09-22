@@ -400,7 +400,7 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
             asChild
             className="w-full rounded-lg bg-gradient-to-r from-[#8EB69B] to-[#235347] text-white hover:from-[#235347] hover:to-[#8EB69B] shadow-md hover:shadow-lg transition-all duration-300 py-2.5 font-semibold flex items-center justify-center gap-2 text-sm"
           >
-            <Link href={`/properties/${slug}`}>
+            <Link href={`/properties/${slug}?imageIndex=${currentImageIndex}`}>
               <Eye className="h-4 w-4" />
               View Details
             </Link>

@@ -52,6 +52,18 @@ const closeUpImages = [
   "DSC01969.jpg",
 ];
 
+// Farmhouse Images (8 images)
+const farmhouseImages = [
+  "DSC02226.jpg",
+  "DSC02227.jpg",
+  "DSC02228.jpg",
+  "DSC02229.jpg",
+  "DSC02231.jpg",
+  "DSC02232.jpg",
+  "DSC02235.jpg",
+  "DSC02239 (1).jpg",
+];
+
 // Content type to image mapping
 const contentImageMap = {
   // Property types - use HDR images
@@ -61,6 +73,8 @@ const contentImageMap = {
   mansion: hdrImages.slice(24, 30),
   apartment: hdrImages.slice(0, 6),
   penthouse: hdrImages.slice(6, 12),
+  // Farmhouse - use farmhouse images
+  farmhouse: farmhouseImages,
 
   // Detail categories - use close-up images
   interior: closeUpImages.slice(0, 4),
@@ -119,7 +133,16 @@ export const getLocalImage = (
 
   // Determine folder based on image type
   const isHDR = imageName.includes("-HDR");
-  const folder = isHDR ? "DSC01806 HDR June 25 2025" : "Close Ups June 25 2025";
+  const isFarmhouse = imageArray === farmhouseImages;
+  let folder;
+
+  if (isFarmhouse) {
+    folder = "famhouse";
+  } else if (isHDR) {
+    folder = "DSC01806 HDR June 25 2025";
+  } else {
+    folder = "Close Ups June 25 2025";
+  }
 
   let imagePath = `/media/${folder}/${imageName}`;
 

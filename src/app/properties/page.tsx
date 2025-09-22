@@ -227,6 +227,15 @@ export default function PropertiesPage() {
           return property.images;
         }
 
+        // Special handling for farmhouse property
+        if (property.id === "famhouse_islamabad_dam_view") {
+          const farmhouseImages: string[] = [];
+          for (let i = 0; i < 8; i++) {
+            farmhouseImages.push(getLocalImage("farmhouse", i));
+          }
+          return farmhouseImages;
+        }
+
         // Generate 3-5 images based on property type
         const imageCount = Math.min(
           5,
