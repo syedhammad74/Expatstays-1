@@ -23,11 +23,16 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = ({
   images,
   initialImageIndex = 0,
 }) => {
-  const [currentIndex, setCurrentIndex] = useState(initialImageIndex);
+  // Ensure initialImageIndex is within bounds
+  const safeInitialIndex = Math.max(
+    0,
+    Math.min(initialImageIndex, images.length - 1)
+  );
+  const [currentIndex, setCurrentIndex] = useState(safeInitialIndex);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [preloadedImages, setPreloadedImages] = useState<Set<number>>(
-    new Set([initialImageIndex])
+    new Set([safeInitialIndex])
   );
   const galleryRef = useRef<HTMLDivElement>(null);
   const transitionTimeoutRef = useRef<NodeJS.Timeout>();

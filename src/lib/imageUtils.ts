@@ -61,7 +61,7 @@ const farmhouseImages = [
   "DSC02231.jpg",
   "DSC02232.jpg",
   "DSC02235.jpg",
-  "DSC02239 (1).jpg",
+  "DSC02239%20(1).jpg",
 ];
 
 // Content type to image mapping

@@ -35,7 +35,7 @@ import { getLocalImage } from "@/lib/imageUtils";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { useToast } from "@/hooks/use-toast";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Head from "next/head";
 
 // Mock property data - In production, this would come from Firebase
@@ -64,21 +64,31 @@ const testimonials = [
   },
 ];
 
-// Update the function signature to use PageProps
+// Main page component
 export default function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
-  // Get initial image index from URL parameters
-  const initialImageIndex = parseInt(searchParams.get("imageIndex") || "0", 10);
+  // Get initial image index from URL parameters - using a safer approach
+  const [initialImageIndex, setInitialImageIndex] = useState(0);
+
+  useEffect(() => {
+    // Get imageIndex from URL on client side
+    if (typeof window !== "undefined") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const imageIndex = parseInt(urlParams.get("imageIndex") || "0", 10);
+      // Ensure imageIndex is valid (non-negative)
+      setInitialImageIndex(Math.max(0, imageIndex));
+    }
+  }, []);
 
   useEffect(() => {
     const loadProperty = async () => {
       try {
+        console.log("Loading property for slug:", slug);
         // Check if it's the hardcoded Famhouse property
         if (slug === "famhouse_islamabad_dam_view") {
           const famhouseProperty: Property = {
@@ -126,7 +136,7 @@ export default function Page({ params }: { params: { slug: string } }) {
               "/media/famhouse/DSC02231.jpg",
               "/media/famhouse/DSC02232.jpg",
               "/media/famhouse/DSC02235.jpg",
-              "/media/famhouse/DSC02239 (1).jpg",
+              "/media/famhouse/DSC02239%20(1).jpg",
             ],
             pricing: {
               basePrice: 350,
@@ -230,12 +240,21 @@ export default function Page({ params }: { params: { slug: string } }) {
         if (fetchedProperty) {
           setProperty(fetchedProperty);
         } else {
-          toast({
-            title: "Property Not Found",
-            description:
-              "The property you&apos;re looking for doesn&apos;t exist.",
-            variant: "destructive",
-          });
+          // Try to load from Firebase as fallback
+          console.log("Loading property from Firebase for slug:", slug);
+          const propertyData = await propertyService.getPropertyById(slug);
+          if (propertyData) {
+            console.log("Property loaded from Firebase:", propertyData);
+            setProperty(propertyData);
+          } else {
+            console.log("Property not found in Firebase");
+            toast({
+              title: "Property Not Found",
+              description:
+                "The property you&apos;re looking for doesn&apos;t exist.",
+              variant: "destructive",
+            });
+          }
         }
       } catch (error) {
         console.error("Error loading property:", error);
