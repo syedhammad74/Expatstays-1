@@ -4,18 +4,18 @@ const nextConfig: NextConfig = {
   // Performance optimizations
   reactStrictMode: true,
   poweredByHeader: false,
-  
+
   // Experimental features for performance
   experimental: {
     optimizeCss: true,
     scrollRestoration: true,
     optimizePackageImports: [
-      'lucide-react',
-      'framer-motion',
-      '@radix-ui/react-icons',
-      'react-hook-form',
-      '@hookform/resolvers',
-      'zod'
+      "lucide-react",
+      "framer-motion",
+      "@radix-ui/react-icons",
+      "react-hook-form",
+      "@hookform/resolvers",
+      "zod",
     ],
   },
 
@@ -46,13 +46,11 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     unoptimized: false,
-    loader: 'default',
-    quality: 85,
+    loader: "default",
   },
 
   // Compression and optimization
   compress: true,
-  swcMinify: true,
 
   // Advanced headers for maximum performance
   async headers() {
@@ -179,11 +177,11 @@ const nextConfig: NextConfig = {
     }
 
     // Bundle analyzer in development
-    if (dev && process.env.ANALYZE === 'true') {
-      const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+    if (dev && process.env.ANALYZE === "true") {
+      const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
       config.plugins.push(
         new BundleAnalyzerPlugin({
-          analyzerMode: 'server',
+          analyzerMode: "server",
           openAnalyzer: true,
         })
       );
@@ -211,4 +209,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
