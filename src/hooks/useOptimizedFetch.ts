@@ -17,7 +17,7 @@ interface UseOptimizedFetchResult<T> {
 }
 
 // Simple in-memory cache
-const cache = new Map<string, { data: any; timestamp: number; staleTime: number }>();
+const cache = new Map<string, { data: unknown; timestamp: number; staleTime: number }>();
 
 export function useOptimizedFetch<T>(
   key: string,

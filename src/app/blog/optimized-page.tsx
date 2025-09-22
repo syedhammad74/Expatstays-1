@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
+import { useState, useCallback, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import {
@@ -168,8 +168,8 @@ const BlogFilters = ({
   filters, 
   onFiltersChange 
 }: { 
-  filters: any; 
-  onFiltersChange: (filters: any) => void; 
+  filters: { category: string; sortBy: string }; 
+  onFiltersChange: (filters: { category: string; sortBy: string }) => void; 
 }) => {
   const categories = ["All", "Travel Guides", "Lifestyle", "Food & Dining"];
   
@@ -221,8 +221,7 @@ const BlogFilters = ({
 
 // Main blog page component
 function BlogPageContent() {
-  const searchParams = useSearchParams();
-  const { trackInteraction, trackError } = usePerformanceMonitor("BlogPage");
+  const { trackInteraction } = usePerformanceMonitor("BlogPage");
 
   // State management
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
@@ -257,7 +256,7 @@ function BlogPageContent() {
   const filteredPosts = useMemo(() => {
     if (!posts) return [];
 
-    let filtered = posts.filter((post) => {
+    const filtered = posts.filter((post) => {
       // Search filter
       if (filters.search && !post.title.toLowerCase().includes(filters.search.toLowerCase()) && 
           !post.excerpt.toLowerCase().includes(filters.search.toLowerCase())) {

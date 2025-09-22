@@ -55,8 +55,8 @@ const PropertyFilters = ({
   filters, 
   onFiltersChange 
 }: { 
-  filters: any; 
-  onFiltersChange: (filters: any) => void; 
+  filters: { search: string; propertyType: string; priceRange: number[]; bedrooms: string; amenities: string[] }; 
+  onFiltersChange: (filters: { search: string; propertyType: string; priceRange: number[]; bedrooms: string; amenities: string[] }) => void; 
 }) => {
   return (
     <Card className="border-0 shadow-xl rounded-2xl bg-white">
@@ -164,7 +164,6 @@ const PropertyFilters = ({
 
 // Main properties page component
 function PropertiesPageContent() {
-  const searchParams = useSearchParams();
   const { toast } = useToast();
   const { trackInteraction, trackError } = usePerformanceMonitor("PropertiesPage");
 

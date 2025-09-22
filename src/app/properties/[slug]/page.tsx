@@ -236,14 +236,14 @@ export default function Page({ params }: { params: { slug: string } }) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center">
+        <div className="text-center">
             <div className="max-w-md mx-auto">
               <h1 className="text-3xl font-bold text-[#051F20] mb-4">
                 Property Not Found
-              </h1>
+          </h1>
               <p className="text-[#4A4A4A] mb-8 text-lg">
-                The property you're looking for doesn't exist.
-              </p>
+            The property you&apos;re looking for doesn&apos;t exist.
+          </p>
               <Button
                 onClick={() => router.push("/properties")}
                 className="bg-[#8EB69B] hover:bg-[#235347] text-white px-8 py-3 rounded-xl text-base font-semibold"
@@ -267,8 +267,8 @@ export default function Page({ params }: { params: { slug: string } }) {
     <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
-          {/* Left Column - Image Gallery */}
-          <div className="lg:col-span-2">
+            {/* Left Column - Image Gallery */}
+            <div className="lg:col-span-2">
             <Card className="border-0 shadow-xl rounded-2xl overflow-hidden bg-white">
               <CardContent className="p-0">
                 <PropertyImageGallery
@@ -277,42 +277,42 @@ export default function Page({ params }: { params: { slug: string } }) {
                 />
               </CardContent>
             </Card>
-          </div>
+            </div>
 
           {/* Right Column - Property Info */}
-          <div className="lg:col-span-1">
+            <div className="lg:col-span-1">
             <Card className="border-0 shadow-xl rounded-2xl bg-white sticky top-24">
               <CardHeader className="pb-4">
                 <div className="flex items-center gap-2 mb-4">
                   <Badge className="bg-[#8EB69B]/15 text-[#235347] border-0 text-xs font-semibold px-3 py-1.5 rounded-full">
-                    {property.propertyType.charAt(0).toUpperCase() +
-                      property.propertyType.slice(1)}
-                  </Badge>
+                      {property.propertyType.charAt(0).toUpperCase() +
+                        property.propertyType.slice(1)}
+                    </Badge>
                   <Badge className="bg-[#235347]/10 text-[#235347] border-0 text-xs font-semibold px-3 py-1.5 rounded-full">
-                    Verified
-                  </Badge>
-                </div>
+                      Verified
+                    </Badge>
+                  </div>
                 <CardTitle className="text-2xl font-bold text-[#051F20] leading-tight mb-2">
-                  {property.title}
+                    {property.title}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* Location */}
+                  {/* Location */}
                 <div className="flex items-center gap-3 text-[#4A4A4A]">
                   <MapPin className="h-5 w-5 text-[#8EB69B] flex-shrink-0" />
-                  <span className="text-sm font-medium">
-                    {property.location.city}, {property.location.country}
-                  </span>
-                </div>
+                    <span className="text-sm font-medium">
+                      {property.location.city}, {property.location.country}
+                    </span>
+                  </div>
 
-                {/* Rating */}
+                  {/* Rating */}
                 <div className="flex items-center gap-3">
                   <div className="flex items-center gap-2">
                     <Star className="h-5 w-5 fill-[#FFD700] text-[#FFD700]" />
                     <span className="text-base font-semibold text-[#051F20]">
-                      {property.rating}
-                    </span>
-                  </div>
+                        {property.rating}
+                      </span>
+                    </div>
                   <span className="text-sm text-[#4A4A4A]">
                     ({property.reviews} reviews)
                   </span>
@@ -331,14 +331,14 @@ export default function Page({ params }: { params: { slug: string } }) {
                     <span className="text-sm font-medium">
                       {property.capacity.bathrooms} bathrooms
                     </span>
-                  </div>
+                      </div>
                   <div className="flex items-center gap-3 text-[#4A4A4A]">
                     <Users className="h-5 w-5 text-[#8EB69B] flex-shrink-0" />
                     <span className="text-sm font-medium">
                       Up to {property.capacity.maxGuests} guests
                     </span>
-                  </div>
-                </div>
+                      </div>
+                    </div>
 
                 {/* Price */}
                 <div className="border-t border-[#E5E7EB] pt-6">
@@ -352,9 +352,9 @@ export default function Page({ params }: { params: { slug: string } }) {
                     + ${property.pricing.cleaningFee} cleaning fee + $
                     {property.pricing.serviceFee} service fee
                   </p>
-                </div>
+                  </div>
 
-                {/* Action Buttons */}
+                  {/* Action Buttons */}
                 <div className="space-y-3">
                   <Button className="w-full bg-[#8EB69B] hover:bg-[#235347] text-white h-12 text-base font-semibold rounded-xl">
                     Book Now
@@ -378,8 +378,8 @@ export default function Page({ params }: { params: { slug: string } }) {
                 </div>
               </CardContent>
             </Card>
-          </div>
         </div>
+      </div>
 
         {/* Property Details Section */}
         <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
@@ -394,8 +394,8 @@ export default function Page({ params }: { params: { slug: string } }) {
               </CardHeader>
               <CardContent>
                 <p className="text-[#4A4A4A] leading-relaxed text-base">
-                  {property.description}
-                </p>
+                {property.description}
+              </p>
               </CardContent>
             </Card>
 
@@ -403,7 +403,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             <Card className="border-0 shadow-xl rounded-2xl bg-white">
               <CardHeader className="pb-4">
                 <CardTitle className="text-2xl font-bold text-[#051F20]">
-                  What this place offers
+                What this place offers
                 </CardTitle>
               </CardHeader>
               <CardContent>
@@ -417,10 +417,10 @@ export default function Page({ params }: { params: { slug: string } }) {
                       <span className="text-sm font-medium">{amenity}</span>
                     </div>
                   ))}
-                </div>
+              </div>
               </CardContent>
             </Card>
-          </div>
+            </div>
 
           {/* Right Column - Additional Info */}
           <div className="lg:col-span-1">
@@ -449,7 +449,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                   <p className="text-sm text-[#4A4A4A] capitalize">
                     {property.propertyType}
                   </p>
-                </div>
+              </div>
                 <div>
                   <h4 className="font-semibold text-[#051F20] mb-2 text-base">
                     Host
@@ -457,7 +457,7 @@ export default function Page({ params }: { params: { slug: string } }) {
                   <p className="text-sm text-[#4A4A4A]">
                     {property.owner.name}
                   </p>
-                </div>
+            </div>
               </CardContent>
             </Card>
           </div>

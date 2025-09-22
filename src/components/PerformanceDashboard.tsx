@@ -56,7 +56,7 @@ export default function PerformanceDashboard({
       const largestContentfulPaint = lcpEntries[lcpEntries.length - 1]?.startTime || 0;
       
       // Memory usage (if available)
-      const memoryUsage = (performance as any).memory?.usedJSHeapSize || 0;
+      const memoryUsage = (performance as Performance & { memory?: { usedJSHeapSize?: number } }).memory?.usedJSHeapSize || 0;
       
       // Count images and API calls
       const imageCount = document.querySelectorAll('img').length;
@@ -193,7 +193,7 @@ export default function PerformanceDashboard({
                 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-1">
-                    <Image className="h-3 w-3 text-[#8EB69B]" />
+                    <Image className="h-3 w-3 text-[#8EB69B]" alt="Images icon" />
                     <span className="text-[#4A4A4A]">Images</span>
                   </div>
                   <span className="text-[#4A4A4A]">{metrics.imageCount}</span>
