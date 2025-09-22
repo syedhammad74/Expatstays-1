@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef } from "react";
 
 interface UseOptimizedFetchOptions {
   cacheTime?: number;
@@ -17,7 +17,10 @@ interface UseOptimizedFetchResult<T> {
 }
 
 // Simple in-memory cache
-const cache = new Map<string, { data: unknown; timestamp: number; staleTime: number }>();
+const cache = new Map<
+  string,
+  { data: unknown; timestamp: number; staleTime: number }
+>();
 
 export function useOptimizedFetch<T>(
   key: string,
@@ -36,82 +39,84 @@ export function useOptimizedFetch<T>(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [isStale, setIsStale] = useState(false);
-  
+
   const retryCountRef = useRef(0);
   const abortControllerRef = useRef<AbortController | null>(null);
 
-  const fetchData = useCallback(async (forceRefresh = false) => {
-    if (!enabled) return;
+  const fetchData = useCallback(
+    async (forceRefresh = false) => {
+      if (!enabled) return;
 
-    // Check cache first
-    const cached = cache.get(key);
-    const now = Date.now();
+      // Check cache first
+      const cached = cache.get(key);
+      const now = Date.now();
 
-    if (cached && !forceRefresh) {
-      const isExpired = now - cached.timestamp > cacheTime;
-      const isStaleData = now - cached.timestamp > cached.staleTime;
+      if (cached && !forceRefresh) {
+        const isExpired = now - cached.timestamp > cacheTime;
+        const isStaleData = now - cached.timestamp > cached.staleTime;
 
-      if (!isExpired) {
-        setData(cached.data);
-        setIsStale(isStaleData);
-        setLoading(false);
-        setError(null);
+        if (!isExpired) {
+          setData(cached.data);
+          setIsStale(isStaleData);
+          setLoading(false);
+          setError(null);
 
-        // If data is stale, fetch in background
-        if (isStaleData) {
-          fetchData(true);
+          // If data is stale, fetch in background
+          if (isStaleData) {
+            fetchData(true);
+          }
+          return;
         }
-        return;
-      }
-    }
-
-    // Cancel previous request
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort();
-    }
-
-    abortControllerRef.current = new AbortController();
-    setLoading(true);
-    setError(null);
-
-    try {
-      const result = await fetchFn();
-      
-      // Check if request was aborted
-      if (abortControllerRef.current?.signal.aborted) {
-        return;
       }
 
-      setData(result);
-      setIsStale(false);
-      retryCountRef.current = 0;
-
-      // Cache the result
-      cache.set(key, {
-        data: result,
-        timestamp: now,
-        staleTime,
-      });
-
-    } catch (err) {
-      if (abortControllerRef.current?.signal.aborted) {
-        return;
+      // Cancel previous request
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
       }
 
-      const error = err as Error;
-      setError(error);
+      abortControllerRef.current = new AbortController();
+      setLoading(true);
+      setError(null);
 
-      // Retry logic
-      if (retryCountRef.current < retryCount) {
-        retryCountRef.current++;
-        setTimeout(() => {
-          fetchData(true);
-        }, retryDelay * retryCountRef.current);
+      try {
+        const result = await fetchFn();
+
+        // Check if request was aborted
+        if (abortControllerRef.current?.signal.aborted) {
+          return;
+        }
+
+        setData(result);
+        setIsStale(false);
+        retryCountRef.current = 0;
+
+        // Cache the result
+        cache.set(key, {
+          data: result,
+          timestamp: now,
+          staleTime,
+        });
+      } catch (err) {
+        if (abortControllerRef.current?.signal.aborted) {
+          return;
+        }
+
+        const error = err as Error;
+        setError(error);
+
+        // Retry logic
+        if (retryCountRef.current < retryCount) {
+          retryCountRef.current++;
+          setTimeout(() => {
+            fetchData(true);
+          }, retryDelay * retryCountRef.current);
+        }
+      } finally {
+        setLoading(false);
       }
-    } finally {
-      setLoading(false);
-    }
-  }, [key, fetchFn, cacheTime, staleTime, retryCount, retryDelay, enabled]);
+    },
+    [key, fetchFn, cacheTime, staleTime, retryCount, retryDelay, enabled]
+  );
 
   const refetch = useCallback(() => {
     return fetchData(true);
@@ -163,14 +168,16 @@ export function clearCache(key?: string) {
 // Utility function to preload data
 export function preloadData<T>(key: string, fetchFn: () => Promise<T>) {
   if (!cache.has(key)) {
-    fetchFn().then((data) => {
-      cache.set(key, {
-        data,
-        timestamp: Date.now(),
-        staleTime: 1 * 60 * 1000, // 1 minute
+    fetchFn()
+      .then((data) => {
+        cache.set(key, {
+          data,
+          timestamp: Date.now(),
+          staleTime: 1 * 60 * 1000, // 1 minute
+        });
+      })
+      .catch(() => {
+        // Silently fail for preloading
       });
-    }).catch(() => {
-      // Silently fail for preloading
-    });
   }
 }

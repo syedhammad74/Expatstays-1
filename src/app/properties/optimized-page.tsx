@@ -3,12 +3,31 @@
 import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Search, Filter, Grid, List, Star, MapPin, Users, BedDouble, Bath, Eye, Heart, Share2 } from "lucide-react";
+import {
+  Search,
+  Filter,
+  Grid,
+  List,
+  Star,
+  MapPin,
+  Users,
+  BedDouble,
+  Bath,
+  Eye,
+  Heart,
+  Share2,
+} from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
@@ -24,17 +43,20 @@ import { VirtualizedPropertyGrid } from "@/components/ui/virtual-grid";
 import OptimizedImage from "@/components/OptimizedImage";
 
 // Memoized PropertyCard for performance
-const MemoizedPropertyCard = React.memo(PropertyCard, (prevProps, nextProps) => {
-  return (
-    prevProps.slug === nextProps.slug &&
-    prevProps.title === nextProps.title &&
-    prevProps.price === nextProps.price &&
-    prevProps.imageUrl === nextProps.imageUrl &&
-    prevProps.images?.length === nextProps.images?.length &&
-    prevProps.rating === nextProps.rating &&
-    prevProps.isAvailable === nextProps.isAvailable
-  );
-});
+const MemoizedPropertyCard = React.memo(
+  PropertyCard,
+  (prevProps, nextProps) => {
+    return (
+      prevProps.slug === nextProps.slug &&
+      prevProps.title === nextProps.title &&
+      prevProps.price === nextProps.price &&
+      prevProps.imageUrl === nextProps.imageUrl &&
+      prevProps.images?.length === nextProps.images?.length &&
+      prevProps.rating === nextProps.rating &&
+      prevProps.isAvailable === nextProps.isAvailable
+    );
+  }
+);
 
 // Loading skeleton component
 const PropertyCardSkeleton = () => (
@@ -51,17 +73,31 @@ const PropertyCardSkeleton = () => (
 );
 
 // Filter component
-const PropertyFilters = ({ 
-  filters, 
-  onFiltersChange 
-}: { 
-  filters: { search: string; propertyType: string; priceRange: number[]; bedrooms: string; amenities: string[] }; 
-  onFiltersChange: (filters: { search: string; propertyType: string; priceRange: number[]; bedrooms: string; amenities: string[] }) => void; 
+const PropertyFilters = ({
+  filters,
+  onFiltersChange,
+}: {
+  filters: {
+    search: string;
+    propertyType: string;
+    priceRange: number[];
+    bedrooms: string;
+    amenities: string[];
+  };
+  onFiltersChange: (filters: {
+    search: string;
+    propertyType: string;
+    priceRange: number[];
+    bedrooms: string;
+    amenities: string[];
+  }) => void;
 }) => {
   return (
     <Card className="border-0 shadow-xl rounded-2xl bg-white">
       <CardHeader>
-        <CardTitle className="text-xl font-bold text-[#051F20]">Filters</CardTitle>
+        <CardTitle className="text-xl font-bold text-[#051F20]">
+          Filters
+        </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Search */}
@@ -71,7 +107,9 @@ const PropertyFilters = ({
             id="search"
             placeholder="Search properties..."
             value={filters.search}
-            onChange={(e) => onFiltersChange({ ...filters, search: e.target.value })}
+            onChange={(e) =>
+              onFiltersChange({ ...filters, search: e.target.value })
+            }
             className="mt-1"
           />
         </div>
@@ -81,7 +119,9 @@ const PropertyFilters = ({
           <Label>Property Type</Label>
           <Select
             value={filters.propertyType}
-            onValueChange={(value) => onFiltersChange({ ...filters, propertyType: value })}
+            onValueChange={(value) =>
+              onFiltersChange({ ...filters, propertyType: value })
+            }
           >
             <SelectTrigger className="mt-1">
               <SelectValue placeholder="All Types" />
@@ -97,10 +137,14 @@ const PropertyFilters = ({
 
         {/* Price Range */}
         <div>
-          <Label>Price Range: ${filters.priceRange[0]} - ${filters.priceRange[1]}</Label>
+          <Label>
+            Price Range: ${filters.priceRange[0]} - ${filters.priceRange[1]}
+          </Label>
           <Slider
             value={filters.priceRange}
-            onValueChange={(value) => onFiltersChange({ ...filters, priceRange: value })}
+            onValueChange={(value) =>
+              onFiltersChange({ ...filters, priceRange: value })
+            }
             max={1000}
             min={50}
             step={50}
@@ -113,7 +157,9 @@ const PropertyFilters = ({
           <Label>Bedrooms</Label>
           <Select
             value={filters.bedrooms}
-            onValueChange={(value) => onFiltersChange({ ...filters, bedrooms: value })}
+            onValueChange={(value) =>
+              onFiltersChange({ ...filters, bedrooms: value })
+            }
           >
             <SelectTrigger className="mt-1">
               <SelectValue placeholder="Any" />
@@ -133,7 +179,7 @@ const PropertyFilters = ({
         <div>
           <Label>Amenities</Label>
           <div className="mt-2 space-y-2">
-            {['WiFi', 'Parking', 'Pool', 'Gym', 'AC'].map((amenity) => (
+            {["WiFi", "Parking", "Pool", "Gym", "AC"].map((amenity) => (
               <div key={amenity} className="flex items-center space-x-2">
                 <Checkbox
                   id={amenity}
@@ -142,17 +188,21 @@ const PropertyFilters = ({
                     if (checked) {
                       onFiltersChange({
                         ...filters,
-                        amenities: [...filters.amenities, amenity]
+                        amenities: [...filters.amenities, amenity],
                       });
                     } else {
                       onFiltersChange({
                         ...filters,
-                        amenities: filters.amenities.filter((a: string) => a !== amenity)
+                        amenities: filters.amenities.filter(
+                          (a: string) => a !== amenity
+                        ),
                       });
                     }
                   }}
                 />
-                <Label htmlFor={amenity} className="text-sm">{amenity}</Label>
+                <Label htmlFor={amenity} className="text-sm">
+                  {amenity}
+                </Label>
               </div>
             ))}
           </div>
@@ -165,16 +215,17 @@ const PropertyFilters = ({
 // Main properties page component
 function PropertiesPageContent() {
   const { toast } = useToast();
-  const { trackInteraction, trackError } = usePerformanceMonitor("PropertiesPage");
+  const { trackInteraction, trackError } =
+    usePerformanceMonitor("PropertiesPage");
 
   // State management
-  const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
-    search: '',
-    propertyType: 'all',
+    search: "",
+    propertyType: "all",
     priceRange: [50, 1000],
-    bedrooms: 'any',
+    bedrooms: "any",
     amenities: [] as string[],
   });
 
@@ -185,7 +236,7 @@ function PropertiesPageContent() {
     error,
     refetch,
   } = useOptimizedFetch<Property[]>(
-    'properties',
+    "properties",
     () => propertyService.getAllProperties(),
     {
       cacheTime: 10 * 60 * 1000, // 10 minutes
@@ -208,7 +259,10 @@ function PropertiesPageContent() {
           }
           return farmhouseImages;
         }
-        const imageCount = Math.min(5, Math.max(3, Math.floor(Math.random() * 3) + 3));
+        const imageCount = Math.min(
+          5,
+          Math.max(3, Math.floor(Math.random() * 3) + 3)
+        );
         const images: string[] = [];
         for (let i = 0; i < imageCount; i++) {
           images.push(getLocalImage(property.propertyType, i));
@@ -232,7 +286,10 @@ function PropertiesPageContent() {
         amenities: property.amenities || [],
         isVerified: true,
         isAvailable: property.availability?.isActive || true,
-        views: property.id === "famhouse_islamabad_dam_view" ? 234 : Math.floor(Math.random() * 100) + 10,
+        views:
+          property.id === "famhouse_islamabad_dam_view"
+            ? 234
+            : Math.floor(Math.random() * 100) + 10,
         isFeatured: property.id === "famhouse_islamabad_dam_view",
       };
     },
@@ -245,29 +302,41 @@ function PropertiesPageContent() {
 
     return properties.filter((property) => {
       // Search filter
-      if (filters.search && !property.title.toLowerCase().includes(filters.search.toLowerCase())) {
+      if (
+        filters.search &&
+        !property.title.toLowerCase().includes(filters.search.toLowerCase())
+      ) {
         return false;
       }
 
       // Property type filter
-      if (filters.propertyType !== 'all' && property.propertyType !== filters.propertyType) {
+      if (
+        filters.propertyType !== "all" &&
+        property.propertyType !== filters.propertyType
+      ) {
         return false;
       }
 
       // Price range filter
-      if (property.pricing.basePrice < filters.priceRange[0] || property.pricing.basePrice > filters.priceRange[1]) {
+      if (
+        property.pricing.basePrice < filters.priceRange[0] ||
+        property.pricing.basePrice > filters.priceRange[1]
+      ) {
         return false;
       }
 
       // Bedrooms filter
-      if (filters.bedrooms !== 'any' && property.capacity.bedrooms < parseInt(filters.bedrooms)) {
+      if (
+        filters.bedrooms !== "any" &&
+        property.capacity.bedrooms < parseInt(filters.bedrooms)
+      ) {
         return false;
       }
 
       // Amenities filter
       if (filters.amenities.length > 0) {
-        const hasAllAmenities = filters.amenities.every(amenity =>
-          property.amenities?.some(propAmenity =>
+        const hasAllAmenities = filters.amenities.every((amenity) =>
+          property.amenities?.some((propAmenity) =>
             propAmenity.toLowerCase().includes(amenity.toLowerCase())
           )
         );
@@ -296,20 +365,26 @@ function PropertiesPageContent() {
   }, [error, trackError, toast]);
 
   // Track interactions
-  const handleFilterChange = useCallback((newFilters: typeof filters) => {
-    setFilters(newFilters);
-    trackInteraction('filter_change');
-  }, [trackInteraction]);
+  const handleFilterChange = useCallback(
+    (newFilters: typeof filters) => {
+      setFilters(newFilters);
+      trackInteraction("filter_change");
+    },
+    [trackInteraction]
+  );
 
-  const handleViewModeChange = useCallback((mode: 'grid' | 'list') => {
-    setViewMode(mode);
-    trackInteraction('view_mode_change');
-  }, [trackInteraction]);
+  const handleViewModeChange = useCallback(
+    (mode: "grid" | "list") => {
+      setViewMode(mode);
+      trackInteraction("view_mode_change");
+    },
+    [trackInteraction]
+  );
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-20">
       <Header />
-      
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Page Header */}
         <div className="text-center mb-8">
@@ -329,12 +404,14 @@ function PropertiesPageContent() {
               <Input
                 placeholder="Search properties..."
                 value={filters.search}
-                onChange={(e) => handleFilterChange({ ...filters, search: e.target.value })}
+                onChange={(e) =>
+                  handleFilterChange({ ...filters, search: e.target.value })
+                }
                 className="pl-10"
               />
             </div>
           </div>
-          
+
           <div className="flex gap-2">
             <Button
               variant={showFilters ? "default" : "outline"}
@@ -344,19 +421,19 @@ function PropertiesPageContent() {
               <Filter className="h-4 w-4" />
               Filters
             </Button>
-            
+
             <div className="flex border rounded-lg">
               <Button
-                variant={viewMode === 'grid' ? "default" : "ghost"}
+                variant={viewMode === "grid" ? "default" : "ghost"}
                 size="sm"
-                onClick={() => handleViewModeChange('grid')}
+                onClick={() => handleViewModeChange("grid")}
               >
                 <Grid className="h-4 w-4" />
               </Button>
               <Button
-                variant={viewMode === 'list' ? "default" : "ghost"}
+                variant={viewMode === "list" ? "default" : "ghost"}
                 size="sm"
-                onClick={() => handleViewModeChange('list')}
+                onClick={() => handleViewModeChange("list")}
               >
                 <List className="h-4 w-4" />
               </Button>
@@ -390,14 +467,20 @@ function PropertiesPageContent() {
               </div>
             ) : propertyCards.length === 0 ? (
               <div className="text-center py-12">
-                <p className="text-gray-600 mb-4">No properties found matching your criteria</p>
-                <Button onClick={() => setFilters({
-                  search: '',
-                  propertyType: 'all',
-                  priceRange: [50, 1000],
-                  bedrooms: 'any',
-                  amenities: [],
-                })}>
+                <p className="text-gray-600 mb-4">
+                  No properties found matching your criteria
+                </p>
+                <Button
+                  onClick={() =>
+                    setFilters({
+                      search: "",
+                      propertyType: "all",
+                      priceRange: [50, 1000],
+                      bedrooms: "any",
+                      amenities: [],
+                    })
+                  }
+                >
                   Clear Filters
                 </Button>
               </div>
@@ -406,7 +489,7 @@ function PropertiesPageContent() {
                 properties={propertyCards}
                 viewMode={viewMode}
                 itemHeight={400}
-                itemsPerRow={viewMode === 'grid' ? 3 : 1}
+                itemsPerRow={viewMode === "grid" ? 3 : 1}
               />
             )}
           </div>
@@ -419,13 +502,15 @@ function PropertiesPageContent() {
 // Main export with Suspense wrapper
 export default function PropertiesPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-20">
-        <div className="flex items-center justify-center min-h-screen">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8EB69B]"></div>
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-20">
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#8EB69B]"></div>
+          </div>
         </div>
-      </div>
-    }>
+      }
+    >
       <PropertiesPageContent />
     </Suspense>
   );
