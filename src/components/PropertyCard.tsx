@@ -46,7 +46,6 @@ export interface PropertyCardProps {
   amenities?: string[];
   isVerified?: boolean;
   isAvailable?: boolean;
-  discount?: number;
   views?: number;
   isFeatured?: boolean;
 }
@@ -67,7 +66,6 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
     amenities = [],
     isVerified = true,
     isAvailable = true,
-    discount = 0,
     views = 0,
     isFeatured = false,
   }: PropertyCardProps) => {
@@ -86,19 +84,19 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
       imageError || hasError ? "/placeholder-property.jpg" : optimizedImageUrl;
 
     return (
-      <Card className="group transition-all duration-300 bg-white hover:bg-white shadow-sm hover:shadow-lg rounded-2xl overflow-hidden border border-[#E5E7EB]/60 hover:border-[#8EB69B]/30 hover:-translate-y-1 h-full flex flex-col">
+      <Card className="group transition-all duration-500 bg-white hover:bg-white shadow-lg hover:shadow-2xl rounded-3xl overflow-hidden border-0 hover:-translate-y-2 h-full flex flex-col max-w-sm mx-auto">
         <CardHeader className="p-0 relative">
-          <div className="relative w-full aspect-[4/3] overflow-hidden">
+          <div className="relative w-full aspect-[5/4] overflow-hidden">
             {/* Loading skeleton */}
             {!isLoaded && !hasError && (
-              <div className="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse" />
+              <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] animate-pulse" />
             )}
 
             <Image
               src={displayImageUrl}
               alt={title}
               fill
-              className={`object-cover transition-all duration-500 group-hover:scale-105 ${
+              className={`object-cover transition-all duration-700 group-hover:scale-110 ${
                 !isLoaded ? "opacity-0" : "opacity-100"
               }`}
               data-ai-hint={imageHint || "luxury property exterior"}
@@ -109,119 +107,104 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
 
-            {/* Gradient overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            {/* Subtle gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
-            {/* Top badges row */}
-            <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
+            {/* Top badges - Minimalist */}
+            <div className="absolute top-4 left-4 right-4 flex justify-between items-start">
               <div className="flex gap-2">
                 {/* Property type badge */}
-                <Badge className="bg-white/95 backdrop-blur-sm text-[#374151] border-0 shadow-sm text-xs font-semibold px-3 py-1.5 rounded-full">
+                <Badge className="bg-white/90 backdrop-blur-md text-[#051F20] border-0 shadow-sm text-xs font-medium px-3 py-1.5 rounded-full">
                   {propertyType.charAt(0).toUpperCase() + propertyType.slice(1)}
                 </Badge>
                 {/* Verified badge */}
                 {isVerified && (
-                  <Badge className="bg-[#8EB69B]/95 backdrop-blur-sm text-white border-0 shadow-sm text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                  <Badge className="bg-[#8EB69B]/90 backdrop-blur-md text-white border-0 shadow-sm text-xs font-medium px-3 py-1.5 rounded-full flex items-center gap-1.5">
                     <Shield className="h-3 w-3" />
                     Verified
                   </Badge>
                 )}
-                {/* Featured badge */}
-                {isFeatured && (
-                  <Badge className="bg-gradient-to-r from-[#F59E0B] to-[#D97706] backdrop-blur-sm text-white border-0 shadow-sm text-xs font-semibold px-3 py-1.5 rounded-full flex items-center gap-1.5">
-                    <TrendingUp className="h-3 w-3" />
-                    Featured
-                  </Badge>
-                )}
               </div>
 
-              <div className="flex gap-2">
-                {/* Views counter */}
-                {views > 0 && (
-                  <div className="bg-white/95 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-sm">
-                    <Eye className="h-3 w-3 text-[#6B7280]" />
-                    <span className="text-xs font-semibold text-[#374151]">
-                      {views}
-                    </span>
-                  </div>
-                )}
-                {/* Favorite button */}
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  className="h-8 w-8 rounded-full bg-white/95 backdrop-blur-sm hover:bg-white border-0 shadow-sm transition-all duration-300 group-hover:scale-105"
-                >
-                  <Heart className="h-4 w-4 text-[#6B7280] group-hover:text-red-500 transition-colors duration-300" />
-                </Button>
-              </div>
+              {/* Favorite button */}
+              <Button
+                size="sm"
+                variant="ghost"
+                className="h-9 w-9 rounded-full bg-white/90 backdrop-blur-md hover:bg-white border-0 shadow-sm transition-all duration-300 group-hover:scale-110"
+              >
+                <Heart className="h-4 w-4 text-[#4A4A4A] group-hover:text-red-500 transition-colors duration-300" />
+              </Button>
             </div>
 
-            {/* Bottom info row */}
-            <div className="absolute bottom-3 left-3 right-3 flex justify-between items-end">
-              {/* Rating */}
-              <div className="bg-white/95 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center space-x-1.5 shadow-sm">
-                <Star className="w-4 h-4 text-yellow-400 fill-current" />
-                <span className="text-sm font-bold text-[#374151]">
-                  {rating}
-                </span>
-              </div>
-
-              {/* Price */}
-              {price && (
-                <div className="bg-white/95 backdrop-blur-sm rounded-full px-4 py-2 shadow-sm">
+            {/* Bottom price - Clean and prominent */}
+            {price && (
+              <div className="absolute bottom-4 right-4">
+                <div className="bg-white/95 backdrop-blur-md rounded-2xl px-4 py-2.5 shadow-lg">
                   <div className="flex items-baseline gap-1">
-                    <span className="text-lg font-bold text-[#8EB69B]">
+                    <span className="text-xl font-bold text-[#8EB69B]">
                       {price}
                     </span>
-                    <span className="text-xs text-[#6B7280] font-medium">
+                    <span className="text-xs text-[#4A4A4A] font-medium">
                       /night
                     </span>
                   </div>
-                  {discount > 0 && (
-                    <div className="text-xs text-red-600 font-semibold text-center">
-                      {discount}% off
-                    </div>
-                  )}
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         </CardHeader>
 
-        <CardContent className="p-4 flex-1 flex flex-col">
-          {/* Location and basic info */}
-          <div className="flex items-center gap-2 mb-3">
+        <CardContent className="p-6 flex-1 flex flex-col">
+          {/* Property title */}
+          <CardTitle className="text-xl font-bold text-[#051F20] group-hover:text-[#8EB69B] transition-colors mb-3 leading-tight line-clamp-2">
+            {title}
+          </CardTitle>
+
+          {/* Location */}
+          <div className="flex items-center gap-2 mb-4">
             <MapPin className="h-4 w-4 text-[#8EB69B] flex-shrink-0" />
-            <span className="text-sm text-[#6B7280] font-medium truncate">
+            <span className="text-sm text-[#4A4A4A] font-medium truncate">
               {location}
             </span>
           </div>
 
-          {/* Property title */}
-          <CardTitle className="text-lg font-bold text-[#111827] group-hover:text-[#8EB69B] transition-colors mb-3 leading-tight line-clamp-2">
-            {title}
-          </CardTitle>
-
-          {/* Property specs */}
-          <div className="flex items-center gap-4 mb-3 text-sm text-[#6B7280]">
-            <div className="flex items-center gap-1.5">
-              <BedDouble className="h-4 w-4" />
-              <span className="font-medium">{bedrooms}</span>
+          {/* Property specs - Clean layout */}
+          <div className="flex items-center gap-6 mb-4 text-sm text-[#4A4A4A]">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-[#F8FBF9] flex items-center justify-center">
+                <BedDouble className="h-4 w-4 text-[#8EB69B]" />
+              </div>
+              <span className="font-semibold">{bedrooms}</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <Bath className="h-4 w-4" />
-              <span className="font-medium">{bathrooms}</span>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-[#F8FBF9] flex items-center justify-center">
+                <Bath className="h-4 w-4 text-[#8EB69B]" />
+              </div>
+              <span className="font-semibold">{bathrooms}</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <Users className="h-4 w-4" />
-              <span className="font-medium">{guests}</span>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-[#F8FBF9] flex items-center justify-center">
+                <Users className="h-4 w-4 text-[#8EB69B]" />
+              </div>
+              <span className="font-semibold">{guests}</span>
             </div>
           </div>
 
-          {/* Key amenities */}
+          {/* Rating */}
+          <div className="flex items-center gap-2 mb-4">
+            <div className="flex items-center">
+              <Star className="w-4 h-4 text-yellow-400 fill-current" />
+              <span className="ml-1 text-sm font-semibold text-[#051F20]">
+                {rating}
+              </span>
+            </div>
+            <span className="text-sm text-[#4A4A4A]">(23 reviews)</span>
+          </div>
+
+          {/* Key amenities - Minimalist */}
           {amenities.length > 0 && (
-            <div className="flex items-center gap-2 mb-3 flex-wrap">
-              {amenities.slice(0, 3).map((amenity, index) => {
+            <div className="flex items-center gap-2 mb-4 flex-wrap">
+              {amenities.slice(0, 2).map((amenity, index) => {
                 const getIcon = (amenity: string) => {
                   switch (amenity.toLowerCase()) {
                     case "wifi":
@@ -251,47 +234,47 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
                 return (
                   <div
                     key={index}
-                    className="flex items-center gap-2 bg-[#F9FAFB] rounded-lg px-3 py-1.5 border border-[#E5E7EB]"
+                    className="flex items-center gap-2 bg-[#F8FBF9] rounded-xl px-3 py-2 border border-[#DAF1DE]/50"
                   >
                     {getIcon(amenity)}
-                    <span className="text-xs text-[#374151] font-medium">
+                    <span className="text-xs text-[#051F20] font-medium">
                       {amenity}
                     </span>
                   </div>
                 );
               })}
-              {amenities.length > 3 && (
-                <div className="bg-[#F9FAFB] rounded-lg px-3 py-1.5 border border-[#E5E7EB]">
+              {amenities.length > 2 && (
+                <div className="bg-[#F8FBF9] rounded-xl px-3 py-2 border border-[#DAF1DE]/50">
                   <span className="text-xs text-[#8EB69B] font-semibold">
-                    +{amenities.length - 3} more
+                    +{amenities.length - 2} more
                   </span>
                 </div>
               )}
             </div>
           )}
 
-          {/* Availability status */}
-          <div className="flex items-center justify-between mb-3 mt-auto">
+          {/* Availability status - Clean */}
+          <div className="flex items-center justify-between mb-4 mt-auto">
             <Badge
               className={`${
                 isAvailable
                   ? "bg-green-50 text-green-700 border-green-200"
                   : "bg-red-50 text-red-700 border-red-200"
-              } text-xs font-semibold px-3 py-1 rounded-full`}
+              } text-xs font-medium px-3 py-1.5 rounded-full`}
             >
               {isAvailable ? "Available" : "Unavailable"}
             </Badge>
-            <div className="flex items-center gap-1.5 text-xs text-[#6B7280]">
+            <div className="flex items-center gap-1.5 text-xs text-[#4A4A4A]">
               <Calendar className="h-3.5 w-3.5" />
               <span className="font-medium">Instant booking</span>
             </div>
           </div>
         </CardContent>
 
-        <CardFooter className="p-4 pt-0">
+        <CardFooter className="p-6 pt-0">
           <Button
             asChild
-            className="w-full rounded-xl bg-gradient-to-r from-[#8EB69B] to-[#235347] text-white hover:from-[#235347] hover:to-[#8EB69B] shadow-sm hover:shadow-md transition-all duration-300 py-3 font-semibold flex items-center justify-center gap-2 text-sm"
+            className="w-full rounded-2xl bg-gradient-to-r from-[#8EB69B] to-[#235347] text-white hover:from-[#235347] hover:to-[#8EB69B] shadow-lg hover:shadow-xl transition-all duration-300 py-4 font-semibold flex items-center justify-center gap-2 text-sm group-hover:scale-[1.02]"
           >
             <Link href={`/properties/${slug}`}>
               <Eye className="h-4 w-4" />

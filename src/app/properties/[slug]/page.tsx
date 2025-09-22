@@ -328,19 +328,25 @@ export default function Page({ params }: { params: { slug: string } }) {
                       <div className="text-2xl font-bold text-[#8EB69B]">
                         {property.capacity.bedrooms}
                       </div>
-                      <div className="text-xs text-[#4A4A4A] font-medium">Bedrooms</div>
+                      <div className="text-xs text-[#4A4A4A] font-medium">
+                        Bedrooms
+                      </div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-[#8EB69B]">
                         {property.capacity.bathrooms}
                       </div>
-                      <div className="text-xs text-[#4A4A4A] font-medium">Bathrooms</div>
+                      <div className="text-xs text-[#4A4A4A] font-medium">
+                        Bathrooms
+                      </div>
                     </div>
                     <div className="text-center">
                       <div className="text-2xl font-bold text-[#8EB69B]">
                         {property.capacity.maxGuests}
                       </div>
-                      <div className="text-xs text-[#4A4A4A] font-medium">Guests</div>
+                      <div className="text-xs text-[#4A4A4A] font-medium">
+                        Guests
+                      </div>
                     </div>
                   </div>
 
@@ -400,137 +406,137 @@ export default function Page({ params }: { params: { slug: string } }) {
           </div>
 
           <div className="space-y-8">
-          {/* Property Highlights - Minimalist */}
-          <div className="bg-white rounded-xl border border-gray-100 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Property Highlights
-            </h2>
+            {/* Property Highlights - Minimalist */}
+            <div className="bg-white rounded-xl border border-gray-100 p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Property Highlights
+              </h2>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="text-center p-4 bg-gray-50 rounded-lg">
-                <div className="text-2xl font-bold text-gray-900 mb-1">
-                  {property.capacity.bedrooms}
-                </div>
-                <div className="text-sm text-gray-600">Bedrooms</div>
-              </div>
-              <div className="text-center p-4 bg-gray-50 rounded-lg">
-                <div className="text-2xl font-bold text-gray-900 mb-1">
-                  {property.capacity.bathrooms}
-                </div>
-                <div className="text-sm text-gray-600">Bathrooms</div>
-              </div>
-              <div className="text-center p-4 bg-gray-50 rounded-lg">
-                <div className="text-2xl font-bold text-gray-900 mb-1">
-                  {property.capacity.maxGuests}
-                </div>
-                <div className="text-sm text-gray-600">Max Guests</div>
-              </div>
-              <div className="text-center p-4 bg-gray-50 rounded-lg">
-                <div className="text-2xl font-bold text-gray-900 mb-1">4</div>
-                <div className="text-sm text-gray-600">Floors</div>
-              </div>
-            </div>
-          </div>
-
-          {/* About Section - Minimalist */}
-          <div className="bg-white rounded-xl border border-gray-100 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              About this property
-            </h2>
-            <p className="text-gray-700 leading-relaxed">
-              {property.description}
-            </p>
-          </div>
-
-          {/* Amenities - Minimalist */}
-          <div className="bg-white rounded-xl border border-gray-100 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              What this place offers
-            </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {property.amenities.map((amenity) => {
-                const getIcon = (amenity: string) => {
-                  switch (amenity.toLowerCase()) {
-                    case "wifi":
-                    case "high-speed wifi":
-                      return <Wifi className="h-4 w-4" />;
-                    case "parking":
-                    case "private parking":
-                      return <Car className="h-4 w-4" />;
-                    case "air conditioning":
-                    case "central air conditioning":
-                      return (
-                        <div className="h-4 w-4 bg-[#8EB69B] rounded-full" />
-                      );
-                    case "kitchen":
-                    case "gourmet kitchen":
-                      return <UtensilsCrossed className="h-4 w-4" />;
-                    case "security":
-                    case "24/7 security":
-                      return <Shield className="h-4 w-4" />;
-                    case "balcony":
-                    case "private balcony":
-                      return <Eye className="h-4 w-4" />;
-                    case "dam view":
-                    case "panoramic dam views":
-                      return <Mountain className="h-4 w-4" />;
-                    case "swimming pool":
-                    case "private swimming pool":
-                      return <Waves className="h-4 w-4" />;
-                    case "gym":
-                    case "fully equipped gym":
-                      return <Dumbbell className="h-4 w-4" />;
-                    default:
-                      return <CheckCircle className="h-4 w-4" />;
-                  }
-                };
-
-                return (
-                  <div
-                    key={amenity}
-                    className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
-                  >
-                    <div className="w-8 h-8 bg-[#8EB69B]/10 rounded-lg flex items-center justify-center text-[#8EB69B]">
-                      {getIcon(amenity)}
-                    </div>
-                    <span className="text-sm font-medium text-gray-700">
-                      {amenity}
-                    </span>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-gray-900 mb-1">
+                    {property.capacity.bedrooms}
                   </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Location - Minimalist */}
-          <div className="bg-white rounded-xl border border-gray-100 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Where you'll be
-            </h2>
-            <div className="flex items-start gap-3">
-              <MapPin className="h-5 w-5 text-[#8EB69B] mt-0.5" />
-              <div>
-                <p className="text-gray-900 font-medium">
-                  {property.location.address}
-                </p>
-                <p className="text-gray-600 text-sm">
-                  {property.location.city}, {property.location.country}
-                </p>
+                  <div className="text-sm text-gray-600">Bedrooms</div>
+                </div>
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-gray-900 mb-1">
+                    {property.capacity.bathrooms}
+                  </div>
+                  <div className="text-sm text-gray-600">Bathrooms</div>
+                </div>
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-gray-900 mb-1">
+                    {property.capacity.maxGuests}
+                  </div>
+                  <div className="text-sm text-gray-600">Max Guests</div>
+                </div>
+                <div className="text-center p-4 bg-gray-50 rounded-lg">
+                  <div className="text-2xl font-bold text-gray-900 mb-1">4</div>
+                  <div className="text-sm text-gray-600">Floors</div>
+                </div>
               </div>
             </div>
-          </div>
 
-          {/* Availability Calendar - Minimalist */}
-          <div className="bg-white rounded-xl border border-gray-100 p-6">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">
-              Availability
-            </h2>
-            <AvailabilityCalendar
-              propertyId={property.id}
-              mode="view"
-              className="w-full"
-            />
-          </div>
+            {/* About Section - Minimalist */}
+            <div className="bg-white rounded-xl border border-gray-100 p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                About this property
+              </h2>
+              <p className="text-gray-700 leading-relaxed">
+                {property.description}
+              </p>
+            </div>
+
+            {/* Amenities - Minimalist */}
+            <div className="bg-white rounded-xl border border-gray-100 p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                What this place offers
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {property.amenities.map((amenity) => {
+                  const getIcon = (amenity: string) => {
+                    switch (amenity.toLowerCase()) {
+                      case "wifi":
+                      case "high-speed wifi":
+                        return <Wifi className="h-4 w-4" />;
+                      case "parking":
+                      case "private parking":
+                        return <Car className="h-4 w-4" />;
+                      case "air conditioning":
+                      case "central air conditioning":
+                        return (
+                          <div className="h-4 w-4 bg-[#8EB69B] rounded-full" />
+                        );
+                      case "kitchen":
+                      case "gourmet kitchen":
+                        return <UtensilsCrossed className="h-4 w-4" />;
+                      case "security":
+                      case "24/7 security":
+                        return <Shield className="h-4 w-4" />;
+                      case "balcony":
+                      case "private balcony":
+                        return <Eye className="h-4 w-4" />;
+                      case "dam view":
+                      case "panoramic dam views":
+                        return <Mountain className="h-4 w-4" />;
+                      case "swimming pool":
+                      case "private swimming pool":
+                        return <Waves className="h-4 w-4" />;
+                      case "gym":
+                      case "fully equipped gym":
+                        return <Dumbbell className="h-4 w-4" />;
+                      default:
+                        return <CheckCircle className="h-4 w-4" />;
+                    }
+                  };
+
+                  return (
+                    <div
+                      key={amenity}
+                      className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg"
+                    >
+                      <div className="w-8 h-8 bg-[#8EB69B]/10 rounded-lg flex items-center justify-center text-[#8EB69B]">
+                        {getIcon(amenity)}
+                      </div>
+                      <span className="text-sm font-medium text-gray-700">
+                        {amenity}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Location - Minimalist */}
+            <div className="bg-white rounded-xl border border-gray-100 p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Where you'll be
+              </h2>
+              <div className="flex items-start gap-3">
+                <MapPin className="h-5 w-5 text-[#8EB69B] mt-0.5" />
+                <div>
+                  <p className="text-gray-900 font-medium">
+                    {property.location.address}
+                  </p>
+                  <p className="text-gray-600 text-sm">
+                    {property.location.city}, {property.location.country}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Availability Calendar - Minimalist */}
+            <div className="bg-white rounded-xl border border-gray-100 p-6">
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Availability
+              </h2>
+              <AvailabilityCalendar
+                propertyId={property.id}
+                mode="view"
+                className="w-full"
+              />
+            </div>
           </div>
         </div>
       </div>
