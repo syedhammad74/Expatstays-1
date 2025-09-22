@@ -29,6 +29,18 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
           rel="stylesheet"
         />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+                  * {
+                    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+                  }
+                  body {
+                    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+                  }
+                `,
+          }}
+        />
       </head>
       <body className="font-sans antialiased">
         <AuthProvider>
