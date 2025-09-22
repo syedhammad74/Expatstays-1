@@ -13,7 +13,6 @@ import {
   BedDouble,
   Users,
   MapPin,
-  CreditCard,
   Star,
   Heart,
   Bath,
@@ -22,19 +21,20 @@ import {
   Shield,
   Eye,
   Calendar,
-  TrendingUp,
   Mountain,
   Home,
   Waves,
   Dumbbell,
 } from "lucide-react";
-import { useState, memo } from "react";
+import { useState, memo, useMemo, useCallback, useRef, useEffect } from "react";
 import { optimizeImageUrl, useImageLoad } from "@/lib/performance";
+import { useSwipe } from "@/hooks/use-swipe";
 
 export interface PropertyCardProps {
   slug: string;
   imageUrl: string;
   imageHint?: string;
+  images?: string[]; // Add support for multiple images
   title: string;
   bedrooms: number;
   guests: number;
@@ -55,6 +55,7 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
     slug,
     imageUrl,
     imageHint,
+    images = [],
     title,
     bedrooms,
     guests,
@@ -70,23 +71,157 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
     isFeatured = false,
   }: PropertyCardProps) => {
     const [imageError, setImageError] = useState(false);
-    const { isLoaded, hasError } = useImageLoad(imageUrl);
+    const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isHovered, setIsHovered] = useState(false);
+    const imageContainerRef = useRef<HTMLDivElement>(null);
+    const scrollTimeoutRef = useRef<NodeJS.Timeout>();
 
-    // Optimize image URL for better performance
-    const optimizedImageUrl = optimizeImageUrl(imageUrl, {
-      width: 400,
-      height: 300,
-      quality: 85,
+    // Use images array if available, otherwise fallback to single imageUrl
+    const allImages = images.length > 0 ? images : [imageUrl];
+    const { isLoaded, hasError } = useImageLoad(allImages[currentImageIndex]);
+
+    // Memoize optimized image URLs for all images
+    const optimizedImageUrls = useMemo(
+      () =>
+        allImages.map((img) =>
+          optimizeImageUrl(img, {
+            width: 400,
+            height: 300,
+            quality: 85,
+          })
+        ),
+      [allImages]
+    );
+
+    // Memoize current display image URL
+    const displayImageUrl = useMemo(() => {
+      const currentImage = optimizedImageUrls[currentImageIndex];
+      return imageError || hasError
+        ? "/placeholder-property.jpg"
+        : currentImage;
+    }, [imageError, hasError, optimizedImageUrls, currentImageIndex]);
+
+    // Handle wheel scroll for image navigation
+    const handleWheel = useCallback(
+      (e: WheelEvent) => {
+        if (!isHovered || allImages.length <= 1) return;
+
+        e.preventDefault();
+
+        // Clear existing timeout
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+
+        // Debounce scroll events
+        scrollTimeoutRef.current = setTimeout(() => {
+          if (e.deltaY > 0) {
+            // Scroll down - next image
+            setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+          } else {
+            // Scroll up - previous image
+            setCurrentImageIndex(
+              (prev) => (prev - 1 + allImages.length) % allImages.length
+            );
+          }
+        }, 50);
+      },
+      [isHovered, allImages.length]
+    );
+
+    // Add swipe support for mobile
+    const swipeHandlers = useSwipe({
+      onSwipeLeft: () => {
+        if (allImages.length > 1) {
+          setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
+        }
+      },
+      onSwipeRight: () => {
+        if (allImages.length > 1) {
+          setCurrentImageIndex(
+            (prev) => (prev - 1 + allImages.length) % allImages.length
+          );
+        }
+      },
+      threshold: 50,
     });
 
-    // Fallback image for errors
-    const displayImageUrl =
-      imageError || hasError ? "/placeholder-property.jpg" : optimizedImageUrl;
+    // Add wheel event listener
+    useEffect(() => {
+      const container = imageContainerRef.current;
+      if (!container) return;
+
+      container.addEventListener("wheel", handleWheel, { passive: false });
+      container.addEventListener("touchstart", swipeHandlers.onTouchStart, {
+        passive: true,
+      });
+      container.addEventListener("touchmove", swipeHandlers.onTouchMove, {
+        passive: false,
+      });
+      container.addEventListener("touchend", swipeHandlers.onTouchEnd, {
+        passive: true,
+      });
+
+      return () => {
+        container.removeEventListener("wheel", handleWheel);
+        container.removeEventListener("touchstart", swipeHandlers.onTouchStart);
+        container.removeEventListener("touchmove", swipeHandlers.onTouchMove);
+        container.removeEventListener("touchend", swipeHandlers.onTouchEnd);
+        if (scrollTimeoutRef.current) {
+          clearTimeout(scrollTimeoutRef.current);
+        }
+      };
+    }, [handleWheel, swipeHandlers]);
+
+    // Memoize amenity icons to prevent recalculation
+    const getIcon = useCallback((amenity: string) => {
+      switch (amenity.toLowerCase()) {
+        case "wifi":
+        case "high-speed wifi":
+          return <Wifi className="h-3.5 w-3.5" />;
+        case "parking":
+        case "private parking":
+          return <Car className="h-3.5 w-3.5" />;
+        case "dam view":
+        case "panoramic dam views":
+        case "mountain view":
+          return <Mountain className="h-3.5 w-3.5" />;
+        case "private swimming pool":
+        case "swimming pool":
+          return <Waves className="h-3.5 w-3.5" />;
+        case "fully equipped gym":
+        case "gym":
+          return <Dumbbell className="h-3.5 w-3.5" />;
+        case "extensive garden":
+        case "garden":
+        case "walking track":
+          return <Home className="h-3.5 w-3.5" />;
+        default:
+          return <Home className="h-3.5 w-3.5" />;
+      }
+    }, []);
+
+    // Memoize displayed amenities (only first 2)
+    const displayedAmenities = useMemo(
+      () => amenities.slice(0, 2),
+      [amenities]
+    );
+
+    // Memoize property type display
+    const propertyTypeDisplay = useMemo(
+      () => propertyType.charAt(0).toUpperCase() + propertyType.slice(1),
+      [propertyType]
+    );
 
     return (
-      <Card className="group transition-all duration-300 bg-white hover:bg-white shadow-md hover:shadow-lg rounded-xl overflow-hidden border border-[#E5E7EB]/40 hover:border-[#8EB69B]/30 hover:-translate-y-1 h-full flex flex-col">
+      <Card className="group transition-all duration-300 bg-white hover:bg-white shadow-md hover:shadow-xl rounded-xl overflow-hidden border border-[#E5E7EB]/40 hover:border-[#8EB69B]/30 hover:-translate-y-2 h-full flex flex-col">
         <CardHeader className="p-0 relative">
-          <div className="relative w-full aspect-[4/3] overflow-hidden">
+          <div
+            ref={imageContainerRef}
+            className="relative w-full aspect-[4/3] overflow-hidden cursor-pointer"
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+          >
             {/* Loading skeleton */}
             {!isLoaded && !hasError && (
               <div className="absolute inset-0 bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] animate-pulse" />
@@ -96,26 +231,41 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
               src={displayImageUrl}
               alt={title}
               fill
-              className={`object-cover transition-all duration-500 group-hover:scale-105 ${
+              className={`object-cover transition-all duration-700 ease-out group-hover:scale-110 ${
                 !isLoaded ? "opacity-0" : "opacity-100"
               }`}
               data-ai-hint={imageHint || "luxury property exterior"}
               onError={() => setImageError(true)}
               priority={false}
+              loading="lazy"
               placeholder="blur"
               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
 
-            {/* Subtle gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
+            {/* Enhanced gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+            {/* Image counter for multiple images */}
+            {allImages.length > 1 && (
+              <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {currentImageIndex + 1} / {allImages.length}
+              </div>
+            )}
+
+            {/* Scroll indicator for multiple images */}
+            {allImages.length > 1 && isHovered && (
+              <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                Scroll to see more
+              </div>
+            )}
 
             {/* Top badges - Compact */}
             <div className="absolute top-3 left-3 right-3 flex justify-between items-start">
               <div className="flex gap-1.5">
                 {/* Property type badge */}
                 <Badge className="bg-white/95 backdrop-blur-sm text-[#051F20] border-0 shadow-sm text-xs font-medium px-2.5 py-1 rounded-full">
-                  {propertyType.charAt(0).toUpperCase() + propertyType.slice(1)}
+                  {propertyTypeDisplay}
                 </Badge>
                 {/* Verified badge */}
                 {isVerified && (
@@ -154,97 +304,71 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
           </div>
         </CardHeader>
 
-        <CardContent className="p-4 flex-1 flex flex-col">
+        <CardContent className="p-5 flex-1 flex flex-col">
           {/* Property title */}
-          <CardTitle className="text-lg font-bold text-[#051F20] group-hover:text-[#8EB69B] transition-colors mb-2 leading-tight line-clamp-2">
+          <CardTitle className="text-lg font-bold text-[#051F20] group-hover:text-[#8EB69B] transition-colors mb-3 leading-tight line-clamp-2">
             {title}
           </CardTitle>
 
           {/* Location */}
-          <div className="flex items-center gap-1.5 mb-3">
-            <MapPin className="h-3.5 w-3.5 text-[#8EB69B] flex-shrink-0" />
+          <div className="flex items-center gap-2 mb-4">
+            <MapPin className="h-4 w-4 text-[#8EB69B] flex-shrink-0" />
             <span className="text-sm text-[#4A4A4A] font-medium truncate">
               {location}
             </span>
           </div>
 
-          {/* Property specs - Compact layout */}
-          <div className="flex items-center gap-4 mb-3 text-sm text-[#4A4A4A]">
-            <div className="flex items-center gap-1.5">
-              <div className="w-6 h-6 rounded-full bg-[#F8FBF9] flex items-center justify-center">
-                <BedDouble className="h-3.5 w-3.5 text-[#8EB69B]" />
+          {/* Property specs - Enhanced layout */}
+          <div className="flex items-center gap-5 mb-4 text-sm text-[#4A4A4A]">
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] flex items-center justify-center shadow-sm">
+                <BedDouble className="h-4 w-4 text-[#8EB69B]" />
               </div>
-              <span className="font-semibold text-xs">{bedrooms}</span>
+              <span className="font-semibold text-sm">{bedrooms}</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <div className="w-6 h-6 rounded-full bg-[#F8FBF9] flex items-center justify-center">
-                <Bath className="h-3.5 w-3.5 text-[#8EB69B]" />
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] flex items-center justify-center shadow-sm">
+                <Bath className="h-4 w-4 text-[#8EB69B]" />
               </div>
-              <span className="font-semibold text-xs">{bathrooms}</span>
+              <span className="font-semibold text-sm">{bathrooms}</span>
             </div>
-            <div className="flex items-center gap-1.5">
-              <div className="w-6 h-6 rounded-full bg-[#F8FBF9] flex items-center justify-center">
-                <Users className="h-3.5 w-3.5 text-[#8EB69B]" />
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] flex items-center justify-center shadow-sm">
+                <Users className="h-4 w-4 text-[#8EB69B]" />
               </div>
-              <span className="font-semibold text-xs">{guests}</span>
+              <span className="font-semibold text-sm">{guests}</span>
             </div>
           </div>
 
           {/* Rating */}
-          <div className="flex items-center gap-2 mb-3">
-            <div className="flex items-center">
-              <Star className="w-3.5 h-3.5 text-yellow-400 fill-current" />
-              <span className="ml-1 text-sm font-semibold text-[#051F20]">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center gap-1">
+              <Star className="w-4 h-4 text-yellow-400 fill-current" />
+              <span className="text-sm font-semibold text-[#051F20]">
                 {rating}
               </span>
             </div>
-            <span className="text-xs text-[#4A4A4A]">(23 reviews)</span>
+            <span className="text-xs text-[#4A4A4A] font-medium">
+              (23 reviews)
+            </span>
           </div>
 
-          {/* Key amenities - Compact */}
+          {/* Key amenities - Enhanced */}
           {amenities.length > 0 && (
-            <div className="flex items-center gap-1.5 mb-3 flex-wrap">
-              {amenities.slice(0, 2).map((amenity, index) => {
-                const getIcon = (amenity: string) => {
-                  switch (amenity.toLowerCase()) {
-                    case "wifi":
-                    case "high-speed wifi":
-                      return <Wifi className="h-3.5 w-3.5" />;
-                    case "parking":
-                    case "private parking":
-                      return <Car className="h-3.5 w-3.5" />;
-                    case "dam view":
-                    case "panoramic dam views":
-                    case "mountain view":
-                      return <Mountain className="h-3.5 w-3.5" />;
-                    case "private swimming pool":
-                    case "swimming pool":
-                      return <Waves className="h-3.5 w-3.5" />;
-                    case "fully equipped gym":
-                    case "gym":
-                      return <Dumbbell className="h-3.5 w-3.5" />;
-                    case "extensive garden":
-                    case "garden":
-                    case "walking track":
-                      return <Home className="h-3.5 w-3.5" />;
-                    default:
-                      return <Home className="h-3.5 w-3.5" />;
-                  }
-                };
-                return (
-                  <div
-                    key={index}
-                    className="flex items-center gap-1.5 bg-[#F8FBF9] rounded-lg px-2.5 py-1.5 border border-[#DAF1DE]/50"
-                  >
-                    {getIcon(amenity)}
-                    <span className="text-xs text-[#051F20] font-medium">
-                      {amenity}
-                    </span>
-                  </div>
-                );
-              })}
+            <div className="flex items-center gap-2 mb-4 flex-wrap">
+              {displayedAmenities.map((amenity, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-2 bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC] rounded-lg px-3 py-2 border border-[#DAF1DE]/50 shadow-sm"
+                >
+                  {getIcon(amenity)}
+                  <span className="text-xs text-[#051F20] font-medium">
+                    {amenity}
+                  </span>
+                </div>
+              ))}
               {amenities.length > 2 && (
-                <div className="bg-[#F8FBF9] rounded-lg px-2.5 py-1.5 border border-[#DAF1DE]/50">
+                <div className="bg-gradient-to-r from-[#F8FBF9] to-[#E6F2EC] rounded-lg px-3 py-2 border border-[#DAF1DE]/50 shadow-sm">
                   <span className="text-xs text-[#8EB69B] font-semibold">
                     +{amenities.length - 2} more
                   </span>
@@ -289,4 +413,29 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
 
 PropertyCard.displayName = "PropertyCard";
 
-export default PropertyCard;
+// Add comparison function for better memoization
+const areEqual = (
+  prevProps: PropertyCardProps,
+  nextProps: PropertyCardProps
+) => {
+  return (
+    prevProps.slug === nextProps.slug &&
+    prevProps.imageUrl === nextProps.imageUrl &&
+    prevProps.images?.length === nextProps.images?.length &&
+    prevProps.title === nextProps.title &&
+    prevProps.bedrooms === nextProps.bedrooms &&
+    prevProps.guests === nextProps.guests &&
+    prevProps.location === nextProps.location &&
+    prevProps.price === nextProps.price &&
+    prevProps.rating === nextProps.rating &&
+    prevProps.bathrooms === nextProps.bathrooms &&
+    prevProps.propertyType === nextProps.propertyType &&
+    prevProps.amenities?.length === nextProps.amenities?.length &&
+    prevProps.isVerified === nextProps.isVerified &&
+    prevProps.isAvailable === nextProps.isAvailable &&
+    prevProps.views === nextProps.views &&
+    prevProps.isFeatured === nextProps.isFeatured
+  );
+};
+
+export default memo(PropertyCard, areEqual);

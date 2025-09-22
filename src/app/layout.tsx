@@ -3,6 +3,9 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
+import ServiceWorkerProvider from "@/components/ServiceWorkerProvider";
+import { DNSPrefetcher, FontPreloader } from "@/components/ResourcePreloader";
+import PerformanceMonitor from "@/components/PerformanceMonitor";
 
 export const metadata: Metadata = {
   title: "Expat Stays",
@@ -52,6 +55,22 @@ export default function RootLayout({
           content="https://myexpatstays.com/logo.png"
         />
         <link rel="icon" href="/logo.png" type="image/png" />
+
+        {/* DNS Prefetching for external domains */}
+        <DNSPrefetcher
+          domains={[
+            "fonts.googleapis.com",
+            "fonts.gstatic.com",
+            "firebasestorage.googleapis.com",
+            "storage.googleapis.com",
+            "js.stripe.com",
+            "m.stripe.network",
+          ]}
+        />
+
+        {/* Font preloading */}
+        <FontPreloader />
+
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -61,6 +80,20 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
           rel="stylesheet"
+        />
+
+        {/* Resource hints */}
+        <link rel="dns-prefetch" href="//firebasestorage.googleapis.com" />
+        <link rel="dns-prefetch" href="//storage.googleapis.com" />
+        <link rel="dns-prefetch" href="//js.stripe.com" />
+        <link rel="dns-prefetch" href="//m.stripe.network" />
+
+        {/* Preload critical resources */}
+        <link rel="preload" href="/logo.png" as="image" />
+        <link
+          rel="preload"
+          href="/_next/static/css/app/layout.css"
+          as="style"
         />
         <style
           dangerouslySetInnerHTML={{
@@ -75,11 +108,14 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
-        <AuthProvider>
-          <main className="min-h-screen">{children}</main>
-          <ConditionalFooter />
-          <Toaster />
-        </AuthProvider>
+        <ServiceWorkerProvider>
+          <AuthProvider>
+            <main className="min-h-screen">{children}</main>
+            <ConditionalFooter />
+            <Toaster />
+            <PerformanceMonitor />
+          </AuthProvider>
+        </ServiceWorkerProvider>
       </body>
     </html>
   );

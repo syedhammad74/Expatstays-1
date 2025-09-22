@@ -32,7 +32,7 @@ import { getLocalImage } from "@/lib/imageUtils";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Header from "@/components/layout/Header";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { format } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { useRouter } from "next/navigation";
@@ -44,6 +44,8 @@ import { ExtendedProperty } from "@/lib/types/property-extended";
 import { useToast } from "@/hooks/use-toast";
 import { usePerformanceMonitor, useDebounce } from "@/hooks/use-performance";
 import { VirtualGrid } from "@/components/ui/virtual-grid";
+import VirtualizedPropertyGrid from "@/components/VirtualizedPropertyGrid";
+import PerformanceSummary from "@/components/PerformanceSummary";
 import dynamic from "next/dynamic";
 const Calendar = dynamic(() =>
   import("@/components/ui/calendar").then((m) => m.Calendar)
@@ -216,6 +218,60 @@ export default function PropertiesPage() {
   // Debounced search for better performance
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
+  // Memoize property conversion to prevent recalculation
+  const convertToPropertyCard = useCallback(
+    (property: Property): PropertyCardProps => {
+      // Generate multiple images for properties that don't have them
+      const generateImages = (property: Property): string[] => {
+        if (property.images && property.images.length > 0) {
+          return property.images;
+        }
+
+        // Generate 3-5 images based on property type
+        const imageCount = Math.min(
+          5,
+          Math.max(3, Math.floor(Math.random() * 3) + 3)
+        );
+        const images: string[] = [];
+
+        for (let i = 0; i < imageCount; i++) {
+          images.push(getLocalImage(property.propertyType, i));
+        }
+
+        return images;
+      };
+
+      return {
+        slug: property.id,
+        imageUrl: property.images?.[0] || getLocalImage("villa", 0),
+        images: generateImages(property),
+        imageHint: property.title,
+        title: property.title,
+        bedrooms: property.capacity.bedrooms,
+        guests: property.capacity.maxGuests,
+        location: `${property.location.city}, ${property.location.country}`,
+        price: `$${property.pricing.basePrice}`,
+        rating: property.rating || 4.8,
+        bathrooms: property.capacity.bathrooms,
+        propertyType: property.propertyType,
+        amenities: property.amenities || [],
+        isVerified: true,
+        isAvailable: property.availability?.isActive || true,
+        views:
+          property.id === "famhouse_islamabad_dam_view"
+            ? 234
+            : Math.floor(Math.random() * 100) + 10, // Higher views for premium farmhouse
+        isFeatured: property.id === "famhouse_islamabad_dam_view", // Mark famhouse as featured
+      };
+    },
+    []
+  );
+
+  // Memoize filtered properties to prevent unnecessary recalculations
+  const memoizedFilteredProperties = useMemo(() => {
+    return filteredProperties.map(convertToPropertyCard);
+  }, [filteredProperties, convertToPropertyCard]);
+
   // Enhanced loadProperties with caching
   const loadProperties = useCallback(async () => {
     try {
@@ -224,12 +280,7 @@ export default function PropertiesPage() {
 
       // Debug configuration (guarded for non-production)
       if (process.env.NODE_ENV !== "production") {
-        console.log("🔍 Properties Page - Configuration Check:");
-        console.log("  - USE_MOCK_DATA:", process.env.USE_MOCK_DATA);
-        console.log(
-          "  - Firebase Project:",
-          process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID
-        );
+        // Removed console.log statements for better performance
       }
 
       // Try to get cached properties first
@@ -395,13 +446,7 @@ export default function PropertiesPage() {
       const allPropertiesCombined = [...hardcodedProperties, ...allProperties];
 
       if (process.env.NODE_ENV !== "production") {
-        console.log("🏠 Properties Page - Loaded Properties:");
-        console.log(`  - Total properties: ${allPropertiesCombined.length}`);
-        console.log(`  - Hardcoded properties: ${hardcodedProperties.length}`);
-        console.log(`  - Service properties: ${allProperties.length}`);
-        if (allPropertiesCombined.length > 0) {
-          console.log(`  - First property: ${allPropertiesCombined[0].title}`);
-        }
+        // Removed console.log statements for better performance
       }
 
       // Cache the properties for faster future loads
@@ -675,29 +720,6 @@ export default function PropertiesPage() {
     trackError,
   ]); // Added dateRange, guests, location, router, filterPropertiesByAvailability, toast, and trackInteraction to dependencies
 
-  // Convert Property to PropertyCardProps
-  const convertToPropertyCard = (property: Property): PropertyCardProps => ({
-    slug: property.id,
-    imageUrl: property.images?.[0] || getLocalImage("villa", 0),
-    imageHint: property.title,
-    title: property.title,
-    bedrooms: property.capacity.bedrooms,
-    guests: property.capacity.maxGuests,
-    location: `${property.location.city}, ${property.location.country}`,
-    price: `$${property.pricing.basePrice}`,
-    rating: property.rating || 4.8,
-    bathrooms: property.capacity.bathrooms,
-    propertyType: property.propertyType,
-    amenities: property.amenities || [],
-    isVerified: true,
-    isAvailable: property.availability?.isActive || true,
-    views:
-      property.id === "famhouse_islamabad_dam_view"
-        ? 234
-        : Math.floor(Math.random() * 100) + 10, // Higher views for premium farmhouse
-    isFeatured: property.id === "famhouse_islamabad_dam_view", // Mark famhouse as featured
-  });
-
   // Enhanced renderProperties with better UI
   const renderProperties = () => {
     if (loading) {
@@ -785,15 +807,24 @@ export default function PropertiesPage() {
           </motion.div>
         )}
 
-        <div className="flex justify-center mt-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl">
-            {filteredProperties.map((property) => (
-              <MemoizedPropertyCard
-                key={property.id}
-                {...convertToPropertyCard(property)}
-              />
-            ))}
-          </div>
+        <div className="mt-8">
+          {memoizedFilteredProperties.length > 12 ? (
+            <VirtualizedPropertyGrid
+              properties={memoizedFilteredProperties}
+              itemsPerPage={12}
+            />
+          ) : (
+            <div className="flex justify-center">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-7xl">
+                {memoizedFilteredProperties.map((propertyCardProps) => (
+                  <MemoizedPropertyCard
+                    key={propertyCardProps.slug}
+                    {...propertyCardProps}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -1321,6 +1352,9 @@ export default function PropertiesPage() {
           </div>
         </div>
       </section>
+
+      {/* Performance monitoring in development */}
+      <PerformanceSummary />
     </div>
   );
 }

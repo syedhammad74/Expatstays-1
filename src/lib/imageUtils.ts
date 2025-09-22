@@ -90,12 +90,17 @@ const contentImageMap = {
 };
 
 /**
- * Get a local image path for specific content
+ * Get a local image path for specific content with optimization
  * @param content - Content type or description
  * @param index - Optional index for multiple images of same type
- * @returns Local image path
+ * @param options - Image optimization options
+ * @returns Local image path with optimization parameters
  */
-export const getLocalImage = (content: string, index: number = 0): string => {
+export const getLocalImage = (
+  content: string,
+  index: number = 0,
+  options: { width?: number; height?: number; quality?: number } = {}
+): string => {
   const cleanContent = content.toLowerCase().replace(/[^a-zA-Z0-9]/g, "");
 
   // Find matching content type
@@ -116,7 +121,18 @@ export const getLocalImage = (content: string, index: number = 0): string => {
   const isHDR = imageName.includes("-HDR");
   const folder = isHDR ? "DSC01806 HDR June 25 2025" : "Close Ups June 25 2025";
 
-  return `/media/${folder}/${imageName}`;
+  let imagePath = `/media/${folder}/${imageName}`;
+
+  // Add optimization parameters if provided
+  if (options.width || options.height || options.quality) {
+    const params = new URLSearchParams();
+    if (options.width) params.append("w", options.width.toString());
+    if (options.height) params.append("h", options.height.toString());
+    if (options.quality) params.append("q", options.quality.toString());
+    imagePath += `?${params.toString()}`;
+  }
+
+  return imagePath;
 };
 
 /**

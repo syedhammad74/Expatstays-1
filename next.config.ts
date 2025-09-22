@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
       "framer-motion",
       "@radix-ui/react-*",
       "lucide-react",
+      "firebase",
+      "@firebase/*",
     ],
     scrollRestoration: true,
   },
@@ -28,6 +30,15 @@ const nextConfig: NextConfig = {
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     unoptimized: process.env.NODE_ENV === "development", // Only for dev mode
+    // Enable responsive images
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "firebasestorage.googleapis.com",
+        port: "",
+        pathname: "/**",
+      },
+    ],
   },
 
   // Compression and caching
@@ -87,23 +98,56 @@ const nextConfig: NextConfig = {
     };
     // Optimize for production
     if (!dev && !isServer) {
-      // Enhanced code splitting
+      // Enhanced code splitting with size limits
       config.optimization = {
         ...config.optimization,
         splitChunks: {
           chunks: "all",
+          maxInitialRequests: 30,
+          maxAsyncRequests: 30,
           cacheGroups: {
             vendor: {
               test: /[\\/]node_modules[\\/]/,
               name: "vendors",
               chunks: "all",
               priority: 10,
+              maxSize: 250000, // 250KB max chunk size
             },
-            commons: {
-              test: /[\\/]node_modules[\\/](@firebase|firebase|framer-motion|@radix-ui)/,
-              name: "commons",
+            firebase: {
+              test: /[\\/]node_modules[\\/](@firebase|firebase)[\\/]/,
+              name: "firebase",
+              chunks: "all",
+              priority: 25,
+              maxSize: 300000, // 300KB max chunk size
+            },
+            framerMotion: {
+              test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
+              name: "framer-motion",
               chunks: "all",
               priority: 20,
+              maxSize: 150000, // 150KB max chunk size
+            },
+            radixUI: {
+              test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
+              name: "radix-ui",
+              chunks: "all",
+              priority: 20,
+              maxSize: 200000, // 200KB max chunk size
+            },
+            stripe: {
+              test: /[\\/]node_modules[\\/](@stripe|stripe)[\\/]/,
+              name: "stripe",
+              chunks: "all",
+              priority: 20,
+              maxSize: 100000, // 100KB max chunk size
+            },
+            commons: {
+              name: "commons",
+              minChunks: 2,
+              chunks: "all",
+              priority: 5,
+              reuseExistingChunk: true,
+              maxSize: 200000, // 200KB max chunk size
             },
             default: {
               minChunks: 2,
@@ -116,6 +160,8 @@ const nextConfig: NextConfig = {
           name: "runtime",
         },
         concatenateModules: true,
+        usedExports: true,
+        sideEffects: false,
       };
     }
 
