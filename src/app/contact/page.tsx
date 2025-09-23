@@ -334,15 +334,15 @@ export default function ContactPage() {
           <div className="mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
               className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start"
             >
               {/* Enhanced Form Card */}
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, delay: 0.2 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
               >
                 <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm rounded-3xl overflow-hidden">
                   <CardHeader className="bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/20 border-b border-[#DAF1DE]/30 pb-8">
@@ -619,8 +619,8 @@ export default function ContactPage() {
               {/* Enhanced Contact Info Cards */}
               <motion.div
                 initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 1, delay: 0.3 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
                 className="space-y-6"
               >
                 {/* Enhanced header */}
@@ -646,8 +646,12 @@ export default function ContactPage() {
                     <motion.div
                       key={index}
                       initial={{ opacity: 0, y: 20 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: index * 0.1 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: 0.6,
+                        delay: 0.4 + index * 0.1,
+                        ease: "easeOut",
+                      }}
                       className="group relative bg-gradient-to-br from-white to-[#FAFDFC] rounded-2xl shadow-lg hover:shadow-xl border border-[#DAF1DE]/40 p-6 transition-all duration-300 hover:scale-105 overflow-hidden"
                     >
                       {/* Enhanced decorative elements */}
@@ -702,8 +706,8 @@ export default function ContactPage() {
                 {/* Enhanced trust indicators */}
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
                   className="bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-2xl p-6 border border-[#DAF1DE]/30"
                 >
                   <div className="text-center space-y-4">
@@ -738,8 +742,8 @@ export default function ContactPage() {
         <section className="container mx-auto px-4 sm:px-8 pb-16 lg:pb-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="max-w-6xl mx-auto"
           >
             <div className="text-center mb-12">
@@ -772,8 +776,8 @@ export default function ContactPage() {
         <section className="container mx-auto px-4 sm:px-8 pb-16 lg:pb-24">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
             className="relative flex flex-col lg:flex-row items-center justify-between py-16 lg:py-24 px-8 lg:px-12 max-w-7xl mx-auto bg-gradient-to-br from-white to-[#F9FCFB] rounded-3xl overflow-hidden border border-[#DAF1DE]/30 shadow-2xl"
           >
             {/* Enhanced decorative elements */}

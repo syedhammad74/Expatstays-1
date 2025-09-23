@@ -100,19 +100,19 @@ const Header = () => {
           const delta = currentY - lastY;
           const newDelta = scrollDelta + delta;
 
-          // Hide header if scrolled down more than 32px
-          if (delta > 0 && newDelta > 32 && isVisible) {
+          // Hide header if scrolled down more than 50px (increased threshold)
+          if (delta > 0 && newDelta > 50 && isVisible) {
             setIsVisible(false);
             setScrollDelta(0);
             setLockout(true);
-            setTimeout(() => setLockout(false), 300);
+            setTimeout(() => setLockout(false), 200); // Reduced timeout
           }
-          // Show header if scrolled up more than 16px
-          else if (delta < 0 && Math.abs(newDelta) > 16 && !isVisible) {
+          // Show header if scrolled up more than 20px (increased threshold)
+          else if (delta < 0 && Math.abs(newDelta) > 20 && !isVisible) {
             setIsVisible(true);
             setScrollDelta(0);
             setLockout(true);
-            setTimeout(() => setLockout(false), 300);
+            setTimeout(() => setLockout(false), 200); // Reduced timeout
           } else {
             setScrollDelta(newDelta);
           }

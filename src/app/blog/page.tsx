@@ -318,23 +318,23 @@ export default function BlogPage() {
 
         <div className="container mx-auto px-4 sm:px-8">
           <motion.div
-            key={search + activeCategory} // animate on filter/search change
             className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12"
             initial="hidden"
             animate="visible"
             variants={{
               hidden: {},
-              visible: { transition: { staggerChildren: 0.18 } },
+              visible: { transition: { staggerChildren: 0.1 } },
             }}
           >
             {filteredPosts.map((post, i) => (
               <motion.div
                 key={post.slug}
                 className="group"
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.1, delay: i * 0.18 }}
-                style={{ willChange: "transform, opacity" }}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
               >
                 <motion.div
                   whileHover={{ scale: 1.025 }}

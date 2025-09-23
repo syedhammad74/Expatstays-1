@@ -5,7 +5,7 @@ export function useScrollToTop() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Scroll to top when route changes
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    // Scroll to top when route changes - use instant scroll to prevent glitches
+    window.scrollTo({ top: 0, behavior: "auto" });
   }, [pathname]);
 }

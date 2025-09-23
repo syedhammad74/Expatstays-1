@@ -185,15 +185,17 @@ body {
   }
 }
 
-/* Smooth Scrolling */
+/* Smooth Scrolling - Improved */
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto; /* Changed from smooth to prevent glitches */
   font-size: 16.7px;
   overflow-x: hidden;
+  scroll-padding-top: 80px; /* Account for fixed header */
 }
 body {
   font-size: 1rem;
   overflow-x: hidden;
+  scroll-behavior: auto; /* Prevent smooth scroll conflicts */
 }
 
 /* Enhanced Focus Styles */
@@ -215,19 +217,19 @@ body {
   @apply bg-muted-foreground/30 rounded-full transition-colors hover:bg-muted-foreground/50;
 }
 
-/* Improved transitions */
+/* Improved transitions - Reduced for better performance */
 .page-transition-in {
-  animation: fadeIn 0.5s ease forwards;
+  animation: fadeIn 0.3s ease forwards;
 }
 
 .page-transition-out {
-  animation: fadeOut 0.3s ease forwards;
+  animation: fadeOut 0.2s ease forwards;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(5px);
   }
   to {
     opacity: 1;
@@ -242,8 +244,18 @@ body {
   }
   to {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-5px);
   }
+}
+
+/* Prevent scroll glitches */
+* {
+  scroll-behavior: auto !important;
+}
+
+/* Smooth scroll only for specific elements */
+.smooth-scroll {
+  scroll-behavior: smooth;
 }
 
 /* Glass morphism effects */
