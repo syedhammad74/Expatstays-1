@@ -73,6 +73,32 @@ export default function PropertiesPage() {
   // const _searchParams = useSearchParams(); // unused
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
   const [calendarOpen, setCalendarOpen] = useState(false);
+  
+  // Smooth scroll to properties section
+  const scrollToProperties = () => {
+    const propertiesSection = document.getElementById('properties-section');
+    if (propertiesSection) {
+      propertiesSection.scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'start' 
+      });
+    }
+  };
+
+  // Auto-scroll to properties section when page loads with search parameters
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasSearchParams = urlParams.has('checkin') || urlParams.has('checkout') || 
+                           urlParams.has('adults') || urlParams.has('location');
+    
+    if (hasSearchParams) {
+      // Small delay to ensure page is fully loaded
+      setTimeout(() => {
+        scrollToProperties();
+      }, 500);
+    }
+  }, []);
+  
   // Initialize with the premium Famhouse property and apartment listing
   const initialProperties: Property[] = [
     {
@@ -701,6 +727,11 @@ export default function PropertiesPage() {
       if (from && to) {
         await filterPropertiesByAvailability();
       }
+      
+      // Scroll to properties section after search
+      setTimeout(() => {
+        scrollToProperties();
+      }, 100);
 
       // performanceMonitor.markEnd("filter-properties"); // Removed performanceMonitor
       // const filterTime = performanceMonitor.getMeasure("filter-properties"); // Removed performanceMonitor
@@ -816,7 +847,7 @@ export default function PropertiesPage() {
           </motion.div>
         )}
 
-        <div className="mt-8">
+        <div id="properties-section" className="mt-8">
           {memoizedFilteredProperties.length > 12 ? (
             <VirtualizedPropertyGrid
               properties={memoizedFilteredProperties}
@@ -902,7 +933,10 @@ export default function PropertiesPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.6 }}
               >
-                <Button className="bg-[#0B2B26] text-white hover:bg-[#235347] transition-all duration-300 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full shadow-lg hover:shadow-xl w-full sm:w-auto">
+                <Button 
+                  onClick={scrollToProperties}
+                  className="bg-[#0B2B26] text-white hover:bg-[#235347] transition-all duration-300 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full shadow-lg hover:shadow-xl w-full sm:w-auto"
+                >
                   Browse All Properties
                 </Button>
                 <Button

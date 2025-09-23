@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
 import PerformanceLayout from "@/components/PerformanceLayout";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
   title: {
@@ -173,6 +174,7 @@ export default function RootLayout({
           criticalCSS={criticalCSS}
         >
           <AuthProvider>
+            <ScrollToTop />
             <main className="min-h-screen">{children}</main>
             <ConditionalFooter />
             <Toaster />

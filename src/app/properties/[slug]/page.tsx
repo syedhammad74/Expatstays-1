@@ -18,6 +18,7 @@ import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
+import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
 export default function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
@@ -25,6 +26,9 @@ export default function Page({ params }: { params: { slug: string } }) {
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
   const router = useRouter();
+
+  // Auto scroll to top when route changes
+  useScrollToTop();
 
   // Get initial image index from URL parameters
   const [initialImageIndex, setInitialImageIndex] = useState(0);
