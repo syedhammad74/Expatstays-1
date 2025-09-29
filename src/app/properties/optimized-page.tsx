@@ -358,16 +358,6 @@ function PropertiesPageContent() {
   const filteredProperties = useMemo(() => {
     if (!properties) return [];
 
-    console.log("🔍 All properties loaded:", properties.length);
-    console.log(
-      "🔍 Properties:",
-      properties.map((p) => ({
-        id: p.id,
-        title: p.title,
-        price: p.pricing.basePrice,
-      }))
-    );
-
     return properties.filter((property) => {
       // Search filter
       if (
@@ -415,12 +405,6 @@ function PropertiesPageContent() {
       return true;
     });
   }, [properties, filters]);
-
-  console.log("🔍 Filtered properties:", filteredProperties.length);
-  console.log(
-    "🔍 Filtered:",
-    filteredProperties.map((p) => ({ id: p.id, title: p.title }))
-  );
 
   // Memoized property cards
   const propertyCards = useMemo(() => {
