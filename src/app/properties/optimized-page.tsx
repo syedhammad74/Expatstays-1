@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useEffect, useCallback, useMemo, Suspense } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useMemo,
+  Suspense,
+} from "react";
 import { useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import {
@@ -37,26 +43,37 @@ import { propertyService } from "@/lib/services/properties";
 import { getLocalImage } from "@/lib/imageUtils";
 import { usePerformanceMonitor } from "@/hooks/use-performance";
 import { useOptimizedFetch } from "@/hooks/useOptimizedFetch";
+import {
+  usePerformanceOptimizer,
+  useDebouncedPerformance,
+  useThrottledPerformance,
+} from "@/hooks/use-performance-optimizer";
 import Header from "@/components/layout/Header";
 import PropertyCard, { PropertyCardProps } from "@/components/PropertyCard";
-import { VirtualizedPropertyGrid } from "@/components/ui/virtual-grid";
-import OptimizedImage from "@/components/OptimizedImage";
+import { VirtualGrid } from "@/components/ui/virtual-grid";
+import OptimizedImage from "@/components/ui/optimized-image";
 
-// Memoized PropertyCard for performance
+// Ultra-optimized PropertyCard with enhanced memoization
 const MemoizedPropertyCard = React.memo(
   PropertyCard,
   (prevProps, nextProps) => {
-    return (
+    // Comprehensive comparison with minimal cost
+    const propsEqual =
       prevProps.slug === nextProps.slug &&
       prevProps.title === nextProps.title &&
       prevProps.price === nextProps.price &&
       prevProps.imageUrl === nextProps.imageUrl &&
       prevProps.images?.length === nextProps.images?.length &&
       prevProps.rating === nextProps.rating &&
-      prevProps.isAvailable === nextProps.isAvailable
-    );
+      prevProps.isAvailable === nextProps.isAvailable &&
+      prevProps.views === nextProps.views &&
+      prevProps.isFeatured === nextProps.isFeatured;
+
+    return propsEqual;
   }
 );
+
+MemoizedPropertyCard.displayName = "MemoizedPropertyCard";
 
 // Loading skeleton component
 const PropertyCardSkeleton = () => (
@@ -142,11 +159,11 @@ const PropertyFilters = ({
           </Label>
           <Slider
             value={filters.priceRange}
-            onValueChange={(value) =>
+            onValueChange={(value: number[]) =>
               onFiltersChange({ ...filters, priceRange: value })
             }
             max={1000}
-            min={50}
+            min={0}
             step={50}
             className="mt-2"
           />
@@ -212,19 +229,29 @@ const PropertyFilters = ({
   );
 };
 
-// Main properties page component
+// Main properties page component with advanced performance optimization
 function PropertiesPageContent() {
   const { toast } = useToast();
   const { trackInteraction, trackError } =
     usePerformanceMonitor("PropertiesPage");
 
-  // State management
+  // Advanced performance optimization
+  const { optimizeImages, virtualizeList, measureRenderTime, metrics } =
+    usePerformanceOptimizer({
+      enableVirtualization: true,
+      enableImageOptimization: true,
+      enableMemoryOptimization: true,
+      enableBundleOptimization: true,
+    });
+
+  // State management with performance optimization
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
   const [showFilters, setShowFilters] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
   const [filters, setFilters] = useState({
     search: "",
     propertyType: "all",
-    priceRange: [50, 1000],
+    priceRange: [0, 1000],
     bedrooms: "any",
     amenities: [] as string[],
   });
@@ -245,7 +272,33 @@ function PropertiesPageContent() {
     }
   );
 
-  // Memoized property conversion
+  // Debounced search for better performance
+  useDebouncedPerformance(
+    filters.search,
+    300,
+    useCallback(
+      (searchValue: string) => {
+        trackInteraction("debounced_search");
+      },
+      [trackInteraction]
+    )
+  );
+
+  // Throttled scroll handler for virtualizations
+  const handleScroll = useThrottledPerformance((scrollPosition: number) => {
+    setScrollPosition(scrollPosition);
+  }, 16); // 60fps
+
+  // Throttled filter changes
+  const throttledFilterChange = useThrottledPerformance(
+    (newFilters: typeof filters) => {
+      setFilters(newFilters);
+      trackInteraction("throttled_filter_change");
+    },
+    100
+  );
+
+  // Memoized property conversion with image optimization
   const convertToPropertyCard = useCallback(
     (property: Property): PropertyCardProps => {
       const generateImages = (property: Property): string[] => {
@@ -261,13 +314,16 @@ function PropertiesPageContent() {
         }
         const imageCount = Math.min(
           5,
-          Math.max(3, Math.floor(Math.random() * 3) + 3)
+          Math.max(
+            3,
+            ((property.id.charCodeAt(0) + property.id.length) % 3) + 3
+          )
         );
         const images: string[] = [];
         for (let i = 0; i < imageCount; i++) {
           images.push(getLocalImage(property.propertyType, i));
         }
-        return images;
+        return optimizeImages(images);
       };
 
       return {
@@ -289,7 +345,9 @@ function PropertiesPageContent() {
         views:
           property.id === "famhouse_islamabad_dam_view"
             ? 234
-            : Math.floor(Math.random() * 100) + 10,
+            : ((property.id.charCodeAt(0) * 17 + property.id.charCodeAt(1)) %
+                100) +
+              10,
         isFeatured: property.id === "famhouse_islamabad_dam_view",
       };
     },
@@ -299,6 +357,16 @@ function PropertiesPageContent() {
   // Memoized filtered properties
   const filteredProperties = useMemo(() => {
     if (!properties) return [];
+
+    console.log("🔍 All properties loaded:", properties.length);
+    console.log(
+      "🔍 Properties:",
+      properties.map((p) => ({
+        id: p.id,
+        title: p.title,
+        price: p.pricing.basePrice,
+      }))
+    );
 
     return properties.filter((property) => {
       // Search filter
@@ -333,12 +401,13 @@ function PropertiesPageContent() {
         return false;
       }
 
-      // Amenities filter
+      // Amenities filter with optimized Set-based lookup
       if (filters.amenities.length > 0) {
+        const propAmenitiesSet = new Set(
+          property.amenities?.map((a) => a.toLowerCase()) || []
+        );
         const hasAllAmenities = filters.amenities.every((amenity) =>
-          property.amenities?.some((propAmenity) =>
-            propAmenity.toLowerCase().includes(amenity.toLowerCase())
-          )
+          propAmenitiesSet.has(amenity.toLowerCase())
         );
         if (!hasAllAmenities) return false;
       }
@@ -346,6 +415,12 @@ function PropertiesPageContent() {
       return true;
     });
   }, [properties, filters]);
+
+  console.log("🔍 Filtered properties:", filteredProperties.length);
+  console.log(
+    "🔍 Filtered:",
+    filteredProperties.map((p) => ({ id: p.id, title: p.title }))
+  );
 
   // Memoized property cards
   const propertyCards = useMemo(() => {
@@ -405,7 +480,7 @@ function PropertiesPageContent() {
                 placeholder="Search properties..."
                 value={filters.search}
                 onChange={(e) =>
-                  handleFilterChange({ ...filters, search: e.target.value })
+                  throttledFilterChange({ ...filters, search: e.target.value })
                 }
                 className="pl-10"
               />
@@ -475,7 +550,7 @@ function PropertiesPageContent() {
                     setFilters({
                       search: "",
                       propertyType: "all",
-                      priceRange: [50, 1000],
+                      priceRange: [0, 1000],
                       bedrooms: "any",
                       amenities: [],
                     })
@@ -485,11 +560,15 @@ function PropertiesPageContent() {
                 </Button>
               </div>
             ) : (
-              <VirtualizedPropertyGrid
-                properties={propertyCards}
-                viewMode={viewMode}
+              <VirtualGrid
+                items={propertyCards}
+                renderItem={(property) => (
+                  <MemoizedPropertyCard key={property.slug} {...property} />
+                )}
                 itemHeight={400}
                 itemsPerRow={viewMode === "grid" ? 3 : 1}
+                overscan={5} // Optimized overscan for better performance
+                className="gap-6"
               />
             )}
           </div>

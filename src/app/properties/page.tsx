@@ -73,14 +73,14 @@ export default function PropertiesPage() {
   // const _searchParams = useSearchParams(); // unused
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
   const [calendarOpen, setCalendarOpen] = useState(false);
-  
+
   // Smooth scroll to properties section
   const scrollToProperties = () => {
-    const propertiesSection = document.getElementById('properties-section');
+    const propertiesSection = document.getElementById("properties-section");
     if (propertiesSection) {
-      propertiesSection.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start' 
+      propertiesSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
       });
     }
   };
@@ -88,9 +88,12 @@ export default function PropertiesPage() {
   // Auto-scroll to properties section when page loads with search parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const hasSearchParams = urlParams.has('checkin') || urlParams.has('checkout') || 
-                           urlParams.has('adults') || urlParams.has('location');
-    
+    const hasSearchParams =
+      urlParams.has("checkin") ||
+      urlParams.has("checkout") ||
+      urlParams.has("adults") ||
+      urlParams.has("location");
+
     if (hasSearchParams) {
       // Small delay to ensure page is fully loaded
       setTimeout(() => {
@@ -98,7 +101,7 @@ export default function PropertiesPage() {
       }, 500);
     }
   }, []);
-  
+
   // Initialize with the premium Famhouse property and apartment listing
   const initialProperties: Property[] = [
     {
@@ -228,6 +231,74 @@ export default function PropertiesPage() {
       createdAt: "2024-09-16T15:00:00Z",
       updatedAt: "2024-09-16T15:00:00Z",
     },
+    {
+      id: "gulberg_greens_2bed_apartment",
+      title: "2 Bedroom Apartment With Kitchen | Gulberg Greens",
+      description:
+        "Unwind in this stylish 2-bedroom apartment with a fully equipped kitchen, cozy living area, smart TV, high-speed Wi-Fi, air conditioning, and modern decor. Perfect for families, business travelers, long stays, or weekend getaways. Located in a central area with restaurants, coffee shops, and pharmacies within the building. Separate entrance for residents. Just 25 minutes from Faisal Mosque. Comfort, design, and convenience await!",
+      location: {
+        address: "Gulberg Greens, Islamabad",
+        city: "Islamabad",
+        state: "Islamabad Capital Territory",
+        country: "Pakistan",
+        coordinates: { lat: 33.6844, lng: 73.0479 },
+      },
+      propertyType: "apartment" as const,
+      capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+      amenities: [
+        "High-Speed WiFi",
+        "Air Conditioning",
+        "Fully Equipped Kitchen",
+        "Smart TV",
+        "Private Parking",
+        "Modern Decor",
+        "Cozy Living Area",
+        "Family-Friendly",
+        "Business Traveler Friendly",
+        "Long Stay Friendly",
+        "Weekend Getaway",
+        "Central Location",
+        "Restaurants Nearby",
+        "Coffee Shops Nearby",
+        "Pharmacies Nearby",
+        "Separate Entrance",
+        "25 Minutes from Faisal Mosque",
+        "Comfort & Convenience",
+        "Washing Machine",
+        "Refrigerator",
+        "Microwave",
+        "Coffee Maker",
+        "24/7 Security",
+        "Elevator Access",
+      ],
+      images: [
+        "/media/DSC01806 HDR June 25 2025/DSC01919-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01914-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01902-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01897-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01934-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01997-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01978-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg",
+        "/media/DSC01806 HDR June 25 2025/DSC01812-HDR.jpg",
+      ],
+      pricing: {
+        basePrice: 120,
+        currency: "USD",
+        cleaningFee: 25,
+        serviceFee: 15,
+      },
+      availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
+      rating: 4.7,
+      reviews: 89,
+      owner: {
+        uid: "owner_gulberg_greens",
+        name: "Ahmed Hassan",
+        email: "ahmed@expatstays.com",
+      },
+      createdAt: "2024-09-16T16:00:00Z",
+      updatedAt: "2024-09-16T16:00:00Z",
+    },
   ];
 
   const [properties, setProperties] = useState<Property[]>(initialProperties);
@@ -262,10 +333,13 @@ export default function PropertiesPage() {
           return farmhouseImages;
         }
 
-        // Generate 3-5 images based on property type
+        // Generate deterministic image count based on property type
         const imageCount = Math.min(
           5,
-          Math.max(3, Math.floor(Math.random() * 3) + 3)
+          Math.max(
+            3,
+            ((property.id.charCodeAt(0) + property.id.length) % 3) + 3
+          )
         );
         const images: string[] = [];
 
@@ -295,7 +369,9 @@ export default function PropertiesPage() {
         views:
           property.id === "famhouse_islamabad_dam_view"
             ? 234
-            : Math.floor(Math.random() * 100) + 10, // Higher views for premium farmhouse
+            : ((property.id.charCodeAt(0) * 17 + property.id.charCodeAt(1)) %
+                100) +
+              10, // Deterministic views for consistency
         isFeatured: property.id === "famhouse_islamabad_dam_view", // Mark famhouse as featured
       };
     },
@@ -474,6 +550,74 @@ export default function PropertiesPage() {
           },
           createdAt: "2024-09-16T15:00:00Z",
           updatedAt: "2024-09-16T15:00:00Z",
+        },
+        {
+          id: "gulberg_greens_2bed_apartment",
+          title: "2 Bedroom Apartment With Kitchen | Gulberg Greens",
+          description:
+            "Unwind in this stylish 2-bedroom apartment with a fully equipped kitchen, cozy living area, smart TV, high-speed Wi-Fi, air conditioning, and modern decor. Perfect for families, business travelers, long stays, or weekend getaways. Located in a central area with restaurants, coffee shops, and pharmacies within the building. Separate entrance for residents. Just 25 minutes from Faisal Mosque. Comfort, design, and convenience await!",
+          location: {
+            address: "Gulberg Greens, Islamabad",
+            city: "Islamabad",
+            state: "Islamabad Capital Territory",
+            country: "Pakistan",
+            coordinates: { lat: 33.6844, lng: 73.0479 },
+          },
+          propertyType: "apartment" as const,
+          capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+          amenities: [
+            "High-Speed WiFi",
+            "Air Conditioning",
+            "Fully Equipped Kitchen",
+            "Smart TV",
+            "Private Parking",
+            "Modern Decor",
+            "Cozy Living Area",
+            "Family-Friendly",
+            "Business Traveler Friendly",
+            "Long Stay Friendly",
+            "Weekend Getaway",
+            "Central Location",
+            "Restaurants Nearby",
+            "Coffee Shops Nearby",
+            "Pharmacies Nearby",
+            "Separate Entrance",
+            "25 Minutes from Faisal Mosque",
+            "Comfort & Convenience",
+            "Washing Machine",
+            "Refrigerator",
+            "Microwave",
+            "Coffee Maker",
+            "24/7 Security",
+            "Elevator Access",
+          ],
+          images: [
+            "/media/DSC01806 HDR June 25 2025/DSC01919-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01914-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01902-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01897-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01934-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01997-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01978-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01812-HDR.jpg",
+          ],
+          pricing: {
+            basePrice: 120,
+            currency: "USD",
+            cleaningFee: 25,
+            serviceFee: 15,
+          },
+          availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
+          rating: 4.7,
+          reviews: 89,
+          owner: {
+            uid: "owner_gulberg_greens",
+            name: "Ahmed Hassan",
+            email: "ahmed@expatstays.com",
+          },
+          createdAt: "2024-09-16T16:00:00Z",
+          updatedAt: "2024-09-16T16:00:00Z",
         },
       ];
 
@@ -727,7 +871,7 @@ export default function PropertiesPage() {
       if (from && to) {
         await filterPropertiesByAvailability();
       }
-      
+
       // Scroll to properties section after search
       setTimeout(() => {
         scrollToProperties();
@@ -933,7 +1077,7 @@ export default function PropertiesPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 1, delay: 0.6 }}
               >
-                <Button 
+                <Button
                   onClick={scrollToProperties}
                   className="bg-[#0B2B26] text-white hover:bg-[#235347] transition-all duration-300 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full shadow-lg hover:shadow-xl w-full sm:w-auto"
                 >
@@ -950,7 +1094,7 @@ export default function PropertiesPage() {
 
             {/* Right Column - Image Stack */}
             <motion.div
-              className="relative"
+              className="relative hidden lg:block"
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 1, delay: 0.3 }}

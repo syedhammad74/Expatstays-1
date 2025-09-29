@@ -190,6 +190,85 @@ export default function Page({ params }: { params: { slug: string } }) {
           return;
         }
 
+        // Hardcoded Gulberg Greens apartment property
+        if (slug === "gulberg_greens_2bed_apartment") {
+          const gulbergProperty: Property = {
+            id: "gulberg_greens_2bed_apartment",
+            title: "2 Bedroom Apartment With Kitchen | Gulberg Greens",
+            description:
+              "Unwind in this stylish 2-bedroom apartment with a fully equipped kitchen, cozy living area, smart TV, high-speed Wi-Fi, air conditioning, and modern decor. Perfect for families, business travelers, long stays, or weekend getaways. Located in a central area with restaurants, coffee shops, and pharmacies within the building. Separate entrance for residents. Just 25 minutes from Faisal Mosque. Comfort, design, and convenience await!",
+            location: {
+              address: "Gulberg Greens, Islamabad",
+              city: "Islamabad",
+              state: "Islamabad Capital Territory",
+              country: "Pakistan",
+              coordinates: { lat: 33.6844, lng: 73.0479 },
+            },
+            propertyType: "apartment",
+            capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+            amenities: [
+              "High-Speed WiFi",
+              "Air Conditioning",
+              "Fully Equipped Kitchen",
+              "Smart TV",
+              "Private Parking",
+              "Modern Decor",
+              "Cozy Living Area",
+              "Family-Friendly",
+              "Business Traveler Friendly",
+              "Long Stay Friendly",
+              "Weekend Getaway",
+              "Central Location",
+              "Restaurants Nearby",
+              "Coffee Shops Nearby",
+              "Pharmacies Nearby",
+              "Separate Entrance",
+              "25 Minutes from Faisal Mosque",
+              "Comfort & Convenience",
+              "Washing Machine",
+              "Refrigerator",
+              "Microwave",
+              "Coffee Maker",
+              "24/7 Security",
+              "Elevator Access",
+            ],
+            images: [
+              "/media/DSC01806 HDR June 25 2025/DSC01919-HDR.jpg",
+              "/media/DSC01806 HDR June 25 2025/DSC01914-HDR.jpg",
+              "/media/DSC01806 HDR June 25 2025/DSC01902-HDR.jpg",
+              "/media/DSC01806 HDR June 25 2025/DSC01897-HDR.jpg",
+              "/media/DSC01806 HDR June 25 2025/DSC01934-HDR.jpg",
+              "/media/DSC01806 HDR June 25 2025/DSC01997-HDR.jpg",
+              "/media/DSC01806 HDR June 25 2025/DSC01978-HDR.jpg",
+              "/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg",
+              "/media/DSC01806 HDR June 25 2025/DSC01812-HDR.jpg",
+            ],
+            pricing: {
+              basePrice: 120,
+              currency: "USD",
+              cleaningFee: 25,
+              serviceFee: 15,
+            },
+            availability: {
+              isActive: true,
+              minimumStay: 1,
+              maximumStay: 30,
+            },
+            rating: 4.7,
+            reviews: 89,
+            owner: {
+              uid: "owner_gulberg_greens",
+              name: "Ahmed Hassan",
+              email: "ahmed@expatstays.com",
+            },
+            createdAt: "2024-09-16T16:00:00Z",
+            updatedAt: "2024-09-16T16:00:00Z",
+          };
+          setProperty(gulbergProperty);
+          setLoading(false);
+          return;
+        }
+
         // Try to load from Firebase
         const fetchedProperty = await propertyService.getPropertyById(slug);
         if (fetchedProperty) {

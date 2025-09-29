@@ -168,7 +168,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased" suppressHydrationWarning={true}>
         <PerformanceLayout
           preloadRoutes={["/properties", "/blog", "/about"]}
           criticalCSS={criticalCSS}

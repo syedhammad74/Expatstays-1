@@ -33,7 +33,7 @@ import {
 import { useOptimizedFetch } from "@/hooks/useOptimizedFetch";
 import { usePerformanceMonitor } from "@/hooks/use-performance";
 import Header from "@/components/layout/Header";
-import OptimizedImage from "@/components/OptimizedImage";
+import OptimizedImage from "@/components/ui/optimized-image";
 import Link from "next/link";
 
 // Blog post interface

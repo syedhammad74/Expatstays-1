@@ -1,4 +1,5 @@
 "use client";
+import React, { useState } from "react";
 import {
   Sailboat,
   MountainSnow,
@@ -158,35 +159,33 @@ const categories = [
 ];
 
 export default function ExperiencesPage() {
+  const [selectedCategory, setSelectedCategory] = useState("All Experiences");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  // Filter experiences based on selected category and search
+  const filteredExperiences = experiencesData.filter((exp) => {
+    const matchesCategory =
+      selectedCategory === "All Experiences" ||
+      exp.category === selectedCategory;
+    const matchesSearch =
+      searchQuery === "" ||
+      exp.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      exp.description.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#FAFAFA] via-white to-[#DAF1DE]/30">
-      {/* Hero Section with Split Layout */}
+    <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] via-white to-[#E6F2EC]">
       <Header />
-      <section className="relative pt-20 pb-24 overflow-hidden">
-        {/* Decorative Background Elements */}
+
+      {/* Hero Section */}
+      <section className="relative pt-20 pb-16 overflow-hidden">
+        {/* Background Elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/5 via-transparent to-[#0B2B26]/5" />
         <div className="absolute top-20 left-10 w-72 h-72 bg-[#8EB69B]/10 rounded-full blur-3xl animate-pulse" />
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#0B2B26]/10 rounded-full blur-3xl animate-pulse delay-1000" />
 
-        {/* Modern Geometric Shapes - Enhanced */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/30 rotate-45 animate-[breathing_5s_ease-in-out_infinite]" />
-        <div className="absolute top-40 right-20 w-16 h-16 bg-gradient-to-br from-[#DAF1DE]/72 to-[#8EB69B]/48 rounded-full animate-[breathing_6.5s_ease-in-out_infinite]" />
-        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-gradient-to-br from-[#235347]/78 to-[#163832]/46 rotate-12 animate-[breathing_7.5s_ease-in-out_infinite]" />
-        <div className="absolute top-1/3 left-1/2 w-12 h-12 bg-gradient-to-br from-[#8EB69B]/90 to-[#DAF1DE]/46 rotate-45 animate-[breathing_8.5s_ease-in-out_infinite]" />
-
-        {/* Large Geometric Elements */}
-        <div className="absolute -top-60 -right-40 w-80 h-80 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/43 rounded-full filter blur-2xl animate-[breathing_10s_ease-in-out_infinite]" />
-        <div className="absolute -bottom-60 -left-40 w-72 h-72 bg-gradient-to-br from-[#DAF1DE]/76 to-[#8EB69B]/54 rounded-full filter blur-2xl animate-[breathing_11s_ease-in-out_infinite]" />
-
-        {/* Triangle Shapes */}
-        <div className="absolute top-1/2 right-10 w-0 h-0 border-l-[30px] border-l-transparent border-b-[52px] border-b-[#8EB69B]/8 border-r-[30px] border-r-transparent animate-[breathing_9s_ease-in-out_infinite]" />
-        <div className="absolute bottom-1/4 right-1/3 w-0 h-0 border-l-[20px] border-l-transparent border-b-[35px] border-b-[#DAF1DE]/10 border-r-[20px] border-r-transparent animate-[breathing_7s_ease-in-out_infinite]" />
-
-        {/* Square Shapes */}
-        <div className="absolute top-1/4 left-20 w-16 h-16 bg-gradient-to-br from-[#235347]/6 to-[#163832]/4 rotate-45 animate-[breathing_8s_ease-in-out_infinite]" />
-        <div className="absolute bottom-1/3 right-1/4 w-12 h-12 bg-gradient-to-br from-[#8EB69B]/8 to-[#72a785]/6 rotate-12 animate-[breathing_6s_ease-in-out_infinite]" />
-
-        <div className="container mx-auto px-4 sm:px-8 rela33tive z-10">
+        <div className="container mx-auto px-4 sm:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Hero Content */}
             <motion.div
@@ -256,7 +255,7 @@ export default function ExperiencesPage() {
                   </Badge>
                 </div>
                 <div className="absolute bottom-6 right-6">
-                  <Badge className="bg-[#0B2B26]/90 backdrop-blur-sm text-white border-0">
+                  <Badge className="bg-[#0B2B26]/90 backdrop-blur-sm border-0 text-white font-semibold">
                     From $150
                   </Badge>
                 </div>
@@ -266,8 +265,8 @@ export default function ExperiencesPage() {
         </div>
       </section>
 
-      {/* Floating Category Filter Bar */}
-      <section className="relative -mt-12 mb-16">
+      {/* Search and Filter Section */}
+      <section className="relative -mt-8 mb-16">
         <div className="container mx-auto px-4 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -275,7 +274,20 @@ export default function ExperiencesPage() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="bg-white/80 backdrop-blur-xl border border-[#8EB69B]/20 rounded-2xl p-6 shadow-xl"
           >
-            <div className="flex items-center justify-between gap-4">
+            <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
+              {/* Search Bar */}
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+                <Input
+                  placeholder="Search experiences..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+
+              {/* Category Filters */}
+              <div className="flex items-center gap-4">
               <div className="flex items-center gap-2 text-[#235347]/70">
                 <Filter className="h-5 w-5" />
                 <span className="text-sm font-medium">Filter by:</span>
@@ -284,12 +296,13 @@ export default function ExperiencesPage() {
                 {categories.map((category) => (
                   <Button
                     key={category}
+                      onClick={() => setSelectedCategory(category)}
                     variant={
-                      category === "All Experiences" ? "default" : "outline"
+                        category === selectedCategory ? "default" : "outline"
                     }
                     size="sm"
                     className={`rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
-                      category === "All Experiences"
+                        category === selectedCategory
                         ? "bg-[#8EB69B] text-[#163832] shadow-lg shadow-[#8EB69B]/25"
                         : "border-[#0B2B26] text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white hover:shadow-lg hover:shadow-[#8EB69B]/25"
                     }`}
@@ -297,6 +310,7 @@ export default function ExperiencesPage() {
                     {category}
                   </Button>
                 ))}
+                </div>
               </div>
             </div>
           </motion.div>
@@ -331,7 +345,7 @@ export default function ExperiencesPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: index * 0.1 }}
                 >
-                  <Card className="group overflow-hidden border-[#8EB69B]/20 bg-[#163832] text-[#F4F4F4] rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
+                  <Card className="group overflow-hidden border-[#8EB69B]/20 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
                     <div className="flex flex-col lg:flex-row h-full">
                       <div className="relative lg:w-1/2 aspect-[4/3] lg:aspect-square overflow-hidden">
                         <Image
@@ -340,36 +354,36 @@ export default function ExperiencesPage() {
                           fill
                           className="object-cover transition-transform duration-500 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#163832]/60 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                        {/* Enhanced Badges */}
+                        {/* Badges */}
                         <div className="absolute top-4 left-4 flex flex-col gap-2">
-                          <Badge className="bg-[#8EB69B]/90 backdrop-blur-sm text-[#163832] border-0">
+                          <Badge className="bg-[#8EB69B]/90 backdrop-blur-sm text-white border-0">
                             {exp.category}
                           </Badge>
                           <Badge
                             variant="outline"
-                            className="bg-[#163832]/90 backdrop-blur-sm border-[#8EB69B]/30 text-[#8EB69B]"
+                            className="bg-white/90 backdrop-blur-sm border-[#8EB69B]/30 text-[#8EB69B]"
                           >
                             Featured
                           </Badge>
                         </div>
 
-                        {/* Enhanced Price */}
+                        {/* Price */}
                         <div className="absolute top-4 right-4">
                           <Badge className="bg-[#0B2B26]/90 backdrop-blur-sm border-0 text-white font-semibold">
                             {exp.price}
                           </Badge>
                         </div>
 
-                        {/* Enhanced Rating */}
+                        {/* Rating */}
                         <div className="absolute bottom-4 left-4">
-                          <div className="flex items-center gap-2 bg-[#163832]/90 backdrop-blur-sm rounded-full px-3 py-2">
+                          <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-3 py-2">
                             <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                            <span className="text-sm font-semibold">
+                            <span className="text-sm font-semibold text-gray-900">
                               {exp.rating}
                             </span>
-                            <span className="text-xs text-[#F4F4F4]/60">
+                            <span className="text-xs text-gray-600">
                               ({exp.reviews})
                             </span>
                           </div>
@@ -383,27 +397,27 @@ export default function ExperiencesPage() {
                               <exp.icon className="h-6 w-6 text-[#8EB69B]" />
                             </div>
                             <div>
-                              <CardTitle className="text-xl lg:text-2xl font-bold text-[#F4F4F4] group-hover:text-[#8EB69B] transition-colors">
+                              <CardTitle className="text-xl lg:text-2xl font-bold text-[#163832] group-hover:text-[#8EB69B] transition-colors">
                                 {exp.title}
                               </CardTitle>
-                              <p className="text-sm text-[#F4F4F4]/60 flex items-center gap-2">
+                              <p className="text-sm text-[#235347]/60 flex items-center gap-2">
                                 <Clock className="h-3 w-3" />
                                 {exp.duration}
                               </p>
                             </div>
                           </div>
 
-                          <p className="text-[#F4F4F4]/80 leading-relaxed mb-6">
+                          <p className="text-[#235347]/80 leading-relaxed mb-6">
                             {exp.description}
                           </p>
 
-                          {/* Enhanced Experience Details */}
+                          {/* Experience Details */}
                           <div className="grid grid-cols-2 gap-4 mb-6">
-                            <div className="flex items-center gap-2 text-sm text-[#F4F4F4]/70">
+                            <div className="flex items-center gap-2 text-sm text-[#235347]/70">
                               <Users className="h-4 w-4 text-[#8EB69B]" />
                               <span>{exp.groupSize}</span>
                             </div>
-                            <div className="flex items-center gap-2 text-sm text-[#F4F4F4]/70">
+                            <div className="flex items-center gap-2 text-sm text-[#235347]/70">
                               <MapPin className="h-4 w-4 text-[#0B2B26]" />
                               <span>{exp.location}</span>
                             </div>
@@ -428,8 +442,8 @@ export default function ExperiencesPage() {
         </div>
       </section>
 
-      {/* All Experiences Grid */}
-      <section className="py-16 bg-gradient-to-br from-[#FAFAFA]/50 to-white">
+      {/* Filtered Experiences Grid */}
+      <section className="py-16 bg-gradient-to-br from-[#F8FBF9]/50 to-white">
         <div className="container mx-auto px-4 sm:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -438,7 +452,10 @@ export default function ExperiencesPage() {
             className="text-center mb-12"
           >
             <h2 className="text-3xl lg:text-4xl font-bold text-[#163832] mb-4">
-              All Experiences
+              {selectedCategory === "All Experiences"
+                ? "All Experiences"
+                : selectedCategory}
+              {filteredExperiences.length && ` (${filteredExperiences.length})`}
             </h2>
             <p className="text-[#235347]/70 max-w-2xl mx-auto">
               Discover our complete collection of curated experiences designed
@@ -446,15 +463,41 @@ export default function ExperiencesPage() {
             </p>
           </motion.div>
 
+          {filteredExperiences.length === 0 ? (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              className="text-center py-12"
+            >
+              <div className="bg-blue-50 border border-blue-200 rounded-2xl p-8 inline-block">
+                <h3 className="text-lg font-semibold text-blue-800 mb-2">
+                  No experiences found
+                </h3>
+                <p className="text-blue-600 mb-4">
+                  Try adjusting your search or filter criteria.
+                </p>
+                <Button
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSelectedCategory("All Experiences");
+                  }}
+                  className="bg-blue-600 hover:bg-blue-700"
+                >
+                  Clear Filters
+                </Button>
+              </div>
+            </motion.div>
+          ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {experiencesData.map((exp, index) => (
+              {filteredExperiences.map((exp, index) => (
               <motion.div
                 key={exp.slug}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
               >
-                <Card className="group overflow-hidden border-[#8EB69B]/20 bg-[#163832] text-[#F4F4F4] rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
+                  <Card className="group overflow-hidden border-[#8EB69B]/20 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
                   <CardHeader className="p-0">
                     <div className="relative aspect-[4/3] overflow-hidden">
                       <Image
@@ -463,38 +506,38 @@ export default function ExperiencesPage() {
                         fill
                         className="object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#163832]/60 via-transparent to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
-                      {/* Enhanced Badges */}
+                        {/* Badges */}
                       <div className="absolute top-4 left-4 flex flex-col gap-2">
-                        <Badge className="bg-[#8EB69B]/90 backdrop-blur-sm text-[#163832] border-0">
+                          <Badge className="bg-[#8EB69B]/90 backdrop-blur-sm text-white border-0">
                           {exp.category}
                         </Badge>
                         {exp.featured && (
                           <Badge
                             variant="outline"
-                            className="bg-[#163832]/90 backdrop-blur-sm border-[#8EB69B]/30 text-[#8EB69B]"
+                              className="bg-white/90 backdrop-blur-sm border-[#8EB69B]/30 text-[#8EB69B]"
                           >
                             Featured
                           </Badge>
                         )}
                       </div>
 
-                      {/* Enhanced Price */}
+                        {/* Price */}
                       <div className="absolute top-4 right-4">
                         <Badge className="bg-[#0B2B26]/90 backdrop-blur-sm border-0 text-white font-semibold">
                           {exp.price}
                         </Badge>
                       </div>
 
-                      {/* Enhanced Rating */}
+                        {/* Rating */}
                       <div className="absolute bottom-4 left-4">
-                        <div className="flex items-center gap-2 bg-[#163832]/90 backdrop-blur-sm rounded-full px-3 py-2">
+                          <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-3 py-2">
                           <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                          <span className="text-sm font-semibold">
+                            <span className="text-sm font-semibold text-gray-900">
                             {exp.rating}
                           </span>
-                          <span className="text-xs text-[#F4F4F4]/60">
+                            <span className="text-xs text-gray-600">
                             ({exp.reviews})
                           </span>
                         </div>
@@ -508,22 +551,22 @@ export default function ExperiencesPage() {
                         <exp.icon className="h-6 w-6 text-[#8EB69B]" />
                       </div>
                       <div>
-                        <CardTitle className="text-lg font-bold text-[#F4F4F4] group-hover:text-[#8EB69B] transition-colors">
+                          <CardTitle className="text-lg font-bold text-[#163832] group-hover:text-[#8EB69B] transition-colors">
                           {exp.title}
                         </CardTitle>
-                        <p className="text-sm text-[#F4F4F4]/60 flex items-center gap-2">
+                          <p className="text-sm text-[#235347]/60 flex items-center gap-2">
                           <Clock className="h-3 w-3" />
                           {exp.duration}
                         </p>
                       </div>
                     </div>
 
-                    <p className="text-[#F4F4F4]/80 leading-relaxed mb-4">
+                      <p className="text-[#235347]/80 leading-relaxed mb-4">
                       {exp.description}
                     </p>
 
-                    {/* Enhanced Experience Details */}
-                    <div className="grid grid-cols-2 gap-3 mb-4 text-sm text-[#F4F4F4]/70">
+                      {/* Experience Details */}
+                      <div className="grid grid-cols-2 gap-3 mb-4 text-sm text-[#235347]/70">
                       <div className="flex items-center gap-2">
                         <Users className="h-3 w-3 text-[#8EB69B]" />
                         <span>{exp.groupSize}</span>
@@ -550,35 +593,14 @@ export default function ExperiencesPage() {
               </motion.div>
             ))}
           </div>
-
-          {/* Enhanced Load More */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-center mt-16"
-          >
-            <Button
-              variant="outline"
-              size="lg"
-              className="rounded-2xl border-[#8EB69B]/30 text-[#0B2B26] hover:bg-gradient-to-r hover:from-[#8EB69B] hover:to-[#0B2B26] hover:text-white hover:border-0 px-10 py-4 text-lg font-semibold shadow-lg shadow-[#8EB69B]/25 hover:shadow-xl hover:shadow-[#8EB69B]/30 transition-all duration-300"
-            >
-              Load More Experiences
-              <Sparkles className="h-5 w-5 ml-2" />
-            </Button>
-          </motion.div>
+          )}
         </div>
       </section>
 
-      {/* Final CTA Section */}
-      <section className="py-16 bg-gradient-to-br from-[#163832] to-[#0B2B26]">
+      {/* Simple Dark CTA Section */}
+      <section className="py-16 bg-[#163832]">
         <div className="container mx-auto px-4 sm:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-center max-w-4xl mx-auto"
-          >
+          <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 bg-[#8EB69B]/20 border border-[#8EB69B]/30 rounded-full px-6 py-3 mb-6">
               <BookOpen className="h-4 w-4 text-[#8EB69B]" />
               <Badge className="bg-transparent text-[#8EB69B] border-[#8EB69B]/50 px-3 py-1 rounded-full text-sm font-medium">
@@ -596,21 +618,24 @@ export default function ExperiencesPage() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button
+                asChild
                 size="lg"
-                className="rounded-2xl bg-gradient-to-r from-[#8EB69B] to-[#0B2B26] text-white hover:from-[#0B2B26] hover:to-[#8EB69B] shadow-lg shadow-[#8EB69B]/25 hover:shadow-xl hover:shadow-[#8EB69B]/30 transition-all duration-300 px-8 py-4 text-lg font-semibold"
+                className="rounded-2xl bg-[#8EB69B] text-white hover:bg-[#0B2B26] shadow-lg transition-all duration-300 px-8 py-4 text-lg font-semibold"
               >
+                <Link href="/contact">
                 Talk to Concierge
                 <ChevronRight className="h-5 w-5 ml-2" />
+                </Link>
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="rounded-2xl border-[#8EB69B]/30 text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white px-8 py-4 text-lg font-semibold transition-all duration-300"
+                className="rounded-2xl border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white px-8 py-4 text-lg font-semibold transition-all duration-300"
               >
                 View All Experiences
               </Button>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>
