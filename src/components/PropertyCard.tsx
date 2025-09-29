@@ -70,81 +70,18 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
     isFeatured = false,
   }: PropertyCardProps) => {
     const [imageError, setImageError] = useState(false);
-    const [currentImageIndex, setCurrentImageIndex] = useState(0);
-    const [isHovered, setIsHovered] = useState(false);
     const [isGalleryOpen, setIsGalleryOpen] = useState(false);
     const imageContainerRef = useRef<HTMLDivElement>(null);
-    const scrollTimeoutRef = useRef<NodeJS.Timeout>();
 
     // Use images array if available, otherwise fallback to single imageUrl
     const allImages = images.length > 0 ? images : [imageUrl];
     // Simplified image handling for better performance
     const displayImageUrl = useMemo(() => {
-      const currentImage = allImages[currentImageIndex];
+      const currentImage = allImages[0]; // Always show first image
       return imageError ? "/placeholder-property.jpg" : currentImage;
-    }, [imageError, allImages, currentImageIndex]);
+    }, [imageError, allImages]);
 
-    // Handle wheel scroll for image navigation
-    const handleWheel = useCallback(
-      (e: WheelEvent) => {
-        if (!isHovered || allImages.length <= 1) return;
-
-        e.preventDefault();
-
-        // Clear existing timeout
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-        }
-
-        // Immediate response for better UX
-        if (e.deltaY > 0) {
-          // Scroll down - next image
-          setCurrentImageIndex((prev) => (prev + 1) % allImages.length);
-        } else {
-          // Scroll up - previous image
-          setCurrentImageIndex(
-            (prev) => (prev - 1 + allImages.length) % allImages.length
-          );
-        }
-      },
-      [isHovered, allImages.length]
-    );
-
-    // Preload adjacent images for smoother transitions
-    useEffect(() => {
-      const preloadImages = () => {
-        const nextIndex = (currentImageIndex + 1) % allImages.length;
-        const prevIndex =
-          (currentImageIndex - 1 + allImages.length) % allImages.length;
-
-        // Preload next and previous images
-        if (allImages[nextIndex]) {
-          const img = new window.Image();
-          img.src = allImages[nextIndex];
-        }
-        if (allImages[prevIndex]) {
-          const img = new window.Image();
-          img.src = allImages[prevIndex];
-        }
-      };
-
-      preloadImages();
-    }, [currentImageIndex, allImages]);
-
-    // Add wheel event listener
-    useEffect(() => {
-      const container = imageContainerRef.current;
-      if (!container) return;
-
-      container.addEventListener("wheel", handleWheel, { passive: false });
-
-      return () => {
-        container.removeEventListener("wheel", handleWheel);
-        if (scrollTimeoutRef.current) {
-          clearTimeout(scrollTimeoutRef.current);
-        }
-      };
-    }, [handleWheel]);
+    // Simplified image handling - no scroll functionality
 
     // Memoize amenity icons to prevent recalculation
     const getIcon = useCallback((amenity: string) => {
@@ -192,15 +129,13 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
           <div
             ref={imageContainerRef}
             className="relative w-full aspect-[4/3] overflow-hidden cursor-pointer"
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
             onClick={() => setIsGalleryOpen(true)}
           >
             <Image
               src={displayImageUrl}
               alt={title}
               fill
-              className="object-cover transition-opacity duration-150 ease-out group-hover:scale-105"
+              className="object-cover"
               data-ai-hint={imageHint || "luxury property exterior"}
               onError={() => setImageError(true)}
               priority={false}
@@ -208,19 +143,16 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
 
-            {/* Enhanced gradient overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
             {/* Image counter for multiple images */}
             {allImages.length > 1 && (
-              <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-2 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                {currentImageIndex + 1} / {allImages.length}
+              <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-2 py-1 rounded-full">
+                1 / {allImages.length}
               </div>
             )}
 
             {/* Click to view gallery indicator */}
-            {allImages.length > 1 && isHovered && (
-              <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            {allImages.length > 1 && (
+              <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full">
                 Click to view gallery
               </div>
             )}
@@ -365,7 +297,7 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
             asChild
             className="w-full rounded-lg bg-gradient-to-r from-[#8EB69B] to-[#235347] text-white hover:from-[#235347] hover:to-[#8EB69B] shadow-md hover:shadow-lg transition-all duration-300 py-2.5 font-semibold flex items-center justify-center gap-2 text-sm"
           >
-            <Link href={`/properties/${slug}?imageIndex=${currentImageIndex}`}>
+            <Link href={`/properties/${slug}`}>
               <Eye className="h-4 w-4" />
               View Details
             </Link>
@@ -377,7 +309,7 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
           isOpen={isGalleryOpen}
           onClose={() => setIsGalleryOpen(false)}
           images={allImages}
-          initialIndex={currentImageIndex}
+          initialIndex={0}
           title={title}
         />
       </Card>
