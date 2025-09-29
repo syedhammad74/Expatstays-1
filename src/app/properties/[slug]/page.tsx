@@ -91,7 +91,7 @@ export default function Page({ params }: { params: { slug: string } }) {
               "/media/famhouse/DSC02231.jpg",
               "/media/famhouse/DSC02232.jpg",
               "/media/famhouse/DSC02235.jpg",
-              "/media/famhouse/DSC02239%20(1).jpg",
+              "/media/famhouse/DSC02239 (1).jpg",
             ],
             pricing: {
               basePrice: 350,

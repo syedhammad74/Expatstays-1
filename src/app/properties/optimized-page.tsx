@@ -306,10 +306,16 @@ function PropertiesPageContent() {
           return property.images;
         }
         if (property.id === "famhouse_islamabad_dam_view") {
-          const farmhouseImages: string[] = [];
-          for (let i = 0; i < 8; i++) {
-            farmhouseImages.push(getLocalImage("farmhouse", i));
-          }
+          const farmhouseImages: string[] = [
+            "/media/famhouse/DSC02226.jpg",
+            "/media/famhouse/DSC02227.jpg",
+            "/media/famhouse/DSC02228.jpg",
+            "/media/famhouse/DSC02229.jpg",
+            "/media/famhouse/DSC02231.jpg",
+            "/media/famhouse/DSC02232.jpg",
+            "/media/famhouse/DSC02235.jpg",
+            "/media/famhouse/DSC02239 (1).jpg",
+          ];
           return farmhouseImages;
         }
         const imageCount = Math.min(
