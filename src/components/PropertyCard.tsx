@@ -27,6 +27,7 @@ import {
   Dumbbell,
 } from "lucide-react";
 import { useState, memo, useMemo, useCallback, useRef, useEffect } from "react";
+import ImageGalleryModal from "./ImageGalleryModal";
 
 export interface PropertyCardProps {
   slug: string;
@@ -71,6 +72,7 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
     const [imageError, setImageError] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isHovered, setIsHovered] = useState(false);
+    const [isGalleryOpen, setIsGalleryOpen] = useState(false);
     const imageContainerRef = useRef<HTMLDivElement>(null);
     const scrollTimeoutRef = useRef<NodeJS.Timeout>();
 
@@ -192,6 +194,7 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
             className="relative w-full aspect-[4/3] overflow-hidden cursor-pointer"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
+            onClick={() => setIsGalleryOpen(true)}
           >
             <Image
               src={displayImageUrl}
@@ -215,10 +218,10 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
               </div>
             )}
 
-            {/* Scroll indicator for multiple images */}
+            {/* Click to view gallery indicator */}
             {allImages.length > 1 && isHovered && (
               <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-3 py-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                Scroll to see more
+                Click to view gallery
               </div>
             )}
 
@@ -368,6 +371,15 @@ const PropertyCard: React.FC<PropertyCardProps> = memo(
             </Link>
           </Button>
         </CardFooter>
+
+        {/* Image Gallery Modal */}
+        <ImageGalleryModal
+          isOpen={isGalleryOpen}
+          onClose={() => setIsGalleryOpen(false)}
+          images={allImages}
+          initialIndex={currentImageIndex}
+          title={title}
+        />
       </Card>
     );
   }

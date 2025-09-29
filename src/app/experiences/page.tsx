@@ -288,28 +288,28 @@ export default function ExperiencesPage() {
 
               {/* Category Filters */}
               <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-[#235347]/70">
-                <Filter className="h-5 w-5" />
-                <span className="text-sm font-medium">Filter by:</span>
-              </div>
-              <div className="flex gap-3 overflow-x-auto scrollbar-hide">
-                {categories.map((category) => (
-                  <Button
-                    key={category}
+                <div className="flex items-center gap-2 text-[#235347]/70">
+                  <Filter className="h-5 w-5" />
+                  <span className="text-sm font-medium">Filter by:</span>
+                </div>
+                <div className="flex gap-3 overflow-x-auto scrollbar-hide">
+                  {categories.map((category) => (
+                    <Button
+                      key={category}
                       onClick={() => setSelectedCategory(category)}
-                    variant={
+                      variant={
                         category === selectedCategory ? "default" : "outline"
-                    }
-                    size="sm"
-                    className={`rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
+                      }
+                      size="sm"
+                      className={`rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap ${
                         category === selectedCategory
-                        ? "bg-[#8EB69B] text-[#163832] shadow-lg shadow-[#8EB69B]/25"
-                        : "border-[#0B2B26] text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white hover:shadow-lg hover:shadow-[#8EB69B]/25"
-                    }`}
-                  >
-                    {category}
-                  </Button>
-                ))}
+                          ? "bg-[#8EB69B] text-[#163832] shadow-lg shadow-[#8EB69B]/25"
+                          : "border-[#0B2B26] text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white hover:shadow-lg hover:shadow-[#8EB69B]/25"
+                      }`}
+                    >
+                      {category}
+                    </Button>
+                  ))}
                 </div>
               </div>
             </div>
@@ -489,110 +489,110 @@ export default function ExperiencesPage() {
               </div>
             </motion.div>
           ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredExperiences.map((exp, index) => (
-              <motion.div
-                key={exp.slug}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.1 }}
-              >
+                <motion.div
+                  key={exp.slug}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
                   <Card className="group overflow-hidden border-[#8EB69B]/20 bg-white rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]">
-                  <CardHeader className="p-0">
-                    <div className="relative aspect-[4/3] overflow-hidden">
-                      <Image
-                        src={exp.imageUrl}
-                        alt={exp.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
+                    <CardHeader className="p-0">
+                      <div className="relative aspect-[4/3] overflow-hidden">
+                        <Image
+                          src={exp.imageUrl}
+                          alt={exp.title}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
 
                         {/* Badges */}
-                      <div className="absolute top-4 left-4 flex flex-col gap-2">
+                        <div className="absolute top-4 left-4 flex flex-col gap-2">
                           <Badge className="bg-[#8EB69B]/90 backdrop-blur-sm text-white border-0">
-                          {exp.category}
-                        </Badge>
-                        {exp.featured && (
-                          <Badge
-                            variant="outline"
-                              className="bg-white/90 backdrop-blur-sm border-[#8EB69B]/30 text-[#8EB69B]"
-                          >
-                            Featured
+                            {exp.category}
                           </Badge>
-                        )}
-                      </div>
+                          {exp.featured && (
+                            <Badge
+                              variant="outline"
+                              className="bg-white/90 backdrop-blur-sm border-[#8EB69B]/30 text-[#8EB69B]"
+                            >
+                              Featured
+                            </Badge>
+                          )}
+                        </div>
 
                         {/* Price */}
-                      <div className="absolute top-4 right-4">
-                        <Badge className="bg-[#0B2B26]/90 backdrop-blur-sm border-0 text-white font-semibold">
-                          {exp.price}
-                        </Badge>
-                      </div>
+                        <div className="absolute top-4 right-4">
+                          <Badge className="bg-[#0B2B26]/90 backdrop-blur-sm border-0 text-white font-semibold">
+                            {exp.price}
+                          </Badge>
+                        </div>
 
                         {/* Rating */}
-                      <div className="absolute bottom-4 left-4">
+                        <div className="absolute bottom-4 left-4">
                           <div className="flex items-center gap-2 bg-white/90 backdrop-blur-sm rounded-full px-3 py-2">
-                          <Star className="h-4 w-4 text-yellow-400 fill-current" />
+                            <Star className="h-4 w-4 text-yellow-400 fill-current" />
                             <span className="text-sm font-semibold text-gray-900">
-                            {exp.rating}
-                          </span>
+                              {exp.rating}
+                            </span>
                             <span className="text-xs text-gray-600">
-                            ({exp.reviews})
-                          </span>
+                              ({exp.reviews})
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </CardHeader>
+                    </CardHeader>
 
-                  <CardContent className="p-6">
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="w-12 h-12 bg-gradient-to-br from-[#8EB69B]/20 to-[#0B2B26]/20 rounded-2xl flex items-center justify-center">
-                        <exp.icon className="h-6 w-6 text-[#8EB69B]" />
-                      </div>
-                      <div>
+                    <CardContent className="p-6">
+                      <div className="flex items-center gap-3 mb-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-[#8EB69B]/20 to-[#0B2B26]/20 rounded-2xl flex items-center justify-center">
+                          <exp.icon className="h-6 w-6 text-[#8EB69B]" />
+                        </div>
+                        <div>
                           <CardTitle className="text-lg font-bold text-[#163832] group-hover:text-[#8EB69B] transition-colors">
-                          {exp.title}
-                        </CardTitle>
+                            {exp.title}
+                          </CardTitle>
                           <p className="text-sm text-[#235347]/60 flex items-center gap-2">
-                          <Clock className="h-3 w-3" />
-                          {exp.duration}
-                        </p>
+                            <Clock className="h-3 w-3" />
+                            {exp.duration}
+                          </p>
+                        </div>
                       </div>
-                    </div>
 
                       <p className="text-[#235347]/80 leading-relaxed mb-4">
-                      {exp.description}
-                    </p>
+                        {exp.description}
+                      </p>
 
                       {/* Experience Details */}
                       <div className="grid grid-cols-2 gap-3 mb-4 text-sm text-[#235347]/70">
-                      <div className="flex items-center gap-2">
-                        <Users className="h-3 w-3 text-[#8EB69B]" />
-                        <span>{exp.groupSize}</span>
+                        <div className="flex items-center gap-2">
+                          <Users className="h-3 w-3 text-[#8EB69B]" />
+                          <span>{exp.groupSize}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <MapPin className="h-3 w-3 text-[#0B2B26]" />
+                          <span>{exp.location}</span>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <MapPin className="h-3 w-3 text-[#0B2B26]" />
-                        <span>{exp.location}</span>
-                      </div>
-                    </div>
-                  </CardContent>
+                    </CardContent>
 
-                  <CardFooter className="p-6 pt-0">
-                    <Button
-                      asChild
-                      className="w-full rounded-2xl bg-gradient-to-r from-[#8EB69B] to-[#0B2B26] text-white hover:from-[#0B2B26] hover:to-[#8EB69B] shadow-lg shadow-[#8EB69B]/25 hover:shadow-xl hover:shadow-[#8EB69B]/30 transition-all duration-300"
-                    >
-                      <Link href={`/experiences/${exp.slug}`}>
-                        Learn More & Book
-                        <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
-                      </Link>
-                    </Button>
-                  </CardFooter>
-                </Card>
-              </motion.div>
-            ))}
-          </div>
+                    <CardFooter className="p-6 pt-0">
+                      <Button
+                        asChild
+                        className="w-full rounded-2xl bg-gradient-to-r from-[#8EB69B] to-[#0B2B26] text-white hover:from-[#0B2B26] hover:to-[#8EB69B] shadow-lg shadow-[#8EB69B]/25 hover:shadow-xl hover:shadow-[#8EB69B]/30 transition-all duration-300"
+                      >
+                        <Link href={`/experiences/${exp.slug}`}>
+                          Learn More & Book
+                          <ArrowRight className="h-4 w-4 ml-2 transition-transform group-hover:translate-x-1" />
+                        </Link>
+                      </Button>
+                    </CardFooter>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
           )}
         </div>
       </section>
@@ -623,8 +623,8 @@ export default function ExperiencesPage() {
                 className="rounded-2xl bg-[#8EB69B] text-white hover:bg-[#0B2B26] shadow-lg transition-all duration-300 px-8 py-4 text-lg font-semibold"
               >
                 <Link href="/contact">
-                Talk to Concierge
-                <ChevronRight className="h-5 w-5 ml-2" />
+                  Talk to Concierge
+                  <ChevronRight className="h-5 w-5 ml-2" />
                 </Link>
               </Button>
               <Button
