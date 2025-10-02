@@ -84,26 +84,14 @@ export const viewport: Viewport = {
   ],
 };
 
-// Critical CSS for above-the-fold content
+// Simplified critical CSS
 const criticalCSS = `
-  * {
-    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
-  }
-  
   body {
-    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     margin: 0;
     padding: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-  
-  .min-h-screen {
-    min-height: 100vh;
-  }
-  
-  .bg-gradient-to-br {
-    background: linear-gradient(to bottom right, #F8FBF9, #E6F2EC);
   }
 `;
 
@@ -126,31 +114,18 @@ export default function RootLayout({
           href="https://firebasestorage.googleapis.com"
         />
 
-        {/* Non-blocking font loading */}
+        {/* Font loading - reverted to normal loading */}
         <link
           href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
           rel="stylesheet"
-          media="print"
-          onLoad="this.media='all'"
         />
-        <noscript>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
-            rel="stylesheet"
-          />
-        </noscript>
 
         {/* Critical CSS */}
         <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
 
         {/* Preload critical resources */}
         <link rel="preload" href="/logo.png" as="image" />
-        <link
-          rel="preload"
-          href="/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg"
-          as="image"
-          fetchpriority="high"
-        />
+        {/* Removed image preload that might cause issues */}
 
         {/* Resource hints for better performance */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -162,24 +137,8 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
 
-        {/* Service Worker Registration */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              if ('serviceWorker' in navigator) {
-                window.addEventListener('load', () => {
-                  navigator.serviceWorker.register('/sw.js')
-                    .then((registration) => {
-                      console.log('SW registered: ', registration);
-                    })
-                    .catch((registrationError) => {
-                      console.log('SW registration failed: ', registrationError);
-                    });
-                });
-              }
-            `,
-          }}
-        />
+        {/* Service Worker Registration - Temporarily disabled */}
+        {/* <script>...</script> */}
 
         {/* Structured data */}
         <script

@@ -300,7 +300,7 @@ export default function Home() {
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
                         className="object-cover object-center select-none"
                         priority={index === 0}
-                        fetchPriority={index === 0 ? "high" : "low"}
+                        // fetchPriority temporarily removed
                         quality={index === 0 ? 90 : 75}
                         draggable={false}
                       />
