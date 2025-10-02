@@ -109,8 +109,9 @@ export default function ResponsiveImage({
         blurDataURL={blurDataURL}
         onLoadingComplete={() => setIsLoading(false)}
         onError={() => setHasError(true)}
-        loading={loading}
+        loading={priority ? "eager" : loading}
         draggable={draggable}
+        fetchPriority={priority ? "high" : undefined}
       />
       {isLoading && (
         <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />

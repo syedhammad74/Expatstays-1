@@ -34,7 +34,11 @@
     "optimize:analyze": "npm run build && npx @next/bundle-analyzer",
     "optimize:images": "node scripts/optimize-images-critical.js",
     "optimize:critical": "npm run optimize:images && npm run build && npm run optimize:analyze",
-    "move:large-assets": "node scripts/move-large-assets.js"
+    "move:large-assets": "node scripts/move-large-assets.js",
+    "optimize:emergency": "node scripts/emergency-performance-fix.js",
+    "optimize:css": "node scripts/optimize-css.js",
+    "optimize:bundle": "node scripts/optimize-bundle.js",
+    "optimize:all": "npm run optimize:emergency && npm run optimize:css && npm run optimize:bundle && npm run move:large-assets"
   },
   "dependencies": {
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
