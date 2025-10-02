@@ -81,18 +81,19 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
     };
 
     return (
-      <Card className="group transition-all duration-300 bg-white hover:bg-white shadow-md hover:shadow-xl rounded-xl overflow-hidden border border-[#E5E7EB]/40 hover:border-[#8EB69B]/30 hover:-translate-y-2 h-full flex flex-col">
+      <Card className="group transition-shadow duration-200 bg-white hover:bg-white shadow-md hover:shadow-xl rounded-xl overflow-hidden border border-[#E5E7EB]/40 hover:border-[#8EB69B]/30 h-full flex flex-col">
         <CardHeader className="p-0 relative">
           <div className="relative w-full aspect-[4/3] overflow-hidden">
             <Image
               src={displayImageUrl}
               alt={title}
               fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
+              className="object-cover"
               onError={() => setImageError(true)}
               priority={false}
               loading="lazy"
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+              quality={75}
             />
 
             {/* Image counter for multiple images */}

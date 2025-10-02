@@ -121,14 +121,40 @@ export default function RootLayout({
         <link rel="manifest" href="/manifest.json" />
 
         {/* DNS prefetch for performance */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link
           rel="dns-prefetch"
           href="https://firebasestorage.googleapis.com"
         />
 
-        {/* Preconnect for critical resources */}
+        {/* Non-blocking font loading */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+          rel="stylesheet"
+          media="print"
+          onLoad="this.media='all'"
+        />
+        <noscript>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+            rel="stylesheet"
+          />
+        </noscript>
+
+        {/* Critical CSS */}
+        <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
+
+        {/* Preload critical resources */}
+        <link rel="preload" href="/logo.png" as="image" />
+        <link
+          rel="preload"
+          href="/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg"
+          as="image"
+          fetchpriority="high"
+        />
+
+        {/* Resource hints for better performance */}
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -136,18 +162,24 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
 
-        {/* Font loading */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
-          rel="stylesheet"
+        {/* Service Worker Registration */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                  navigator.serviceWorker.register('/sw.js')
+                    .then((registration) => {
+                      console.log('SW registered: ', registration);
+                    })
+                    .catch((registrationError) => {
+                      console.log('SW registration failed: ', registrationError);
+                    });
+                });
+              }
+            `,
+          }}
         />
-
-        {/* Critical CSS */}
-        <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
-
-        {/* Preload critical images */}
-        <link rel="preload" href="/logo.png" as="image" />
-        {/* Removed image preloading for performance */}
 
         {/* Structured data */}
         <script

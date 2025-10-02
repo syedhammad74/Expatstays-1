@@ -938,7 +938,7 @@ export default function PropertiesPage() {
               setFilteredProperties(properties);
               // Removed tracking for performance
             }}
-            className="bg-[#8EB69B] text-white hover:bg-[#235347] px-8 py-3 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300"
+            className="bg-[#8EB69B] text-white hover:bg-[#235347] px-8 py-3 rounded-2xl font-semibold shadow-lg transition-colors duration-150"
           >
             Clear Filters
           </Button>
@@ -1033,13 +1033,13 @@ export default function PropertiesPage() {
               <div className="flex flex-col sm:flex-row gap-3 lg:gap-4">
                 <Button
                   onClick={scrollToProperties}
-                  className="bg-[#0B2B26] text-white hover:bg-[#235347] transition-all duration-300 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full shadow-lg hover:shadow-xl w-full sm:w-auto"
+                  className="bg-[#0B2B26] text-white hover:bg-[#235347] transition-colors duration-150 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full shadow-lg w-full sm:w-auto"
                 >
                   Browse All Properties
                 </Button>
                 <Button
                   variant="ghost"
-                  className="border-2 border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition-all duration-300 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full w-full sm:w-auto"
+                  className="border-2 border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition-colors duration-150 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full w-full sm:w-auto"
                 >
                   Schedule a Consultation
                 </Button>
@@ -1082,14 +1082,16 @@ export default function PropertiesPage() {
         <div className="absolute -left-16 lg:-left-32 -top-16 lg:-top-32 w-[200px] lg:w-[420px] h-[200px] lg:h-[420px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl z-0" />
         {/* Left: Image */}
         <div className="lg:w-1/2 w-full flex justify-center items-center z-10 mb-8 lg:mb-0">
-          <div className="rounded-xl lg:rounded-2xl shadow-lg overflow-hidden transition-transform duration-300 hover:scale-105 w-full max-w-md">
+          <div className="rounded-xl lg:rounded-2xl shadow-lg overflow-hidden w-full max-w-md">
             <Image
               src="/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"
               alt="Luxury Bedroom"
               width={600}
               height={400}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
               className="object-cover w-full h-48 sm:h-56 lg:h-72 xl:h-96"
-              priority
+              quality={80}
+              loading="lazy"
             />
           </div>
         </div>
@@ -1101,7 +1103,7 @@ export default function PropertiesPage() {
           {/* Removed error state */}
           <div className="w-full bg-white rounded-xl lg:rounded-full shadow-xl py-4 lg:py-3 px-4 lg:px-5 flex flex-col lg:flex-row items-center gap-4">
             {/* Location Field */}
-            <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-all duration-300">
+            <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
               <MapPin className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
               <Select value={location} onValueChange={setLocation}>
                 <SelectTrigger className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium focus:ring-0 focus:border-none h-12 lg:h-14">
@@ -1118,7 +1120,7 @@ export default function PropertiesPage() {
               </Select>
             </div>
             {/* Date Field */}
-            <div className="flex items-center w-full lg:min-w-[250px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-all duration-300">
+            <div className="flex items-center w-full lg:min-w-[250px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
               <CalendarIcon className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
               <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                 <PopoverTrigger asChild>
@@ -1159,15 +1161,15 @@ export default function PropertiesPage() {
                     }}
                     modifiersClassNames={{
                       selected:
-                        "bg-[#8EB69B] text-white rounded-full shadow-lg scale-105 transition-all duration-200",
+                        "bg-[#8EB69B] text-white rounded-full shadow-lg transition-colors duration-150",
                       range_start:
-                        "bg-[#8EB69B] text-white rounded-l-full shadow-lg scale-105 relative z-10 transition-all duration-200",
+                        "bg-[#8EB69B] text-white rounded-l-full shadow-lg relative z-10 transition-colors duration-150",
                       range_end:
-                        "bg-[#8EB69B] text-white rounded-r-full shadow-lg scale-105 relative z-10 transition-all duration-200",
+                        "bg-[#8EB69B] text-white rounded-r-full shadow-lg relative z-10 transition-colors duration-150",
                       range_middle:
-                        "bg-[#DAF1DE] text-[#051F20] opacity-80 transition-all duration-200",
+                        "bg-[#DAF1DE] text-[#051F20] opacity-80 transition-colors duration-150",
                       hovered:
-                        "bg-[#BFE3D0] text-[#051F20] shadow-md transition-all duration-200",
+                        "bg-[#BFE3D0] text-[#051F20] shadow-md transition-colors duration-150",
                       today:
                         "border-2 border-[#8EB69B] bg-white text-[#051F20] font-bold",
                       focus: "ring-2 ring-[#8EB69B] ring-offset-2",
@@ -1208,7 +1210,7 @@ export default function PropertiesPage() {
               </Popover>
             </div>
             {/* Guests Field */}
-            <div className="flex items-center w-full lg:min-w-[120px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-all duration-300">
+            <div className="flex items-center w-full lg:min-w-[120px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
               <Users className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
               <Popover open={guestsOpen} onOpenChange={setGuestsOpen}>
                 <PopoverTrigger asChild>
@@ -1291,7 +1293,7 @@ export default function PropertiesPage() {
             {/* Search Button */}
             <div className="flex-shrink-0 w-full lg:w-auto">
               <Button
-                className="h-12 lg:h-14 px-6 lg:px-8 bg-[#8EB69B] text-[#051F20] font-semibold rounded-lg lg:rounded-full shadow-md hover:bg-[#235347] hover:text-[#DAF1DE] hover:scale-105 transition-all duration-300 flex items-center gap-2 w-full lg:w-auto text-sm lg:text-base disabled:opacity-50"
+                className="h-12 lg:h-14 px-6 lg:px-8 bg-[#8EB69B] text-[#051F20] font-semibold rounded-lg lg:rounded-full shadow-md hover:bg-[#235347] hover:text-[#DAF1DE] transition-colors duration-150 flex items-center gap-2 w-full lg:w-auto text-sm lg:text-base disabled:opacity-50"
                 onClick={handleFind}
                 disabled={searchLoading}
               >
@@ -1356,7 +1358,7 @@ export default function PropertiesPage() {
                   variant={useVirtualScrolling ? "ghost" : "default"}
                   size="sm"
                   onClick={() => setUseVirtualScrolling(false)}
-                  className={`rounded-xl px-4 py-2 font-semibold transition-all duration-300 ${
+                  className={`rounded-xl px-4 py-2 font-semibold transition-colors duration-150 ${
                     !useVirtualScrolling
                       ? "bg-[#8EB69B] text-white shadow-md"
                       : "text-[#8EB69B] hover:bg-[#8EB69B]/10"
@@ -1370,7 +1372,7 @@ export default function PropertiesPage() {
                   size="sm"
                   onClick={() => setUseVirtualScrolling(true)}
                   disabled={filteredProperties.length <= 20}
-                  className={`rounded-xl px-4 py-2 font-semibold transition-all duration-300 ${
+                  className={`rounded-xl px-4 py-2 font-semibold transition-colors duration-150 ${
                     useVirtualScrolling
                       ? "bg-[#8EB69B] text-white shadow-md"
                       : "text-[#8EB69B] hover:bg-[#8EB69B]/10"
@@ -1435,7 +1437,7 @@ export default function PropertiesPage() {
               },
             ].map((service) => (
               <div key={service.title} className="group relative">
-                <div className="bg-white rounded-xl lg:rounded-2xl shadow-sm border border-slate-200/50 p-6 lg:p-8 group-hover:shadow-xl transition-all duration-300">
+                <div className="bg-white rounded-xl lg:rounded-2xl shadow-sm border border-slate-200/50 p-6 lg:p-8 group-hover:shadow-xl transition-shadow duration-200">
                   <div className="inline-flex items-center justify-center w-12 lg:w-16 h-12 lg:h-16 rounded-xl lg:rounded-2xl bg-gradient-to-br from-[#8EB69B]/10 to-[#DAF1DE]/20 mb-4 lg:mb-6">
                     <service.icon className="h-6 lg:h-8 w-6 lg:w-8 text-[#8EB69B]" />
                   </div>

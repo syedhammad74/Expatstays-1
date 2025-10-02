@@ -38,9 +38,9 @@ const nextConfig: NextConfig = {
         hostname: "storage.googleapis.com",
       },
     ],
-    formats: ["image/webp"], // Removed AVIF for better compatibility
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920], // Reduced sizes
-    imageSizes: [16, 32, 48, 64, 96, 128, 256], // Reduced sizes
+    formats: ["image/webp", "image/avif"], // Re-enabled AVIF for better compression
+    deviceSizes: [640, 750, 828, 1080, 1200], // Optimized sizes
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384], // Added 384 for better mobile
     minimumCacheTTL: 31536000, // 1 year
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",

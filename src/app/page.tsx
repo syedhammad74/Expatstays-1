@@ -223,22 +223,22 @@ export default function Home() {
           {/* Modern Decorative Elements - Hero Background */}
           <div className="absolute -top-14 left-8 pointer-events-none hidden lg:block">
             {/* Large decorative circle */}
-            <div className="w-72 h-72 -left-10  bg-[#8EB69B] rounded-full animate-[breathing_4s_ease-in-out_infinite]"></div>
+            <div className="w-72 h-72 -left-10  bg-[#8EB69B] rounded-full"></div>
 
             {/* Medium decorative circle */}
             {/* <div className="absolute -top-8 -left-8 w-40 h-40 bg-[#8EB69B] rounded-full animate-[breathing_7.5s_ease-in-out_infinite]"></div> */}
 
             {/* Small decorative circle */}
-            <div className="absolute top-36 -left-24 w-44 h-44 bg-[#8EB69B] rounded-full animate-[breathing_7s_ease-in-out_infinite]"></div>
+            <div className="absolute top-36 -left-24 w-44 h-44 bg-[#8EB69B] rounded-full"></div>
 
             {/* Floating dot */}
-            <div className="absolute top-8 left-24 w-4 h-4 rounded-full bg-[#8EB69B] animate-[breathing_7.5s_ease-in-out_infinite]"></div>
+            <div className="absolute top-8 left-24 w-4 h-4 rounded-full bg-[#8EB69B]"></div>
           </div>
 
           {/* Additional decorative element - Top right */}
           <div className="absolute top-96 right-16 z-0 pointer-events-none hidden lg:block">
-            <div className="w-44 h-44 bg-gradient-to-br bg-[#8EB69B] rounded-full animate-[breathing_7.5s_ease-in-out_infinite]"></div>
-            <div className="absolute top-4 right-4 w-16 h-16 bg-[#8EB69B] rounded-full shadow-sm animate-[breathing_6.5s_ease-in-out_infinite]"></div>
+            <div className="w-44 h-44 bg-gradient-to-br bg-[#8EB69B] rounded-full"></div>
+            <div className="absolute top-4 right-4 w-16 h-16 bg-[#8EB69B] rounded-full shadow-sm"></div>
           </div>
           {/* Left Panel */}
           <div className="w-full lg:w-2/5 flex mb-20 mt-8 flex-col justify-center items-start px-4 lg:px-12 z-10 animate-fade-in-up">
@@ -255,14 +255,14 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 w-full sm:w-auto">
               <Button
                 size="lg"
-                className="rounded-buttons px-4 lg:px-6 py-3 lg:py-4 bg-[#8EB69B] text-[#051F20] font-bold shadow-lg hover:shadow-[0_0_16px_#8EB69B55] hover:bg-[#235347] hover:text-[#DAF1DE] transition-all duration-200 w-full sm:w-auto"
+                className="rounded-buttons px-4 lg:px-6 py-3 lg:py-4 bg-[#8EB69B] text-[#051F20] font-bold shadow-lg hover:bg-[#235347] hover:text-[#DAF1DE] transition-colors duration-150 w-full sm:w-auto"
               >
                 Explore Properties
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="rounded-buttons px-4 lg:px-6 py-3 lg:py-4 border-[#8EB69B] text-[#8EB69B] font-bold hover:bg-[#8EB69B] hover:text-[#051F20] hover:shadow-[0_0_16px_#8EB69B55] transition-all duration-200 w-full sm:w-auto"
+                className="rounded-buttons px-4 lg:px-6 py-3 lg:py-4 border-[#8EB69B] text-[#8EB69B] font-bold hover:bg-[#8EB69B] hover:text-[#051F20] transition-colors duration-150 w-full sm:w-auto"
               >
                 Book Now
               </Button>
@@ -297,9 +297,11 @@ export default function Home() {
                         src={slide.image}
                         alt={slide.alt}
                         fill
-                        sizes="(max-width: 1024px) 100vw, 50vw"
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
                         className="object-cover object-center select-none"
                         priority={index === 0}
+                        fetchPriority={index === 0 ? "high" : "low"}
+                        quality={index === 0 ? 90 : 75}
                         draggable={false}
                       />
                       {/* Subtle overlay for better contrast */}
@@ -329,11 +331,11 @@ export default function Home() {
                       <button
                         key={index}
                         onClick={() => goToSlide(index)}
-                        className={`rounded-full transition-all duration-300 ease-in-out transform hover:scale-110
+                        className={`rounded-full transition-colors duration-200
                                   ${
                                     index === currentServiceIndex
                                       ? "w-3 h-3 bg-green-600 ring-2 ring-green-500/50 ring-offset-1 ring-offset-green-400/20 shadow-lg"
-                                      : "w-2.5 h-2.5 bg-green-600/60 hover:bg-green-400/80 hover:scale-110"
+                                      : "w-2.5 h-2.5 bg-green-600/60"
                                   }
                                 `}
                         aria-label={`Go to slide ${index + 1}`}
@@ -367,7 +369,7 @@ export default function Home() {
             )}
             <div className="w-full max-w-4xl mx-auto bg-white rounded-2xl lg:rounded-full shadow-xl py-4 lg:py-3 px-4 lg:px-5 flex flex-col lg:flex-row items-center gap-4">
               {/* Location Field */}
-              <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-xl px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-all duration-300">
+              <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-xl px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
                 <MapPin className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
                 <Select value={location} onValueChange={setLocation}>
                   <SelectTrigger className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium focus:ring-0 focus:border-none h-12 lg:h-14">
@@ -386,7 +388,7 @@ export default function Home() {
                 </Select>
               </div>
               {/* Date Field */}
-              <div className="flex items-center w-full lg:min-w-[250px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-xl px-3 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-all duration-300">
+              <div className="flex items-center w-full lg:min-w-[250px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-xl px-3 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
                 <CalendarIcon className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
                 <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                   <PopoverTrigger asChild>
@@ -477,7 +479,7 @@ export default function Home() {
                 </Popover>
               </div>
               {/* Guests Field */}
-              <div className="flex items-center w-full lg:min-w-[120px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-xl px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-all duration-300">
+              <div className="flex items-center w-full lg:min-w-[120px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-xl px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
                 <Users className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
                 <Popover open={guestsOpen} onOpenChange={setGuestsOpen}>
                   <PopoverTrigger asChild>
@@ -566,7 +568,7 @@ export default function Home() {
               {/* Search Button */}
               <div className="flex-shrink-0 w-full lg:w-auto">
                 <Button
-                  className="h-12 lg:h-14 px-6 lg:px-8 bg-[#8EB69B] text-[#051F20] font-semibold rounded-xl lg:rounded-full shadow-md hover:bg-[#235347] hover:text-[#DAF1DE] hover:scale-105 transition-all duration-300 flex items-center gap-2 w-full lg:w-auto"
+                  className="h-12 lg:h-14 px-6 lg:px-8 bg-[#8EB69B] text-[#051F20] font-semibold rounded-xl lg:rounded-full shadow-md hover:bg-[#235347] hover:text-[#DAF1DE] transition-colors duration-150 flex items-center gap-2 w-full lg:w-auto"
                   onClick={handleFind}
                 >
                   <Search className="h-4 lg:h-5 w-4 lg:w-5" />
@@ -626,15 +628,12 @@ export default function Home() {
                   gradient: "from-[#235347] to-[#163832]",
                 },
               ].map((service, i) => (
-                <div
-                  key={service.title}
-                  className="group relative hover:-translate-y-2 transition-transform duration-300"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-xl group-hover:shadow-2xl transition-all duration-300" />
+                <div key={service.title} className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-xl group-hover:shadow-2xl transition-shadow duration-200" />
                   <div className="relative p-6 lg:p-8">
                     {/* Animated Icon */}
                     <div
-                      className={`inline-flex p-4 lg:p-6 rounded-xl lg:rounded-2xl bg-gradient-to-br ${service.gradient} mb-4 lg:mb-6 shadow-lg hover:scale-110 hover:rotate-1 transition-transform duration-300`}
+                      className={`inline-flex p-4 lg:p-6 rounded-xl lg:rounded-2xl bg-gradient-to-br ${service.gradient} mb-4 lg:mb-6 shadow-lg`}
                     >
                       <service.icon className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
                     </div>
@@ -702,10 +701,10 @@ export default function Home() {
                   {featuredProperties.map((property, i) => (
                     <div
                       key={property.id}
-                      className="group relative hover:-translate-y-3 transition-transform duration-300 cursor-pointer"
+                      className="group relative cursor-pointer"
                       onClick={() => handlePropertyClick(property.id)}
                     >
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-all duration-500" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-shadow duration-200" />
                       <div className="relative p-6 lg:p-8">
                         <div className="relative h-48 lg:h-64 rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6">
                           <Image
@@ -715,7 +714,10 @@ export default function Home() {
                             }
                             alt={property.title}
                             fill
-                            className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
+                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                            className="object-cover object-center"
+                            quality={75}
+                            loading="lazy"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-[#163832]/60 to-transparent" />
                           {property.featured && (
@@ -764,7 +766,7 @@ export default function Home() {
                               </div>
                             </div>
                             <Button
-                              className="bg-[#163832] text-white hover:bg-[#235347] transition-colors duration-200 text-sm lg:text-base px-3 lg:px-4 py-2 lg:py-2"
+                              className="bg-[#163832] text-white hover:bg-[#235347] transition-colors duration-150 text-sm lg:text-base px-3 lg:px-4 py-2 lg:py-2"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handlePropertyClick(property.id);
@@ -783,7 +785,7 @@ export default function Home() {
               <div className="text-center mt-8 lg:mt-12">
                 <Button
                   variant="outline"
-                  className="border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-[#051F20] transition-colors duration-200"
+                  className="border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-[#051F20] transition-colors duration-150"
                   onClick={handleViewAllProperties}
                 >
                   View All Properties <ArrowRight className="h-4 w-4 ml-2" />
@@ -836,11 +838,8 @@ export default function Home() {
                   badge: "Return Guest",
                 },
               ].map((testimonial, i) => (
-                <div
-                  key={testimonial.author}
-                  className="group relative hover:-translate-y-2 transition-transform duration-300"
-                >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-xl group-hover:shadow-2xl transition-all duration-300" />
+                <div key={testimonial.author} className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-xl group-hover:shadow-2xl transition-shadow duration-200" />
                   <div className="relative p-6 lg:p-8">
                     {/* Header */}
                     <div className="flex items-start justify-between mb-4 lg:mb-6">
@@ -1039,13 +1038,13 @@ export default function Home() {
           <div className="max-w-5xl mx-auto px-4">
             {/* Enhanced Decorative Elements */}
             <div className="absolute top-16 left-8 pointer-events-none hidden lg:block">
-              <div className="w-28 h-28 bg-[#8EB69B]/20 rounded-full animate-[breathing_6s_ease-in-out_infinite]"></div>
+              <div className="w-28 h-28 bg-[#8EB69B]/20 rounded-full"></div>
             </div>
             <div className="absolute bottom-16 right-8 pointer-events-none hidden lg:block">
-              <div className="w-20 h-20 bg-[#DAF1DE]/30 rounded-full animate-[breathing_7s_ease-in-out_infinite]"></div>
+              <div className="w-20 h-20 bg-[#DAF1DE]/30 rounded-full"></div>
             </div>
             <div className="absolute top-1/2 left-1/4 pointer-events-none hidden lg:block">
-              <div className="w-12 h-12 bg-[#235347]/10 rounded-full animate-[breathing_8s_ease-in-out_infinite]"></div>
+              <div className="w-12 h-12 bg-[#235347]/10 rounded-full"></div>
             </div>
 
             <div className="text-center mb-12 lg:mb-16 relative z-10">
@@ -1116,7 +1115,7 @@ export default function Home() {
                     </p>
 
                     <Button
-                      className="w-full bg-gradient-to-r from-[#8EB69B] to-[#235347] text-white hover:from-[#235347] hover:to-[#163832] transition-all duration-300 py-4 text-base font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02]"
+                      className="w-full bg-gradient-to-r from-[#8EB69B] to-[#235347] text-white hover:from-[#235347] hover:to-[#163832] transition-colors duration-200 py-4 text-base font-semibold shadow-lg"
                       onClick={() =>
                         window.open(
                           "https://www.instagram.com/expatstays?igsh=dnJ0ZHg3ZW0xbjV2",
@@ -1176,7 +1175,7 @@ export default function Home() {
                     </p>
 
                     <Button
-                      className="w-full bg-gradient-to-r from-[#235347] to-[#163832] text-white hover:from-[#163832] hover:to-[#051F20] transition-all duration-300 py-4 text-base font-semibold shadow-lg hover:shadow-xl hover:scale-[1.02]"
+                      className="w-full bg-gradient-to-r from-[#235347] to-[#163832] text-white hover:from-[#163832] hover:to-[#051F20] transition-colors duration-200 py-4 text-base font-semibold shadow-lg"
                       onClick={() =>
                         window.open(
                           "https://www.instagram.com/isa_unscripted?igsh=bTBxbjN5OXkxaWdn",
@@ -1215,7 +1214,7 @@ export default function Home() {
                               muted={true}
                               enableMuteToggle
                               poster="/media/Close Ups June 25 2025/IMG_1017.PNG"
-                              className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                              className="w-full h-full object-cover object-center"
                               onClick={() =>
                                 window.open(
                                   "https://www.instagram.com/isa_unscripted?igsh=bTBxbjN5OXkxaWdn",
@@ -1235,7 +1234,7 @@ export default function Home() {
                           </div>
 
                           {/* Click to view overlay */}
-                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
                               <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
                                 <Instagram className="h-6 w-6 text-[#8EB69B]" />
@@ -1253,14 +1252,14 @@ export default function Home() {
                   </div>
 
                   {/* Decorative Element */}
-                  <div className="absolute -top-6 -right-6 w-20 h-20 bg-[#DAF1DE]/30 rounded-full animate-[breathing_8s_ease-in-out_infinite] pointer-events-none"></div>
+                  <div className="absolute -top-6 -right-6 w-20 h-20 bg-[#DAF1DE]/30 rounded-full pointer-events-none"></div>
                 </div>
               </div>
             </div>
 
             {/* Enhanced Call to Action */}
             <div className="text-center mt-16 lg:mt-20">
-              <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#DAF1DE] to-[#8EB69B] px-8 lg:px-12 py-4 lg:py-6 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
+              <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#DAF1DE] to-[#8EB69B] px-8 lg:px-12 py-4 lg:py-6 rounded-full shadow-xl hover:shadow-2xl transition-shadow duration-200">
                 <Instagram className="h-6 w-6 text-[#051F20]" />
                 <span className="text-[#051F20] font-bold text-lg">
                   Join our Instagram community
