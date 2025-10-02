@@ -21,8 +21,8 @@ import {
 import ResponsiveImage from "@/components/ui/ResponsiveImage";
 // Removed framer-motion for performance
 import { useRef, useState, useEffect, useCallback } from "react";
-// import Header from "@/components/layout/Header"; // Temporarily disabled
-// import InViewVideo from "@/components/InViewVideo"; // Temporarily disabled
+import Header from "@/components/layout/Header";
+import InViewVideo from "@/components/InViewVideo";
 import {
   Popover,
   PopoverContent,
@@ -35,14 +35,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-// import dynamic from "next/dynamic";
-// const Calendar = dynamic(() =>
-//   import("@/components/ui/calendar").then((m) => m.Calendar)
-// ); // Temporarily disabled
+import dynamic from "next/dynamic";
+const Calendar = dynamic(() =>
+  import("@/components/ui/calendar").then((m) => m.Calendar)
+);
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { DateRange } from "react-day-picker";
-// import "react-day-picker/dist/style.css"; // Temporarily disabled
+import "react-day-picker/dist/style.css";
 import React from "react";
 // Removed embla-carousel for performance
 // Removed Head import - using metadata API instead
@@ -50,44 +50,6 @@ import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 
 export default function Home() {
-  console.log("🚀 Home component loading...");
-
-  // Temporary override to test basic functionality
-  const [showBasicContent, setShowBasicContent] = useState(true);
-
-  useEffect(() => {
-    console.log("🏠 Home useEffect running");
-    // After 3 seconds, hide basic content and show full page
-    setTimeout(() => {
-      console.log("🎯 Switching to full content");
-      setShowBasicContent(false);
-    }, 3000);
-  }, []);
-
-  if (showBasicContent) {
-    return (
-      <div className="min-h-screen bg-white p-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-bold text-[#8EB69B] mb-4">
-            🏠 Expat Stays
-          </h1>
-          <p className="text-lg text-gray-600 mb-6">
-            Basic UI is loading... Testing components...
-          </p>
-          <div className="p-6 bg-[#8EB69B]/10 rounded-lg">
-            <p className="text-[#8EB69B] font-semibold">
-              ✅ If you see this, React and basic styling are working!
-            </p>
-            <p className="text-gray-600 mt-2">
-              Loading full content in 3 seconds...
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  console.log("🎯 Rendering full Home page");
   // Parallax effect for hero images
   const heroRef = useRef<HTMLDivElement>(null);
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
@@ -390,12 +352,7 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
       />
       <div className="min-h-screen bg-white">
-        {/* <Header /> */}
-        <div className="bg-[#8EB69B] p-4 text-white text-center">
-          <h1 className="text-xl font-bold">
-            Header Temporarily Removed for Testing
-          </h1>
-        </div>
+        <Header />
         {/* Hero Section: Split & Layered Visual Immersion */}
         <section className="relative w-full  min-h-[50vh] flex flex-col lg:flex-row items-center justify-center overflow-hidden mb-0 lg:mb-1 px-4 lg:px-0">
           {/* Modern Decorative Elements - Hero Background */}
@@ -853,21 +810,6 @@ export default function Home() {
                 Discover our handpicked luxury properties, perfect for your next
                 stay
               </p>
-
-              {/* Debug Info */}
-              <div className="mt-4 p-3 bg-gray-100 rounded-lg text-sm text-gray-700">
-                <p>
-                  <strong>Debug:</strong> Loading:{" "}
-                  {propertiesLoading ? "Yes" : "No"} | Properties:{" "}
-                  {featuredProperties.length}
-                </p>
-                {featuredProperties.length > 0 && (
-                  <p>
-                    Property IDs:{" "}
-                    {featuredProperties.map((p) => p.id).join(", ")}
-                  </p>
-                )}
-              </div>
             </div>
 
             {propertiesLoading ? (

@@ -1,12 +1,12 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-// import "../styles/animations.css"; // Temporarily disabled to isolate CSS loading issues
+import "../styles/animations.css";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
 // Removed CriticalCSS and PerformanceLayout for performance
 import ScrollToTop from "@/components/ScrollToTop";
-// import UILoadingGuard from "@/components/ui/UILoadingGuard"; // Temporarily disabled
+import UILoadingGuard from "@/components/ui/UILoadingGuard";
 
 export const metadata: Metadata = {
   title: {
@@ -145,14 +145,12 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning={true}>
-        {/* <UILoadingGuard> */}
         <AuthProvider>
           <ScrollToTop />
           <main className="min-h-screen">{children}</main>
           <ConditionalFooter />
           <Toaster />
         </AuthProvider>
-        {/* </UILoadingGuard> */}
       </body>
     </html>
   );
