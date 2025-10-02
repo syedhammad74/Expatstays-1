@@ -4,9 +4,9 @@ import "../styles/animations.css";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
-import CriticalCSS from "@/components/ui/CriticalCSS";
-// Removed PerformanceLayout for performance
+// Removed CriticalCSS and PerformanceLayout for performance
 import ScrollToTop from "@/components/ScrollToTop";
+import UILoadingGuard from "@/components/ui/UILoadingGuard";
 
 export const metadata: Metadata = {
   title: {
@@ -106,26 +106,10 @@ export default function RootLayout({
           href="https://firebasestorage.googleapis.com"
         />
 
-        {/* Non-blocking font loading for better performance */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
-          rel="preload"
-          as="style"
-          onLoad="this.onload=null;this.rel='stylesheet'"
-        />
-        <noscript>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
-            rel="stylesheet"
-          />
-        </noscript>
-
-        {/* Critical CSS Component */}
-        <CriticalCSS />
+        {/* Font loading handled in globals.css to avoid duplication */}
 
         {/* Preload critical resources */}
         <link rel="preload" href="/logo.png" as="image" />
-        {/* Removed image preload that might cause issues */}
 
         {/* Resource hints for better performance */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
@@ -161,12 +145,14 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning={true}>
-        <AuthProvider>
-          <ScrollToTop />
-          <main className="min-h-screen">{children}</main>
-          <ConditionalFooter />
-          <Toaster />
-        </AuthProvider>
+        <UILoadingGuard>
+          <AuthProvider>
+            <ScrollToTop />
+            <main className="min-h-screen">{children}</main>
+            <ConditionalFooter />
+            <Toaster />
+          </AuthProvider>
+        </UILoadingGuard>
       </body>
     </html>
   );

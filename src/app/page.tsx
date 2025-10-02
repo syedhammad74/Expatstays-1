@@ -130,61 +130,88 @@ export default function Home() {
         const allProperties = await propertyService.getAllProperties();
         console.log("📊 All properties:", allProperties.length);
 
+        // Always ensure we have properties
+        if (allProperties.length === 0) {
+          console.log("⚠️ No properties from service, using fallback");
+          throw new Error("No properties available from service");
+        }
+
         // Get first 3 properties or featured ones
         const featured = allProperties.filter((p) => p.featured).slice(0, 3);
         console.log("⭐ Featured properties:", featured.length);
 
-        if (featured.length < 3) {
-          // If not enough featured properties, fill with regular ones
-          const regular = allProperties
-            .filter((p) => !p.featured)
-            .slice(0, 3 - featured.length);
-          const finalProperties = [...featured, ...regular];
-          console.log(
-            "🏠 Final properties for display:",
-            finalProperties.length
-          );
-          setFeaturedProperties(finalProperties);
+        if (featured.length > 0) {
+          if (featured.length < 3) {
+            // If not enough featured properties, fill with regular ones
+            const regular = allProperties
+              .filter((p) => !p.featured)
+              .slice(0, 3 - featured.length);
+            const finalProperties = [...featured, ...regular];
+            console.log(
+              "🏠 Final properties for display:",
+              finalProperties.length
+            );
+            setFeaturedProperties(finalProperties);
+          } else {
+            console.log("🏠 Using featured properties:", featured.length);
+            setFeaturedProperties(featured);
+          }
         } else {
-          console.log("🏠 Using featured properties:", featured.length);
-          setFeaturedProperties(featured);
+          // No featured properties, use first 3 available
+          console.log("🏠 No featured properties, using first 3 available");
+          setFeaturedProperties(allProperties.slice(0, 3));
         }
       } catch (err) {
         console.error("❌ Failed to fetch properties:", err);
-        // Fallback to hardcoded properties for display
+        // Fallback to hardcoded properties with real IDs
         const fallbackProperties = [
           {
-            id: "fallback-1",
-            title: "Luxury Villa Experience",
+            id: "prop_islamabad_dam_view",
+            title: "2-Bedroom Apartment with Stunning Dam View",
             images: ["/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg"],
-            location: { city: "Dubai", state: "UAE", country: "UAE" },
-            pricing: { basePrice: 2500 },
-            capacity: { maxGuests: 6, bedrooms: 3, bathrooms: 2 },
-            rating: 4.9,
-            featured: true,
-            availability: { isActive: true },
-          },
-          {
-            id: "fallback-2",
-            title: "Palm Jumeirah Retreat",
-            images: ["/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"],
-            location: { city: "Palm Jumeirah", state: "Dubai", country: "UAE" },
-            pricing: { basePrice: 3200 },
-            capacity: { maxGuests: 8, bedrooms: 4, bathrooms: 3 },
+            location: {
+              city: "Islamabad",
+              state: "Islamabad Capital Territory",
+              country: "Pakistan",
+            },
+            pricing: { basePrice: 150 },
+            capacity: { maxGuests: 4, bedrooms: 2, bathrooms: 2 },
             rating: 4.8,
             featured: true,
             availability: { isActive: true },
+            propertyType: "apartment",
           },
           {
-            id: "fallback-3",
-            title: "Downtown Luxury Loft",
-            images: ["/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg"],
-            location: { city: "Downtown", state: "Dubai", country: "UAE" },
-            pricing: { basePrice: 1800 },
-            capacity: { maxGuests: 4, bedrooms: 2, bathrooms: 2 },
+            id: "prop_gulberg_greens",
+            title: "2 Bedroom Apartment With Kitchen | Gulberg Greens",
+            images: ["/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"],
+            location: {
+              city: "Islamabad",
+              state: "Islamabad Capital Territory",
+              country: "Pakistan",
+            },
+            pricing: { basePrice: 200 },
+            capacity: { maxGuests: 6, bedrooms: 2, bathrooms: 2 },
             rating: 4.9,
-            featured: false,
+            featured: true,
             availability: { isActive: true },
+            propertyType: "apartment",
+          },
+          {
+            id: "prop_farmhouse_islamabad",
+            title: "Luxury Farmhouse | Islamabad Hillside",
+            images: ["/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg"],
+            location: {
+              city: "Islamabad",
+              state: "Islamabad Capital Territory",
+              country: "Pakistan",
+            },
+            pricing: { basePrice: 300 },
+            capacity: { maxGuests: 8, bedrooms: 3, bathrooms: 3 },
+            rating: 4.7,
+            featured: true,
+            availability: { isActive: true },
+            propertyType: "farmhouse",
           },
         ];
         setFeaturedProperties(fallbackProperties as any);
@@ -192,6 +219,65 @@ export default function Home() {
         setPropertiesLoading(false);
       }
     };
+
+    // Force show properties after a short delay (for testing)
+    setTimeout(() => {
+      if (featuredProperties.length === 0) {
+        console.log("🔧 Force showing properties for testing...");
+        const testProperties = [
+          {
+            id: "prop_islamabad_dam_view",
+            title: "2-Bedroom Apartment with Stunning Dam View",
+            images: ["/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg"],
+            location: {
+              city: "Islamabad",
+              state: "Islamabad Capital Territory",
+              country: "Pakistan",
+            },
+            pricing: { basePrice: 150 },
+            capacity: { maxGuests: 4, bedrooms: 2, bathrooms: 2 },
+            rating: 4.8,
+            featured: true,
+            availability: { isActive: true },
+            propertyType: "apartment",
+          },
+          {
+            id: "prop_gulberg_greens",
+            title: "2 Bedroom Apartment With Kitchen | Gulberg Greens",
+            images: ["/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"],
+            location: {
+              city: "Islamabad",
+              state: "Islamabad Capital Territory",
+              country: "Pakistan",
+            },
+            pricing: { basePrice: 200 },
+            capacity: { maxGuests: 6, bedrooms: 2, bathrooms: 2 },
+            rating: 4.9,
+            featured: true,
+            availability: { isActive: true },
+            propertyType: "apartment",
+          },
+          {
+            id: "prop_farmhouse_islamabad",
+            title: "Luxury Farmhouse | Islamabad Hillside",
+            images: ["/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg"],
+            location: {
+              city: "Islamabad",
+              state: "Islamabad Capital Territory",
+              country: "Pakistan",
+            },
+            pricing: { basePrice: 300 },
+            capacity: { maxGuests: 8, bedrooms: 3, bathrooms: 3 },
+            rating: 4.7,
+            featured: true,
+            availability: { isActive: true },
+            propertyType: "farmhouse",
+          },
+        ];
+        setFeaturedProperties(testProperties as any);
+        setPropertiesLoading(false);
+      }
+    }, 2000); // Wait 2 seconds, then force show properties
 
     fetchFeaturedProperties();
   }, []);
@@ -227,6 +313,8 @@ export default function Home() {
 
   // Handle property navigation
   const handlePropertyClick = (propertyId: string) => {
+    console.log("🏠 Navigating to property:", propertyId);
+    console.log("🚀 Router available:", !!router);
     router.push(`/properties/${propertyId}`);
   };
 
@@ -722,6 +810,21 @@ export default function Home() {
                 Discover our handpicked luxury properties, perfect for your next
                 stay
               </p>
+
+              {/* Debug Info */}
+              <div className="mt-4 p-3 bg-gray-100 rounded-lg text-sm text-gray-700">
+                <p>
+                  <strong>Debug:</strong> Loading:{" "}
+                  {propertiesLoading ? "Yes" : "No"} | Properties:{" "}
+                  {featuredProperties.length}
+                </p>
+                {featuredProperties.length > 0 && (
+                  <p>
+                    Property IDs:{" "}
+                    {featuredProperties.map((p) => p.id).join(", ")}
+                  </p>
+                )}
+              </div>
             </div>
 
             {propertiesLoading ? (
@@ -739,8 +842,15 @@ export default function Home() {
                   No properties available
                 </h3>
                 <p className="text-gray-600 mb-4">
-                  We're working on adding amazing properties for you
+                  Loading properties... If this persists, please refresh the
+                  page.
                 </p>
+                <Button
+                  onClick={() => window.location.reload()}
+                  className="bg-[#8EB69B] text-white hover:bg-[#163832]"
+                >
+                  Refresh Page
+                </Button>
               </div>
             ) : (
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
