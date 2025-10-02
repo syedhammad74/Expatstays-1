@@ -18,7 +18,7 @@ import {
   HomeIcon,
   CheckCircle,
 } from "lucide-react";
-import ResponsiveImage from "@/components/ui/ResponsiveImage";
+import FastImage from "@/components/ui/FastImage";
 // Removed framer-motion for performance
 import { useRef, useState, useEffect, useCallback } from "react";
 import Header from "@/components/layout/Header";
@@ -428,16 +428,14 @@ export default function Home() {
                         index === currentServiceIndex ? "block" : "hidden"
                       }`}
                     >
-                      <ResponsiveImage
+                      <FastImage
                         src={slide.image}
                         alt={slide.alt}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
                         className="object-cover object-center select-none"
                         priority={index === 0}
-                        // fetchPriority temporarily removed
-                        quality={index === 0 ? 90 : 75}
-                        draggable={false}
+                        quality={index === 0 ? 90 : 85}
                       />
                       {/* Subtle overlay for better contrast */}
                       <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
@@ -848,7 +846,7 @@ export default function Home() {
                     <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-shadow duration-200" />
                     <div className="relative p-6 lg:p-8">
                       <div className="relative h-48 lg:h-64 rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6">
-                        <ResponsiveImage
+                        <FastImage
                           src={
                             property.images?.[0] || "/placeholder-property.jpg"
                           }
@@ -856,8 +854,7 @@ export default function Home() {
                           fill
                           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
                           className="object-cover object-center"
-                          quality={75}
-                          loading="lazy"
+                          quality={85}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-[#163832]/60 to-transparent" />
                         {property.featured && (
@@ -983,7 +980,7 @@ export default function Home() {
                       <div className="flex items-center gap-3 lg:gap-4">
                         <div className="relative">
                           <div className="w-10 lg:w-12 h-10 lg:h-12 rounded-full overflow-hidden">
-                            <ResponsiveImage
+                            <FastImage
                               src={testimonial.avatar}
                               alt={testimonial.author}
                               width={48}
@@ -1069,7 +1066,7 @@ export default function Home() {
                       Founder
                     </Badge>
                     <div className="rounded-xl overflow-hidden aspect-[4/5]">
-                      <ResponsiveImage
+                      <FastImage
                         src="/media/isa.webp"
                         alt="Isa Husain - Founder of Expat Stays"
                         width={800}
@@ -1213,7 +1210,7 @@ export default function Home() {
                   <div className="relative p-6 lg:p-8">
                     <div className="flex items-center gap-4 mb-6">
                       <div className="w-16 h-16 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full flex items-center justify-center shadow-lg overflow-hidden ring-2 ring-white/50">
-                        <ResponsiveImage
+                        <FastImage
                           src="/media/Close Ups June 25 2025/logo1.png"
                           alt="ExpatStays Logo"
                           width={64}
@@ -1273,7 +1270,7 @@ export default function Home() {
                   <div className="relative p-6 lg:p-8">
                     <div className="flex items-center gap-4 mb-6">
                       <div className="w-16 h-16 bg-gradient-to-br from-[#235347] to-[#163832] rounded-full flex items-center justify-center shadow-lg overflow-hidden ring-2 ring-white/50">
-                        <ResponsiveImage
+                        <FastImage
                           src="/media/Close Ups June 25 2025/logo2.png"
                           alt="Isa Unscripted Logo"
                           width={64}

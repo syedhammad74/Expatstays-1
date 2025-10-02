@@ -2,20 +2,70 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Font loading optimization - Import Google Fonts with display=swap */
-@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+/* Immediate font loading for FOUT prevention */
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;500;600;700;800;900&display=swap");
 
-/* Ensure proper font rendering */
+/* Critical font and text styling */
 * {
   font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, sans-serif !important;
+    "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+    "Helvetica Neue", sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html {
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 body {
   font-family: "Nunito Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, sans-serif !important;
+    "Roboto", sans-serif !important;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #051f20;
+  background-color: #ffffff;
+}
+
+/* Critical text sizing for immediate display */
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+h4 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.5rem;
+  }
+  h3 {
+    font-size: 1.25rem;
+  }
 }
 
 @layer base {

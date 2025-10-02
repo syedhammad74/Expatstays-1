@@ -106,10 +106,52 @@ export default function RootLayout({
           href="https://firebasestorage.googleapis.com"
         />
 
-        {/* Font loading handled in globals.css to avoid duplication */}
+        {/* Critical font preloading for instant display */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,300..1000;1,300..1000&display=swap"
+          rel="preload"
+          as="style"
+          onLoad="this.onload=null;this.rel='stylesheet'"
+        />
+        <noscript>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,300..1000;1,300..1000&display=swap"
+            rel="stylesheet"
+          />
+        </noscript>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
+            /* Immediate fallback font loading */
+            * { 
+              font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important; 
+            }
+            body { 
+              font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
+              font-weight: 400;
+            }
+          `,
+          }}
+        />
 
         {/* Preload critical resources */}
+        {/* Preload critical images for instant display */}
         <link rel="preload" href="/logo.png" as="image" />
+        <link
+          rel="preload"
+          href="/media/DSC01806 HDR June 25 2025/DSC01970-HDR.jpg"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"
+          as="image"
+        />
 
         {/* Resource hints for better performance */}
         <link rel="dns-prefetch" href="https://fonts.googleapis.com" />

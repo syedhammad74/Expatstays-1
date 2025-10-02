@@ -38,24 +38,10 @@ export default function ResponsiveImage({
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
 
-  // Generate optimized src set for different formats and sizes
+  // Simplified for faster loading - use original images with Next.js optimization
   const getOptimizedSrc = (originalSrc: string) => {
-    // If it's already optimized or external, return as-is
-    if (originalSrc.includes("optimized") || originalSrc.startsWith("http")) {
-      return originalSrc;
-    }
-
-    // Convert to optimized path
-    const pathParts = originalSrc.split("/");
-    const filename = pathParts[pathParts.length - 1];
-    const nameWithoutExt = filename.split(".")[0];
-    const folder = pathParts.slice(0, -1).join("/");
-
-    // Default to medium size for primary src
-    return `${folder.replace(
-      "/media",
-      "/optimized"
-    )}/${nameWithoutExt}-800w.webp`;
+    // Let Next.js handle optimization for speed
+    return originalSrc;
   };
 
   const generateSrcSet = (originalSrc: string) => {
