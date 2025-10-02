@@ -5,8 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CardSpotlight } from "@/components/ui/card-spotlight";
 import { Disclosure } from "@headlessui/react";
-import { motion } from "framer-motion";
-import useEmblaCarousel from "embla-carousel-react";
+// Removed framer-motion and embla-carousel for performance
 import Image from "next/image";
 import {
   ConciergeBell,
@@ -179,65 +178,39 @@ const ServicesOverviewSection: React.FC = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
 
-  // Embla Carousel setup
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "center",
-    skipSnaps: false,
-    dragFree: false,
-    containScroll: "trimSnaps",
-    dragThreshold: 10,
-    inViewThreshold: 0.7,
-    watchDrag: true,
-  });
+  // Simple carousel state management
+  const [currentSlide, setCurrentSlide] = useState(0);
 
-  // Update current index when carousel slides
+  // Auto-advance carousel
   useEffect(() => {
-    if (!emblaApi) return;
-
-    const onSelect = () => {
-      setCurrentServiceIndex(emblaApi.selectedScrollSnap());
-      setIsAutoPlaying(false);
-      setTimeout(() => setIsAutoPlaying(true), 2000);
-    };
-
-    const onDragStart = () => {
-      setIsDragging(true);
-      setIsAutoPlaying(false);
-    };
-
-    const onDragEnd = () => {
-      setIsDragging(false);
-      setTimeout(() => setIsAutoPlaying(true), 2000);
-    };
-
-    emblaApi.on("select", onSelect);
-    emblaApi.on("pointerDown", onDragStart);
-    emblaApi.on("pointerUp", onDragEnd);
-
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("pointerDown", onDragStart);
-      emblaApi.off("pointerUp", onDragEnd);
-    };
-  }, [emblaApi]);
-
-  // Auto-rotate carousel every 5 seconds (only when auto-playing)
-  useEffect(() => {
-    if (!isAutoPlaying || !emblaApi) return;
+    if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
-      emblaApi.scrollNext();
+      setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [emblaApi, isAutoPlaying]);
+  }, [isAutoPlaying]);
 
-  // Navigation functions
+  // Handle slide navigation
   const goToSlide = (index: number) => {
-    if (emblaApi) {
-      emblaApi.scrollTo(index);
-    }
+    setCurrentSlide(index);
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 2000);
+  };
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 2000);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide(
+      (prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length
+    );
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 2000);
   };
 
   return (
@@ -273,21 +246,21 @@ const ServicesOverviewSection: React.FC = () => {
 
       {/* Hero Section - Enhanced with better spacing and visual hierarchy */}
       <div className="relative z-10 w-full flex flex-col lg:flex-row items-center justify-evenly px-6 lg:px-12 py-16 lg:py-20 max-w-7xl mx-auto">
-        <motion.div
+        <div
           className="flex-1 space-y-6 text-center lg:text-left lg:pr-12 mb-8 lg:mb-0"
           initial={{ opacity: 0, x: -60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, ease: "easeOut" }}
         >
-          <motion.span
+          <span
             className="inline-block bg-gradient-to-r from-[#8EB69B] to-[#72a785] text-white font-semibold px-6 py-2 rounded-full uppercase text-sm tracking-wider shadow-lg"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             Premium Services
-          </motion.span>
-          <motion.h1
+          </span>
+          <h1
             className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#051F20] leading-tight"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -297,8 +270,8 @@ const ServicesOverviewSection: React.FC = () => {
             <span className="bg-gradient-to-r from-[#8EB69B] to-[#72a785] bg-clip-text text-transparent">
               Lifestyle
             </span>
-          </motion.h1>
-          <motion.p
+          </h1>
+          <p
             className="text-base sm:text-lg lg:text-xl text-[#235347] max-w-lg leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -306,8 +279,8 @@ const ServicesOverviewSection: React.FC = () => {
           >
             Experience top-tier luxury with our curated offerings built for
             discerning tastes and exceptional living.
-          </motion.p>
-          <motion.div
+          </p>
+          <div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.5 }}
@@ -324,21 +297,20 @@ const ServicesOverviewSection: React.FC = () => {
                 />
               </Button>
             </Link>
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
 
         {/* Enhanced Carousel Section */}
-        <motion.div
+        <div
           className="flex-1 w-full lg:w-auto"
           initial={{ opacity: 0, x: 60 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
         >
           <div className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] max-w-2xl mx-auto">
-            {/* Embla Carousel */}
+            {/* Simple Image Display */}
             <div
               className="overflow-hidden rounded-2xl lg:rounded-3xl shadow-xl lg:shadow-2xl"
-              ref={emblaRef}
               style={{
                 touchAction: "manipulation",
                 userSelect: "none",
@@ -346,11 +318,13 @@ const ServicesOverviewSection: React.FC = () => {
                 WebkitTouchCallout: "none",
               }}
             >
-              <div className="flex">
+              <div className="relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px]">
                 {carouselSlides.map((slide, index) => (
                   <div
                     key={index}
-                    className="flex-[0_0_100%] min-w-0 relative h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px]"
+                    className={`absolute inset-0 transition-opacity duration-500 ${
+                      index === currentSlide ? "opacity-100" : "opacity-0"
+                    }`}
                   >
                     <Image
                       src={slide.image}
@@ -364,14 +338,11 @@ const ServicesOverviewSection: React.FC = () => {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none" />
 
                     {/* Enhanced slide title overlay */}
-                    
-
-                    {/* Drag indicator */}
-                    {isDragging && (
-                      <div className="absolute top-2 sm:top-3 md:top-4 right-2 sm:right-3 md:right-4 bg-[#8EB69B] text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium shadow-lg">
-                        ✋ Dragging
-                      </div>
-                    )}
+                    <div className="absolute bottom-4 left-4 right-4 text-white">
+                      <h3 className="text-lg sm:text-xl font-semibold mb-1">
+                        {slide.title}
+                      </h3>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -385,7 +356,7 @@ const ServicesOverviewSection: React.FC = () => {
                       onClick={() => goToSlide(index)}
                       className={`rounded-full transition-all duration-500 ease-in-out transform hover:scale-125
                                 ${
-                                  index === currentServiceIndex
+                                  index === currentSlide
                                     ? "w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 bg-gradient-to-r from-[#8EB69B] to-[#72a785] shadow-lg shadow-[#8EB69B]/30"
                                     : "w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 bg-[#8EB69B]/40 hover:bg-[#8EB69B]/60"
                                 }
@@ -399,8 +370,7 @@ const ServicesOverviewSection: React.FC = () => {
           </div>
 
           {/* Touch Instructions */}
-          
-        </motion.div>
+        </div>
       </div>
 
       {/* Services Grid - Enhanced with modern design */}
@@ -413,7 +383,7 @@ const ServicesOverviewSection: React.FC = () => {
           <div className="absolute bottom-10 right-1/3 w-20 h-20 bg-gradient-to-br from-[#8EB69B]/7 to-[#DAF1DE]/4 rotate-12 animate-[breathing_6.5s_ease-in-out_infinite]" />
         </div>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -429,11 +399,11 @@ const ServicesOverviewSection: React.FC = () => {
             Premium services designed to elevate your luxury living experience
             with unparalleled attention to detail
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
           {services.map((svc, idx) => (
-            <motion.div
+            <div
               key={idx}
               className="group relative"
               initial={{ opacity: 0, y: 40 }}
@@ -446,13 +416,13 @@ const ServicesOverviewSection: React.FC = () => {
               />
               <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-8 shadow-xl group-hover:shadow-2xl transition-all duration-500">
                 {/* Animated Icon */}
-                <motion.div
+                <div
                   className={`inline-flex p-5 rounded-2xl bg-gradient-to-br ${svc.gradient} mb-6 shadow-lg`}
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ duration: 0.3 }}
                 >
                   <svc.icon className="w-7 h-7 text-white" aria-hidden />
-                </motion.div>
+                </div>
 
                 <div className="text-center">
                   <h3 className="text-2xl font-bold text-[#051F20] mb-4">
@@ -471,7 +441,7 @@ const ServicesOverviewSection: React.FC = () => {
                   </Link>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -490,7 +460,7 @@ const ServicesOverviewSection: React.FC = () => {
           <div className="absolute bottom-10 left-10 w-0 h-0 border-l-[20px] border-l-transparent border-b-[35px] border-b-[#DAF1DE]/8 border-r-[20px] border-r-transparent animate-[breathing_8s_ease-in-out_infinite]" />
         </div>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -507,11 +477,11 @@ const ServicesOverviewSection: React.FC = () => {
             Join thousands of satisfied guests who choose our premium services
             for their exceptional quality
           </p>
-        </motion.div>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-10 max-w-7xl mx-auto">
           {whyChoose.map((item, idx) => (
-            <motion.div
+            <div
               key={idx}
               className="group relative"
               initial={{ opacity: 0, y: 40 }}
@@ -523,13 +493,13 @@ const ServicesOverviewSection: React.FC = () => {
                 className={`absolute inset-0 bg-gradient-to-br ${item.bgGradient} rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
               />
               <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-8 text-center shadow-xl group-hover:shadow-2xl transition-all duration-500">
-                <motion.div
+                <div
                   className={`inline-flex p-5 rounded-2xl bg-gradient-to-br ${item.gradient} mb-6 shadow-lg`}
                   whileHover={{ scale: 1.1, rotate: 5 }}
                   transition={{ duration: 0.3 }}
                 >
                   <item.icon className="w-7 h-7 text-white" aria-hidden />
-                </motion.div>
+                </div>
                 <h3 className="text-2xl font-bold text-[#051F20] mb-4">
                   {item.title}
                 </h3>
@@ -537,7 +507,7 @@ const ServicesOverviewSection: React.FC = () => {
                   {item.desc}
                 </p>
               </div>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>
@@ -556,7 +526,7 @@ const ServicesOverviewSection: React.FC = () => {
           <div className="absolute bottom-20 left-20 w-28 h-28 bg-gradient-to-br from-[#DAF1DE]/7 to-[#8EB69B]/5 rotate-45 animate-[breathing_8s_ease-in-out_infinite]" />
         </div>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -572,9 +542,9 @@ const ServicesOverviewSection: React.FC = () => {
             Simple steps to access our premium luxury services and elevate your
             experience
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
@@ -585,7 +555,7 @@ const ServicesOverviewSection: React.FC = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
               <div className="space-y-6">
                 {howItWorksSteps.slice(0, 2).map((item, idx) => (
-                  <motion.div
+                  <div
                     key={idx}
                     initial={{ opacity: 0, x: -30 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -605,12 +575,12 @@ const ServicesOverviewSection: React.FC = () => {
                         </p>
                       )}
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
               <div className="space-y-6">
                 {howItWorksSteps.slice(2).map((item, idx) => (
-                  <motion.div
+                  <div
                     key={idx + 2}
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
@@ -630,7 +600,7 @@ const ServicesOverviewSection: React.FC = () => {
                         </p>
                       )}
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
             </div>
@@ -643,7 +613,7 @@ const ServicesOverviewSection: React.FC = () => {
               </Button>
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* FAQ Section - Enhanced with modern design */}
@@ -660,7 +630,7 @@ const ServicesOverviewSection: React.FC = () => {
           <div className="absolute bottom-10 right-10 w-16 h-16 bg-gradient-to-br from-[#DAF1DE]/7 to-[#8EB69B]/5 rotate-45 animate-[breathing_8.5s_ease-in-out_infinite]" />
         </div>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -676,11 +646,11 @@ const ServicesOverviewSection: React.FC = () => {
             Everything you need to know about our premium services and luxury
             experiences
           </p>
-        </motion.div>
+        </div>
 
         <div className="space-y-4 max-w-4xl mx-auto">
           {faqs.map((faq, idx) => (
-            <motion.div
+            <div
               key={idx}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
@@ -707,7 +677,7 @@ const ServicesOverviewSection: React.FC = () => {
                   </div>
                 )}
               </Disclosure>
-            </motion.div>
+            </div>
           ))}
         </div>
       </div>

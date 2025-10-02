@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { Loader2, Sparkles, Shield, Zap } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import Image from "next/image";
 
 export default function SignInPage() {
@@ -46,7 +46,7 @@ export default function SignInPage() {
 
         {/* Overlay Content */}
         <div className="relative left-20 pb-20 z-20 flex flex-col justify-center h-full p-4 text-white">
-          <motion.div
+          <div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
@@ -87,7 +87,7 @@ export default function SignInPage() {
                 </span>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
 
@@ -104,7 +104,7 @@ export default function SignInPage() {
         </div>
         
         <div className="w-full max-w-[400px] sm:max-w-[500px] lg:max-w-[600px] flex flex-col justify-center rounded-2xl lg:rounded-3xl shadow-xl border border-[#DAF1DE]/60 bg-white/95 p-4 sm:p-6 lg:p-8 max-h-[90vh] overflow-y-auto">
-          <motion.div
+          <div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -116,9 +116,9 @@ export default function SignInPage() {
             <p className="text-[#4A4A4A] text-xs sm:text-sm">
               Sign in to access your account and continue your journey
             </p>
-          </motion.div>
+          </div>
 
-          <motion.div
+          <div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
@@ -137,7 +137,7 @@ export default function SignInPage() {
                 </Link>
               </p>
             </div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

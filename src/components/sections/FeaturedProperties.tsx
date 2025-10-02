@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import PropertyCard, {
   type PropertyCardProps,
-} from "@/components/PropertyCard";
+} from "@/components/molecular/PropertyCard";
 import { Button } from "@/components/ui/button";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";

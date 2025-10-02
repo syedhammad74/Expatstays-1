@@ -10,7 +10,7 @@ import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { UserMenu } from "@/components/auth/UserMenu";
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
+// Removed framer-motion for performance
 import Image from "next/image";
 
 const navLinks = [
@@ -28,12 +28,7 @@ const NavLink = ({ href, label }: { href: string; label: string }) => {
     pathname === href || (href !== "/" && pathname.startsWith(href));
 
   return (
-    <motion.div
-      whileHover={{ y: -1 }}
-      whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-      className="relative"
-    >
+    <div className="relative hover-lift">
       <Link
         href={href}
         className={cn(
@@ -45,21 +40,14 @@ const NavLink = ({ href, label }: { href: string; label: string }) => {
         )}
       >
         {label}
-        <AnimatePresence>
-          {isActive && (
-            <motion.div
-              layoutId="activeIndicator"
-              className="absolute left-0 right-0 h-0.5 bg-[#8EB69B] rounded-full"
-              style={{ bottom: "-5px" }}
-              initial={{ scaleX: 0 }}
-              animate={{ scaleX: 1 }}
-              exit={{ scaleX: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-            />
-          )}
-        </AnimatePresence>
+        {isActive && (
+          <div
+            className="absolute left-0 right-0 h-0.5 bg-[#8EB69B] rounded-full"
+            style={{ bottom: "-5px" }}
+          />
+        )}
       </Link>
-    </motion.div>
+    </div>
   );
 };
 
@@ -136,22 +124,10 @@ const Header = () => {
   }, []);
 
   return (
-    <AnimatePresence mode="wait">
+    <>
       {isVisible && (
-        <motion.div
-          className="sticky top-0 left-0 right-0 z-50 w-full px-4 pt-6"
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -100, opacity: 0 }}
-          transition={{
-            duration: 0.3,
-            ease: "easeOut",
-            type: "spring",
-            stiffness: 300,
-            damping: 30,
-          }}
-        >
-          <motion.header
+        <div className="sticky top-0 left-0 right-0 z-50 w-full px-4 pt-6 animate-slide-down">
+          <header
             className={cn(
               "w-auto mx-auto",
               "bg-white/95 backdrop-blur-xl border border-[#EBEBEB]/50",
@@ -162,14 +138,6 @@ const Header = () => {
               WebkitBackdropFilter: "blur(16px)",
               backdropFilter: "blur(16px)",
             }}
-            animate={isSticky ? { scale: 0.98 } : { scale: 1 }}
-            transition={{
-              duration: 0.2,
-              ease: "easeInOut",
-              type: "spring",
-              stiffness: 400,
-              damping: 40,
-            }}
           >
             <div className="px-4 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between h-16">
@@ -178,11 +146,7 @@ const Header = () => {
                   href="/"
                   className="flex items-center space-x-2 sm:space-x-1"
                 >
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
-                    className="flex items-center space-x-1 sm:space-x-3"
-                  >
+                  <div className="flex items-center space-x-1 sm:space-x-3">
                     <Image
                       src={Logo}
                       alt="Expat Stays"
@@ -191,34 +155,21 @@ const Header = () => {
                     <span className="text-lg sm:text-xl lg:text-2xl font-bold text-[#0B2B26]">
                       Expat Stays
                     </span>
-                  </motion.div>
+                  </div>
                 </Link>
 
                 {/* Desktop Navigation */}
                 <nav className="hidden xl:flex items-center space-x-1">
                   {navLinks.map((link, index) => (
-                    <motion.div
-                      key={link.href}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        duration: 0.5,
-                        delay: index * 0.1,
-                        ease: "easeOut",
-                      }}
-                    >
+                    <div key={link.href}>
                       <NavLink href={link.href} label={link.label} />
-                    </motion.div>
+                    </div>
                   ))}
                 </nav>
 
                 {/* Desktop Actions */}
                 <div className="hidden lg:flex items-center space-x-3 xl:space-x-4">
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -1 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                  >
+                  <div>
                     <Button
                       variant="ghost"
                       size="icon"
@@ -227,13 +178,9 @@ const Header = () => {
                     >
                       <Search className="h-4 w-4" />
                     </Button>
-                  </motion.div>
+                  </div>
 
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -1 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                  >
+                  <div>
                     <Button
                       variant="ghost"
                       size="icon"
@@ -241,7 +188,7 @@ const Header = () => {
                       aria-label="Notifications"
                     >
                       <Bell className="h-4 w-4" />
-                      <motion.span
+                      <span
                         className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#8EB69B] rounded-full"
                         animate={{
                           scale: [1, 1.2, 1],
@@ -254,39 +201,35 @@ const Header = () => {
                         }}
                       />
                     </Button>
-                  </motion.div>
+                  </div>
 
-                  <motion.div
+                  <div
                     className="h-6 w-px bg-[#EBEBEB]"
                     initial={{ scaleY: 0 }}
                     animate={{ scaleY: 1 }}
                     transition={{ duration: 0.5, delay: 0.3 }}
                   />
 
-                  <motion.div
-                    whileHover={{ scale: 1.05, y: -1 }}
-                    whileTap={{ scale: 0.95 }}
-                    transition={{ duration: 0.2, ease: "easeOut" }}
-                  >
+                  <div>
                     <Button
                       className="bg-[#8EB69B] text-[#0B2B26] hover:bg-[#7AA589] font-medium transition-all duration-200"
                       asChild
                     >
                       <Link href="/properties">Find A House</Link>
                     </Button>
-                  </motion.div>
+                  </div>
 
                   {!loading &&
                     (user ? (
                       <UserMenu />
                     ) : (
-                      <motion.div
+                      <div
                         className="flex items-center space-x-2 xl:space-x-3"
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: 0.4 }}
                       >
-                        <motion.div
+                        <div
                           whileHover={{ scale: 1.05, y: -1 }}
                           whileTap={{ scale: 0.95 }}
                           transition={{ duration: 0.2, ease: "easeOut" }}
@@ -299,8 +242,8 @@ const Header = () => {
                               Sign In
                             </Button>
                           </Link>
-                        </motion.div>
-                        <motion.div
+                        </div>
+                        <div
                           whileHover={{ scale: 1.05, y: -1 }}
                           whileTap={{ scale: 0.95 }}
                           transition={{ duration: 0.2, ease: "easeOut" }}
@@ -310,8 +253,8 @@ const Header = () => {
                               Sign Up
                             </Button>
                           </Link>
-                        </motion.div>
-                      </motion.div>
+                        </div>
+                      </div>
                     ))}
                 </div>
 
@@ -319,7 +262,7 @@ const Header = () => {
                 <div className="lg:hidden">
                   <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                     <SheetTrigger asChild>
-                      <motion.div
+                      <div
                         whileHover={{ scale: 1.05, y: -1 }}
                         whileTap={{ scale: 0.95 }}
                         transition={{ duration: 0.2, ease: "easeOut" }}
@@ -330,52 +273,38 @@ const Header = () => {
                           className="h-9 w-9 text-[#235347] hover:bg-[#F2F2F2] transition-all duration-200"
                           aria-label="Open menu"
                         >
-                          <AnimatePresence mode="wait">
-                            {isMenuOpen ? (
-                              <motion.div
-                                key="close"
-                                initial={{ rotate: -90, opacity: 0 }}
-                                animate={{ rotate: 0, opacity: 1 }}
-                                exit={{ rotate: 90, opacity: 0 }}
-                                transition={{ duration: 0.2 }}
-                              >
-                                <X className="h-5 w-5" />
-                              </motion.div>
-                            ) : (
-                              <motion.div
-                                key="menu"
-                                initial={{ rotate: 90, opacity: 0 }}
-                                animate={{ rotate: 0, opacity: 1 }}
-                                exit={{ rotate: -90, opacity: 0 }}
-                                transition={{ duration: 0.2 }}
-                              >
-                                <Menu className="h-5 w-5" />
-                              </motion.div>
-                            )}
-                          </AnimatePresence>
+                          {isMenuOpen ? (
+                            <div key="close">
+                              <X className="h-5 w-5" />
+                            </div>
+                          ) : (
+                            <div key="menu">
+                              <Menu className="h-5 w-5" />
+                            </div>
+                          )}
                         </Button>
-                      </motion.div>
+                      </div>
                     </SheetTrigger>
                     <SheetContent
                       side="right"
                       className="w-[300px] sm:w-[350px] bg-white/95 backdrop-blur-xl border-l border-[#EBEBEB]"
                     >
-                      <motion.div
+                      <div
                         className="p-6 h-full flex flex-col"
                         initial={{ opacity: 0, x: 20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.3 }}
                       >
-                        <motion.div
+                        <div
                           className="mb-6"
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: 0.1 }}
-                        ></motion.div>
+                        ></div>
                         <nav className="flex-1">
                           <div className="space-y-2">
                             {navLinks.map((link, index) => (
-                              <motion.div
+                              <div
                                 key={link.href}
                                 initial={{ opacity: 0, x: 20 }}
                                 animate={{ opacity: 1, x: 0 }}
@@ -391,17 +320,17 @@ const Header = () => {
                                 >
                                   {link.label}
                                 </Link>
-                              </motion.div>
+                              </div>
                             ))}
                           </div>
                         </nav>
-                        <motion.div
+                        <div
                           className="border-t border-[#EBEBEB] pt-4 space-y-3"
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.4, delay: 0.3 }}
                         >
-                          <motion.div
+                          <div
                             whileHover={{ scale: 1.05, y: -1 }}
                             whileTap={{ scale: 0.95 }}
                             transition={{ duration: 0.2, ease: "easeOut" }}
@@ -413,15 +342,15 @@ const Header = () => {
                             >
                               <Link href="/properties">Find A House</Link>
                             </Button>
-                          </motion.div>
+                          </div>
                           {!loading && !user && (
-                            <motion.div
+                            <div
                               className="space-y-2"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               transition={{ duration: 0.3, delay: 0.4 }}
                             >
-                              <motion.div
+                              <div
                                 whileHover={{ scale: 1.05, y: -1 }}
                                 whileTap={{ scale: 0.95 }}
                                 transition={{ duration: 0.2, ease: "easeOut" }}
@@ -435,8 +364,8 @@ const Header = () => {
                                     Sign In
                                   </Button>
                                 </Link>
-                              </motion.div>
-                              <motion.div
+                              </div>
+                              <div
                                 whileHover={{ scale: 1.05, y: -1 }}
                                 whileTap={{ scale: 0.95 }}
                                 transition={{ duration: 0.2, ease: "easeOut" }}
@@ -449,30 +378,30 @@ const Header = () => {
                                     Sign Up
                                   </Button>
                                 </Link>
-                              </motion.div>
-                            </motion.div>
+                              </div>
+                            </div>
                           )}
                           {user && (
-                            <motion.div
+                            <div
                               className="pt-3 border-t border-[#EBEBEB]"
                               initial={{ opacity: 0 }}
                               animate={{ opacity: 1 }}
                               transition={{ duration: 0.3, delay: 0.5 }}
                             >
                               <UserMenu />
-                            </motion.div>
+                            </div>
                           )}
-                        </motion.div>
-                      </motion.div>
+                        </div>
+                      </div>
                     </SheetContent>
                   </Sheet>
                 </div>
               </div>
             </div>
-          </motion.header>
-        </motion.div>
+          </header>
+        </div>
       )}
-    </AnimatePresence>
+    </>
   );
 };
 

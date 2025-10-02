@@ -9,7 +9,7 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import Logo from "../../../public/logo.png";
 import Image from "next/image";
 
@@ -47,14 +47,10 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
           <div className="lg:col-span-2">
-            <motion.div
-              className="flex items-center"
-              whileHover={{ scale: 1.02 }}
-              transition={{ duration: 0.2 }}
-            >
+            <div className="flex items-center hover-scale">
               <Image src={Logo} alt="Expat Stays" className="h-8 w-auto" />
               <span className="text-2xl font-bold">Expat Stays</span>
-            </motion.div>
+            </div>
             <p className="mt-6 text-sm text-[#235347] leading-relaxed max-w-md">
               Experience unparalleled luxury and comfort with Expat Stays. Your
               premier choice for exclusive property rentals and management.

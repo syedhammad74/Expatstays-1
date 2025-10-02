@@ -27,7 +27,11 @@
     "clean": "rm -rf .next out",
     "clean:all": "npm run clean && rm -rf node_modules package-lock.json",
     "validate:config": "node scripts/validate-config.js",
-    "verify:real-data": "node scripts/verify-config.js"
+    "verify:real-data": "node scripts/verify-config.js",
+    "compress-images": "node scripts/compress-images.js",
+    "install-sharp": "node scripts/install-sharp.js",
+    "optimize:remove-heavy": "node scripts/remove-heavy-dependencies.js",
+    "optimize:analyze": "npm run build && npx @next/bundle-analyzer"
   },
   "dependencies": {
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
@@ -55,36 +59,27 @@
     "@stripe/react-stripe-js": "^3.7.0",
     "@stripe/stripe-js": "^7.4.0",
     "@tabler/icons-react": "^3.34.0",
-    "@types/react-window": "^1.8.8",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "critters": "^0.0.23",
     "date-fns": "^3.6.0",
     "dotenv": "^16.6.1",
-    "embla-carousel-react": "^8.6.0",
     "firebase": "^11.10.0",
     "firebase-admin": "^13.4.0",
-    "framer-motion": "^12.23.0",
     "genkit": "^1.8.0",
-    "leaflet": "^1.9.4",
     "lucide-react": "^0.475.0",
-    "motion": "^12.23.0",
     "next": "^15.3.3",
     "patch-package": "^8.0.0",
     "react": "^18.3.1",
     "react-day-picker": "^8.10.1",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.54.2",
-    "react-leaflet": "^4.2.1",
-    "react-window": "^2.1.1",
     "stripe": "^18.3.0",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@types/leaflet": "^1.9.19",
-    "@types/lodash": "^4.17.20",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -94,6 +89,7 @@
     "genkit-cli": "^1.8.0",
     "postcss": "^8",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5",
+    "sharp": "^0.33.0"
   }
 }

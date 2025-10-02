@@ -13,7 +13,7 @@ import {
   User,
   Mail,
 } from "lucide-react";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import Link from "next/link";
 import { bookingService } from "@/lib/services/bookings";
 import { propertyService } from "@/lib/services/properties";
@@ -114,7 +114,7 @@ function BookingSuccessContent() {
 
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-28">
-      <motion.div
+      <div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -128,11 +128,11 @@ function BookingSuccessContent() {
           Your booking has been confirmed. Check your email for confirmation
           details.
         </p>
-      </motion.div>
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Booking Details */}
-        <motion.div
+        <div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -198,10 +198,10 @@ function BookingSuccessContent() {
               )}
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
         {/* Payment Details */}
-        <motion.div
+        <div
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -294,11 +294,11 @@ function BookingSuccessContent() {
               )}
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
       </div>
 
       {/* Guest Information */}
-      <motion.div
+      <div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.6 }}
@@ -334,10 +334,10 @@ function BookingSuccessContent() {
             </div>
           </CardContent>
         </Card>
-      </motion.div>
+      </div>
 
       {/* Action Buttons */}
-      <motion.div
+      <div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.8 }}
@@ -359,10 +359,10 @@ function BookingSuccessContent() {
             Browse More Properties
           </Link>
         </Button>
-      </motion.div>
+      </div>
 
       {/* Next Steps */}
-      <motion.div
+      <div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 1 }}
@@ -391,7 +391,7 @@ function BookingSuccessContent() {
             </ul>
           </CardContent>
         </Card>
-      </motion.div>
+      </div>
     </div>
   );
 }

@@ -1,9 +1,10 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import "../styles/animations.css";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
-import PerformanceLayout from "@/components/PerformanceLayout";
+// Removed PerformanceLayout for performance
 import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
@@ -146,7 +147,7 @@ export default function RootLayout({
 
         {/* Preload critical images */}
         <link rel="preload" href="/logo.png" as="image" />
-        <link rel="preload" href="/media/famhouse/DSC02226.jpg" as="image" />
+        {/* Removed image preloading for performance */}
 
         {/* Structured data */}
         <script
@@ -169,17 +170,12 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased" suppressHydrationWarning={true}>
-        <PerformanceLayout
-          preloadRoutes={["/properties", "/blog", "/about"]}
-          criticalCSS={criticalCSS}
-        >
-          <AuthProvider>
-            <ScrollToTop />
-            <main className="min-h-screen">{children}</main>
-            <ConditionalFooter />
-            <Toaster />
-          </AuthProvider>
-        </PerformanceLayout>
+        <AuthProvider>
+          <ScrollToTop />
+          <main className="min-h-screen">{children}</main>
+          <ConditionalFooter />
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );

@@ -6,7 +6,7 @@ import { CalendarDays, UserCircle, Tag } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 
 const blogPost = {
   id: "how-to-feel-at-home-living-abroad",
@@ -90,7 +90,7 @@ export default function BlogPostDetailPage() {
         </header>
 
         {post.featuredImageUrl && (
-          <motion.div
+          <div
             whileHover={{ scale: 1.015 }}
             transition={{ duration: 0.35, ease: "easeInOut" }}
             className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden mb-6 lg:mb-8 shadow-lg border-2 border-transparent hover:border-[#DAF1DE] focus-within:border-[#8EB69B]"
@@ -102,7 +102,7 @@ export default function BlogPostDetailPage() {
               priority
               className="object-cover rounded-3xl transition-all duration-300"
             />
-          </motion.div>
+          </div>
         )}
 
         <div

@@ -61,7 +61,7 @@ import {
 import { Booking, Property } from "@/lib/types/firebase";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 
 export default function ProfilePage() {
   const router = useRouter();
@@ -276,12 +276,7 @@ export default function ProfilePage() {
       <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-28">
         <div className="space-y-6">
           {/* Header Section */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="relative"
-          >
+          <div className="relative">
             {/* Decorative Background */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/5 via-transparent to-[#0B2B26]/5 rounded-3xl" />
             <div className="absolute top-0 right-0 w-20 h-20 sm:w-32 sm:h-32 bg-[#8EB69B]/10 rounded-full blur-2xl" />
@@ -365,15 +360,10 @@ export default function ProfilePage() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
 
           {/* Quick Stats */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-4"
-          >
+          <div className="grid grid-cols-1 gap-3 sm:gap-4 md:grid-cols-4">
             <Card className="bg-white/90 backdrop-blur-xl border-[#8EB69B]/20 rounded-xl shadow-md hover:shadow-lg transition-all duration-300">
               <CardContent className="p-3 sm:p-4">
                 <div className="flex items-center justify-between">
@@ -442,7 +432,7 @@ export default function ProfilePage() {
                 </div>
               </CardContent>
             </Card>
-          </motion.div>
+          </div>
 
           <Tabs defaultValue="profile" className="space-y-6">
             <TabsList className="bg-white/80 backdrop-blur-xl border border-[#8EB69B]/20 rounded-2xl p-2 shadow-lg">
@@ -484,12 +474,7 @@ export default function ProfilePage() {
             </TabsList>
 
             <TabsContent value="profile">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="grid grid-cols-1 md:grid-cols-3 gap-6"
-              >
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="md:col-span-2">
                   <Card className="bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-xl shadow-xl h-full">
                     <CardHeader>
@@ -729,15 +714,11 @@ export default function ProfilePage() {
                     </CardContent>
                   </Card>
                 </div>
-              </motion.div>
+              </div>
             </TabsContent>
 
             <TabsContent value="bookings">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
+              <div>
                 <Card className="bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-2xl shadow-xl">
                   <CardHeader>
                     <CardTitle className="text-2xl font-bold text-[#163832]">
@@ -833,15 +814,11 @@ export default function ProfilePage() {
                     )}
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             </TabsContent>
 
             <TabsContent value="saved">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
+              <div>
                 <Card className="bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-2xl shadow-xl">
                   <CardHeader>
                     <CardTitle className="text-2xl font-bold text-[#163832]">
@@ -872,15 +849,11 @@ export default function ProfilePage() {
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             </TabsContent>
 
             <TabsContent value="recommended">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
+              <div>
                 <Card className="bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-2xl shadow-xl">
                   <CardHeader>
                     <CardTitle className="text-2xl font-bold text-[#163832]">
@@ -916,15 +889,11 @@ export default function ProfilePage() {
                     </Button>
                   </CardFooter>
                 </Card>
-              </motion.div>
+              </div>
             </TabsContent>
 
             <TabsContent value="preferences">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
+              <div>
                 <Card className="bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-2xl shadow-xl">
                   <CardHeader>
                     <CardTitle className="text-2xl font-bold text-[#163832]">
@@ -1086,7 +1055,7 @@ export default function ProfilePage() {
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             </TabsContent>
           </Tabs>
         </div>

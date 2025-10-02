@@ -22,7 +22,7 @@ import {
   AlertCircle,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { motion, AnimatePresence } from "framer-motion";
+// Removed framer-motion for performance
 import type { PaymentIntent } from "@stripe/stripe-js";
 
 export interface PaymentFormProps {
@@ -211,7 +211,7 @@ export default function PaymentForm({
 
   if (paymentSucceeded) {
     return (
-      <motion.div
+      <div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="text-center py-8"
@@ -221,7 +221,7 @@ export default function PaymentForm({
           Payment Successful!
         </h3>
         <p className="text-[#235347]/70">Your booking has been confirmed.</p>
-      </motion.div>
+      </div>
     );
   }
 
@@ -421,9 +421,8 @@ export default function PaymentForm({
             </div>
 
             {/* Error Display */}
-            <AnimatePresence>
               {paymentError && (
-                <motion.div
+                <div
                   initial={{ opacity: 0, y: -10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
@@ -432,9 +431,8 @@ export default function PaymentForm({
                     <AlertCircle className="h-4 w-4" />
                     <AlertDescription>{paymentError}</AlertDescription>
                   </Alert>
-                </motion.div>
+                </div>
               )}
-            </AnimatePresence>
 
             {/* Submit Button */}
             <Button

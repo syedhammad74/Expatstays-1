@@ -22,7 +22,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
 import { getLocalImage } from "@/lib/imageUtils";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import Header from "@/components/layout/Header";
 import React, { useState } from "react";
 
@@ -106,13 +106,13 @@ export default function BlogPage() {
       {/* Enhanced Background with Decorative Shapes */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
         {/* Animated gradient orbs */}
-        <motion.div
+        <div
           className="absolute top-24 left-10 w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl"
           style={{ willChange: "transform, opacity" }}
           animate={{ scale: [1, 1.04, 1], opacity: [0.13, 0.17, 0.13] }}
           transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div
+        <div
           className="absolute bottom-10 right-10 w-[250px] lg:w-[500px] h-[250px] lg:h-[500px] bg-gradient-to-br from-[#8EB69B]/10 to-[#235347]/10 rounded-full blur-2xl"
           style={{ willChange: "transform, opacity" }}
           animate={{ scale: [1, 1.06, 1], opacity: [0.09, 0.13, 0.09] }}
@@ -125,19 +125,19 @@ export default function BlogPage() {
         />
 
         {/* Decorative geometric shapes */}
-        <motion.div
+        <div
           className="absolute top-1/4 right-1/4 w-16 lg:w-32 h-16 lg:h-32 border border-[#8EB69B]/20 rounded-full"
           style={{ willChange: "transform" }}
           animate={{ rotate: 360 }}
           transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
         />
-        <motion.div
+        <div
           className="absolute bottom-1/3 left-1/6 w-12 lg:w-24 h-12 lg:h-24 bg-gradient-to-br from-[#DAF1DE]/30 to-[#8EB69B]/20 rounded-lg rotate-45"
           style={{ willChange: "transform" }}
           animate={{ rotate: [45, 405], scale: [1, 1.03, 1] }}
           transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div
+        <div
           className="absolute top-1/2 right-1/6 w-8 lg:w-16 h-8 lg:h-16 border-2 border-[#8EB69B]/30 rounded-full"
           style={{ willChange: "transform, opacity" }}
           animate={{ scale: [1, 1.08, 1], opacity: [0.35, 0.5, 0.35] }}
@@ -145,13 +145,13 @@ export default function BlogPage() {
         />
 
         {/* Floating dots */}
-        <motion.div
+        <div
           className="absolute top-1/3 left-1/2 w-2 h-2 bg-[#8EB69B] rounded-full"
           style={{ willChange: "transform, opacity" }}
           animate={{ y: [-6, 6, -6], opacity: [0.6, 0.8, 0.6] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div
+        <div
           className="absolute bottom-1/4 right-1/3 w-1 h-1 bg-[#DAF1DE] rounded-full"
           style={{ willChange: "transform, opacity" }}
           animate={{ y: [6, -6, 6], opacity: [0.4, 0.7, 0.4] }}
@@ -241,12 +241,12 @@ export default function BlogPage() {
             />
           </div>
           {/* Floating accent orb */}
-          <motion.div
+          <div
             className="absolute -top-8 -right-8 w-24 h-24 bg-[#8EB69B]/20 rounded-full blur-2xl z-0"
             animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.7, 0.5] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           />
-          <motion.div
+          <div
             className="absolute bottom-0 left-0 w-12 h-12 bg-[#DAF1DE]/40 rounded-full blur-xl z-0"
             animate={{ scale: [1, 1.12, 1], opacity: [0.3, 0.5, 0.3] }}
             transition={{
@@ -261,7 +261,7 @@ export default function BlogPage() {
 
       {/* Filter/Search Section */}
       <section className="relative z-30 max-w-5xl mx-auto -mt-14 mb-16 px-4 sm:px-8">
-        <motion.div
+        <div
           initial={{ y: -24, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.7, ease: "easeOut" }}
@@ -286,7 +286,7 @@ export default function BlogPage() {
           {/* Category Filters */}
           <div className="flex flex-wrap gap-2 justify-center md:justify-end w-full md:w-auto">
             {categories.map((cat) => (
-              <motion.button
+              <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
                 whileHover={{ scale: 1.06 }}
@@ -302,10 +302,10 @@ export default function BlogPage() {
                 aria-pressed={activeCategory === cat}
               >
                 {cat}
-              </motion.button>
+              </button>
             ))}
           </div>
-        </motion.div>
+        </div>
       </section>
 
       {/* Blog Posts Grid - Futuristic Cards */}
@@ -317,7 +317,7 @@ export default function BlogPage() {
         <div className="pointer-events-none absolute bottom-1/3 right-0 w-12 lg:w-24 h-12 lg:h-24 bg-gradient-to-br from-[#8EB69B]/15 to-[#235347]/10 rounded-full opacity-50 z-0" />
 
         <div className="container mx-auto px-4 sm:px-8">
-          <motion.div
+          <div
             className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12"
             initial="hidden"
             animate="visible"
@@ -327,7 +327,7 @@ export default function BlogPage() {
             }}
           >
             {filteredPosts.map((post, i) => (
-              <motion.div
+              <div
                 key={post.slug}
                 className="group"
                 variants={{
@@ -336,7 +336,7 @@ export default function BlogPage() {
                 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
-                <motion.div
+                <div
                   whileHover={{ scale: 1.025 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.3 }}
@@ -386,10 +386,10 @@ export default function BlogPage() {
                       </Button>
                     </CardContent>
                   </Card>
-                </motion.div>
-              </motion.div>
+                </div>
+              </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
     </div>

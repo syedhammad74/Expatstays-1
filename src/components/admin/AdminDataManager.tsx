@@ -38,7 +38,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import {
   Plus,
   Edit,
@@ -520,7 +520,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -542,9 +542,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
@@ -566,9 +566,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -590,9 +590,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -614,7 +614,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
       </div>
 
       {/* Controls */}
@@ -642,7 +642,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[700px] bg-gradient-to-br from-white via-[#FAFAFA] to-[#DAF1DE]/20 border-[#8EB69B]/30 shadow-2xl backdrop-blur-sm">
-                  <motion.div
+                  <div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3 }}
@@ -959,7 +959,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                         </Button>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 </DialogContent>
               </Dialog>
 
@@ -1324,7 +1324,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
       {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="sm:max-w-[700px] bg-gradient-to-br from-white via-[#FAFAFA] to-[#DAF1DE]/20 border-[#8EB69B]/30 shadow-2xl backdrop-blur-sm">
-          <motion.div
+          <div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.3 }}
@@ -1629,7 +1629,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                 </Button>
               </div>
             </div>
-          </motion.div>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

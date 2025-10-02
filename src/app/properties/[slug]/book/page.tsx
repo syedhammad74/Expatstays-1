@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import Image from "next/image";
 import { format } from "date-fns";
 import {
@@ -42,11 +42,7 @@ import { bookingService } from "@/lib/services/bookings";
 import { useAuth } from "@/hooks/use-auth";
 import AmenityIcon from "@/components/AmenityIcon";
 import { Property } from "@/lib/types/firebase";
-import {
-  CacheManager,
-  performanceMonitor,
-  useDebounce,
-} from "@/lib/performance";
+// Removed performance monitoring for optimization
 import { Booking } from "@/lib/types/firebase";
 type BookingStatus = "pending" | "confirmed" | "completed" | "cancelled";
 
@@ -85,28 +81,17 @@ export default function PropertyBookingPage() {
   const [isProcessing, setIsProcessing] = useState(false);
 
   // Debounced guest details for better performance
-  const debouncedGuestDetails = useDebounce(guestDetails, 300);
+  // Removed debounce for simplicity
 
   // Load property data with caching
   const loadProperty = useCallback(async () => {
     try {
       setLoading(true);
-      performanceMonitor.markStart("load-property-booking");
-
-      // Try cache first
-      const cachedProperty = CacheManager.getCachedProperty(propertyId);
-      if (cachedProperty) {
-        console.log("📱 Using cached property for faster loading");
-        setProperty(cachedProperty as Property);
-        setLoading(false);
-        return;
-      }
+      // Removed performance monitoring
 
       const propertyData = await propertyService.getPropertyById(propertyId);
       if (propertyData) {
         setProperty(propertyData);
-        // Cache for future use
-        CacheManager.cacheProperty(propertyData);
       } else {
         toast({
           title: "Error",
@@ -116,11 +101,8 @@ export default function PropertyBookingPage() {
         router.push("/properties");
       }
 
-      performanceMonitor.markEnd("load-property-booking");
-      const loadTime = performanceMonitor.getMeasure("load-property-booking");
-      console.log(
-        `⚡ Property loaded for booking in ${loadTime?.toFixed(2)}ms`
-      );
+      // Removed performance monitoring
+      console.log("⚡ Property loaded for booking");
     } catch (error) {
       console.error("Error loading property:", error);
       toast({
@@ -217,9 +199,9 @@ export default function PropertyBookingPage() {
     }
 
     if (
-      !debouncedGuestDetails.firstName ||
-      !debouncedGuestDetails.lastName ||
-      !debouncedGuestDetails.email
+      !guestDetails.firstName ||
+      !guestDetails.lastName ||
+      !guestDetails.email
     ) {
       toast({
         title: "Complete Details",
@@ -231,7 +213,7 @@ export default function PropertyBookingPage() {
 
     try {
       setIsProcessing(true);
-      performanceMonitor.markStart("process-booking");
+      // Removed performance monitoring
 
       const numAdults = guests.adults;
       const numChildren = guests.children;
@@ -242,9 +224,9 @@ export default function PropertyBookingPage() {
         propertyId: property!.id,
         guest: {
           uid: user.uid,
-          name: `${debouncedGuestDetails.firstName} ${debouncedGuestDetails.lastName}`,
-          email: debouncedGuestDetails.email,
-          phone: debouncedGuestDetails.phone,
+          name: `${guestDetails.firstName} ${guestDetails.lastName}`,
+          email: guestDetails.email,
+          phone: guestDetails.phone,
         },
         dates: {
           checkIn: format(dateRange.from, "yyyy-MM-dd"),
@@ -274,7 +256,7 @@ export default function PropertyBookingPage() {
           method: paymentMethod,
           status: "pending",
         },
-        specialRequests: debouncedGuestDetails.specialRequests,
+        specialRequests: guestDetails.specialRequests,
         status: "pending" as BookingStatus,
       };
 
@@ -296,14 +278,14 @@ export default function PropertyBookingPage() {
       });
     } finally {
       setIsProcessing(false);
-      performanceMonitor.markEnd("process-booking");
+      // Removed performance monitoring
     }
   }, [
     user,
     dateRange,
     guests,
     paymentMethod,
-    debouncedGuestDetails,
+    guestDetails,
     property,
     bookingDetails,
     router,
@@ -357,7 +339,7 @@ export default function PropertyBookingPage() {
           {/* Left Column - Property Details */}
           <div className="lg:col-span-2 space-y-6">
             {/* Property Images Gallery */}
-            <motion.div
+            <div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -417,10 +399,10 @@ export default function PropertyBookingPage() {
                   ))}
                 </div>
               )}
-            </motion.div>
+            </div>
 
             {/* Property Information */}
-            <motion.div
+            <div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
@@ -496,12 +478,12 @@ export default function PropertyBookingPage() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           </div>
 
           {/* Right Column - Booking Form */}
           <div className="lg:col-span-1">
-            <motion.div
+            <div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -772,7 +754,7 @@ export default function PropertyBookingPage() {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>

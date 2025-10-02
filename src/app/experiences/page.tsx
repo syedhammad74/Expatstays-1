@@ -34,7 +34,7 @@ import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import Link from "next/link";
 import { getLocalImage } from "@/lib/imageUtils";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import Header from "@/components/layout/Header";
 
 const experiencesData = [
@@ -188,7 +188,7 @@ export default function ExperiencesPage() {
         <div className="container mx-auto px-4 sm:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left: Hero Content */}
-            <motion.div
+            <div
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
@@ -230,10 +230,10 @@ export default function ExperiencesPage() {
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
 
             {/* Right: Hero Image */}
-            <motion.div
+            <div
               initial={{ opacity: 0, x: 50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
@@ -260,7 +260,7 @@ export default function ExperiencesPage() {
                   </Badge>
                 </div>
               </div>
-            </motion.div>
+            </div>
           </div>
         </div>
       </section>
@@ -268,7 +268,7 @@ export default function ExperiencesPage() {
       {/* Search and Filter Section */}
       <section className="relative -mt-8 mb-16">
         <div className="container mx-auto px-4 sm:px-8">
-          <motion.div
+          <div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -313,14 +313,14 @@ export default function ExperiencesPage() {
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
       {/* Featured Experiences Section */}
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-8">
-          <motion.div
+          <div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -333,13 +333,13 @@ export default function ExperiencesPage() {
               Our most popular and highly-rated experiences, carefully curated
               for the discerning traveler.
             </p>
-          </motion.div>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
             {experiencesData
               .filter((exp) => exp.featured)
               .map((exp, index) => (
-                <motion.div
+                <div
                   key={exp.slug}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -436,7 +436,7 @@ export default function ExperiencesPage() {
                       </div>
                     </div>
                   </Card>
-                </motion.div>
+                </div>
               ))}
           </div>
         </div>
@@ -445,7 +445,7 @@ export default function ExperiencesPage() {
       {/* Filtered Experiences Grid */}
       <section className="py-16 bg-gradient-to-br from-[#F8FBF9]/50 to-white">
         <div className="container mx-auto px-4 sm:px-8">
-          <motion.div
+          <div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -461,10 +461,10 @@ export default function ExperiencesPage() {
               Discover our complete collection of curated experiences designed
               to create unforgettable memories.
             </p>
-          </motion.div>
+          </div>
 
           {filteredExperiences.length === 0 ? (
-            <motion.div
+            <div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -487,11 +487,11 @@ export default function ExperiencesPage() {
                   Clear Filters
                 </Button>
               </div>
-            </motion.div>
+            </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredExperiences.map((exp, index) => (
-                <motion.div
+                <div
                   key={exp.slug}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -590,7 +590,7 @@ export default function ExperiencesPage() {
                       </Button>
                     </CardFooter>
                   </Card>
-                </motion.div>
+                </div>
               ))}
             </div>
           )}

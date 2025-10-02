@@ -31,7 +31,7 @@ import {
   AccordionContent,
 } from "@/components/ui/accordion";
 import { getLocalImage } from "@/lib/imageUtils";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import Header from "@/components/layout/Header";
 
 const features = [
@@ -196,12 +196,12 @@ export default function AboutPage() {
 
       {/* Animated Futuristic Background */}
       <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-        <motion.div
+        <div
           className="absolute top-24 left-10 w-[600px] h-[600px] bg-gradient-to-br from-[#8EB69B]/20 to-[#235347]/10 rounded-full blur-3xl"
           animate={{ scale: [1, 1.1, 1], opacity: [0.12, 0.18, 0.12] }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
         />
-        <motion.div
+        <div
           className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-gradient-to-br from-[#235347]/10 to-[#8EB69B]/10 rounded-full blur-2xl"
           animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.15, 0.08] }}
           transition={{
@@ -234,21 +234,21 @@ export default function AboutPage() {
       {/* HERO SECTION */}
       <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 lg:pt-16 pb-12 lg:pb-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
         {/* Decorative geometric shape behind text */}
-        <motion.div
+        <div
           className="pointer-events-none absolute left-0 top-16 w-72 h-32 lg:w-[420px] lg:h-40 bg-[#DAF1DE]/30 rounded-3xl blur-2xl z-0"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 0.7, scale: 1 }}
           transition={{ duration: 1.2, ease: "easeInOut" }}
         />
         {/* Decorative orb in whitespace between text and image */}
-        <motion.div
+        <div
           className="pointer-events-none absolute hidden lg:block left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-[#8EB69B]/15 rounded-full blur-3xl z-0"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 0.5, scale: 1 }}
           transition={{ duration: 1.5, ease: "easeInOut" }}
         />
         {/* Optionally, a sparkle accent layered on top */}
-        <motion.div
+        <div
           className="pointer-events-none absolute hidden lg:block left-[54%] top-[44%] z-10"
           initial={{ opacity: 0, scale: 0.8, rotate: 0 }}
           animate={{ opacity: 0.7, scale: 1, rotate: 20 }}
@@ -260,16 +260,16 @@ export default function AboutPage() {
           }}
         >
           <Sparkles className="w-6 h-6 text-[#8EB69B] opacity-80" />
-        </motion.div>
+        </div>
         {/* Decorative squircle/blob in lower whitespace */}
-        <motion.div
+        <div
           className="pointer-events-none absolute left-1/4 bottom-[-80px] lg:left-1/2 lg:bottom-[-120px] w-[420px] h-[180px] lg:w-[600px] lg:h-[260px] bg-gradient-to-br from-[#DAF1DE]/40 via-[#8EB69B]/20 to-[#0B2B26]/10 rounded-[120px] blur-3xl z-0"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 0.7, scale: 1 }}
           transition={{ duration: 1.8, ease: "easeInOut" }}
         />
         {/* Floating orb for extra depth */}
-        <motion.div
+        <div
           className="pointer-events-none absolute left-[60%] bottom-0 w-16 h-16 bg-[#8EB69B]/20 rounded-full blur-2xl z-0"
           animate={{ scale: [1, 1.12, 1], opacity: [0.3, 0.5, 0.3] }}
           transition={{
@@ -279,7 +279,7 @@ export default function AboutPage() {
             delay: 1,
           }}
         />
-        <motion.div
+        <div
           className="space-y-6 lg:space-y-8 relative z-10"
           initial={{ opacity: 0, x: -40 }}
           animate={{ opacity: 1, x: 0 }}
@@ -294,7 +294,7 @@ export default function AboutPage() {
           <h1 className="text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-[#051F20] mb-4 lg:mb-6 leading-tight relative">
             Welcome to <span className="text-[#8EB69B]">Expat Stays</span>
             {/* Animated sparkle dot */}
-            <motion.div
+            <div
               className="absolute -right-8 top-2 w-2.5 h-2.5 bg-[#DAF1DE] rounded-full opacity-70"
               animate={{ x: [0, 8, 0], opacity: [0.7, 1, 0.7] }}
               transition={{
@@ -309,22 +309,22 @@ export default function AboutPage() {
             We curate the world's most extraordinary stays and experiences for
             modern expats and global citizens.
           </p>
-        </motion.div>
+        </div>
         {/* Right: Hero Image with Decorative Orbs */}
-        <motion.div
+        <div
           className="relative w-full h-64 lg:h-[420px] rounded-2xl overflow-hidden shadow-xl"
           initial={{ opacity: 0, x: 40 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
         >
           {/* Decorative blurred orb (top left) */}
-          <motion.div
+          <div
             className="pointer-events-none absolute -top-8 -left-8 w-40 h-40 lg:w-64 lg:h-64 bg-[#8EB69B]/20 rounded-full blur-3xl z-0"
             animate={{ scale: [1, 1.08, 1], opacity: [0.4, 0.6, 0.4] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
           />
           {/* Decorative blurred orb (bottom right) */}
-          <motion.div
+          <div
             className="pointer-events-none absolute -bottom-8 -right-8 w-24 h-24 lg:w-40 lg:h-40 bg-[#DAF1DE]/30 rounded-full blur-2xl z-0"
             animate={{ scale: [1, 1.12, 1], opacity: [0.3, 0.5, 0.3] }}
             transition={{
@@ -341,13 +341,13 @@ export default function AboutPage() {
             className="object-cover object-center relative z-10"
             priority
           />
-        </motion.div>
+        </div>
       </section>
 
       {/* OUR STORY SECTION */}
       <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          <motion.div
+          <div
             className="space-y-4 lg:space-y-6 order-2 lg:order-1"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -399,9 +399,9 @@ export default function AboutPage() {
                 </span>
               </div>
             </div>
-          </motion.div>
+          </div>
 
-          <motion.div
+          <div
             className="relative order-1 lg:order-2"
             initial={{ opacity: 0, x: 40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -426,7 +426,7 @@ export default function AboutPage() {
                 className="rounded-xl lg:rounded-2xl shadow-xl object-cover border-2 border-[#235347]/20 mt-4 lg:mt-8 w-full h-[150px] sm:h-[200px] lg:h-[250px] xl:h-[300px]"
               />
             </div>
-          </motion.div>
+          </div>
         </div>
       </section>
 
@@ -445,7 +445,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <motion.div
+        <div
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
           initial="hidden"
           whileInView="visible"
@@ -456,7 +456,7 @@ export default function AboutPage() {
           }}
         >
           {features.map((feature, i) => (
-            <motion.div
+            <div
               key={feature.title}
               variants={{
                 hidden: { opacity: 0, y: 40 },
@@ -477,9 +477,9 @@ export default function AboutPage() {
                   {feature.desc}
                 </p>
               </Card>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </section>
 
       {/* TESTIMONIALS SECTION */}
@@ -497,7 +497,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <motion.div
+        <div
           className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8"
           initial="hidden"
           whileInView="visible"
@@ -508,7 +508,7 @@ export default function AboutPage() {
           }}
         >
           {testimonials.map((testimonial, i) => (
-            <motion.div
+            <div
               key={testimonial.author}
               variants={{
                 hidden: { opacity: 0, y: 40 },
@@ -571,12 +571,12 @@ export default function AboutPage() {
                 {/* Hover Effect Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/5 to-transparent rounded-xl lg:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
               </Card>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
         {/* Stats Row */}
-        <motion.div
+        <div
           className="mt-12 lg:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -599,7 +599,7 @@ export default function AboutPage() {
               <p className="text-xs text-[#235347]">{stat.detail}</p>
             </div>
           ))}
-        </motion.div>
+        </div>
       </section>
 
       {/* ACHIEVEMENTS SECTION */}
@@ -617,7 +617,7 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <motion.div
+        <div
           className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8"
           initial="hidden"
           whileInView="visible"
@@ -628,7 +628,7 @@ export default function AboutPage() {
           }}
         >
           {achievements.map((achievement, i) => (
-            <motion.div
+            <div
               key={achievement.title}
               variants={{
                 hidden: { opacity: 0, y: 40 },
@@ -651,14 +651,14 @@ export default function AboutPage() {
                   {achievement.year}
                 </div>
               </Card>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </section>
 
       {/* CTA SECTION */}
       <section className="container mx-auto px-4 py-12 lg:py-20">
-        <motion.div
+        <div
           className="relative bg-gradient-to-br from-[#8EB69B]/10 via-white to-[#235347]/10 rounded-2xl lg:rounded-3xl p-6 lg:p-8 xl:p-12 2xl:p-16 text-center overflow-hidden"
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -671,7 +671,7 @@ export default function AboutPage() {
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 lg:w-32 h-16 lg:h-32 bg-gradient-to-br from-[#DAF1DE]/30 to-transparent rounded-full blur-2xl"></div>
 
           <div className="relative z-10">
-            <motion.div
+            <div
               initial={{ opacity: 0, scale: 0.8 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
@@ -680,7 +680,7 @@ export default function AboutPage() {
             >
               <Sparkles className="w-3 lg:w-4 h-3 lg:h-4" />
               Ready to Experience Luxury?
-            </motion.div>
+            </div>
 
             <h2 className="text-2xl lg:text-3xl xl:text-4xl 2xl:text-5xl font-bold text-[#051F20] mb-4 lg:mb-6 leading-tight">
               Start Your Luxury Journey Today
@@ -714,22 +714,22 @@ export default function AboutPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center items-center">
-              <motion.button
+              <button
                 className="rounded-buttons px-6 lg:px-8 py-3 lg:py-4 bg-[#8EB69B] text-[#051F20] font-bold shadow-lg hover:shadow-[0_0_20px_#8EB69B55] hover:bg-[#235347] hover:text-[#DAF1DE] transition-all duration-200 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base min-w-[180px] lg:min-w-[200px] w-full sm:w-auto"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.97 }}
               >
                 <ArrowRight className="w-4 lg:w-5 h-4 lg:h-5" />
                 Explore Properties
-              </motion.button>
-              <motion.button
+              </button>
+              <button
                 className="rounded-buttons px-6 lg:px-8 py-3 lg:py-4 border-2 border-[#8EB69B] text-[#8EB69B] font-bold hover:bg-[#8EB69B] hover:text-[#051F20] hover:shadow-[0_0_20px_#8EB69B55] transition-all duration-200 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base min-w-[180px] lg:min-w-[200px] w-full sm:w-auto"
                 whileHover={{ scale: 1.05, y: -2 }}
                 whileTap={{ scale: 0.97 }}
               >
                 <Phone className="w-4 lg:w-5 h-4 lg:h-5" />
                 Contact Our Team
-              </motion.button>
+              </button>
             </div>
 
             {/* Additional info */}
@@ -748,7 +748,7 @@ export default function AboutPage() {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </section>
     </div>
   );

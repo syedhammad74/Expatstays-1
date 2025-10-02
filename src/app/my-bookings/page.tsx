@@ -33,7 +33,7 @@ import { Booking, Property } from "@/lib/types/firebase";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 import Image from "next/image";
-import { motion, AnimatePresence } from "framer-motion";
+// Removed framer-motion for performance
 import Header from "@/components/layout/Header";
 
 interface BookingWithProperty extends Booking {
@@ -202,12 +202,12 @@ export default function MyBookingsPage() {
         <Header />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
           <div className="flex items-center justify-center h-64">
-            <motion.div
+            <div
               animate={{ rotate: 360 }}
               transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
             >
               <Loader2 className="h-8 w-8 text-[#8EB69B]" />
-            </motion.div>
+            </div>
           </div>
         </div>
       </div>
@@ -219,7 +219,7 @@ export default function MyBookingsPage() {
       <div className="min-h-screen bg-gradient-to-br from-[#FAFAFA] via-white to-[#DAF1DE]/30">
         <Header />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
-          <motion.div
+          <div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -236,7 +236,7 @@ export default function MyBookingsPage() {
                 </Link>
               </AlertDescription>
             </Alert>
-          </motion.div>
+          </div>
         </div>
       </div>
     );
@@ -255,7 +255,7 @@ export default function MyBookingsPage() {
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 md:px-12 lg:px-16 py-6 pt-20 md:pt-28">
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Header Section */}
-          <motion.div
+          <div
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -267,10 +267,10 @@ export default function MyBookingsPage() {
             <p className="text-lg lg:text-xl text-[#4A4A4A] max-w-2xl mx-auto leading-relaxed">
               Manage your luxury property reservations and view booking details
             </p>
-          </motion.div>
+          </div>
 
           {/* Booking Stats Cards */}
-          <motion.div
+          <div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -308,7 +308,7 @@ export default function MyBookingsPage() {
                 color: "from-red-400 to-red-600",
               },
             ].map((stat, index) => (
-              <motion.div
+              <div
                 key={stat.label}
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -334,12 +334,12 @@ export default function MyBookingsPage() {
                     </div>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
             ))}
-          </motion.div>
+          </div>
 
           {/* Booking Tabs */}
-          <motion.div
+          <div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
@@ -379,10 +379,9 @@ export default function MyBookingsPage() {
                 ))}
               </TabsList>
 
-              <AnimatePresence mode="wait">
                 <TabsContent key={filter} value={filter} className="space-y-6">
                   {filteredBookings.length === 0 ? (
-                    <motion.div
+                    <div
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
@@ -390,7 +389,7 @@ export default function MyBookingsPage() {
                     >
                       <Card className="bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-3xl shadow-xl">
                         <CardContent className="flex flex-col items-center justify-center py-16">
-                          <motion.div
+                          <div
                             initial={{ scale: 0 }}
                             animate={{ scale: 1 }}
                             transition={{
@@ -401,16 +400,16 @@ export default function MyBookingsPage() {
                             className="w-24 h-24 bg-gradient-to-br from-[#8EB69B]/20 to-[#0B2B26]/20 rounded-full flex items-center justify-center mb-6"
                           >
                             <Calendar className="h-12 w-12 text-[#8EB69B]" />
-                          </motion.div>
-                          <motion.h3
+                          </div>
+                          <h3
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.4 }}
                             className="text-2xl lg:text-3xl font-bold text-[#163832] mb-3 text-center"
                           >
                             No {filter === "all" ? "" : filter} bookings found
-                          </motion.h3>
-                          <motion.p
+                          </h3>
+                          <p
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.5 }}
@@ -419,9 +418,9 @@ export default function MyBookingsPage() {
                             {filter === "all"
                               ? "You haven't made any bookings yet. Start exploring our amazing luxury properties!"
                               : `You don't have any ${filter} bookings at the moment.`}
-                          </motion.p>
+                          </p>
                           {filter === "all" && (
-                            <motion.div
+                            <div
                               initial={{ opacity: 0, y: 10 }}
                               animate={{ opacity: 1, y: 0 }}
                               transition={{ duration: 0.6, delay: 0.6 }}
@@ -437,13 +436,13 @@ export default function MyBookingsPage() {
                                   <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
                                 </Link>
                               </Button>
-                            </motion.div>
+                            </div>
                           )}
                         </CardContent>
                       </Card>
-                    </motion.div>
+                    </div>
                   ) : (
-                    <motion.div
+                    <div
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0 }}
@@ -451,7 +450,7 @@ export default function MyBookingsPage() {
                       className="space-y-6"
                     >
                       {filteredBookings.map((booking, index) => (
-                        <motion.div
+                        <div
                           key={booking.id}
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
@@ -710,14 +709,13 @@ export default function MyBookingsPage() {
                               </div>
                             </CardContent>
                           </Card>
-                        </motion.div>
+                        </div>
                       ))}
-                    </motion.div>
+                    </div>
                   )}
                 </TabsContent>
-              </AnimatePresence>
             </Tabs>
-          </motion.div>
+          </div>
         </div>
       </div>
     </div>

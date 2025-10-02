@@ -23,7 +23,7 @@ import { Switch } from "@/components/ui/switch";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { useToast } from "@/hooks/use-toast";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import {
   Home,
   MapPin,
@@ -357,7 +357,7 @@ export function PropertyCreationDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto bg-gradient-to-br from-white via-[#FAFAFA] to-[#DAF1DE]/20 border-[#8EB69B]/30 shadow-2xl backdrop-blur-sm">
-        <motion.div
+        <div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.3 }}
@@ -1003,7 +1003,7 @@ export function PropertyCreationDialog({
               </Button>
             </div>
           </form>
-        </motion.div>
+        </div>
       </DialogContent>
     </Dialog>
   );

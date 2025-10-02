@@ -8,7 +8,7 @@ import React, {
   Suspense,
 } from "react";
 import { useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import {
   Search,
   Filter,
@@ -41,17 +41,13 @@ import { useToast } from "@/hooks/use-toast";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { getLocalImage } from "@/lib/imageUtils";
-import { usePerformanceMonitor } from "@/hooks/use-performance";
-import { useOptimizedFetch } from "@/hooks/useOptimizedFetch";
-import {
-  usePerformanceOptimizer,
-  useDebouncedPerformance,
-  useThrottledPerformance,
-} from "@/hooks/use-performance-optimizer";
+// Removed heavy performance monitoring hooks
 import Header from "@/components/layout/Header";
-import PropertyCard, { PropertyCardProps } from "@/components/PropertyCard";
-import { VirtualGrid } from "@/components/ui/virtual-grid";
-import OptimizedImage from "@/components/ui/optimized-image";
+import {
+  PropertyCard,
+  PropertyCardProps,
+} from "@/components/molecular/PropertyCard";
+// Removed virtual grid and optimized image components
 
 // Ultra-optimized PropertyCard with enhanced memoization
 const MemoizedPropertyCard = React.memo(
@@ -232,17 +228,9 @@ const PropertyFilters = ({
 // Main properties page component with advanced performance optimization
 function PropertiesPageContent() {
   const { toast } = useToast();
-  const { trackInteraction, trackError } =
-    usePerformanceMonitor("PropertiesPage");
+  // Simplified - removed performance monitoring
 
-  // Advanced performance optimization
-  const { optimizeImages, virtualizeList, measureRenderTime, metrics } =
-    usePerformanceOptimizer({
-      enableVirtualization: true,
-      enableImageOptimization: true,
-      enableMemoryOptimization: true,
-      enableBundleOptimization: true,
-    });
+  // Simplified - removed performance optimization
 
   // State management with performance optimization
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
@@ -256,47 +244,29 @@ function PropertiesPageContent() {
     amenities: [] as string[],
   });
 
-  // Optimized data fetching
-  const {
-    data: properties,
-    loading,
-    error,
-    refetch,
-  } = useOptimizedFetch<Property[]>(
-    "properties",
-    () => propertyService.getAllProperties(),
-    {
-      cacheTime: 10 * 60 * 1000, // 10 minutes
-      staleTime: 2 * 60 * 1000, // 2 minutes
-      retryCount: 3,
-    }
-  );
+  // Simplified data fetching
+  const [properties, setProperties] = useState<Property[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // Debounced search for better performance
-  useDebouncedPerformance(
-    filters.search,
-    300,
-    useCallback(
-      (searchValue: string) => {
-        trackInteraction("debounced_search");
-      },
-      [trackInteraction]
-    )
-  );
+  useEffect(() => {
+    const fetchProperties = async () => {
+      try {
+        setLoading(true);
+        const data = await propertyService.getAllProperties();
+        setProperties(data);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch properties"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchProperties();
+  }, []);
 
-  // Throttled scroll handler for virtualizations
-  const handleScroll = useThrottledPerformance((scrollPosition: number) => {
-    setScrollPosition(scrollPosition);
-  }, 16); // 60fps
-
-  // Throttled filter changes
-  const throttledFilterChange = useThrottledPerformance(
-    (newFilters: typeof filters) => {
-      setFilters(newFilters);
-      trackInteraction("throttled_filter_change");
-    },
-    100
-  );
+  // Simplified - removed debounced and throttled performance hooks
 
   // Memoized property conversion with image optimization
   const convertToPropertyCard = useCallback(
@@ -329,19 +299,18 @@ function PropertiesPageContent() {
         for (let i = 0; i < imageCount; i++) {
           images.push(getLocalImage(property.propertyType, i));
         }
-        return optimizeImages(images);
+        return images;
       };
 
       return {
         slug: property.id,
         imageUrl: property.images?.[0] || getLocalImage("villa", 0),
         images: generateImages(property),
-        imageHint: property.title,
         title: property.title,
         bedrooms: property.capacity.bedrooms,
         guests: property.capacity.maxGuests,
         location: `${property.location.city}, ${property.location.country}`,
-        price: `$${property.pricing.basePrice}`,
+        price: property.pricing.basePrice,
         rating: property.rating || 4.8,
         bathrooms: property.capacity.bathrooms,
         propertyType: property.propertyType,
@@ -420,31 +389,25 @@ function PropertiesPageContent() {
   // Error handling
   useEffect(() => {
     if (error) {
-      trackError(error);
+      console.error("Error:", error);
       toast({
         title: "Error",
         description: "Failed to load properties. Please try again.",
         variant: "destructive",
       });
     }
-  }, [error, trackError, toast]);
+  }, [error, toast]);
 
   // Track interactions
-  const handleFilterChange = useCallback(
-    (newFilters: typeof filters) => {
-      setFilters(newFilters);
-      trackInteraction("filter_change");
-    },
-    [trackInteraction]
-  );
+  const handleFilterChange = useCallback((newFilters: typeof filters) => {
+    setFilters(newFilters);
+    // Filter changed
+  }, []);
 
-  const handleViewModeChange = useCallback(
-    (mode: "grid" | "list") => {
-      setViewMode(mode);
-      trackInteraction("view_mode_change");
-    },
-    [trackInteraction]
-  );
+  const handleViewModeChange = useCallback((mode: "grid" | "list") => {
+    setViewMode(mode);
+    // View mode changed
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-20">
@@ -470,7 +433,7 @@ function PropertiesPageContent() {
                 placeholder="Search properties..."
                 value={filters.search}
                 onChange={(e) =>
-                  throttledFilterChange({ ...filters, search: e.target.value })
+                  setFilters({ ...filters, search: e.target.value })
                 }
                 className="pl-10"
               />
@@ -528,7 +491,9 @@ function PropertiesPageContent() {
             ) : error ? (
               <div className="text-center py-12">
                 <p className="text-red-600 mb-4">Failed to load properties</p>
-                <Button onClick={() => refetch()}>Try Again</Button>
+                <Button onClick={() => window.location.reload()}>
+                  Try Again
+                </Button>
               </div>
             ) : propertyCards.length === 0 ? (
               <div className="text-center py-12">
@@ -550,16 +515,17 @@ function PropertiesPageContent() {
                 </Button>
               </div>
             ) : (
-              <VirtualGrid
-                items={propertyCards}
-                renderItem={(property) => (
+              <div
+                className={`grid gap-6 ${
+                  viewMode === "grid"
+                    ? "grid-cols-1 md:grid-cols-2 lg:grid-cols-3"
+                    : "grid-cols-1"
+                }`}
+              >
+                {propertyCards.map((property) => (
                   <MemoizedPropertyCard key={property.slug} {...property} />
-                )}
-                itemHeight={400}
-                itemsPerRow={viewMode === "grid" ? 3 : 1}
-                overscan={5} // Optimized overscan for better performance
-                className="gap-6"
-              />
+                ))}
+              </div>
             )}
           </div>
         </div>

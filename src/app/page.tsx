@@ -19,7 +19,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import Image from "next/image";
-import { motion, number } from "framer-motion";
+// Removed framer-motion for performance
 import { useRef, useState, useEffect, useCallback } from "react";
 import Header from "@/components/layout/Header";
 import InViewVideo from "@/components/InViewVideo";
@@ -45,7 +45,7 @@ import { DateRange } from "react-day-picker";
 import "react-day-picker/dist/style.css";
 import React from "react";
 import Head from "next/head";
-import useEmblaCarousel from "embla-carousel-react";
+// Removed embla-carousel for performance
 
 export default function Home() {
   // Parallax effect for hero images
@@ -62,17 +62,7 @@ export default function Home() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
 
-  // Embla Carousel setup
-  const [emblaRef, emblaApi] = useEmblaCarousel({
-    loop: true,
-    align: "center",
-    skipSnaps: false,
-    dragFree: false,
-    containScroll: "trimSnaps",
-    dragThreshold: 10,
-    inViewThreshold: 0.7,
-    watchDrag: true,
-  });
+ 
 
   // Carousel data with diverse images
   const carouselSlides = [
@@ -108,53 +98,23 @@ export default function Home() {
     },
   ];
 
-  // Update current index when carousel slides
+  // Simple carousel logic (replaced Embla Carousel)
+  // Auto-rotation handled in the useEffect below
+
+  // Simple auto-rotate (replaced Embla Carousel)
   useEffect(() => {
-    if (!emblaApi) return;
-
-    const onSelect = () => {
-      setCurrentServiceIndex(emblaApi.selectedScrollSnap());
-      setIsAutoPlaying(false);
-      setTimeout(() => setIsAutoPlaying(true), 2000);
-    };
-
-    const onDragStart = () => {
-      setIsDragging(true);
-      setIsAutoPlaying(false);
-    };
-
-    const onDragEnd = () => {
-      setIsDragging(false);
-      setTimeout(() => setIsAutoPlaying(true), 2000);
-    };
-
-    emblaApi.on("select", onSelect);
-    emblaApi.on("pointerDown", onDragStart);
-    emblaApi.on("pointerUp", onDragEnd);
-
-    return () => {
-      emblaApi.off("select", onSelect);
-      emblaApi.off("pointerDown", onDragStart);
-      emblaApi.off("pointerUp", onDragEnd);
-    };
-  }, [emblaApi]);
-
-  // Auto-rotate carousel every 5 seconds (only when auto-playing)
-  useEffect(() => {
-    if (!isAutoPlaying || !emblaApi) return;
+    if (!isAutoPlaying) return;
 
     const interval = setInterval(() => {
-      emblaApi.scrollNext();
+      setCurrentServiceIndex((prev) => (prev + 1) % carouselSlides.length);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [emblaApi, isAutoPlaying]);
+  }, [isAutoPlaying, carouselSlides.length]);
 
-  // Navigation functions
+  // Simple navigation (replaced Embla Carousel)
   const goToSlide = (index: number) => {
-    if (emblaApi) {
-      emblaApi.scrollTo(index);
-    }
+    setCurrentServiceIndex(index);
   };
 
   // Helper for guests summary
@@ -302,10 +262,9 @@ export default function Home() {
           >
             {/* Carousel Container */}
             <div className="relative w-full h-full max-w-xl mx-auto">
-              {/* Embla Carousel */}
+              {/* Simple Carousel */}
               <div
                 className="overflow-hidden rounded-xl lg:rounded-2xl shadow-2xl"
-                ref={emblaRef}
                 style={{
                   touchAction: "manipulation",
                   userSelect: "none",
@@ -317,7 +276,9 @@ export default function Home() {
                   {carouselSlides.map((slide, index) => (
                     <div
                       key={index}
-                      className="flex-[0_0_100%] min-w-0 relative h-[250px] sm:h-[300px] lg:h-[350px]"
+                      className={`flex-[0_0_100%] min-w-0 relative h-[250px] sm:h-[300px] lg:h-[350px] ${
+                        index === currentServiceIndex ? "block" : "hidden"
+                      }`}
                     >
                       <Image
                         src={slide.image}
@@ -652,24 +613,18 @@ export default function Home() {
                   gradient: "from-[#235347] to-[#163832]",
                 },
               ].map((service, i) => (
-                <motion.div
+                <div
                   key={service.title}
-                  className="group relative"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  whileHover={{ y: -8 }}
+                  className="group relative hover:-translate-y-2 transition-transform duration-300"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-xl group-hover:shadow-2xl transition-all duration-300" />
                   <div className="relative p-6 lg:p-8">
                     {/* Animated Icon */}
-                    <motion.div
-                      className={`inline-flex p-4 lg:p-6 rounded-xl lg:rounded-2xl bg-gradient-to-br ${service.gradient} mb-4 lg:mb-6 shadow-lg`}
-                      whileHover={{ scale: 1.1, rotate: 5 }}
-                      transition={{ duration: 0.3 }}
+                    <div
+                      className={`inline-flex p-4 lg:p-6 rounded-xl lg:rounded-2xl bg-gradient-to-br ${service.gradient} mb-4 lg:mb-6 shadow-lg hover:scale-110 hover:rotate-1 transition-transform duration-300`}
                     >
                       <service.icon className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
-                    </motion.div>
+                    </div>
 
                     {/* Content */}
                     <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-3 lg:mb-4">
@@ -682,25 +637,16 @@ export default function Home() {
                     {/* Features */}
                     <div className="space-y-2 lg:space-y-3">
                       {service.features.map((feature, j) => (
-                        <motion.div
-                          key={feature}
-                          className="flex items-center gap-3"
-                          initial={{ opacity: 0, x: -20 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{
-                            duration: 0.4,
-                            delay: i * 0.1 + j * 0.1,
-                          }}
-                        >
+                        <div key={feature} className="flex items-center gap-3">
                           <div className="w-2 h-2 rounded-full bg-[#8EB69B]" />
                           <span className="text-xs lg:text-sm text-[#163832] font-medium">
                             {feature}
                           </span>
-                        </motion.div>
+                        </div>
                       ))}
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
           </div>
@@ -753,13 +699,9 @@ export default function Home() {
                     badge: "New",
                   },
                 ].map((property, i) => (
-                  <motion.div
+                  <div
                     key={property.title}
-                    className="group relative"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: i * 0.1 }}
-                    whileHover={{ y: -12 }}
+                    className="group relative hover:-translate-y-3 transition-transform duration-300"
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-all duration-500" />
                     <div className="relative p-6 lg:p-8">
@@ -817,7 +759,7 @@ export default function Home() {
                         </div>
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
                 ))}
               </div>
 
@@ -876,13 +818,9 @@ export default function Home() {
                   badge: "Return Guest",
                 },
               ].map((testimonial, i) => (
-                <motion.div
+                <div
                   key={testimonial.author}
-                  className="group relative"
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: i * 0.1 }}
-                  whileHover={{ y: -8 }}
+                  className="group relative hover:-translate-y-2 transition-transform duration-300"
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-xl group-hover:shadow-2xl transition-all duration-300" />
                   <div className="relative p-6 lg:p-8">
@@ -937,7 +875,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
+                </div>
               ))}
             </div>
 
@@ -1093,20 +1031,14 @@ export default function Home() {
             </div>
 
             <div className="text-center mb-12 lg:mb-16 relative z-10">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.8 }}
-                className="inline-flex items-center gap-3 mb-4"
-              >
+              <div className="inline-flex items-center gap-3 mb-4">
                 <div className="p-3 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full shadow-xl">
                   <Instagram className="h-6 w-6 text-white" />
                 </div>
                 <Badge className="bg-[#235347]/20 text-[#235347] border-none px-4 py-2 rounded-full text-sm font-semibold">
                   Social Media
                 </Badge>
-              </motion.div>
+              </div>
 
               <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
                 Follow Our <span className="text-[#8EB69B]">Journey</span>
@@ -1120,13 +1052,7 @@ export default function Home() {
             {/* Enhanced Modern Instagram Layout */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Left Side: Account Information */}
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="space-y-8"
-              >
+              <div className="space-y-8">
                 {/* ExpatStays Account */}
                 <div className="group relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-white/98 to-white/95 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/60 shadow-xl group-hover:shadow-2xl transition-all duration-500" />
@@ -1246,26 +1172,13 @@ export default function Home() {
                     </Button>
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
               {/* Right Side: Instagram Image */}
-              <motion.div
-                initial={{ opacity: 0, x: 50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.3 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="relative"
-              >
+              <div className="relative">
                 <div className="relative">
                   {/* Instagram Image Container */}
-                  <motion.div
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, amount: 0.3 }}
-                    transition={{ duration: 0.6, delay: 0.6 }}
-                    className="group relative"
-                    whileHover={{ y: -8 }}
-                  >
+                  <div className="group relative hover:-translate-y-2 transition-transform duration-300">
                     <div className="w-full max-w-sm mx-auto">
                       <div
                         className="relative aspect-[9/16] rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-[#8EB69B] to-[#235347] p-1 cursor-pointer"
@@ -1319,22 +1232,16 @@ export default function Home() {
                         @isa_unscripted
                       </div>
                     </div>
-                  </motion.div>
+                  </div>
 
                   {/* Decorative Element */}
                   <div className="absolute -top-6 -right-6 w-20 h-20 bg-[#DAF1DE]/30 rounded-full animate-[breathing_8s_ease-in-out_infinite] pointer-events-none"></div>
                 </div>
-              </motion.div>
+              </div>
             </div>
 
             {/* Enhanced Call to Action */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.3 }}
-              transition={{ duration: 0.8, delay: 1 }}
-              className="text-center mt-16 lg:mt-20"
-            >
+            <div className="text-center mt-16 lg:mt-20">
               <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#DAF1DE] to-[#8EB69B] px-8 lg:px-12 py-4 lg:py-6 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-105">
                 <Instagram className="h-6 w-6 text-[#051F20]" />
                 <span className="text-[#051F20] font-bold text-lg">
@@ -1342,7 +1249,7 @@ export default function Home() {
                 </span>
                 <ArrowRight className="h-5 w-5 text-[#051F20]" />
               </div>
-            </motion.div>
+            </div>
           </div>
         </section>
       </div>

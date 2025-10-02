@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useMemo, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import {
   ArrowRight,
   Calendar,
@@ -103,7 +103,7 @@ const blogPosts: BlogPost[] = [
 
 // Blog card component
 const BlogCard = ({ post }: { post: BlogPost }) => (
-  <motion.div
+  <div
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.5 }}
@@ -155,7 +155,7 @@ const BlogCard = ({ post }: { post: BlogPost }) => (
         </Link>
       </CardFooter>
     </Card>
-  </motion.div>
+  </div>
 );
 
 // Loading skeleton

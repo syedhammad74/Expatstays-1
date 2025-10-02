@@ -24,7 +24,7 @@ import {
   Heart,
 } from "lucide-react";
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+// Removed framer-motion for performance
 import Header from "@/components/layout/Header";
 import {
   Tooltip,
@@ -253,14 +253,14 @@ export default function ContactPage() {
           </div>
 
           <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-            <motion.div
+            <div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="text-center max-w-4xl mx-auto"
             >
               {/* Enhanced badge */}
-              <motion.div
+              <div
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.6, delay: 0.2 }}
@@ -269,10 +269,10 @@ export default function ContactPage() {
                 <MessageSquare className="w-4 h-4" />
                 Get in Touch
                 <Sparkle className="w-3 h-3" />
-              </motion.div>
+              </div>
 
               {/* Enhanced title */}
-              <motion.h1
+              <h1
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.3 }}
@@ -280,10 +280,10 @@ export default function ContactPage() {
               >
                 Let&apos;s Start a
                 <span className="block text-[#8EB69B]">Conversation</span>
-              </motion.h1>
+              </h1>
 
               {/* Enhanced subtitle */}
-              <motion.p
+              <p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.4 }}
@@ -291,10 +291,10 @@ export default function ContactPage() {
               >
                 Ready to transform your Dubai experience? Our expert team is
                 here to guide you through every step of your luxury journey.
-              </motion.p>
+              </p>
 
               {/* Enhanced stats */}
-              <motion.div
+              <div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.5 }}
@@ -324,22 +324,22 @@ export default function ContactPage() {
                     Rating
                   </div>
                 </div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Contact Form Section - Enhanced */}
         <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
           <div className="mx-auto">
-            <motion.div
+            <div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
               className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start"
             >
               {/* Enhanced Form Card */}
-              <motion.div
+              <div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
@@ -364,9 +364,8 @@ export default function ContactPage() {
                   <CardContent className="p-8">
                     <form onSubmit={handleSubmit} className="space-y-6">
                       {/* Success/Error Messages */}
-                      <AnimatePresence>
                         {showSuccess && (
-                          <motion.div
+                          <div
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
@@ -377,11 +376,11 @@ export default function ContactPage() {
                               Message sent successfully! We&apos;ll get back to
                               you soon.
                             </span>
-                          </motion.div>
+                          </div>
                         )}
 
                         {showError && (
-                          <motion.div
+                          <div
                             initial={{ opacity: 0, y: -10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
@@ -391,9 +390,8 @@ export default function ContactPage() {
                             <span className="text-red-800 font-medium">
                               {errorMessage}
                             </span>
-                          </motion.div>
+                          </div>
                         )}
-                      </AnimatePresence>
 
                       {/* Enhanced Form Fields */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -614,10 +612,10 @@ export default function ContactPage() {
                     </form>
                   </CardContent>
                 </Card>
-              </motion.div>
+              </div>
 
               {/* Enhanced Contact Info Cards */}
-              <motion.div
+              <div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
@@ -643,7 +641,7 @@ export default function ContactPage() {
                 {/* Enhanced contact cards */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-6">
                   {contactInfo.map((item, index) => (
-                    <motion.div
+                    <div
                       key={index}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -699,12 +697,12 @@ export default function ContactPage() {
                           </TooltipContent>
                         </Tooltip>
                       )}
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
 
                 {/* Enhanced trust indicators */}
-                <motion.div
+                <div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
@@ -732,15 +730,15 @@ export default function ContactPage() {
                       </div>
                     </div>
                   </div>
-                </motion.div>
-              </motion.div>
-            </motion.div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Enhanced Map Section */}
         <section className="container mx-auto px-4 sm:px-8 pb-16 lg:pb-24">
-          <motion.div
+              <div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -769,12 +767,12 @@ export default function ContactPage() {
                 title="Expat Stays Office Map"
               ></iframe>
             </div>
-          </motion.div>
+              </div>
         </section>
 
         {/* Enhanced CTA Section */}
         <section className="container mx-auto px-4 sm:px-8 pb-16 lg:pb-24">
-          <motion.div
+              <div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -823,7 +821,7 @@ export default function ContactPage() {
                 </Button>
               </div>
             </div>
-          </motion.div>
+              </div>
         </section>
       </div>
     </TooltipProvider>

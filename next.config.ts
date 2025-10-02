@@ -11,7 +11,6 @@ const nextConfig: NextConfig = {
     scrollRestoration: true,
     optimizePackageImports: [
       "lucide-react",
-      "framer-motion",
       "@radix-ui/react-icons",
       "react-hook-form",
       "@hookform/resolvers",
@@ -19,7 +18,7 @@ const nextConfig: NextConfig = {
     ],
   },
 
-  // Advanced image optimization
+  // Optimized image settings for performance
   images: {
     remotePatterns: [
       {
@@ -39,9 +38,9 @@ const nextConfig: NextConfig = {
         hostname: "storage.googleapis.com",
       },
     ],
-    formats: ["image/avif", "image/webp"],
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+    formats: ["image/webp"], // Removed AVIF for better compatibility
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920], // Reduced sizes
+    imageSizes: [16, 32, 48, 64, 96, 128, 256], // Reduced sizes
     minimumCacheTTL: 31536000, // 1 year
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
@@ -136,13 +135,6 @@ const nextConfig: NextConfig = {
             firebase: {
               test: /[\\/]node_modules[\\/](firebase|@firebase)[\\/]/,
               name: "firebase",
-              chunks: "all",
-              priority: 20,
-              maxSize: 244000,
-            },
-            framer: {
-              test: /[\\/]node_modules[\\/]framer-motion[\\/]/,
-              name: "framer-motion",
               chunks: "all",
               priority: 20,
               maxSize: 244000,

@@ -16,7 +16,7 @@ import {
   DollarSign,
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 
 interface MockPaymentFormProps {
   bookingId: string;
@@ -168,14 +168,14 @@ export function MockPaymentForm({
                 size="lg"
               >
                 {processing ? (
-                  <motion.div
+                  <div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     className="flex items-center gap-2"
                   >
                     <Loader2 className="h-5 w-5 animate-spin" />
                     Processing Payment...
-                  </motion.div>
+                  </div>
                 ) : (
                   <div className="flex items-center gap-2">
                     <CreditCard className="h-5 w-5" />
@@ -185,7 +185,7 @@ export function MockPaymentForm({
               </Button>
             </>
           ) : (
-            <motion.div
+            <div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               className="text-center py-8"
@@ -197,7 +197,7 @@ export function MockPaymentForm({
               <p className="text-gray-600">
                 Your booking has been confirmed. Redirecting...
               </p>
-            </motion.div>
+            </div>
           )}
         </CardContent>
       </Card>

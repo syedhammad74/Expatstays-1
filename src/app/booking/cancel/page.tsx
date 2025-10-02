@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { XCircle, Home, RotateCcw, HelpCircle } from "lucide-react";
-import { motion } from "framer-motion";
+// Removed framer-motion for performance
 import Link from "next/link";
 import { bookingService } from "@/lib/services/bookings";
 import { Booking } from "@/lib/types/firebase";
@@ -59,7 +59,7 @@ function BookingCancelContent() {
     <div className="min-h-screen bg-gradient-to-br from-[#FAFAFA] via-white to-[#DAF1DE]/30 py-12">
       <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl mx-auto">
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -72,9 +72,9 @@ function BookingCancelContent() {
           <p className="text-xl text-[#235347]/70">
             Your payment was cancelled. No charges were made to your account.
           </p>
-        </motion.div>
+        </div>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -130,9 +130,9 @@ function BookingCancelContent() {
               )}
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -172,9 +172,9 @@ function BookingCancelContent() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
 
-        <motion.div
+        <div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.6 }}
@@ -199,7 +199,7 @@ function BookingCancelContent() {
               </div>
             </CardContent>
           </Card>
-        </motion.div>
+        </div>
       </div>
       </div>
       </div>
