@@ -376,11 +376,11 @@ export default function Home() {
             <div className="absolute top-4 right-4 w-16 h-16 bg-[#8EB69B] rounded-full shadow-sm"></div>
           </div>
           {/* Left Panel */}
-          <div className="w-full lg:w-2/5 flex mb-20 mt-8 flex-col justify-center items-start px-4 lg:px-12 z-10 animate-fade-in-up">
+          <div className="w-full lg:w-2/5 flex mb-20 mt-8 flex-col justify-center items-start px-4 lg:px-12 z-10 ">
             <Badge className="bg-[#235347]/20 text-[#235347] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
               Luxury Rentals
             </Badge>
-            <h1 className="text-3xl lg:text-4xl xl:text-6xl font-extrabold text-[#051F20] leading-tight mb-4 lg:mb-6">
+            <h1 className="text-3xl lg:text-4xl xl:text-6xl font-semibold text-[#051F20] leading-tight mb-4 lg:mb-6">
               Find Your <span className="text-[#8EB69B]">Perfect Home</span>
             </h1>
             <p className="text-base lg:text-lg text-[#235347] mb-6 lg:mb-10 max-w-md">
@@ -390,14 +390,14 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 w-full sm:w-auto">
               <Button
                 size="lg"
-                className="rounded-buttons px-4 lg:px-6 py-3 lg:py-4 bg-[#8EB69B] text-[#051F20] font-bold shadow-lg hover:bg-[#235347] hover:text-[#DAF1DE] transition-colors duration-150 w-full sm:w-auto"
+                className="rounded-buttons px-4 lg:px-6 py-3 lg:py-4 bg-[#8EB69B] text-[#051F20] font-medium shadow-lg hover:bg-[#235347] hover:text-[#DAF1DE] transition-colors duration-150 w-full sm:w-auto"
               >
                 Explore Properties
               </Button>
               <Button
                 variant="outline"
                 size="lg"
-                className="rounded-buttons px-4 lg:px-6 py-3 lg:py-4 border-[#8EB69B] text-[#8EB69B] font-bold hover:bg-[#8EB69B] hover:text-[#051F20] transition-colors duration-150 w-full sm:w-auto"
+                className="rounded-buttons px-4 lg:px-6 py-3 lg:py-4 border-[#8EB69B] text-[#8EB69B] font-medium hover:bg-[#8EB69B] hover:text-[#051F20] transition-colors duration-150 w-full sm:w-auto"
               >
                 Book Now
               </Button>
@@ -492,7 +492,7 @@ export default function Home() {
           <div className="absolute -left-16 lg:-left-32 -top-16 lg:-top-32 w-[200px] h-[200px] lg:w-[420px] lg:h-[420px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl z-0" />
 
           <div className="relative z-10 w-full">
-            <h2 className="mb-6 text-2xl lg:text-3xl xl:text-4xl font-bold text-[#051F20] text-center font-[Manrope,Inter,sans-serif] tracking-tight">
+            <h2 className="mb-6 text-2xl lg:text-3xl xl:text-4xl font-medium text-[#051F20] text-center font-[Manrope,Inter,sans-serif] tracking-tight">
               Book Your Next Stay in Seconds
             </h2>
             {error && (
@@ -537,9 +537,9 @@ export default function Home() {
                         : "Check in – Check out"}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="p-0 bg-white rounded-2xl lg:rounded-3xl shadow-2xl border border-[#DAF1DE]/80 animate-fade-in-up min-w-[300px] lg:min-w-[340px]">
+                  <PopoverContent className="p-0 bg-white rounded-2xl lg:rounded-3xl shadow-2xl border border-[#DAF1DE]/80  min-w-[300px] lg:min-w-[340px]">
                     <div className="px-4 lg:px-6 pt-4 lg:pt-6 pb-2">
-                      <h3 className="text-lg lg:text-xl font-bold text-[#051F20]">
+                      <h3 className="text-lg lg:text-xl font-medium text-[#051F20]">
                         Select your stay dates
                       </h3>
                       <p className="text-sm text-[#8EB69B]">
@@ -574,7 +574,7 @@ export default function Home() {
                         hovered:
                           "bg-[#BFE3D0] text-[#051F20] shadow-md transition-all duration-200",
                         today:
-                          "border-2 border-[#8EB69B] bg-white text-[#051F20] font-bold",
+                          "border-2 border-[#8EB69B] bg-white text-[#051F20] font-medium",
                         focus: "ring-2 ring-[#8EB69B] ring-offset-2",
                         active: "ring-2 ring-[#235347] ring-offset-2",
                         disabled: "opacity-40 cursor-not-allowed",
@@ -716,7 +716,7 @@ export default function Home() {
         <section className="mb-16 lg:mb-24">
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-center mb-12 lg:mb-16">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
+              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-[#051F20] mb-4">
                 Exclusive <span className="text-[#8EB69B]">Services</span>
               </h2>
               <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
@@ -772,7 +772,7 @@ export default function Home() {
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-3 lg:mb-4">
+                    <h3 className="text-xl lg:text-2xl font-medium text-[#051F20] mb-3 lg:mb-4">
                       {service.title}
                     </h3>
                     <p className="text-sm lg:text-base text-[#235347] mb-4 lg:mb-6 leading-relaxed">
@@ -801,7 +801,7 @@ export default function Home() {
         <section className="mb-16 lg:mb-24">
           <div className="max-w-7xl mx-auto px-4">
             <div className="text-center mb-12 lg:mb-16">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
+              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-[#051F20] mb-4">
                 Featured <span className="text-[#8EB69B]">Properties</span>
               </h2>
               <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
@@ -859,7 +859,7 @@ export default function Home() {
                         <div className="absolute inset-0 bg-gradient-to-t from-[#163832]/60 to-transparent" />
                         {property.featured && (
                           <div className="absolute top-3 lg:top-4 right-3 lg:right-4">
-                            <div className="bg-[#8EB69B] text-[#051F20] px-2 lg:px-3 py-1 rounded-full text-xs font-bold">
+                            <div className="bg-[#8EB69B] text-[#051F20] px-2 lg:px-3 py-1 rounded-full text-xs font-semibold">
                               Featured
                             </div>
                           </div>
@@ -881,7 +881,7 @@ export default function Home() {
                             {property.location?.city},{" "}
                             {property.location?.state}
                           </div>
-                          <h3 className="text-lg lg:text-xl font-bold text-[#051F20] mb-2">
+                          <h3 className="text-lg lg:text-xl font-medium text-[#051F20] mb-2">
                             {property.title}
                           </h3>
                           <div className="flex items-center gap-4 text-xs lg:text-sm text-[#235347]">
@@ -893,7 +893,7 @@ export default function Home() {
 
                         <div className="flex items-center justify-between pt-3 lg:pt-4">
                           <div>
-                            <div className="text-xl lg:text-2xl font-bold text-[#8EB69B]">
+                            <div className="text-xl lg:text-2xl font-semibold text-[#8EB69B]">
                               ${property.pricing?.basePrice}
                             </div>
                             <div className="text-xs lg:text-sm text-[#235347]">
@@ -933,7 +933,7 @@ export default function Home() {
         <section className="mb-16 lg:mb-24">
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-center mb-12 lg:mb-16">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
+              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-[#051F20] mb-4">
                 Guest <span className="text-[#8EB69B]">Experiences</span>
               </h2>
               <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
@@ -1034,7 +1034,7 @@ export default function Home() {
               <div className="inline-flex items-center gap-3 lg:gap-4 bg-gradient-to-r from-[#DAF1DE] to-[#8EB69B] px-6 lg:px-8 py-3 lg:py-4 rounded-full">
                 <div className="flex items-center gap-1">
                   <Star className="h-4 lg:h-5 w-4 lg:w-5 fill-[#051F20] text-[#051F20]" />
-                  <span className="font-bold text-[#051F20] text-sm lg:text-base">
+                  <span className="font-medium text-[#051F20] text-sm lg:text-base">
                     4.9
                   </span>
                 </div>
@@ -1081,7 +1081,7 @@ export default function Home() {
                   {/* Right: Content */}
                   <div className="p-7 lg:p-10 bg-white flex flex-col gap-4 lg:gap-6">
                     <div>
-                      <h3 className="text-3xl lg:text-4xl font-extrabold text-[#051F20]">
+                      <h3 className="text-3xl lg:text-4xl font-semibold text-[#051F20]">
                         Isa Husain
                       </h3>
                       <div className="hidden lg:block h-1 w-20 bg-gradient-to-r from-[#8EB69B] to-[#235347] rounded-full mt-2" />
@@ -1142,7 +1142,7 @@ export default function Home() {
 
                     {/* Experience */}
                     <div className="pt-1">
-                      <h4 className="text-sm lg:text-base font-bold text-[#051F20] mb-3">
+                      <h4 className="text-sm lg:text-base font-medium text-[#051F20] mb-3">
                         Experience
                       </h4>
                       <div className="space-y-2">
@@ -1191,7 +1191,7 @@ export default function Home() {
                 </Badge>
               </div>
 
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
+              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-medium text-[#051F20] mb-4">
                 Follow Our <span className="text-[#8EB69B]">Journey</span>
               </h2>
               <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto leading-relaxed">
@@ -1219,7 +1219,7 @@ export default function Home() {
                         />
                       </div>
                       <div>
-                        <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-1">
+                        <h3 className="text-xl lg:text-2xl font-medium text-[#051F20] mb-1">
                           @expatstays
                         </h3>
                         <p className="text-sm lg:text-base text-[#235347] mb-2">
@@ -1279,7 +1279,7 @@ export default function Home() {
                         />
                       </div>
                       <div>
-                        <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-1">
+                        <h3 className="text-xl lg:text-2xl font-medium text-[#051F20] mb-1">
                           @isa_unscripted
                         </h3>
                         <p className="text-sm lg:text-base text-[#235347] mb-2">
@@ -1379,7 +1379,7 @@ export default function Home() {
                       </div>
 
                       {/* Image Label */}
-                      <div className="absolute -bottom-2 -right-2 bg-[#8EB69B] text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg ring-2 ring-white/50">
+                      <div className="absolute -bottom-2 -right-2 bg-[#8EB69B] text-white px-3 py-1 rounded-full text-xs font-medium shadow-lg ring-2 ring-white/50">
                         @isa_unscripted
                       </div>
                     </div>
@@ -1395,7 +1395,7 @@ export default function Home() {
             <div className="text-center mt-16 lg:mt-20">
               <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#DAF1DE] to-[#8EB69B] px-8 lg:px-12 py-4 lg:py-6 rounded-full shadow-xl hover:shadow-2xl transition-shadow duration-200">
                 <Instagram className="h-6 w-6 text-[#051F20]" />
-                <span className="text-[#051F20] font-bold text-lg">
+                <span className="text-[#051F20] font-medium text-lg">
                   Join our Instagram community
                 </span>
                 <ArrowRight className="h-5 w-5 text-[#051F20]" />

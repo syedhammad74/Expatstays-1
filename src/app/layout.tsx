@@ -106,32 +106,10 @@ export default function RootLayout({
           href="https://firebasestorage.googleapis.com"
         />
 
-        {/* Critical font preloading for instant display */}
+        {/* Simple font loading */}
         <link
-          href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,300..1000;1,300..1000&display=swap"
-          rel="preload"
-          as="style"
-          onLoad="this.onload=null;this.rel='stylesheet'"
-        />
-        <noscript>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,300..1000;1,300..1000&display=swap"
-            rel="stylesheet"
-          />
-        </noscript>
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `
-            /* Immediate fallback font loading */
-            * { 
-              font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important; 
-            }
-            body { 
-              font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif !important;
-              font-weight: 400;
-            }
-          `,
-          }}
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          rel="stylesheet"
         />
 
         {/* Preload critical resources */}
