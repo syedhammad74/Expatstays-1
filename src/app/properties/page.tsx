@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback, useMemo, Component, ErrorInfo, ReactNode } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
@@ -36,8 +36,66 @@ const PropertyGridSkeleton = dynamic(
   }
 );
 
+// Error Boundary Component
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error?: Error;
+}
+
+class PropertiesErrorBoundary extends Component<
+  { children: ReactNode },
+  ErrorBoundaryState
+> {
+  constructor(props: { children: ReactNode }) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error("❌ Properties page error:", error);
+    console.error("Error info:", errorInfo);
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+          <div className="text-center">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              Something went wrong
+            </h2>
+            <p className="text-gray-600 mb-6">
+              We're having trouble loading the properties page. Please try refreshing.
+            </p>
+            <button
+              onClick={() => window.location.reload()}
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Refresh Page
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+function PropertiesPageWrapper() {
+  return (
+    <PropertiesErrorBoundary>
+      <PropertiesPage />
+    </PropertiesErrorBoundary>
+  );
+}
+
 // Main Properties Page Component
-export default function PropertiesPage() {
+function PropertiesPage() {
   const { toast } = useToast();
   const router = useRouter();
 
@@ -57,22 +115,28 @@ export default function PropertiesPage() {
     amenities: [] as string[],
   });
 
-  // Data fetching
+  // Data fetching with enhanced error handling
   const fetchProperties = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
+      console.log("🔍 Fetching properties...");
       const data = await propertyService.getAllProperties();
+      console.log("✅ Properties fetched successfully:", data.length);
       setProperties(data);
     } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to fetch properties"
-      );
-      toast({
-        title: "Error",
-        description: "Failed to load properties",
-        variant: "destructive",
-      });
+      console.error("❌ Error fetching properties:", err);
+      const errorMessage = err instanceof Error ? err.message : "Failed to fetch properties";
+      setError(errorMessage);
+      
+      // Only show toast in development or if it's a critical error
+      if (process.env.NODE_ENV === 'development') {
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      }
     } finally {
       setLoading(false);
     }
@@ -83,9 +147,20 @@ export default function PropertiesPage() {
     fetchProperties();
   }, [fetchProperties]);
 
-  // Filter properties
+  // Filter properties with enhanced safety checks
   const filteredProperties = useMemo(() => {
+    if (!Array.isArray(properties)) {
+      console.warn("Properties is not an array:", properties);
+      return [];
+    }
+
     return properties.filter((property) => {
+      try {
+        // Safety check for property structure
+        if (!property || typeof property !== 'object') {
+          console.warn("Invalid property object:", property);
+          return false;
+        }
       // Search filter
       if (filters.search) {
         const searchLower = filters.search.toLowerCase();
@@ -134,6 +209,10 @@ export default function PropertiesPage() {
       }
 
       return true;
+      } catch (err) {
+        console.error("Error filtering property:", property, err);
+        return false;
+      }
     });
   }, [properties, filters]);
 
@@ -359,3 +438,6 @@ export default function PropertiesPage() {
     </div>
   );
 }
+
+// Export the wrapper component
+export default PropertiesPageWrapper;
