@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 
 /**
- * UILoadingGuard component ensures UI loads properly
- * Handles font loading and style application gracefully
+ * UILoadingGuard - Simplified version to troubleshoot loading issues
  */
 export default function UILoadingGuard({
   children,
@@ -14,47 +13,15 @@ export default function UILoadingGuard({
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
-    // Check if fonts are loaded and styles are applied
-    const checkUIReadiness = () => {
-      // Check if primary font is loaded
-      if (document.fonts) {
-        document.fonts.ready.then(() => {
-          setTimeout(() => setIsLoaded(true), 100); // Small delay for style application
-        });
-      } else {
-        // Fallback for browsers without font loading API
-        setTimeout(() => setIsLoaded(true), 500);
-      }
-    };
+    console.log("🔄 UILoadingGuard starting...");
 
-    // Immediate check
-    checkUIReadiness();
+    // Simplified loading check - just wait a short time
+    const timer = setTimeout(() => {
+      console.log("✅ UILoadingGuard ready");
+      setIsLoaded(true);
+    }, 100); // Very short delay
 
-    // Additional check after stylesheet loading
-    const checkStylesheets = () => {
-      const stylesheets = document.styleSheets;
-      let loadedCount = 0;
-
-      for (let i = 0; i < stylesheets.length; i++) {
-        try {
-          // Try to access rules - will throw if not loaded
-          stylesheets[i].cssRules;
-          loadedCount++;
-        } catch (e) {
-          // Stylesheet not yet loaded
-        }
-      }
-
-      // If we have loaded stylesheets, proceed
-      if (loadedCount > 0) {
-        setIsLoaded(true);
-      } else {
-        // Fallback timeout
-        setTimeout(() => setIsLoaded(true), 1000);
-      }
-    };
-
-    setTimeout(checkStylesheets, 200);
+    return () => clearTimeout(timer);
   }, []);
 
   if (!isLoaded) {
@@ -62,11 +29,13 @@ export default function UILoadingGuard({
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
           <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-600 rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading...</p>
+          <p className="text-gray-600">Loading UI...</p>
+          <p className="text-gray-500 text-sm mt-2">Checking components...</p>
         </div>
       </div>
     );
   }
 
+  console.log("🎯 UILoadingGuard rendering children");
   return <>{children}</>;
 }
