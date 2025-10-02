@@ -31,7 +31,9 @@
     "compress-images": "node scripts/compress-images.js",
     "install-sharp": "node scripts/install-sharp.js",
     "optimize:remove-heavy": "node scripts/remove-heavy-dependencies.js",
-    "optimize:analyze": "npm run build && npx @next/bundle-analyzer"
+    "optimize:analyze": "npm run build && npx @next/bundle-analyzer",
+    "optimize:images": "node scripts/optimize-images-critical.js",
+    "optimize:critical": "npm run optimize:images && npm run build && npm run optimize:analyze"
   },
   "dependencies": {
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",

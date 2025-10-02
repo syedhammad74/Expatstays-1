@@ -126,21 +126,68 @@ export default function Home() {
     const fetchFeaturedProperties = async () => {
       try {
         setPropertiesLoading(true);
+        console.log("🔍 Fetching properties for landing page...");
         const allProperties = await propertyService.getAllProperties();
+        console.log("📊 All properties:", allProperties.length);
+
         // Get first 3 properties or featured ones
         const featured = allProperties.filter((p) => p.featured).slice(0, 3);
+        console.log("⭐ Featured properties:", featured.length);
+
         if (featured.length < 3) {
           // If not enough featured properties, fill with regular ones
           const regular = allProperties
             .filter((p) => !p.featured)
             .slice(0, 3 - featured.length);
-          setFeaturedProperties([...featured, ...regular]);
+          const finalProperties = [...featured, ...regular];
+          console.log(
+            "🏠 Final properties for display:",
+            finalProperties.length
+          );
+          setFeaturedProperties(finalProperties);
         } else {
+          console.log("🏠 Using featured properties:", featured.length);
           setFeaturedProperties(featured);
         }
       } catch (err) {
-        console.error("Failed to fetch properties:", err);
-        setFeaturedProperties([]);
+        console.error("❌ Failed to fetch properties:", err);
+        // Fallback to hardcoded properties for display
+        const fallbackProperties = [
+          {
+            id: "fallback-1",
+            title: "Luxury Villa Experience",
+            images: ["/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg"],
+            location: { city: "Dubai", state: "UAE", country: "UAE" },
+            pricing: { basePrice: 2500 },
+            capacity: { maxGuests: 6, bedrooms: 3, bathrooms: 2 },
+            rating: 4.9,
+            featured: true,
+            availability: { isActive: true },
+          },
+          {
+            id: "fallback-2",
+            title: "Palm Jumeirah Retreat",
+            images: ["/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"],
+            location: { city: "Palm Jumeirah", state: "Dubai", country: "UAE" },
+            pricing: { basePrice: 3200 },
+            capacity: { maxGuests: 8, bedrooms: 4, bathrooms: 3 },
+            rating: 4.8,
+            featured: true,
+            availability: { isActive: true },
+          },
+          {
+            id: "fallback-3",
+            title: "Downtown Luxury Loft",
+            images: ["/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg"],
+            location: { city: "Downtown", state: "Dubai", country: "UAE" },
+            pricing: { basePrice: 1800 },
+            capacity: { maxGuests: 4, bedrooms: 2, bathrooms: 2 },
+            rating: 4.9,
+            featured: false,
+            availability: { isActive: true },
+          },
+        ];
+        setFeaturedProperties(fallbackProperties as any);
       } finally {
         setPropertiesLoading(false);
       }
@@ -665,135 +712,130 @@ export default function Home() {
         </section>
 
         {/* Featured Properties Section */}
-        {
-          <section className="mb-16 lg:mb-24">
-            <div className="max-w-7xl mx-auto px-4">
-              <div className="text-center mb-12 lg:mb-16">
-                <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
-                  Featured <span className="text-[#8EB69B]">Properties</span>
-                </h2>
-                <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
-                  Discover our handpicked luxury properties, perfect for your
-                  next stay
+        <section className="mb-16 lg:mb-24">
+          <div className="max-w-7xl mx-auto px-4">
+            <div className="text-center mb-12 lg:mb-16">
+              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
+                Featured <span className="text-[#8EB69B]">Properties</span>
+              </h2>
+              <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
+                Discover our handpicked luxury properties, perfect for your next
+                stay
+              </p>
+            </div>
+
+            {propertiesLoading ? (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="bg-gray-200 rounded-2xl h-96 animate-pulse"
+                  />
+                ))}
+              </div>
+            ) : featuredProperties.length === 0 ? (
+              <div className="text-center py-12">
+                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  No properties available
+                </h3>
+                <p className="text-gray-600 mb-4">
+                  We're working on adding amazing properties for you
                 </p>
               </div>
-
-              {propertiesLoading ? (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-                  {[1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      className="bg-gray-200 rounded-2xl h-96 animate-pulse"
-                    />
-                  ))}
-                </div>
-              ) : featuredProperties.length === 0 ? (
-                <div className="text-center py-12">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                    No properties available
-                  </h3>
-                  <p className="text-gray-600 mb-4">
-                    We're working on adding amazing properties for you
-                  </p>
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-                  {featuredProperties.map((property, i) => (
-                    <div
-                      key={property.id}
-                      className="group relative cursor-pointer"
-                      onClick={() => handlePropertyClick(property.id)}
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-shadow duration-200" />
-                      <div className="relative p-6 lg:p-8">
-                        <div className="relative h-48 lg:h-64 rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6">
-                          <Image
-                            src={
-                              property.images?.[0] ||
-                              "/placeholder-property.jpg"
-                            }
-                            alt={property.title}
-                            fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-                            className="object-cover object-center"
-                            quality={75}
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-[#163832]/60 to-transparent" />
-                          {property.featured && (
-                            <div className="absolute top-3 lg:top-4 right-3 lg:right-4">
-                              <div className="bg-[#8EB69B] text-[#051F20] px-2 lg:px-3 py-1 rounded-full text-xs font-bold">
-                                Featured
-                              </div>
-                            </div>
-                          )}
-                          <div className="absolute bottom-3 lg:bottom-4 left-3 lg:left-4 right-3 lg:right-4">
-                            <div className="flex items-center gap-2 text-white">
-                              <Star className="h-3 lg:h-4 w-3 lg:w-4 fill-[#8EB69B] text-[#8EB69B]" />
-                              <span className="text-xs lg:text-sm font-semibold">
-                                {property.rating || 4.8}
-                              </span>
+            ) : (
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+                {featuredProperties.map((property, i) => (
+                  <div
+                    key={property.id}
+                    className="group relative cursor-pointer"
+                    onClick={() => handlePropertyClick(property.id)}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-shadow duration-200" />
+                    <div className="relative p-6 lg:p-8">
+                      <div className="relative h-48 lg:h-64 rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6">
+                        <Image
+                          src={
+                            property.images?.[0] || "/placeholder-property.jpg"
+                          }
+                          alt={property.title}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
+                          className="object-cover object-center"
+                          quality={75}
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#163832]/60 to-transparent" />
+                        {property.featured && (
+                          <div className="absolute top-3 lg:top-4 right-3 lg:right-4">
+                            <div className="bg-[#8EB69B] text-[#051F20] px-2 lg:px-3 py-1 rounded-full text-xs font-bold">
+                              Featured
                             </div>
                           </div>
-                        </div>
-
-                        <div className="space-y-3 lg:space-y-4">
-                          <div>
-                            <div className="flex items-center gap-2 text-[#235347] text-xs lg:text-sm mb-2">
-                              <MapPin className="h-3 lg:h-4 w-3 lg:w-4" />
-                              {property.location?.city},{" "}
-                              {property.location?.state}
-                            </div>
-                            <h3 className="text-lg lg:text-xl font-bold text-[#051F20] mb-2">
-                              {property.title}
-                            </h3>
-                            <div className="flex items-center gap-4 text-xs lg:text-sm text-[#235347]">
-                              <span>{property.capacity?.maxGuests} guests</span>
-                              <span>•</span>
-                              <span>
-                                {property.capacity?.bedrooms} bedrooms
-                              </span>
-                            </div>
-                          </div>
-
-                          <div className="flex items-center justify-between pt-3 lg:pt-4">
-                            <div>
-                              <div className="text-xl lg:text-2xl font-bold text-[#8EB69B]">
-                                ${property.pricing?.basePrice}
-                              </div>
-                              <div className="text-xs lg:text-sm text-[#235347]">
-                                per night
-                              </div>
-                            </div>
-                            <Button
-                              className="bg-[#163832] text-white hover:bg-[#235347] transition-colors duration-150 text-sm lg:text-base px-3 lg:px-4 py-2 lg:py-2"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handlePropertyClick(property.id);
-                              }}
-                            >
-                              View Details
-                            </Button>
+                        )}
+                        <div className="absolute bottom-3 lg:bottom-4 left-3 lg:left-4 right-3 lg:right-4">
+                          <div className="flex items-center gap-2 text-white">
+                            <Star className="h-3 lg:h-4 w-3 lg:w-4 fill-[#8EB69B] text-[#8EB69B]" />
+                            <span className="text-xs lg:text-sm font-semibold">
+                              {property.rating || 4.8}
+                            </span>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              )}
 
-              <div className="text-center mt-8 lg:mt-12">
-                <Button
-                  variant="outline"
-                  className="border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-[#051F20] transition-colors duration-150"
-                  onClick={handleViewAllProperties}
-                >
-                  View All Properties <ArrowRight className="h-4 w-4 ml-2" />
-                </Button>
+                      <div className="space-y-3 lg:space-y-4">
+                        <div>
+                          <div className="flex items-center gap-2 text-[#235347] text-xs lg:text-sm mb-2">
+                            <MapPin className="h-3 lg:h-4 w-3 lg:w-4" />
+                            {property.location?.city},{" "}
+                            {property.location?.state}
+                          </div>
+                          <h3 className="text-lg lg:text-xl font-bold text-[#051F20] mb-2">
+                            {property.title}
+                          </h3>
+                          <div className="flex items-center gap-4 text-xs lg:text-sm text-[#235347]">
+                            <span>{property.capacity?.maxGuests} guests</span>
+                            <span>•</span>
+                            <span>{property.capacity?.bedrooms} bedrooms</span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between pt-3 lg:pt-4">
+                          <div>
+                            <div className="text-xl lg:text-2xl font-bold text-[#8EB69B]">
+                              ${property.pricing?.basePrice}
+                            </div>
+                            <div className="text-xs lg:text-sm text-[#235347]">
+                              per night
+                            </div>
+                          </div>
+                          <Button
+                            className="bg-[#163832] text-white hover:bg-[#235347] transition-colors duration-150 text-sm lg:text-base px-3 lg:px-4 py-2 lg:py-2"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handlePropertyClick(property.id);
+                            }}
+                          >
+                            View Details
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
               </div>
+            )}
+
+            <div className="text-center mt-8 lg:mt-12">
+              <Button
+                variant="outline"
+                className="border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-[#051F20] transition-colors duration-150"
+                onClick={handleViewAllProperties}
+              >
+                View All Properties <ArrowRight className="h-4 w-4 ml-2" />
+              </Button>
             </div>
-          </section>
-        }
+          </div>
+        </section>
 
         {/* AI-Style Testimonials Section */}
         <section className="mb-16 lg:mb-24">
