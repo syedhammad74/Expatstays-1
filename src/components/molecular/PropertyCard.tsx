@@ -14,7 +14,7 @@ import {
   Share2,
 } from "lucide-react";
 
-export interface PropertyCardProps {
+export default interface PropertyCardProps {
   slug: string;
   imageUrl: string;
   images?: string[];
