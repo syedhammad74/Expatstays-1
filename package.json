@@ -33,7 +33,8 @@
     "optimize:remove-heavy": "node scripts/remove-heavy-dependencies.js",
     "optimize:analyze": "npm run build && npx @next/bundle-analyzer",
     "optimize:images": "node scripts/optimize-images-critical.js",
-    "optimize:critical": "npm run optimize:images && npm run build && npm run optimize:analyze"
+    "optimize:critical": "npm run optimize:images && npm run build && npm run optimize:analyze",
+    "move:large-assets": "node scripts/move-large-assets.js"
   },
   "dependencies": {
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",

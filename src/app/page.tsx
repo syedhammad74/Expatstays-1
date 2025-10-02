@@ -18,7 +18,7 @@ import {
   HomeIcon,
   CheckCircle,
 } from "lucide-react";
-import Image from "next/image";
+import ResponsiveImage from "@/components/ui/ResponsiveImage";
 // Removed framer-motion for performance
 import { useRef, useState, useEffect, useCallback } from "react";
 import Header from "@/components/layout/Header";
@@ -340,7 +340,7 @@ export default function Home() {
                         index === currentServiceIndex ? "block" : "hidden"
                       }`}
                     >
-                      <Image
+                      <ResponsiveImage
                         src={slide.image}
                         alt={slide.alt}
                         fill
@@ -753,7 +753,7 @@ export default function Home() {
                     <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-shadow duration-200" />
                     <div className="relative p-6 lg:p-8">
                       <div className="relative h-48 lg:h-64 rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6">
-                        <Image
+                        <ResponsiveImage
                           src={
                             property.images?.[0] || "/placeholder-property.jpg"
                           }
@@ -888,7 +888,7 @@ export default function Home() {
                       <div className="flex items-center gap-3 lg:gap-4">
                         <div className="relative">
                           <div className="w-10 lg:w-12 h-10 lg:h-12 rounded-full overflow-hidden">
-                            <Image
+                            <ResponsiveImage
                               src={testimonial.avatar}
                               alt={testimonial.author}
                               width={48}
@@ -974,7 +974,7 @@ export default function Home() {
                       Founder
                     </Badge>
                     <div className="rounded-xl overflow-hidden aspect-[4/5]">
-                      <Image
+                      <ResponsiveImage
                         src="/media/isa.webp"
                         alt="Isa Husain - Founder of Expat Stays"
                         width={800}
@@ -1118,7 +1118,7 @@ export default function Home() {
                   <div className="relative p-6 lg:p-8">
                     <div className="flex items-center gap-4 mb-6">
                       <div className="w-16 h-16 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full flex items-center justify-center shadow-lg overflow-hidden ring-2 ring-white/50">
-                        <Image
+                        <ResponsiveImage
                           src="/media/Close Ups June 25 2025/logo1.png"
                           alt="ExpatStays Logo"
                           width={64}
@@ -1178,7 +1178,7 @@ export default function Home() {
                   <div className="relative p-6 lg:p-8">
                     <div className="flex items-center gap-4 mb-6">
                       <div className="w-16 h-16 bg-gradient-to-br from-[#235347] to-[#163832] rounded-full flex items-center justify-center shadow-lg overflow-hidden ring-2 ring-white/50">
-                        <Image
+                        <ResponsiveImage
                           src="/media/Close Ups June 25 2025/logo2.png"
                           alt="Isa Unscripted Logo"
                           width={64}

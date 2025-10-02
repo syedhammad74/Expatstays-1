@@ -13,6 +13,8 @@ interface ResponsiveImageProps {
   priority?: boolean;
   sizes?: string;
   quality?: number;
+  loading?: "lazy" | "eager";
+  draggable?: boolean;
 }
 
 /**
@@ -30,6 +32,8 @@ export default function ResponsiveImage({
   priority = false,
   sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
   quality = 75,
+  loading = "lazy",
+  draggable = true,
 }: ResponsiveImageProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
@@ -105,7 +109,8 @@ export default function ResponsiveImage({
         blurDataURL={blurDataURL}
         onLoadingComplete={() => setIsLoading(false)}
         onError={() => setHasError(true)}
-        loading={priority ? "eager" : "lazy"}
+        loading={loading}
+        draggable={draggable}
       />
       {isLoading && (
         <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />

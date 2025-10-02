@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import { getLocalImage } from "@/lib/imageUtils";
 // Removed framer-motion for better mobile performance
-import Image from "next/image";
+import ResponsiveImage from "@/components/ui/ResponsiveImage";
 import Header from "@/components/layout/Header";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { format } from "date-fns";
@@ -1051,7 +1051,7 @@ export default function PropertiesPage() {
               <div className="relative space-y-4 lg:space-y-6">
                 {/* Top Image */}
                 <div className="relative h-48 sm:h-56 lg:h-72 rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl">
-                  <Image
+                  <ResponsiveImage
                     src="/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"
                     alt="Luxury Villa Interior"
                     fill
@@ -1062,7 +1062,7 @@ export default function PropertiesPage() {
 
                 {/* Bottom Image */}
                 <div className="relative h-40 sm:h-48 lg:h-64 rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl -mt-4 lg:-mt-8 ml-4 lg:ml-8">
-                  <Image
+                  <ResponsiveImage
                     src="/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg"
                     alt="Luxury Penthouse"
                     fill
@@ -1083,7 +1083,7 @@ export default function PropertiesPage() {
         {/* Left: Image */}
         <div className="lg:w-1/2 w-full flex justify-center items-center z-10 mb-8 lg:mb-0">
           <div className="rounded-xl lg:rounded-2xl shadow-lg overflow-hidden w-full max-w-md">
-            <Image
+            <ResponsiveImage
               src="/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"
               alt="Luxury Bedroom"
               width={600}

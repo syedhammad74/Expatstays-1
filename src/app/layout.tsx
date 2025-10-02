@@ -4,6 +4,7 @@ import "../styles/animations.css";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
+import CriticalCSS from "@/components/ui/CriticalCSS";
 // Removed PerformanceLayout for performance
 import ScrollToTop from "@/components/ScrollToTop";
 
@@ -84,16 +85,7 @@ export const viewport: Viewport = {
   ],
 };
 
-// Simplified critical CSS
-const criticalCSS = `
-  body {
-    font-family: 'Nunito Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    margin: 0;
-    padding: 0;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-`;
+// Comprehensive critical CSS component will be added
 
 export default function RootLayout({
   children,
@@ -114,14 +106,22 @@ export default function RootLayout({
           href="https://firebasestorage.googleapis.com"
         />
 
-        {/* Font loading - reverted to normal loading */}
+        {/* Non-blocking font loading for better performance */}
         <link
           href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
-          rel="stylesheet"
+          rel="preload"
+          as="style"
+          onLoad="this.onload=null;this.rel='stylesheet'"
         />
+        <noscript>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+            rel="stylesheet"
+          />
+        </noscript>
 
-        {/* Critical CSS */}
-        <style dangerouslySetInnerHTML={{ __html: criticalCSS }} />
+        {/* Critical CSS Component */}
+        <CriticalCSS />
 
         {/* Preload critical resources */}
         <link rel="preload" href="/logo.png" as="image" />
