@@ -14,7 +14,8 @@ import Logo from "../../../public/logo.png";
 import Image from "next/image";
 
 const Footer = () => {
-  const currentYear = new Date().getFullYear();
+  // Use static year to prevent hydration mismatch - will be updated annually
+  const currentYear = 2025;
 
   const quickLinks = [
     { href: "/properties", label: "Properties" },
@@ -47,7 +48,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           {/* Company Info */}
           <div className="lg:col-span-2">
-            <div className="flex items-center hover-scale">
+            <div className="flex items-center hover:scale-105 transition-transform duration-200">
               <Image src={Logo} alt="Expat Stays" className="h-8 w-auto" />
               <span className="text-2xl font-bold">Expat Stays</span>
             </div>

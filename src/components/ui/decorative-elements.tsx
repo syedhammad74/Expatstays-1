@@ -54,9 +54,10 @@ export function DecorativeElements({
       {Array.from({
         length: isTablet ? Math.min(3, elementCount) : elementCount,
       }).map((_, i) => {
-        const size = Math.random() * (isTablet ? 100 : 200) + 50;
-        const xPos = Math.random() * 100;
-        const yPos = Math.random() * 100;
+        // Use deterministic values to prevent hydration mismatch
+        const size = ((i * 37 + 13) % 150) + 50; // Deterministic size based on index
+        const xPos = ((i * 23 + 7) % 80) + 10; // Deterministic X position
+        const yPos = ((i * 41 + 17) % 70) + 15; // Deterministic Y position
         const color = colors[i % colors.length];
 
         return (

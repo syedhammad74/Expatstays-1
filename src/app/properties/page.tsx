@@ -6,19 +6,21 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
-import { bookingService } from "@/lib/services/bookings";
-import { getLocalImage } from "@/lib/imageUtils";
 
 // Lazy load heavy components
 const PropertyFilters = dynamic(
-  () => import("@/components/molecular/PropertyFilters"),
+  () =>
+    import("@/components/molecular").then((m) => ({
+      default: m.PropertyFilters,
+    })),
   {
     loading: () => <div className="h-32 bg-gray-100 rounded animate-pulse" />,
   }
 );
 
 const PropertyCard = dynamic(
-  () => import("@/components/molecular/PropertyCard"),
+  () =>
+    import("@/components/molecular").then((m) => ({ default: m.PropertyCard })),
   {
     loading: () => <div className="h-80 bg-gray-100 rounded animate-pulse" />,
   }
@@ -89,7 +91,8 @@ export default function PropertiesPage() {
         const searchLower = filters.search.toLowerCase();
         const matchesSearch =
           property.title?.toLowerCase().includes(searchLower) ||
-          property.location?.toLowerCase().includes(searchLower) ||
+          property.location?.city?.toLowerCase().includes(searchLower) ||
+          property.location?.address?.toLowerCase().includes(searchLower) ||
           property.description?.toLowerCase().includes(searchLower);
         if (!matchesSearch) return false;
       }
@@ -102,10 +105,10 @@ export default function PropertiesPage() {
       }
 
       // Price range filter
-      if (property.price) {
+      if (property.pricing?.basePrice) {
         if (
-          property.price < filters.priceRange[0] ||
-          property.price > filters.priceRange[1]
+          property.pricing.basePrice < filters.priceRange[0] ||
+          property.pricing.basePrice > filters.priceRange[1]
         ) {
           return false;
         }
@@ -114,7 +117,7 @@ export default function PropertiesPage() {
       // Bedrooms filter
       if (filters.bedrooms !== "any") {
         const requiredBedrooms = parseInt(filters.bedrooms);
-        if (property.bedrooms !== requiredBedrooms) {
+        if (property.capacity?.bedrooms !== requiredBedrooms) {
           return false;
         }
       }
@@ -207,7 +210,7 @@ export default function PropertiesPage() {
       return property.images;
     }
 
-    return [property.imageUrl || "/placeholder-property.jpg"];
+    return [property.images?.[0] || "/placeholder-property.jpg"];
   }, []);
 
   if (loading) {
@@ -327,22 +330,24 @@ export default function PropertiesPage() {
             {filteredProperties.map((property) => (
               <PropertyCard
                 key={property.id}
-                slug={property.slug || property.id}
-                imageUrl={property.imageUrl || "/placeholder-property.jpg"}
+                slug={property.id}
+                imageUrl={property.images?.[0] || "/placeholder-property.jpg"}
                 images={generateImages(property)}
                 title={property.title || "Untitled Property"}
-                bedrooms={property.bedrooms || 0}
-                guests={property.guests || 0}
-                location={property.location || "Unknown Location"}
-                price={property.price || 0}
+                bedrooms={property.capacity?.bedrooms || 0}
+                guests={property.capacity?.maxGuests || 0}
+                location={`${property.location?.city || "Unknown"}, ${
+                  property.location?.state || ""
+                }`}
+                price={property.pricing?.basePrice || 0}
                 rating={property.rating || 4.8}
-                bathrooms={property.bathrooms || 1}
+                bathrooms={property.capacity?.bathrooms || 1}
                 propertyType={property.propertyType || "apartment"}
                 amenities={property.amenities || []}
-                isVerified={property.isVerified || false}
-                isAvailable={property.isAvailable !== false}
-                views={Math.floor(Math.random() * 1000) + 100}
-                isFeatured={property.isFeatured || false}
+                isVerified={true}
+                isAvailable={property.availability?.isActive !== false}
+                views={(((property.id?.length || 1) * 123 + 456) % 1000) + 100}
+                isFeatured={property.featured || false}
                 onViewDetails={handleViewProperty}
                 onToggleFavorite={handleToggleFavorite}
                 onShare={handleShare}
