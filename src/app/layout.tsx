@@ -4,32 +4,28 @@ import "../styles/animations.css";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
-// Removed CriticalCSS and PerformanceLayout for performance
 import ScrollToTop from "@/components/ScrollToTop";
-import UILoadingGuard from "@/components/ui/UILoadingGuard";
 
 export const metadata: Metadata = {
   title: {
-    default: "Expat Stays - Luxury Property Rentals",
+    default: "Expat Stays - Luxury Property Rentals & Management",
     template: "%s | Expat Stays",
   },
   description:
-    "High-end luxury property rental and management with modern glass morphism design. Premium accommodations in Islamabad with world-class amenities.",
+    "Experience luxury living with Expat Stays. Premium property rentals and professional property management services in prime locations.",
   keywords: [
     "luxury rentals",
     "property management",
-    "Islamabad",
+    "short term rentals",
+    "premium accommodation",
+    "vacation rentals",
+    "property services",
     "expat stays",
-    "premium accommodations",
+    "luxury living",
   ],
   authors: [{ name: "Expat Stays Team" }],
   creator: "Expat Stays",
   publisher: "Expat Stays",
-  formatDetection: {
-    email: false,
-    address: false,
-    telephone: false,
-  },
   metadataBase: new URL("https://myexpatstays.com"),
   alternates: {
     canonical: "/",
@@ -38,10 +34,10 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://myexpatstays.com",
-    title: "Expat Stays - Luxury Property Rentals",
-    description:
-      "High-end luxury property rental and management with modern glass morphism design.",
     siteName: "Expat Stays",
+    title: "Expat Stays - Luxury Property Rentals & Management",
+    description:
+      "Experience luxury living with Expat Stays. Premium property rentals and professional property management services in prime locations.",
     images: [
       {
         url: "/og-image.jpg",
@@ -53,10 +49,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Expat Stays - Luxury Property Rentals",
+    site: "@expatstays",
+    creator: "@expatstays",
+    title: "Expat Stays - Luxury Property Rentals & Management",
     description:
-      "High-end luxury property rental and management with modern glass morphism design.",
-    images: ["/og-image.jpg"],
+      "Experience luxury living with Expat Stays. Premium property rentals and professional property management services in prime locations.",
+    images: ["/twitter-image.jpg"],
   },
   robots: {
     index: true,
@@ -75,17 +73,14 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 5,
-  userScalable: true,
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#8EB69B" },
-    { media: "(prefers-color-scheme: dark)", color: "#235347" },
+    { media: "(prefers-color-scheme: dark)", color: "#163832" },
   ],
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 };
-
-// Comprehensive critical CSS component will be added
 
 export default function RootLayout({
   children,
@@ -95,54 +90,19 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Favicon and app icons */}
+        {/* Favicon */}
         <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
 
-        {/* DNS prefetch for performance */}
+        {/* Preload fonts */}
         <link
-          rel="dns-prefetch"
-          href="https://firebasestorage.googleapis.com"
-        />
-
-        {/* Simple font loading */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
         />
 
-        {/* Preload critical resources */}
-        {/* Preload critical images for instant display */}
+        {/* Preload critical images */}
         <link rel="preload" href="/logo.png" as="image" />
-        <link
-          rel="preload"
-          href="/media/DSC01806 HDR June 25 2025/DSC01970-HDR.jpg"
-          as="image"
-        />
-        <link
-          rel="preload"
-          href="/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg"
-          as="image"
-        />
-        <link
-          rel="preload"
-          href="/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"
-          as="image"
-        />
-
-        {/* Resource hints for better performance */}
-        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-        <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
-
-        {/* Service Worker Registration - Temporarily disabled */}
-        {/* <script>...</script> */}
 
         {/* Structured data */}
         <script
@@ -164,7 +124,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-sans antialiased" suppressHydrationWarning={true}>
+      <body className="font-sans antialiased">
         <AuthProvider>
           <ScrollToTop />
           <main className="min-h-screen">{children}</main>

@@ -1,9 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
 
-interface FastImageProps {
+interface SimpleImageProps {
   src: string;
   alt: string;
   width?: number;
@@ -11,45 +10,41 @@ interface FastImageProps {
   fill?: boolean;
   className?: string;
   priority?: boolean;
-  sizes?: string;
   quality?: number;
 }
 
-export default function FastImage({
+export default function SimpleImage({
   src,
   alt,
-  width,
-  height,
+  width = 400,
+  height = 300,
   fill = false,
   className = "",
   priority = false,
-  sizes = "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw",
   quality = 85,
-}: FastImageProps) {
-  const [isLoading, setIsLoading] = useState(true);
+}: SimpleImageProps) {
+  // Use a fallback image if src is not provided or is empty
+  const imageSrc = src || "/placeholder-image.jpg";
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="relative bg-gray-100 rounded overflow-hidden">
       <Image
-        src={src}
+        src={imageSrc}
         alt={alt}
-        width={width}
-        height={height}
+        width={fill ? undefined : width}
+        height={fill ? undefined : height}
         fill={fill}
-        className={`transition-opacity duration-200 ${
-          isLoading ? "opacity-0" : "opacity-100"
-        } ${className}`}
+        className={`object-cover ${className}`}
         priority={priority}
         quality={quality}
-        sizes={sizes}
         loading={priority ? "eager" : "lazy"}
-        onLoadingComplete={() => setIsLoading(false)}
+        onError={(e) => {
+          // Fallback to placeholder on error
+          e.currentTarget.src = "/placeholder-image.jpg";
+        }}
         placeholder="blur"
         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
       />
-      {isLoading && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse rounded" />
-      )}
     </div>
   );
 }
