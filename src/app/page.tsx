@@ -37,12 +37,17 @@ import {
 } from "@/components/ui/select";
 import dynamic from "next/dynamic";
 const Calendar = dynamic(() =>
-  import("@/components/ui/calendar").then((m) => m.Calendar)
+  import("@/components/ui/calendar").then((m) => m.Calendar), {
+    loading: () => <div className="w-full h-[300px] bg-gray-100 animate-pulse rounded-lg" />
+  }
 );
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
 import { DateRange } from "react-day-picker";
-import "react-day-picker/dist/style.css";
+// Defer non-critical CSS loading
+if (typeof window !== 'undefined') {
+  import("react-day-picker/dist/style.css");
+}
 import React from "react";
 // Removed embla-carousel for performance
 // Removed Head import - using metadata API instead
@@ -124,23 +129,30 @@ export default function Home() {
   };
 
   // Fetch featured properties for landing page
-  useEffect(() => {
-    const fetchFeaturedProperties = async () => {
+  const fetchFeaturedProperties = useCallback(async () => {
       try {
         setPropertiesLoading(true);
-        console.log("🔍 Fetching properties for landing page...");
+        if (process.env.NODE_ENV === 'development') {
+          console.log("🔍 Fetching properties for landing page...");
+        }
         const allProperties = await propertyService.getAllProperties();
-        console.log("📊 All properties:", allProperties.length);
+        if (process.env.NODE_ENV === 'development') {
+          console.log("📊 All properties:", allProperties.length);
+        }
 
         // Always ensure we have properties
         if (allProperties.length === 0) {
-          console.log("⚠️ No properties from service, using fallback");
+          if (process.env.NODE_ENV === 'development') {
+            console.log("⚠️ No properties from service, using fallback");
+          }
           throw new Error("No properties available from service");
         }
 
         // Get first 3 properties or featured ones
         const featured = allProperties.filter((p) => p.featured).slice(0, 3);
-        console.log("⭐ Featured properties:", featured.length);
+        if (process.env.NODE_ENV === 'development') {
+          console.log("⭐ Featured properties:", featured.length);
+        }
 
         if (featured.length > 0) {
           if (featured.length < 3) {
@@ -149,22 +161,30 @@ export default function Home() {
               .filter((p) => !p.featured)
               .slice(0, 3 - featured.length);
             const finalProperties = [...featured, ...regular];
-            console.log(
-              "🏠 Final properties for display:",
-              finalProperties.length
-            );
+            if (process.env.NODE_ENV === 'development') {
+              console.log(
+                "🏠 Final properties for display:",
+                finalProperties.length
+              );
+            }
             setFeaturedProperties(finalProperties);
           } else {
-            console.log("🏠 Using featured properties:", featured.length);
+            if (process.env.NODE_ENV === 'development') {
+              console.log("🏠 Using featured properties:", featured.length);
+            }
             setFeaturedProperties(featured);
           }
         } else {
           // No featured properties, use first 3 available
-          console.log("🏠 No featured properties, using first 3 available");
+          if (process.env.NODE_ENV === 'development') {
+            console.log("🏠 No featured properties, using first 3 available");
+          }
           setFeaturedProperties(allProperties.slice(0, 3));
         }
       } catch (err) {
-        console.error("❌ Failed to fetch properties:", err);
+        if (process.env.NODE_ENV === 'development') {
+          console.error("❌ Failed to fetch properties:", err);
+        }
         // Fallback to hardcoded properties with real IDs
         const fallbackProperties = [
           {
@@ -220,12 +240,15 @@ export default function Home() {
       } finally {
         setPropertiesLoading(false);
       }
-    };
+    }, []);
 
-    // Force show properties after a short delay (for testing)
-    setTimeout(() => {
+  // Force show properties after a short delay (for testing)
+  useEffect(() => {
+    const timeout = setTimeout(() => {
       if (featuredProperties.length === 0) {
-        console.log("🔧 Force showing properties for testing...");
+        if (process.env.NODE_ENV === 'development') {
+          console.log("🔧 Force showing properties for testing...");
+        }
         const testProperties = [
           {
             id: "apartment_dam_view_islamabad",
@@ -281,17 +304,22 @@ export default function Home() {
       }
     }, 2000); // Wait 2 seconds, then force show properties
 
+    return () => clearTimeout(timeout);
+  }, [featuredProperties.length]);
+
+  // Fetch featured properties for landing page
+  useEffect(() => {
     fetchFeaturedProperties();
-  }, []);
+  }, [fetchFeaturedProperties]);
 
   // Helper for guests summary
-  const guestsSummary = () => {
+  const guestsSummary = useCallback(() => {
     const total = guests.adults + guests.children;
     let label = `${total} Guest${total !== 1 ? "s" : ""}`;
     if (guests.infants > 0)
       label += `, ${guests.infants} Infant${guests.infants > 1 ? "s" : ""}`;
     return label;
-  };
+  }, [guests.adults, guests.children, guests.infants]);
 
   // Handle Find click with validation
   const handleFind = () => {
@@ -329,14 +357,15 @@ export default function Home() {
   };
 
   // Handle property navigation
-  const handlePropertyClick = (propertyId: string) => {
-    console.log("🏠 Navigating to property:", propertyId);
-    console.log("🚀 Router available:", !!router);
+  const handlePropertyClick = useCallback((propertyId: string) => {
+    if (process.env.NODE_ENV === 'development') {
+      console.log("🏠 Navigating to property:", propertyId);
+    }
     router.push(`/properties/${propertyId}`);
-  };
+  }, [router]);
 
   // Handle view all properties - scroll to properties section
-  const handleViewAllProperties = () => {
+  const handleViewAllProperties = useCallback(() => {
     const propertiesSection = document.getElementById("properties-section");
     if (propertiesSection) {
       propertiesSection.scrollIntoView({
@@ -344,7 +373,7 @@ export default function Home() {
         block: "start",
       });
     }
-  };
+  }, []);
 
   const orgJsonLd = {
     "@context": "https://schema.org",
@@ -369,24 +398,24 @@ export default function Home() {
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
-      />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
       <div className="min-h-screen bg-white">
         <Header />
         {/* Hero Section */}
         <section className="relative w-full bg-white py-16 lg:py-24">
           <div className="container mx-auto max-w-7xl px-4">
             <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-              {/* Left Panel */}
+          {/* Left Panel */}
               <div className="flex-1 text-center lg:text-left">
                 <div className="badge badge-primary mb-4 inline-block">
-                  Luxury Rentals
+              Luxury Rentals
                 </div>
                 <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-dark mb-6 leading-tight">
                   Find Your <span className="text-primary">Perfect Home</span>
-                </h1>
+            </h1>
                 <p className="text-lg text-gray mb-8 max-w-lg mx-auto lg:mx-0">
                   Curated luxury properties for modern living. Minimal,
                   beautiful, and effortless.
@@ -395,90 +424,90 @@ export default function Home() {
                   <button
                     onClick={handleViewAllProperties}
                     className="btn btn-primary"
-                  >
-                    Explore Properties
+              >
+                Explore Properties
                   </button>
                   <button
                     onClick={() => router.push("/contact")}
                     className="btn btn-secondary"
-                  >
-                    Book Now
+              >
+                Book Now
                   </button>
-                </div>
-              </div>
+            </div>
+          </div>
 
               {/* Right Panel: Simple Carousel */}
-              <div
-                ref={heroRef}
+          <div
+            ref={heroRef}
                 className="relative w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-[500px] flex items-center justify-center"
-              >
-                {/* Carousel Container */}
-                <div className="relative w-full h-full max-w-xl mx-auto">
+          >
+            {/* Carousel Container */}
+            <div className="relative w-full h-full max-w-xl mx-auto">
                   {/* Simple Carousel */}
-                  <div
-                    className="overflow-hidden rounded-xl lg:rounded-2xl shadow-2xl"
-                    style={{
-                      touchAction: "manipulation",
-                      userSelect: "none",
-                      WebkitUserSelect: "none",
-                      WebkitTouchCallout: "none",
-                    }}
-                  >
-                    <div className="flex">
-                      {carouselSlides.map((slide, index) => (
-                        <div
-                          key={index}
+              <div
+                className="overflow-hidden rounded-xl lg:rounded-2xl shadow-2xl"
+                style={{
+                  touchAction: "manipulation",
+                  userSelect: "none",
+                  WebkitUserSelect: "none",
+                  WebkitTouchCallout: "none",
+                }}
+              >
+                <div className="flex">
+                  {carouselSlides.map((slide, index) => (
+                    <div
+                      key={index}
                           className={`flex-[0_0_100%] min-w-0 relative h-[300px] sm:h-[400px] lg:h-[500px] ${
                             index === currentServiceIndex ? "block" : "hidden"
                           }`}
-                        >
-                          <Image
-                            src={slide.image}
-                            alt={slide.alt}
-                            fill
+                    >
+                      <Image
+                        src={slide.image}
+                        alt={slide.alt}
+                        fill
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
-                            className="object-cover object-center select-none"
-                            priority={index === 0}
+                        className="object-cover object-center select-none"
+                        priority={index === 0}
                             quality={index === 0 ? 90 : 85}
                             placeholder="blur"
                             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                          />
-                          {/* Subtle overlay for better contrast */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+                      />
+                      {/* Subtle overlay for better contrast */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
 
-                          {/* Slide title overlay */}
-                          <div className="absolute bottom-4 left-4 right-4">
-                            <h3 className="text-white text-lg font-semibold drop-shadow-lg">
-                              {slide.title}
-                            </h3>
-                          </div>
-                        </div>
-                      ))}
+                      {/* Slide title overlay */}
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <h3 className="text-white text-lg font-semibold drop-shadow-lg">
+                          {slide.title}
+                        </h3>
+                      </div>
                     </div>
+                  ))}
+                </div>
 
                     {/* Carousel Navigation Dots */}
                     <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
                       <div className="flex space-x-2">
-                        {carouselSlides.map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={() => goToSlide(index)}
+                    {carouselSlides.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => goToSlide(index)}
                             className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
-                              index === currentServiceIndex
+                                    index === currentServiceIndex
                                 ? "bg-white w-6"
                                 : "bg-white/50 hover:bg-white/75"
                             }`}
-                            aria-label={`Go to slide ${index + 1}`}
-                          />
-                        ))}
-                      </div>
-                    </div>
+                        aria-label={`Go to slide ${index + 1}`}
+                      />
+                    ))}
                   </div>
                 </div>
+              </div>
+            </div>
 
-                {/* Touch Instructions (visible on mobile) */}
-                <div className="hidden sm:block lg:hidden mt-4 text-xs text-gray-500 text-center">
-                  Swipe to navigate • Touch to pause auto-play
+            {/* Touch Instructions (visible on mobile) */}
+            <div className="hidden sm:block lg:hidden mt-4 text-xs text-gray-500 text-center">
+              Swipe to navigate • Touch to pause auto-play
                 </div>
               </div>
             </div>
@@ -491,7 +520,7 @@ export default function Home() {
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-dark mb-4">
                 Book Your <span className="text-primary">Perfect Stay</span>
-              </h2>
+            </h2>
               <p className="text-lg text-gray max-w-2xl mx-auto">
                 Find and book luxury properties in seconds with our intuitive
                 search
@@ -507,210 +536,210 @@ export default function Home() {
                 onSubmit={handleSearch}
                 className="flex flex-col lg:flex-row gap-4"
               >
-                {/* Location Field */}
+              {/* Location Field */}
                 <div className="flex items-center w-full lg:min-w-[200px] h-12 bg-white border border-gray-300 rounded-xl px-4 gap-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 transition-colors duration-150">
                   <MapPin className="h-4 w-4 text-primary" />
-                  <Select value={location} onValueChange={setLocation}>
+                <Select value={location} onValueChange={setLocation}>
                     <SelectTrigger className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium focus:ring-0 focus:border-none h-12">
-                      <SelectValue placeholder="Location" />
-                    </SelectTrigger>
+                    <SelectValue placeholder="Location" />
+                  </SelectTrigger>
                     <SelectContent className="bg-white border border-gray-300 rounded-xl shadow-lg">
-                      <SelectItem value="Dubai">Dubai</SelectItem>
-                      <SelectItem value="Abu Dhabi">Abu Dhabi</SelectItem>
+                    <SelectItem value="Dubai">Dubai</SelectItem>
+                    <SelectItem value="Abu Dhabi">Abu Dhabi</SelectItem>
                       <SelectItem value="Palm Jumeirah">
                         Palm Jumeirah
                       </SelectItem>
-                      <SelectItem value="JLT">JLT</SelectItem>
-                      <SelectItem value="Emirates Hills">
-                        Emirates Hills
-                      </SelectItem>
-                      <SelectItem value="City Walk">City Walk</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-                {/* Date Field */}
+                    <SelectItem value="JLT">JLT</SelectItem>
+                    <SelectItem value="Emirates Hills">
+                      Emirates Hills
+                    </SelectItem>
+                    <SelectItem value="City Walk">City Walk</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              {/* Date Field */}
                 <div className="flex items-center w-full lg:min-w-[250px] h-12 bg-white border border-gray-300 rounded-xl px-4 gap-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 transition-colors duration-150">
                   <CalendarIcon className="h-4 w-4 text-primary" />
-                  <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant="ghost"
+                <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="ghost"
                         className="w-full justify-between bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium text-dark hover:bg-transparent focus:ring-0 focus:border-none h-12"
-                      >
-                        {dateRange?.from && dateRange?.to
-                          ? `${format(dateRange.from, "MMM d")} – ${format(
-                              dateRange.to,
-                              "MMM d, yyyy"
-                            )}`
-                          : "Check in – Check out"}
-                      </Button>
-                    </PopoverTrigger>
+                    >
+                      {dateRange?.from && dateRange?.to
+                        ? `${format(dateRange.from, "MMM d")} – ${format(
+                            dateRange.to,
+                            "MMM d, yyyy"
+                          )}`
+                        : "Check in – Check out"}
+                    </Button>
+                  </PopoverTrigger>
                     <PopoverContent className="p-0 bg-white rounded-2xl shadow-2xl border border-gray-300 min-w-[300px]">
                       <div className="px-6 pt-6 pb-2">
                         <h3 className="text-lg font-bold text-dark">
-                          Select your stay dates
-                        </h3>
+                        Select your stay dates
+                      </h3>
                         <p className="text-sm text-primary">
-                          Choose check-in and check-out
-                        </p>
-                      </div>
-                      <Calendar
-                        mode="range"
-                        selected={dateRange}
-                        onSelect={(range: DateRange | undefined) =>
-                          setDateRange(range)
-                        }
-                        numberOfMonths={1}
+                        Choose check-in and check-out
+                      </p>
+                    </div>
+                    <Calendar
+                      mode="range"
+                      selected={dateRange}
+                      onSelect={(range: DateRange | undefined) =>
+                        setDateRange(range)
+                      }
+                      numberOfMonths={1}
                         className="rounded-2xl bg-light p-4"
-                        initialFocus
-                        onDayMouseEnter={setHoveredDate}
-                        onDayMouseLeave={() => setHoveredDate(undefined)}
-                        modifiers={{
-                          ...(dateRange?.from ? { start: dateRange.from } : {}),
-                          ...(dateRange?.to ? { end: dateRange.to } : {}),
-                          ...(hoveredDate ? { hovered: hoveredDate } : {}),
-                        }}
-                        modifiersClassNames={{
+                      initialFocus
+                      onDayMouseEnter={setHoveredDate}
+                      onDayMouseLeave={() => setHoveredDate(undefined)}
+                      modifiers={{
+                        ...(dateRange?.from ? { start: dateRange.from } : {}),
+                        ...(dateRange?.to ? { end: dateRange.to } : {}),
+                        ...(hoveredDate ? { hovered: hoveredDate } : {}),
+                      }}
+                      modifiersClassNames={{
                           selected: "bg-primary text-white rounded-full",
                           range_start: "bg-primary text-white rounded-l-full",
                           range_end: "bg-primary text-white rounded-r-full",
                           range_middle: "bg-primary/20 text-dark",
                           hovered: "bg-primary/30 text-dark",
-                          today:
+                        today:
                             "border-2 border-primary bg-white text-dark font-bold",
                           focus: "ring-2 ring-primary ring-offset-2",
                           active: "ring-2 ring-secondary ring-offset-2",
-                          disabled: "opacity-40 cursor-not-allowed",
-                        }}
-                        disabled={(date: Date) => {
-                          if (dateRange?.from && !dateRange?.to) {
-                            return date < dateRange.from;
-                          }
-                          return false;
-                        }}
-                      />
+                        disabled: "opacity-40 cursor-not-allowed",
+                      }}
+                      disabled={(date: Date) => {
+                        if (dateRange?.from && !dateRange?.to) {
+                          return date < dateRange.from;
+                        }
+                        return false;
+                      }}
+                    />
                       <div className="flex justify-between items-center px-4 py-2 border-t border-gray-300">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="text-primary"
-                          onClick={() => setDateRange(undefined)}
-                        >
-                          Clear
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => {
-                            setHoveredDate(undefined);
-                            if (dateRange?.from && dateRange?.to) {
-                              setCalendarOpen(false);
-                            }
-                          }}
-                        >
-                          Done
-                        </Button>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                </div>
-                {/* Guests Field */}
-                <div className="flex items-center w-full lg:min-w-[150px] h-12 bg-white border border-gray-300 rounded-xl px-4 gap-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 transition-colors duration-150">
-                  <Users className="h-4 w-4 text-primary" />
-                  <Popover open={guestsOpen} onOpenChange={setGuestsOpen}>
-                    <PopoverTrigger asChild>
                       <Button
                         variant="ghost"
-                        className="w-full justify-between bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium text-dark hover:bg-transparent focus:ring-0 focus:border-none h-12"
+                        size="sm"
+                          className="text-primary"
+                        onClick={() => setDateRange(undefined)}
                       >
-                        {guestsSummary() || "Select Guests"}
+                        Clear
                       </Button>
-                    </PopoverTrigger>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setHoveredDate(undefined);
+                          if (dateRange?.from && dateRange?.to) {
+                            setCalendarOpen(false);
+                          }
+                        }}
+                      >
+                        Done
+                      </Button>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+              {/* Guests Field */}
+                <div className="flex items-center w-full lg:min-w-[150px] h-12 bg-white border border-gray-300 rounded-xl px-4 gap-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 transition-colors duration-150">
+                  <Users className="h-4 w-4 text-primary" />
+                <Popover open={guestsOpen} onOpenChange={setGuestsOpen}>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="ghost"
+                        className="w-full justify-between bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium text-dark hover:bg-transparent focus:ring-0 focus:border-none h-12"
+                    >
+                      {guestsSummary() || "Select Guests"}
+                    </Button>
+                  </PopoverTrigger>
                     <PopoverContent className="w-full lg:w-80 bg-white rounded-2xl shadow-xl border border-gray-300 z-50 p-6 animate-fade-in">
-                      <div className="flex flex-col gap-4 lg:gap-5">
-                        {[
-                          { label: "Adult", sub: "Ages 13+", key: "adults" },
-                          {
-                            label: "Children",
-                            sub: "Ages 2-12",
-                            key: "children",
-                          },
-                          { label: "Infants", sub: "Under 2", key: "infants" },
-                        ].map((g) => (
-                          <div
-                            key={g.key}
-                            className="flex items-center justify-between gap-2"
-                          >
-                            <div>
+                    <div className="flex flex-col gap-4 lg:gap-5">
+                      {[
+                        { label: "Adult", sub: "Ages 13+", key: "adults" },
+                        {
+                          label: "Children",
+                          sub: "Ages 2-12",
+                          key: "children",
+                        },
+                        { label: "Infants", sub: "Under 2", key: "infants" },
+                      ].map((g) => (
+                        <div
+                          key={g.key}
+                          className="flex items-center justify-between gap-2"
+                        >
+                          <div>
                               <div className="font-semibold text-dark text-sm">
-                                {g.label}
-                              </div>
-                              <div className="text-xs text-primary">
-                                {g.sub}
-                              </div>
+                              {g.label}
                             </div>
-                            <div className="flex items-center gap-2">
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="rounded-full border border-gray-300 text-primary h-8 w-8"
-                                onClick={() =>
-                                  setGuests((prev) => ({
-                                    ...prev,
-                                    [g.key]: Math.max(
-                                      0,
-                                      prev[g.key as keyof typeof guests] - 1
-                                    ),
-                                  }))
-                                }
-                                aria-label={`Decrease ${g.label}`}
-                              >
-                                -
-                              </Button>
-                              <span className="w-6 text-center font-semibold text-dark text-sm">
-                                {guests[g.key as keyof typeof guests]}
-                              </span>
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="rounded-full border border-gray-300 text-primary h-8 w-8"
-                                onClick={() =>
-                                  setGuests((prev) => ({
-                                    ...prev,
-                                    [g.key]:
-                                      prev[g.key as keyof typeof guests] + 1,
-                                  }))
-                                }
-                                aria-label={`Increase ${g.label}`}
-                              >
-                                +
-                              </Button>
+                              <div className="text-xs text-primary">
+                              {g.sub}
                             </div>
                           </div>
-                        ))}
-                      </div>
-                      <div className="flex justify-end mt-4 lg:mt-6">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => setGuestsOpen(false)}
-                        >
-                          Close
-                        </Button>
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                </div>
-                {/* Search Button */}
-                <div className="flex-shrink-0 w-full lg:w-auto">
-                  <Button
+                          <div className="flex items-center gap-2">
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                                className="rounded-full border border-gray-300 text-primary h-8 w-8"
+                              onClick={() =>
+                                setGuests((prev) => ({
+                                  ...prev,
+                                  [g.key]: Math.max(
+                                    0,
+                                    prev[g.key as keyof typeof guests] - 1
+                                  ),
+                                }))
+                              }
+                              aria-label={`Decrease ${g.label}`}
+                            >
+                              -
+                            </Button>
+                              <span className="w-6 text-center font-semibold text-dark text-sm">
+                              {guests[g.key as keyof typeof guests]}
+                            </span>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                                className="rounded-full border border-gray-300 text-primary h-8 w-8"
+                              onClick={() =>
+                                setGuests((prev) => ({
+                                  ...prev,
+                                  [g.key]:
+                                    prev[g.key as keyof typeof guests] + 1,
+                                }))
+                              }
+                              aria-label={`Increase ${g.label}`}
+                            >
+                              +
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <div className="flex justify-end mt-4 lg:mt-6">
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setGuestsOpen(false)}
+                      >
+                        Close
+                      </Button>
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              </div>
+              {/* Search Button */}
+              <div className="flex-shrink-0 w-full lg:w-auto">
+                <Button
                     className="h-12 px-6 bg-primary text-white font-semibold rounded-xl shadow-md hover:bg-secondary transition-colors duration-150 flex items-center gap-2 w-full lg:w-auto"
-                    onClick={handleFind}
-                  >
+                  onClick={handleFind}
+                >
                     <Search className="h-4 w-4" />
-                    Find
-                  </Button>
-                </div>
+                  Find
+                </Button>
+              </div>
               </form>
             </div>
           </div>
@@ -914,15 +943,15 @@ export default function Home() {
                           <span className="text-xs lg:text-sm text-[#163832] font-bold">
                             {feature}
                           </span>
-                        </div>
-                      ))}
                     </div>
-                  </div>
-                </div>
               ))}
             </div>
           </div>
-        </section>
+              </div>
+                ))}
+              </div>
+            </div>
+          </section>
 
         {/* AI-Style Testimonials Section */}
         <section className="mb-16 lg:mb-24">
