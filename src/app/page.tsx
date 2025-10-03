@@ -370,60 +370,89 @@ export default function Home() {
       <div className="min-h-screen bg-white">
         <Header />
         {/* Hero Section */}
-        <section className="relative w-full bg-white py-16 lg:py-24">
-          <div className="container mx-auto max-w-7xl px-4">
-            <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+        <section className="relative w-full bg-gradient-to-br from-white via-gray-50 to-white py-20 lg:py-32 overflow-hidden">
+          {/* Background Elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-20 left-10 w-72 h-72 bg-primary/5 rounded-full blur-3xl"></div>
+            <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/5 rounded-full blur-3xl"></div>
+            <div className="absolute top-1/2 left-1/4 w-2 h-2 bg-primary/30 rounded-full animate-pulse"></div>
+            <div className="absolute top-1/3 right-1/3 w-1 h-1 bg-secondary/40 rounded-full animate-pulse delay-1000"></div>
+          </div>
+
+          <div className="container mx-auto max-w-7xl px-4 relative z-10">
+            <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
               {/* Left Panel */}
-              <div className="flex-1 text-center lg:text-left">
-                <div className="badge badge-primary mb-4 inline-block">
+              <div className="flex-1 text-center lg:text-left space-y-8">
+                {/* Badge */}
+                <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-semibold border border-primary/20">
+                  <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
                   Luxury Rentals
                 </div>
-                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-dark mb-6 leading-tight">
-                  Find Your <span className="text-primary">Perfect Home</span>
-                </h1>
-                <p className="text-lg text-gray mb-8 max-w-lg mx-auto lg:mx-0">
-                  Curated luxury properties for modern living. Minimal,
-                  beautiful, and effortless.
-                </p>
+
+                {/* Main Heading */}
+                <div className="space-y-6">
+                  <h1 className="text-5xl lg:text-6xl xl:text-7xl font-bold text-dark leading-tight">
+                    Find Your{" "}
+                    <span className="relative">
+                      <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                        Perfect Home
+                      </span>
+                      <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary/30 to-secondary/30 rounded-full"></div>
+                    </span>
+                  </h1>
+                  <p className="text-xl lg:text-2xl text-gray max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                    Curated luxury properties for modern living. Minimal,
+                    beautiful, and effortless experiences await you.
+                  </p>
+                </div>
+
+                {/* Stats */}
+                <div className="flex flex-wrap items-center gap-8 justify-center lg:justify-start">
+                  <div className="text-center lg:text-left">
+                    <div className="text-3xl font-bold text-dark">500+</div>
+                    <div className="text-sm text-gray">Properties</div>
+                  </div>
+                  <div className="text-center lg:text-left">
+                    <div className="text-3xl font-bold text-dark">4.9</div>
+                    <div className="text-sm text-gray">Rating</div>
+                  </div>
+                  <div className="text-center lg:text-left">
+                    <div className="text-3xl font-bold text-dark">10K+</div>
+                    <div className="text-sm text-gray">Happy Guests</div>
+                  </div>
+                </div>
+
+                {/* CTA Buttons */}
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                   <button
                     onClick={handleViewAllProperties}
-                    className="btn btn-primary"
+                    className="group relative bg-primary hover:bg-secondary text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl"
                   >
-                    Explore Properties
+                    <span className="relative z-10">Explore Properties</span>
+                    <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </button>
                   <button
                     onClick={() => router.push("/contact")}
-                    className="btn btn-secondary"
+                    className="group bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105"
                   >
                     Book Now
                   </button>
                 </div>
               </div>
 
-              {/* Right Panel: Sliding Touch Carousel */}
-              <div
-                ref={heroRef}
-                className="relative w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-[500px] flex items-center justify-center"
-              >
-                {/* Carousel Container */}
-                <div className="relative w-full h-full max-w-xl mx-auto">
-                  {/* Simple Carousel */}
-                  <div
-                    className="overflow-hidden rounded-xl lg:rounded-2xl shadow-2xl animate-fade-in-up delay-300"
-                    style={{
-                      touchAction: "manipulation",
-                      userSelect: "none",
-                      WebkitUserSelect: "none",
-                      WebkitTouchCallout: "none",
-                    }}
-                  >
-                    <div className="flex">
+              {/* Right Panel: Enhanced Carousel */}
+              <div className="relative w-full lg:w-1/2">
+                <div className="relative">
+                  {/* Carousel Container */}
+                  <div className="relative h-[400px] sm:h-[500px] lg:h-[600px] rounded-2xl lg:rounded-3xl overflow-hidden shadow-2xl">
+                    <div className="relative w-full h-full">
                       {carouselSlides.map((slide, index) => (
                         <div
                           key={index}
-                          className={`flex-[0_0_100%] min-w-0 relative h-[300px] sm:h-[400px] lg:h-[500px] ${
-                            index === currentServiceIndex ? "block" : "hidden"
+                          className={`absolute inset-0 transition-opacity duration-1000 ${
+                            index === currentServiceIndex
+                              ? "opacity-100"
+                              : "opacity-0"
                           }`}
                         >
                           <Image
@@ -431,53 +460,103 @@ export default function Home() {
                             alt={slide.alt}
                             fill
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
-                            className="object-cover object-center select-none"
+                            className="object-cover object-center"
                             priority={index === 0}
-                            quality={index === 0 ? 90 : 85}
+                            quality={90}
                           />
-                          {/* Subtle overlay for better contrast */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
 
-                          {/* Slide title overlay */}
-                          <div className="absolute bottom-4 left-4 right-4">
-                            <h3 className="text-white text-lg font-semibold drop-shadow-lg">
-                              {slide.title}
-                            </h3>
+                          {/* Enhanced overlay */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10"></div>
+
+                          {/* Slide content */}
+                          <div className="absolute bottom-6 left-6 right-6">
+                            <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4">
+                              <h3 className="text-lg font-bold text-dark mb-1">
+                                {slide.title}
+                              </h3>
+                              <p className="text-sm text-gray">
+                                Luxury living at its finest
+                              </p>
+                            </div>
                           </div>
 
-                          {/* Drag indicator */}
-                          {isDragging && (
-                            <div className="absolute top-4 right-4 bg-green-500 text-white px-2 py-1 rounded text-xs">
-                              ✋ Dragging
-                            </div>
-                          )}
+                          {/* Slide number indicator */}
+                          <div className="absolute top-6 right-6 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-semibold text-dark">
+                            {index + 1} / {carouselSlides.length}
+                          </div>
                         </div>
                       ))}
                     </div>
 
-                    {/* Carousel Navigation Dots */}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
-                      <div className="flex space-x-2">
+                    {/* Enhanced Navigation Dots */}
+                    <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
+                      <div className="flex items-center gap-3 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2">
                         {carouselSlides.map((_, index) => (
                           <button
                             key={index}
                             onClick={() => goToSlide(index)}
-                            className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
+                            className={`w-3 h-3 rounded-full transition-all duration-300 ${
                               index === currentServiceIndex
-                                ? "bg-white w-6"
-                                : "bg-white/50 hover:bg-white/75"
+                                ? "bg-primary scale-125"
+                                : "bg-gray-300 hover:bg-gray-400"
                             }`}
                             aria-label={`Go to slide ${index + 1}`}
                           />
                         ))}
                       </div>
                     </div>
-                  </div>
-                </div>
 
-                {/* Touch Instructions (visible on mobile) */}
-                <div className="hidden sm:block lg:hidden mt-4 text-xs text-gray-500 text-center">
-                  Swipe to navigate • Touch to pause auto-play
+                    {/* Navigation Arrows */}
+                    <button
+                      onClick={() =>
+                        goToSlide(
+                          (currentServiceIndex - 1 + carouselSlides.length) %
+                            carouselSlides.length
+                        )
+                      }
+                      className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm hover:bg-white text-dark rounded-full p-2 transition-all duration-300 opacity-0 lg:opacity-100 hover:scale-110"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M15 19l-7-7 7-7"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      onClick={() =>
+                        goToSlide(
+                          (currentServiceIndex + 1) % carouselSlides.length
+                        )
+                      }
+                      className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/90 backdrop-blur-sm hover:bg-white text-dark rounded-full p-2 transition-all duration-300 opacity-0 lg:opacity-100 hover:scale-110"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+
+                  {/* Floating Elements */}
+                  <div className="absolute -top-4 -right-4 w-8 h-8 bg-primary/20 rounded-full animate-bounce"></div>
+                  <div className="absolute -bottom-4 -left-4 w-6 h-6 bg-secondary/20 rounded-full animate-bounce delay-1000"></div>
                 </div>
               </div>
             </div>
