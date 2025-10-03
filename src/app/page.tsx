@@ -478,7 +478,7 @@ export default function Home() {
         </section>
 
         {/* Booking Section */}
-        <section className="section bg-light">
+        <section className="section lg:-top-36 ">
           <div className="container">
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-dark mb-4">
