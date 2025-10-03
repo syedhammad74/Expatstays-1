@@ -380,14 +380,14 @@ export default function Home() {
             <Badge className="bg-[#235347]/20 text-[#235347] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
               Luxury Rentals
             </Badge>
-            <h1 className="text-3xl lg:text-4xl xl:text-6xl font-semibold text-[#051F20] leading-tight mb-4 lg:mb-6">
+            <h1 className="text-3xl lg:text-4xl xl:text-6xl font-extrabold text-[#051F20] leading-tight mb-4 lg:mb-6 animate-fade-in-up">
               Find Your <span className="text-[#8EB69B]">Perfect Home</span>
             </h1>
-            <p className="text-base lg:text-lg text-[#235347] mb-6 lg:mb-10 max-w-md">
+            <p className="text-base lg:text-lg text-[#235347] mb-6 lg:mb-10 max-w-md animate-fade-in-up delay-100">
               Curated luxury properties for modern living. Minimal, beautiful,
               and effortless.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 w-full sm:w-auto">
+            <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 w-full sm:w-auto animate-fade-in-up delay-200">
               <Button
                 size="lg"
                 className="px-6 py-4 bg-[#8EB69B] text-[#051F20] font-bold rounded-xl shadow-lg hover:bg-[#235347] hover:text-white transition-all duration-300 w-full sm:w-auto hover:scale-105 hover:shadow-xl"
@@ -412,7 +412,7 @@ export default function Home() {
             <div className="relative w-full h-full max-w-xl mx-auto">
               {/* Simple Carousel */}
               <div
-                className="overflow-hidden rounded-xl lg:rounded-2xl shadow-2xl"
+                className="overflow-hidden rounded-xl lg:rounded-2xl shadow-2xl animate-fade-in-up delay-300"
                 style={{
                   touchAction: "manipulation",
                   userSelect: "none",
@@ -843,7 +843,7 @@ export default function Home() {
                     className="group relative cursor-pointer"
                     onClick={() => handlePropertyClick(property.id)}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-shadow duration-200" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-all duration-300 hover-lift" />
                     <div className="relative p-6 lg:p-8">
                       <div className="relative h-48 lg:h-64 rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6">
                         <Image
