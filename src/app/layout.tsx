@@ -115,55 +115,94 @@ export default function RootLayout({
           />
         </noscript>
 
-        {/* Preload critical resources */}
+        {/* Preload critical resources for LCP optimization */}
         <link rel="preload" href="/logo.png" as="image" />
+        <link
+          rel="preload"
+          href="/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"
+          as="image"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          href="/media/DSC01806 HDR June 25 2025/DSC01919-HDR.jpg"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="/media/DSC01806 HDR June 25 2025/DSC01914-HDR.jpg"
+          as="image"
+        />
+        <link
+          rel="preload"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+          as="style"
+          onLoad="this.onload=null;this.rel='stylesheet'"
+        />
+        <link rel="modulepreload" href="/_next/static/chunks/app/page.js" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link rel="dns-prefetch" href="//firebasestorage.googleapis.com" />
         <link rel="dns-prefetch" href="//storage.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="//fonts.gstatic.com" />
 
         {/* Critical CSS inlined for above-the-fold content */}
         <style
           dangerouslySetInnerHTML={{
             __html: `
-            /* Critical CSS for above-the-fold content */
+            /* Critical CSS for above-the-fold content - LCP optimized */
             *{box-sizing:border-box}
-            body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;margin:0;padding:0;line-height:1.6;background:#fff}
-            .container{max-width:1200px;margin:0 auto;padding:0 1rem}
-            .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:0.5rem;font-weight:500;transition:all 0.2s;cursor:pointer;border:none;text-decoration:none}
-            .btn-primary{background-color:#8EB69B;color:white;padding:0.75rem 1.5rem}
-            .btn-primary:hover{background-color:#7BA68A;transform:translateY(-1px)}
+            html{font-size:16px;line-height:1.6}
+            body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;margin:0;padding:0;line-height:1.6;background:#fff;color:#051F20;font-weight:400}
+            
+            /* Header critical styles */
+            .header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(0,0,0,0.1)}
+            .header-container{max-width:1280px;margin:0 auto;padding:0 1rem;height:4rem;display:flex;align-items:center;justify-content:space-between}
+            .logo{height:2rem;width:auto}
+            
+            /* Hero section critical styles - LCP element */
+            .hero-bg{background:linear-gradient(135deg,#fff 0%,#f9fafb 50%,#fff 100%);min-height:100vh;display:flex;align-items:center}
+            .hero-container{max-width:1280px;margin:0 auto;padding:4rem 1rem;width:100%}
+            .hero-content{display:flex;flex-direction:column;align-items:center;gap:2rem;width:100%}
+            .hero-text{text-align:center;max-width:600px;flex:1}
+            .hero-buttons{display:flex;flex-direction:column;gap:1rem;align-items:center;margin-top:2rem}
+            .hero-carousel{width:100%;max-width:600px;height:400px;border-radius:1rem;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);position:relative;background:#f3f4f6}
+            
+            /* LCP image optimization */
+            .hero-carousel img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+            .hero-carousel .lcp-image{will-change:transform;transform:translateZ(0)}
+            
+            /* Button critical styles */
+            .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:0.5rem;font-weight:500;transition:all 0.2s;cursor:pointer;border:none;text-decoration:none;font-size:1rem;line-height:1.5}
+            .btn-primary{background-color:#8EB69B;color:white;padding:0.75rem 1.5rem;box-shadow:0 4px 6px -1px rgba(0,0,0,0.1)}
+            .btn-primary:hover{background-color:#7BA68A;transform:translateY(-1px);box-shadow:0 6px 8px -1px rgba(0,0,0,0.15)}
+            
+            /* Badge critical styles */
             .badge{display:inline-flex;align-items:center;padding:0.25rem 0.75rem;border-radius:9999px;font-size:0.875rem;font-weight:500}
             .badge-primary{background-color:#8EB69B;color:white}
+            
+            /* Typography critical styles */
             .text-primary{color:#8EB69B}
             .text-dark{color:#051F20}
             .text-gray{color:#6B7280}
-            .bg-white{background-color:white}
-            .bg-light{background-color:#F9FAFB}
-            .section{padding:3rem 0}
             .font-bold{font-weight:700}
             .font-semibold{font-weight:600}
             .text-4xl{font-size:2.25rem;line-height:2.5rem}
             .text-5xl{font-size:3rem;line-height:1}
             .text-6xl{font-size:3.75rem;line-height:1}
             .text-lg{font-size:1.125rem;line-height:1.75rem}
-            .text-xl{font-size:1.25rem;line-height:1.75rem}
-            .mb-4{margin-bottom:1rem}
-            .mb-6{margin-bottom:1.5rem}
-            .mb-8{margin-bottom:2rem}
-            .mb-12{margin-bottom:3rem}
             .leading-tight{line-height:1.25}
-            .max-w-lg{max-width:32rem}
-            .max-w-2xl{max-width:42rem}
-            .mx-auto{margin-left:auto;margin-right:auto}
-            .text-center{text-align:center}
-            .flex{display:flex}
-            .items-center{align-items:center}
-            .justify-center{justify-content:center}
-            .justify-start{justify-content:flex-start}
-            .flex-col{flex-direction:column}
-            .flex-row{flex-direction:row}
-            .gap-4{gap:1rem}
-            .gap-8{gap:2rem}
-            .gap-12{gap:3rem}
+            
+            /* Layout critical styles */
+            .container{max-width:1200px;margin:0 auto;padding:0 1rem}
+            .bg-white{background-color:white}
+            .bg-light{background-color:#F9FAFB}
+            .section{padding:3rem 0}
             .relative{position:relative}
             .w-full{width:100%}
             .h-full{height:100%}
@@ -175,24 +214,50 @@ export default function RootLayout({
             .object-center{object-position:center}
             .select-none{user-select:none}
             .pointer-events-none{pointer-events:none}
-            .drop-shadow-lg{filter:drop-shadow(0 10px 8px rgba(0,0,0,0.04)) drop-shadow(0 4px 3px rgba(0,0,0,0.1))}
-            .animate-pulse{animation:pulse 2s cubic-bezier(0.4,0,0.6,1) infinite}
-            @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-            /* Hero section critical styles */
-            .hero-bg{background:linear-gradient(135deg,#fff 0%,#f9fafb 50%,#fff 100%)}
-            .hero-container{max-width:1280px;margin:0 auto;padding:4rem 1rem}
-            .hero-content{display:flex;flex-direction:column;align-items:center;gap:2rem}
-            .hero-text{text-align:center;max-width:600px}
-            .hero-buttons{display:flex;flex-direction:column;gap:1rem;align-items:center}
-            .hero-carousel{width:100%;max-width:600px;height:400px;border-radius:1rem;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25)}
-            .carousel-dots{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);display:flex;gap:0.5rem}
-            .carousel-dot{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.5);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+            
+            /* Carousel navigation critical styles */
+            .carousel-dots{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);display:flex;gap:0.5rem;z-index:10}
+            .carousel-dot{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.5);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
             .carousel-dot.active{background:white}
-            .carousel-dot-inner{width:10px;height:10px;border-radius:50%;background:white}
-            .carousel-dot.active .carousel-dot-inner{background:#374151}
-            @media (min-width:640px){.hero-buttons{flex-direction:row}.hero-carousel{height:400px}}
-            @media (min-width:1024px){.hero-content{flex-direction:row;text-align:left}.hero-text{text-align:left}.hero-carousel{height:500px}}
-            @media (min-width:1280px){.hero-carousel{height:600px}}
+            .carousel-dot-inner{width:10px;height:10px;border-radius:50%;background:white;transition:all 0.2s}
+            .carousel-dot.active .carousel-dot-inner{background:#374151;width:24px}
+            
+            /* Responsive critical styles */
+            @media (min-width:640px){
+              .hero-buttons{flex-direction:row}
+              .hero-carousel{height:400px}
+              .text-4xl{font-size:2.5rem}
+            }
+            @media (min-width:1024px){
+              .hero-content{flex-direction:row;text-align:left}
+              .hero-text{text-align:left}
+              .hero-carousel{height:500px}
+              .text-5xl{font-size:3.5rem}
+            }
+            @media (min-width:1280px){
+              .hero-carousel{height:600px}
+              .text-6xl{font-size:4rem}
+            }
+            
+            /* Performance optimizations */
+            .hero-carousel{will-change:transform}
+            .btn{will-change:transform}
+            .carousel-dot{will-change:background}
+            
+            /* Loading states */
+            .loading{opacity:0.7;pointer-events:none}
+            .loaded{opacity:1;transition:opacity 0.3s ease}
+            
+            /* LCP optimization states */
+            .lcp-loading{opacity:0.8}
+            .lcp-loaded{opacity:1;transition:opacity 0.2s ease}
+            
+            /* Speed Index optimization */
+            .above-fold{will-change:transform;contain:layout style paint}
+            .below-fold{contain:layout style paint}
+            
+            /* Performance hints */
+            .performance-hint{transform:translateZ(0);will-change:transform}
           `,
           }}
         />

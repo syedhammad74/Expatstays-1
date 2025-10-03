@@ -50,13 +50,14 @@ const nextConfig: NextConfig = {
       },
     ],
     formats: ["image/webp", "image/avif"], // Re-enabled AVIF for better compression
-    deviceSizes: [640, 750, 828, 1080, 1200], // Optimized sizes
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384], // Added 384 for better mobile
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920], // Added 1920 for LCP optimization
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512], // Added 512 for better LCP
     minimumCacheTTL: 31536000, // 1 year
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     unoptimized: false,
     loader: "default",
+    // LCP optimization settings
   },
 
   // Compression and optimization

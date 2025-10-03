@@ -59,6 +59,7 @@ import React from "react";
 // Removed embla-carousel for performance
 // Removed Head import - using metadata API instead
 import { Property } from "@/lib/types/firebase";
+import PerformanceOptimizer from "@/components/PerformanceOptimizer";
 
 export default function Home() {
   // Parallax effect for hero images
@@ -414,9 +415,13 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
       />
       <div className="min-h-screen bg-white">
+        <PerformanceOptimizer />
         <Header />
-        {/* Hero Section */}
-        <section className="hero-bg py-16 lg:py-24">
+        {/* Hero Section - LCP Optimized */}
+        <section
+          className="hero-bg py-16 lg:py-24"
+          style={{ contain: "layout style paint" }}
+        >
           <div className="hero-container">
             <div className="hero-content">
               {/* Left Panel */}
@@ -478,13 +483,27 @@ export default function Home() {
                             alt={slide.alt}
                             fill
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
-                            className="object-cover object-center select-none"
+                            className={`object-cover object-center select-none ${
+                              index === 0 ? "lcp-image" : ""
+                            }`}
                             priority={index === 0}
                             fetchPriority={index === 0 ? "high" : "auto"}
                             loading={index === 0 ? "eager" : "lazy"}
                             quality={index === 0 ? 90 : 85}
                             placeholder="blur"
                             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                            onLoad={
+                              index === 0
+                                ? () => {
+                                    // LCP optimization - mark as loaded
+                                    if (typeof window !== "undefined") {
+                                      document.documentElement.classList.add(
+                                        "lcp-loaded"
+                                      );
+                                    }
+                                  }
+                                : undefined
+                            }
                           />
                           {/* Subtle overlay for better contrast */}
                           <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
@@ -760,10 +779,13 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Featured Properties Section */}
-        <section id="properties-section" className="section bg-light">
+        {/* Featured Properties Section - Below Fold Optimization */}
+        <section
+          id="properties-section"
+          className="section bg-light below-fold"
+        >
           <div className="container">
-            <div className="text-center mb-12">
+            <div className="text-center mb-12 performance-hint">
               <h2 className="text-3xl lg:text-4xl font-bold text-dark mb-4">
                 Featured <span className="text-primary">Properties</span>
               </h2>
