@@ -97,7 +97,11 @@ export default function RootLayout({
 
         {/* Optimized font loading */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
@@ -115,10 +119,11 @@ export default function RootLayout({
         <link rel="preload" href="/logo.png" as="image" />
         <link rel="dns-prefetch" href="//firebasestorage.googleapis.com" />
         <link rel="dns-prefetch" href="//storage.googleapis.com" />
-        
+
         {/* Critical CSS inlined for above-the-fold content */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `
             /* Critical CSS for above-the-fold content */
             body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;margin:0;padding:0;line-height:1.6}
             .container{max-width:1200px;margin:0 auto;padding:0 1rem}
@@ -175,8 +180,9 @@ export default function RootLayout({
             @media (min-width:640px){.sm\\:flex-row{flex-direction:row}.sm\\:h-\\[400px\\]{height:400px}.sm\\:text-sm{font-size:0.875rem;line-height:1.25rem}}
             @media (min-width:1024px){.lg\\:flex-row{flex-direction:row}.lg\\:h-\\[500px\\]{height:500px}.lg\\:text-left{text-align:left}.lg\\:justify-start{justify-content:flex-start}}
             @media (min-width:1280px){.xl\\:text-6xl{font-size:3.75rem;line-height:1}}
-          `
-        }} />
+          `,
+          }}
+        />
 
         {/* Structured data */}
         <script
@@ -199,12 +205,12 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans antialiased">
-          <AuthProvider>
-            <ScrollToTop />
-            <main className="min-h-screen">{children}</main>
-            <ConditionalFooter />
-            <Toaster />
-          </AuthProvider>
+        <AuthProvider>
+          <ScrollToTop />
+          <main className="min-h-screen">{children}</main>
+          <ConditionalFooter />
+          <Toaster />
+        </AuthProvider>
       </body>
     </html>
   );
