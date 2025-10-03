@@ -16,6 +16,15 @@ const nextConfig: NextConfig = {
       "@hookform/resolvers",
       "zod",
     ],
+    turbo: {
+      rules: {
+        "*.svg": {
+          loaders: ["@svgr/webpack"],
+          as: "*.js",
+        },
+      },
+    },
+    serverComponentsExternalPackages: ["sharp"],
   },
 
   // Optimized image settings for performance
@@ -73,6 +82,14 @@ const nextConfig: NextConfig = {
             key: "Permissions-Policy",
             value: "camera=(), microphone=(), geolocation=()",
           },
+          {
+            key: "X-DNS-Prefetch-Control",
+            value: "on",
+          },
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=31536000; includeSubDomains",
+          },
         ],
       },
       {
@@ -108,6 +125,25 @@ const nextConfig: NextConfig = {
           {
             key: "Cache-Control",
             value: "public, max-age=300, s-maxage=300",
+          },
+        ],
+      },
+      {
+        source:
+          "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|webp|avif|ico|woff|woff2|ttf|otf))",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/(.*\\.(html|json))",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=3600, s-maxage=86400",
           },
         ],
       },
