@@ -335,9 +335,15 @@ export default function Home() {
     router.push(`/properties/${propertyId}`);
   };
 
-  // Handle view all properties
+  // Handle view all properties - scroll to properties section
   const handleViewAllProperties = () => {
-    router.push("/properties");
+    const propertiesSection = document.getElementById("properties-section");
+    if (propertiesSection) {
+      propertiesSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
   };
 
   const orgJsonLd = {
@@ -708,93 +714,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Exclusive Services Section: Animated Icons */}
-        <section className="mb-16 lg:mb-24">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-12 lg:mb-16">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-dark mb-4">
-                Exclusive <span className="text-[#8EB69B]">Services</span>
-              </h2>
-              <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
-                Premium services designed to elevate your luxury living
-                experience
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-              {[
-                {
-                  icon: Shield,
-                  title: "Verified Properties",
-                  desc: "Every property is personally inspected and verified for quality and safety standards.",
-                  features: [
-                    "24/7 Security",
-                    "Quality Assurance",
-                    "Regular Inspections",
-                  ],
-                  gradient: "from-[#8EB69B] to-[#235347]",
-                },
-                {
-                  icon: Users,
-                  title: "Concierge Service",
-                  desc: "Personalized assistance for all your needs, from bookings to local recommendations.",
-                  features: [
-                    "Personal Concierge",
-                    "Local Expertise",
-                    "24/7 Support",
-                  ],
-                  gradient: "from-[#DAF1DE] to-[#8EB69B]",
-                },
-                {
-                  icon: Star,
-                  title: "Premium Experience",
-                  desc: "Curated experiences and amenities that go beyond standard luxury accommodations.",
-                  features: [
-                    "Exclusive Access",
-                    "Custom Experiences",
-                    "Premium Amenities",
-                  ],
-                  gradient: "from-[#235347] to-[#163832]",
-                },
-              ].map((service, i) => (
-                <div key={service.title} className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-xl group-hover:shadow-2xl transition-shadow duration-200" />
-                  <div className="relative p-6 lg:p-8">
-                    {/* Animated Icon */}
-                    <div
-                      className={`inline-flex p-4 lg:p-6 rounded-xl lg:rounded-2xl bg-gradient-to-br ${service.gradient} mb-4 lg:mb-6 shadow-lg`}
-                    >
-                      <service.icon className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
-                    </div>
-
-                    {/* Content */}
-                    <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-3 lg:mb-4">
-                      {service.title}
-                    </h3>
-                    <p className="text-sm lg:text-base text-[#235347] mb-4 lg:mb-6 leading-relaxed">
-                      {service.desc}
-                    </p>
-
-                    {/* Features */}
-                    <div className="space-y-2 lg:space-y-3">
-                      {service.features.map((feature, j) => (
-                        <div key={feature} className="flex items-center gap-3">
-                          <div className="w-2 h-2 rounded-full bg-[#8EB69B]" />
-                          <span className="text-xs lg:text-sm text-[#163832] font-bold">
-                            {feature}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* Featured Properties Section */}
-        <section className="section bg-light">
+        <section id="properties-section" className="section bg-light">
           <div className="container">
             <div className="text-center mb-12">
               <h2 className="text-3xl lg:text-4xl font-bold text-dark mb-4">
@@ -909,6 +830,91 @@ export default function Home() {
               >
                 View All Properties <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
+            </div>
+          </div>
+        </section>
+
+        {/* Exclusive Services Section: Animated Icons */}
+        <section className="mb-16 lg:mb-24">
+          <div className="max-w-6xl mx-auto px-4">
+            <div className="text-center mb-12 lg:mb-16">
+              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-dark mb-4">
+                Exclusive <span className="text-[#8EB69B]">Services</span>
+              </h2>
+              <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
+                Premium services designed to elevate your luxury living
+                experience
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+              {[
+                {
+                  icon: Shield,
+                  title: "Verified Properties",
+                  desc: "Every property is personally inspected and verified for quality and safety standards.",
+                  features: [
+                    "24/7 Security",
+                    "Quality Assurance",
+                    "Regular Inspections",
+                  ],
+                  gradient: "from-[#8EB69B] to-[#235347]",
+                },
+                {
+                  icon: Users,
+                  title: "Concierge Service",
+                  desc: "Personalized assistance for all your needs, from bookings to local recommendations.",
+                  features: [
+                    "Personal Concierge",
+                    "Local Expertise",
+                    "24/7 Support",
+                  ],
+                  gradient: "from-[#DAF1DE] to-[#8EB69B]",
+                },
+                {
+                  icon: Star,
+                  title: "Premium Experience",
+                  desc: "Curated experiences and amenities that go beyond standard luxury accommodations.",
+                  features: [
+                    "Exclusive Access",
+                    "Custom Experiences",
+                    "Premium Amenities",
+                  ],
+                  gradient: "from-[#235347] to-[#163832]",
+                },
+              ].map((service, i) => (
+                <div key={service.title} className="group relative">
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-xl group-hover:shadow-2xl transition-shadow duration-200" />
+                  <div className="relative p-6 lg:p-8">
+                    {/* Animated Icon */}
+                    <div
+                      className={`inline-flex p-4 lg:p-6 rounded-xl lg:rounded-2xl bg-gradient-to-br ${service.gradient} mb-4 lg:mb-6 shadow-lg`}
+                    >
+                      <service.icon className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
+                    </div>
+
+                    {/* Content */}
+                    <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-3 lg:mb-4">
+                      {service.title}
+                    </h3>
+                    <p className="text-sm lg:text-base text-[#235347] mb-4 lg:mb-6 leading-relaxed">
+                      {service.desc}
+                    </p>
+
+                    {/* Features */}
+                    <div className="space-y-2 lg:space-y-3">
+                      {service.features.map((feature, j) => (
+                        <div key={feature} className="flex items-center gap-3">
+                          <div className="w-2 h-2 rounded-full bg-[#8EB69B]" />
+                          <span className="text-xs lg:text-sm text-[#163832] font-bold">
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </section>
