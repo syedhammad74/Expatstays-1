@@ -188,27 +188,11 @@ const Header = () => {
                       aria-label="Notifications"
                     >
                       <Bell className="h-4 w-4" />
-                      <span
-                        className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#8EB69B] rounded-full"
-                        animate={{
-                          scale: [1, 1.2, 1],
-                          opacity: [0.7, 1, 0.7],
-                        }}
-                        transition={{
-                          duration: 2,
-                          repeat: Infinity,
-                          ease: "easeInOut",
-                        }}
-                      />
+                      <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#8EB69B] rounded-full animate-pulse" />
                     </Button>
                   </div>
 
-                  <div
-                    className="h-6 w-px bg-[#EBEBEB]"
-                    initial={{ scaleY: 0 }}
-                    animate={{ scaleY: 1 }}
-                    transition={{ duration: 0.5, delay: 0.3 }}
-                  />
+                  <div className="h-6 w-px bg-[#EBEBEB]" />
 
                   <div>
                     <Button
@@ -223,17 +207,8 @@ const Header = () => {
                     (user ? (
                       <UserMenu />
                     ) : (
-                      <div
-                        className="flex items-center space-x-2 xl:space-x-3"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.5, delay: 0.4 }}
-                      >
-                        <div
-                          whileHover={{ scale: 1.05, y: -1 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={{ duration: 0.2, ease: "easeOut" }}
-                        >
+                      <div className="flex items-center space-x-2 xl:space-x-3">
+                        <div>
                           <Link href="/auth/signin">
                             <Button
                               variant="ghost"
@@ -243,11 +218,7 @@ const Header = () => {
                             </Button>
                           </Link>
                         </div>
-                        <div
-                          whileHover={{ scale: 1.05, y: -1 }}
-                          whileTap={{ scale: 0.95 }}
-                          transition={{ duration: 0.2, ease: "easeOut" }}
-                        >
+                        <div>
                           <Link href="/auth/signup">
                             <Button className="bg-[#0B2B26] text-white hover:bg-[#163832] font-medium transition-all duration-200">
                               Sign Up
@@ -262,11 +233,7 @@ const Header = () => {
                 <div className="lg:hidden">
                   <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                     <SheetTrigger asChild>
-                      <div
-                        whileHover={{ scale: 1.05, y: -1 }}
-                        whileTap={{ scale: 0.95 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                      >
+                      <div className="hover-scale">
                         <Button
                           variant="ghost"
                           size="icon"
@@ -289,29 +256,14 @@ const Header = () => {
                       side="right"
                       className="w-[300px] sm:w-[350px] bg-white/95 backdrop-blur-xl border-l border-[#EBEBEB]"
                     >
-                      <div
-                        className="p-6 h-full flex flex-col"
-                        initial={{ opacity: 0, x: 20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <div
-                          className="mb-6"
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.4, delay: 0.1 }}
-                        ></div>
+                      <div className="p-6 h-full flex flex-col animate-fade-in-up">
+                        <div className="mb-6 animate-fade-in-up delay-100"></div>
                         <nav className="flex-1">
                           <div className="space-y-2">
                             {navLinks.map((link, index) => (
                               <div
                                 key={link.href}
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{
-                                  duration: 0.3,
-                                  delay: 0.2 + index * 0.1,
-                                }}
+                                className="animate-fade-in-up"
                               >
                                 <Link
                                   href={link.href}
@@ -324,17 +276,8 @@ const Header = () => {
                             ))}
                           </div>
                         </nav>
-                        <div
-                          className="border-t border-[#EBEBEB] pt-4 space-y-3"
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.4, delay: 0.3 }}
-                        >
-                          <div
-                            whileHover={{ scale: 1.05, y: -1 }}
-                            whileTap={{ scale: 0.95 }}
-                            transition={{ duration: 0.2, ease: "easeOut" }}
-                          >
+                        <div className="border-t border-[#EBEBEB] pt-4 space-y-3 animate-fade-in-up delay-300">
+                          <div className="hover-scale">
                             <Button
                               className="w-full bg-[#8EB69B] text-[#0B2B26] hover:bg-[#7AA589] font-medium transition-all duration-200"
                               onClick={() => setIsMenuOpen(false)}
@@ -344,17 +287,8 @@ const Header = () => {
                             </Button>
                           </div>
                           {!loading && !user && (
-                            <div
-                              className="space-y-2"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ duration: 0.3, delay: 0.4 }}
-                            >
-                              <div
-                                whileHover={{ scale: 1.05, y: -1 }}
-                                whileTap={{ scale: 0.95 }}
-                                transition={{ duration: 0.2, ease: "easeOut" }}
-                              >
+                            <div className="space-y-2 animate-fade-in delay-400">
+                              <div className="hover-scale">
                                 <Link href="/auth/signin">
                                   <Button
                                     variant="outline"
@@ -365,11 +299,7 @@ const Header = () => {
                                   </Button>
                                 </Link>
                               </div>
-                              <div
-                                whileHover={{ scale: 1.05, y: -1 }}
-                                whileTap={{ scale: 0.95 }}
-                                transition={{ duration: 0.2, ease: "easeOut" }}
-                              >
+                              <div className="hover-scale">
                                 <Link href="/auth/signup">
                                   <Button
                                     className="w-full bg-[#0B2B26] text-white hover:bg-[#163832] transition-all duration-200"
@@ -382,12 +312,7 @@ const Header = () => {
                             </div>
                           )}
                           {user && (
-                            <div
-                              className="pt-3 border-t border-[#EBEBEB]"
-                              initial={{ opacity: 0 }}
-                              animate={{ opacity: 1 }}
-                              transition={{ duration: 0.3, delay: 0.5 }}
-                            >
+                            <div className="pt-3 border-t border-[#EBEBEB] animate-fade-in delay-500">
                               <UserMenu />
                             </div>
                           )}

@@ -381,7 +381,7 @@ export default function Home() {
           {/* Right Panel: Sliding Touch Carousel */}
           <div
             ref={heroRef}
-            className="relative flex-col mt-2 w-full lg:w-1/2 sm:w-1/3 h-[250px] sm:h-[300px] lg:h-[300px] flex items-center justify-center mb-8 lg:mb-8 "
+            className="relative w-full lg:w-1/2 h-[250px] sm:h-[300px] lg:h-[400px] flex items-center justify-center"
           >
             {/* Carousel Container */}
             <div className="relative w-full h-full max-w-xl mx-auto">
@@ -467,7 +467,7 @@ export default function Home() {
           <div className="absolute -left-16 lg:-left-32 -top-16 lg:-top-32 w-[200px] h-[200px] lg:w-[420px] lg:h-[420px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl z-0" />
 
           <div className="relative z-10 w-full">
-            <h2 className="mb-6 text-2xl lg:text-3xl xl:text-4xl font-bold text-[#051F20] text-center font-[Manrope,Inter,sans-serif] tracking-tight">
+            <h2 className="mb-6 text-2xl lg:text-3xl xl:text-4xl font-bold text-brand-dark text-center tracking-tight">
               Book Your Next Stay in Seconds
             </h2>
             {error && (
@@ -477,13 +477,13 @@ export default function Home() {
             )}
             <div className="w-full max-w-4xl mx-auto bg-white rounded-2xl lg:rounded-full shadow-xl py-4 lg:py-3 px-4 lg:px-5 flex flex-col lg:flex-row items-center gap-4">
               {/* Location Field */}
-              <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-xl px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
-                <MapPin className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
+              <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-brand-accent rounded-xl px-4 gap-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 transition-colors duration-150">
+                <MapPin className="h-4 lg:h-5 w-4 lg:w-5 text-primary" />
                 <Select value={location} onValueChange={setLocation}>
                   <SelectTrigger className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-bold focus:ring-0 focus:border-none h-12 lg:h-14">
                     <SelectValue placeholder="Location" />
                   </SelectTrigger>
-                  <SelectContent className="bg-white border border-[#DAF1DE] rounded-xl shadow-lg">
+                  <SelectContent className="bg-white border border-brand-accent rounded-xl shadow-lg">
                     <SelectItem value="Dubai">Dubai</SelectItem>
                     <SelectItem value="Abu Dhabi">Abu Dhabi</SelectItem>
                     <SelectItem value="Palm Jumeirah">Palm Jumeirah</SelectItem>
