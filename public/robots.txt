@@ -1,3 +1,8 @@
 User-agent: *
 Allow: /
-Sitemap: https://myexpatstays.com/sitemap.xml 
+
+# Sitemap
+Sitemap: https://myexpatstays.com/sitemap.xml
+
+# Performance optimizations
+Crawl-delay: 1

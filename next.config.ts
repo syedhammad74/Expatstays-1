@@ -25,6 +25,8 @@ const nextConfig: NextConfig = {
       },
     },
     serverComponentsExternalPackages: ["sharp"],
+    esmExternals: true,
+    serverMinification: true,
   },
 
   // Optimized image settings for performance
@@ -59,6 +61,9 @@ const nextConfig: NextConfig = {
 
   // Compression and optimization
   compress: true,
+
+  // Advanced compression settings
+  swcMinify: true,
 
   // Advanced headers for maximum performance
   async headers() {
@@ -147,6 +152,19 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        source: "/(.*\\.(css|js))",
+        headers: [
+          {
+            key: "Content-Encoding",
+            value: "gzip",
+          },
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
     ];
   },
 
@@ -159,36 +177,43 @@ const nextConfig: NextConfig = {
         splitChunks: {
           chunks: "all",
           minSize: 20000,
-          maxSize: 244000,
+          maxSize: 200000,
           cacheGroups: {
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: "vendors",
-              chunks: "all",
-              priority: 10,
-              maxSize: 244000,
-            },
             firebase: {
               test: /[\\/]node_modules[\\/](firebase|@firebase)[\\/]/,
               name: "firebase",
-              chunks: "all",
+              chunks: "async",
+              priority: 30,
+              maxSize: 150000,
+            },
+            vendor: {
+              test: /[\\/]node_modules[\\/]/,
+              name: "vendors",
+              chunks: "async",
               priority: 20,
-              maxSize: 244000,
+              maxSize: 200000,
             },
             radix: {
               test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
               name: "radix-ui",
-              chunks: "all",
-              priority: 20,
-              maxSize: 244000,
+              chunks: "async",
+              priority: 25,
+              maxSize: 100000,
+            },
+            lucide: {
+              test: /[\\/]node_modules[\\/]lucide-react[\\/]/,
+              name: "lucide",
+              chunks: "async",
+              priority: 15,
+              maxSize: 50000,
             },
             commons: {
               name: "commons",
               minChunks: 2,
-              chunks: "all",
-              priority: 5,
+              chunks: "async",
+              priority: 10,
               reuseExistingChunk: true,
-              maxSize: 244000,
+              maxSize: 100000,
             },
           },
         },
@@ -197,11 +222,34 @@ const nextConfig: NextConfig = {
         },
         usedExports: true,
         sideEffects: false,
+        moduleIds: "deterministic",
       };
 
       // Tree shaking optimization
       config.optimization.providedExports = true;
       config.optimization.usedExports = true;
+
+      // Remove console logs and optimize for modern browsers
+      config.optimization.minimizer = config.optimization.minimizer || [];
+      config.optimization.minimizer.push(
+        new (require("terser-webpack-plugin"))({
+          terserOptions: {
+            compress: {
+              drop_console: true,
+              drop_debugger: true,
+              // Remove legacy JavaScript features
+              ecma: 2020,
+              passes: 2,
+            },
+            mangle: {
+              safari10: false,
+            },
+            format: {
+              ecma: 2020,
+            },
+          },
+        })
+      );
     }
 
     // Bundle analyzer in development
@@ -213,6 +261,26 @@ const nextConfig: NextConfig = {
           openAnalyzer: true,
         })
       );
+    }
+
+    // Remove legacy JavaScript polyfills for modern browsers
+    if (!dev && !isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        // Remove Node.js polyfills
+        fs: false,
+        net: false,
+        tls: false,
+        crypto: false,
+        stream: false,
+        url: false,
+        zlib: false,
+        http: false,
+        https: false,
+        assert: false,
+        os: false,
+        path: false,
+      };
     }
 
     return config;

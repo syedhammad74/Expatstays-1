@@ -21,8 +21,12 @@ import {
 import Image from "next/image";
 // Removed framer-motion for performance
 import { useRef, useState, useEffect, useCallback } from "react";
-import Header from "@/components/layout/Header";
-import InViewVideo from "@/components/InViewVideo";
+const Header = dynamic(() => import("@/components/layout/Header"), {
+  loading: () => <div className="h-16 bg-white border-b border-gray-200" />,
+});
+const InViewVideo = dynamic(() => import("@/components/InViewVideo"), {
+  loading: () => <div className="w-full h-full bg-gray-200 animate-pulse" />,
+});
 import {
   Popover,
   PopoverContent,
@@ -55,7 +59,6 @@ import React from "react";
 // Removed embla-carousel for performance
 // Removed Head import - using metadata API instead
 import { Property } from "@/lib/types/firebase";
-import { propertyService } from "@/lib/services/properties";
 
 export default function Home() {
   // Parallax effect for hero images
@@ -138,6 +141,8 @@ export default function Home() {
       if (process.env.NODE_ENV === "development") {
         console.log("🔍 Fetching properties for landing page...");
       }
+      // Lazy load Firebase service only when needed
+      const { propertyService } = await import("@/lib/services/properties");
       const allProperties = await propertyService.getAllProperties();
       if (process.env.NODE_ENV === "development") {
         console.log("📊 All properties:", allProperties.length);
@@ -411,22 +416,22 @@ export default function Home() {
       <div className="min-h-screen bg-white">
         <Header />
         {/* Hero Section */}
-        <section className="relative w-full bg-white py-16 lg:py-24">
-          <div className="container mx-auto max-w-7xl px-4">
-            <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+        <section className="hero-bg py-16 lg:py-24">
+          <div className="hero-container">
+            <div className="hero-content">
               {/* Left Panel */}
-              <div className="flex-1 text-center lg:text-left">
+              <div className="hero-text flex-1">
                 <div className="badge badge-primary mb-4 inline-block">
                   Luxury Rentals
                 </div>
                 <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-dark mb-6 leading-tight">
                   Find Your <span className="text-primary">Perfect Home</span>
                 </h1>
-                <p className="text-lg text-gray mb-8 max-w-lg mx-auto lg:mx-0">
+                <p className="text-lg text-gray mb-8">
                   Curated luxury properties for modern living. Minimal,
                   beautiful, and effortless.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <div className="hero-buttons">
                   <button
                     onClick={handleViewAllProperties}
                     className="btn btn-primary"
@@ -445,13 +450,14 @@ export default function Home() {
               {/* Right Panel: Simple Carousel */}
               <div
                 ref={heroRef}
-                className="relative w-full lg:w-1/2 h-[300px] sm:h-[400px] lg:h-[500px] flex items-center justify-center"
+                className="relative w-full lg:w-1/2 flex items-center justify-center"
               >
                 {/* Carousel Container */}
-                <div className="relative w-full h-full max-w-xl mx-auto">
+                {/* Carousel Container */}
+                <div className="hero-carousel relative">
                   {/* Simple Carousel */}
                   <div
-                    className="overflow-hidden rounded-xl lg:rounded-2xl shadow-2xl"
+                    className="w-full h-full overflow-hidden"
                     style={{
                       touchAction: "manipulation",
                       userSelect: "none",
@@ -494,29 +500,19 @@ export default function Home() {
                     </div>
 
                     {/* Carousel Navigation Dots */}
-                    <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
-                      <div className="flex space-x-3">
-                        {carouselSlides.map((_, index) => (
-                          <button
-                            key={index}
-                            onClick={() => goToSlide(index)}
-                            className={`min-w-[44px] min-h-[44px] rounded-full transition-all duration-200 flex items-center justify-center ${
-                              index === currentServiceIndex
-                                ? "bg-white"
-                                : "bg-white/50 hover:bg-white/75"
-                            }`}
-                            aria-label={`Go to slide ${index + 1}`}
-                          >
-                            <span
-                              className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
-                                index === currentServiceIndex
-                                  ? "bg-gray-800 w-6"
-                                  : "bg-white"
-                              }`}
-                            />
-                          </button>
-                        ))}
-                      </div>
+                    <div className="carousel-dots">
+                      {carouselSlides.map((_, index) => (
+                        <button
+                          key={index}
+                          onClick={() => goToSlide(index)}
+                          className={`carousel-dot ${
+                            index === currentServiceIndex ? "active" : ""
+                          }`}
+                          aria-label={`Go to slide ${index + 1}`}
+                        >
+                          <span className="carousel-dot-inner" />
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -1390,7 +1386,7 @@ export default function Home() {
                               src="/media/Video.mp4"
                               muted={true}
                               enableMuteToggle
-                              poster="/media/Close Ups June 25 2025/IMG_1017.PNG"
+                              poster="/media/Close Ups June 25 2025/IMG_1017-compressed.webp"
                               className="w-full h-full object-cover object-center"
                               onClick={() =>
                                 window.open(

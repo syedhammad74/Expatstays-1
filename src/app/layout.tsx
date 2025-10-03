@@ -125,7 +125,8 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
             /* Critical CSS for above-the-fold content */
-            body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;margin:0;padding:0;line-height:1.6}
+            *{box-sizing:border-box}
+            body{font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,sans-serif;margin:0;padding:0;line-height:1.6;background:#fff}
             .container{max-width:1200px;margin:0 auto;padding:0 1rem}
             .btn{display:inline-flex;align-items:center;justify-content:center;border-radius:0.5rem;font-weight:500;transition:all 0.2s;cursor:pointer;border:none;text-decoration:none}
             .btn-primary{background-color:#8EB69B;color:white;padding:0.75rem 1.5rem}
@@ -177,9 +178,21 @@ export default function RootLayout({
             .drop-shadow-lg{filter:drop-shadow(0 10px 8px rgba(0,0,0,0.04)) drop-shadow(0 4px 3px rgba(0,0,0,0.1))}
             .animate-pulse{animation:pulse 2s cubic-bezier(0.4,0,0.6,1) infinite}
             @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-            @media (min-width:640px){.sm\\:flex-row{flex-direction:row}.sm\\:h-\\[400px\\]{height:400px}.sm\\:text-sm{font-size:0.875rem;line-height:1.25rem}}
-            @media (min-width:1024px){.lg\\:flex-row{flex-direction:row}.lg\\:h-\\[500px\\]{height:500px}.lg\\:text-left{text-align:left}.lg\\:justify-start{justify-content:flex-start}}
-            @media (min-width:1280px){.xl\\:text-6xl{font-size:3.75rem;line-height:1}}
+            /* Hero section critical styles */
+            .hero-bg{background:linear-gradient(135deg,#fff 0%,#f9fafb 50%,#fff 100%)}
+            .hero-container{max-width:1280px;margin:0 auto;padding:4rem 1rem}
+            .hero-content{display:flex;flex-direction:column;align-items:center;gap:2rem}
+            .hero-text{text-align:center;max-width:600px}
+            .hero-buttons{display:flex;flex-direction:column;gap:1rem;align-items:center}
+            .hero-carousel{width:100%;max-width:600px;height:400px;border-radius:1rem;overflow:hidden;box-shadow:0 25px 50px -12px rgba(0,0,0,0.25)}
+            .carousel-dots{position:absolute;bottom:1rem;left:50%;transform:translateX(-50%);display:flex;gap:0.5rem}
+            .carousel-dot{width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.5);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center}
+            .carousel-dot.active{background:white}
+            .carousel-dot-inner{width:10px;height:10px;border-radius:50%;background:white}
+            .carousel-dot.active .carousel-dot-inner{background:#374151}
+            @media (min-width:640px){.hero-buttons{flex-direction:row}.hero-carousel{height:400px}}
+            @media (min-width:1024px){.hero-content{flex-direction:row;text-align:left}.hero-text{text-align:left}.hero-carousel{height:500px}}
+            @media (min-width:1280px){.hero-carousel{height:600px}}
           `,
           }}
         />
