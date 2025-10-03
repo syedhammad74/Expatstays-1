@@ -353,54 +353,29 @@ export default function Home() {
       />
       <div className="min-h-screen bg-white">
         <Header />
-        {/* Hero Section: Split & Layered Visual Immersion */}
-        <section className="relative w-full  min-h-[50vh] flex flex-col lg:flex-row items-center justify-center overflow-hidden mb-0 lg:mb-1 px-4 lg:px-0">
-          {/* Modern Decorative Elements - Hero Background */}
-          <div className="absolute -top-14 left-8 pointer-events-none hidden lg:block">
-            {/* Large decorative circle */}
-            <div className="w-72 h-72 -left-10  bg-[#8EB69B] rounded-full"></div>
-
-            {/* Medium decorative circle */}
-            {/* <div className="absolute -top-8 -left-8 w-40 h-40 bg-[#8EB69B] rounded-full animate-[breathing_7.5s_ease-in-out_infinite]"></div> */}
-
-            {/* Small decorative circle */}
-            <div className="absolute top-36 -left-24 w-44 h-44 bg-[#8EB69B] rounded-full"></div>
-
-            {/* Floating dot */}
-            <div className="absolute top-8 left-24 w-4 h-4 rounded-full bg-[#8EB69B]"></div>
-          </div>
-
-          {/* Additional decorative element - Top right */}
-          <div className="absolute top-96 right-16 z-0 pointer-events-none hidden lg:block">
-            <div className="w-44 h-44 bg-gradient-to-br bg-[#8EB69B] rounded-full"></div>
-            <div className="absolute top-4 right-4 w-16 h-16 bg-[#8EB69B] rounded-full shadow-sm"></div>
-          </div>
+        {/* Hero Section */}
+        <section className="relative w-full bg-white py-16 lg:py-24">
           {/* Left Panel */}
-          <div className="w-full lg:w-2/5 flex mb-20 mt-8 flex-col justify-center items-start px-4 lg:px-12 z-10 ">
-            <Badge className="bg-[#235347]/20 text-[#235347] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
-              Luxury Rentals
-            </Badge>
-            <h1 className="text-3xl lg:text-4xl xl:text-6xl font-extrabold text-[#051F20] leading-tight mb-4 lg:mb-6 animate-fade-in-up">
-              Find Your <span className="text-[#8EB69B]">Perfect Home</span>
-            </h1>
-            <p className="text-base lg:text-lg text-[#235347] mb-6 lg:mb-10 max-w-md animate-fade-in-up delay-100">
-              Curated luxury properties for modern living. Minimal, beautiful,
-              and effortless.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 w-full sm:w-auto animate-fade-in-up delay-200">
-              <Button
-                size="lg"
-                className="px-6 py-4 bg-[#8EB69B] text-[#051F20] font-bold rounded-xl shadow-lg hover:bg-[#235347] hover:text-white transition-all duration-300 w-full sm:w-auto hover:scale-105 hover:shadow-xl"
-              >
-                Explore Properties
-              </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                className="px-6 py-4 border-2 border-[#8EB69B] text-[#8EB69B] font-bold rounded-xl hover:bg-[#8EB69B] hover:text-[#051F20] transition-all duration-300 w-full sm:w-auto hover:scale-105 hover:shadow-xl"
-              >
-                Book Now
-              </Button>
+          <div className="container mx-auto max-w-4xl px-4">
+            <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+              <div className="flex-1 text-center lg:text-left">
+                <div className="badge badge-primary mb-4 inline-block">
+                  Luxury Rentals
+                </div>
+                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-dark mb-6 leading-tight">
+                  Find Your <span className="text-primary">Perfect Home</span>
+                </h1>
+                <p className="text-lg text-gray mb-8 max-w-lg mx-auto lg:mx-0">
+                  Curated luxury properties for modern living. Minimal,
+                  beautiful, and effortless.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                  <button className="btn btn-primary">
+                    Explore Properties
+                  </button>
+                  <button className="btn btn-secondary">Book Now</button>
+                </div>
+              </div>
             </div>
           </div>
           {/* Right Panel: Sliding Touch Carousel */}
@@ -798,13 +773,13 @@ export default function Home() {
         </section>
 
         {/* Featured Properties Section */}
-        <section className="mb-16 lg:mb-24">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center mb-12 lg:mb-16">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4">
-                Featured <span className="text-[#8EB69B]">Properties</span>
+        <section className="section bg-light">
+          <div className="container">
+            <div className="text-center mb-12">
+              <h2 className="text-3xl lg:text-4xl font-bold text-dark mb-4">
+                Featured <span className="text-primary">Properties</span>
               </h2>
-              <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
+              <p className="text-lg text-gray max-w-2xl mx-auto">
                 Discover our handpicked luxury properties, perfect for your next
                 stay
               </p>
@@ -836,80 +811,68 @@ export default function Home() {
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
-                {featuredProperties.map((property, i) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {featuredProperties.map((property) => (
                   <div
                     key={property.id}
-                    className="group relative cursor-pointer"
+                    className="card hover-lift cursor-pointer"
                     onClick={() => handlePropertyClick(property.id)}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-2xl group-hover:shadow-3xl transition-all duration-300 hover-lift" />
-                    <div className="relative p-6 lg:p-8">
-                      <div className="relative h-48 lg:h-64 rounded-xl lg:rounded-2xl overflow-hidden mb-4 lg:mb-6">
-                        <Image
-                          src={
-                            property.images?.[0] || "/placeholder-property.jpg"
-                          }
-                          alt={property.title}
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-                          className="object-cover object-center"
-                          quality={85}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-[#163832]/60 to-transparent" />
-                        {property.featured && (
-                          <div className="absolute top-3 lg:top-4 right-3 lg:right-4">
-                            <div className="bg-[#8EB69B] text-[#051F20] px-2 lg:px-3 py-1 rounded-full text-xs font-semibold">
-                              Featured
-                            </div>
-                          </div>
-                        )}
-                        <div className="absolute bottom-3 lg:bottom-4 left-3 lg:left-4 right-3 lg:right-4">
-                          <div className="flex items-center gap-2 text-white">
-                            <Star className="h-3 lg:h-4 w-3 lg:w-4 fill-[#8EB69B] text-[#8EB69B]" />
-                            <span className="text-xs lg:text-sm font-semibold">
-                              {property.rating || 4.8}
-                            </span>
-                          </div>
+                    <div className="relative h-48 overflow-hidden">
+                      <Image
+                        src={
+                          property.images?.[0] || "/placeholder-property.jpg"
+                        }
+                        alt={property.title}
+                        fill
+                        className="img-cover"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      />
+                      {property.featured && (
+                        <div className="absolute top-3 right-3">
+                          <span className="badge badge-primary text-xs">
+                            Featured
+                          </span>
                         </div>
+                      )}
+                      <div className="absolute bottom-3 left-3 flex items-center gap-1 text-white">
+                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                        <span className="text-sm font-medium">
+                          {property.rating || 4.8}
+                        </span>
                       </div>
-
-                      <div className="space-y-3 lg:space-y-4">
+                    </div>
+                    <div className="p-4">
+                      <div className="flex items-center gap-1 text-gray mb-2">
+                        <MapPin className="h-4 w-4" />
+                        <span className="text-sm">
+                          {property.location?.city}, {property.location?.state}
+                        </span>
+                      </div>
+                      <h3 className="text-lg font-semibold text-dark mb-2">
+                        {property.title}
+                      </h3>
+                      <div className="flex items-center gap-4 text-sm text-gray mb-4">
+                        <span>{property.capacity?.maxGuests} guests</span>
+                        <span>•</span>
+                        <span>{property.capacity?.bedrooms} bedrooms</span>
+                      </div>
+                      <div className="flex items-center justify-between">
                         <div>
-                          <div className="flex items-center gap-2 text-[#235347] text-xs lg:text-sm mb-2">
-                            <MapPin className="h-3 lg:h-4 w-3 lg:w-4" />
-                            {property.location?.city},{" "}
-                            {property.location?.state}
+                          <div className="text-xl font-bold text-primary">
+                            ${property.pricing?.basePrice}
                           </div>
-                          <h3 className="text-lg lg:text-xl font-bold text-[#051F20] mb-2">
-                            {property.title}
-                          </h3>
-                          <div className="flex items-center gap-4 text-xs lg:text-sm text-[#235347]">
-                            <span>{property.capacity?.maxGuests} guests</span>
-                            <span>•</span>
-                            <span>{property.capacity?.bedrooms} bedrooms</span>
-                          </div>
+                          <div className="text-sm text-gray">per night</div>
                         </div>
-
-                        <div className="flex items-center justify-between pt-3 lg:pt-4">
-                          <div>
-                            <div className="text-xl lg:text-2xl font-semibold text-[#8EB69B]">
-                              ${property.pricing?.basePrice}
-                            </div>
-                            <div className="text-xs lg:text-sm text-[#235347]">
-                              per night
-                            </div>
-                          </div>
-                          <Button
-                            className="bg-[#163832] text-white hover:bg-[#235347] transition-colors duration-150 text-sm lg:text-base px-3 lg:px-4 py-2 lg:py-2"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handlePropertyClick(property.id);
-                            }}
-                          >
-                            View Details
-                          </Button>
-                        </div>
+                        <button
+                          className="btn btn-secondary text-sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handlePropertyClick(property.id);
+                          }}
+                        >
+                          View Details
+                        </button>
                       </div>
                     </div>
                   </div>
