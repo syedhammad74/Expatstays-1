@@ -474,6 +474,8 @@ export default function Home() {
                             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
                             className="object-cover object-center select-none"
                             priority={index === 0}
+                            fetchPriority={index === 0 ? "high" : "auto"}
+                            loading={index === 0 ? "eager" : "lazy"}
                             quality={index === 0 ? 90 : 85}
                             placeholder="blur"
                             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
@@ -493,18 +495,26 @@ export default function Home() {
 
                     {/* Carousel Navigation Dots */}
                     <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-20">
-                      <div className="flex space-x-2">
+                      <div className="flex space-x-3">
                         {carouselSlides.map((_, index) => (
                           <button
                             key={index}
                             onClick={() => goToSlide(index)}
-                            className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
+                            className={`min-w-[44px] min-h-[44px] rounded-full transition-all duration-200 flex items-center justify-center ${
                               index === currentServiceIndex
-                                ? "bg-white w-6"
+                                ? "bg-white"
                                 : "bg-white/50 hover:bg-white/75"
                             }`}
                             aria-label={`Go to slide ${index + 1}`}
-                          />
+                          >
+                            <span
+                              className={`w-2.5 h-2.5 rounded-full transition-all duration-200 ${
+                                index === currentServiceIndex
+                                  ? "bg-gray-800 w-6"
+                                  : "bg-white"
+                              }`}
+                            />
+                          </button>
                         ))}
                       </div>
                     </div>
@@ -546,7 +556,10 @@ export default function Home() {
                 <div className="flex items-center w-full lg:min-w-[200px] h-12 bg-white border border-gray-300 rounded-xl px-4 gap-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 transition-colors duration-150">
                   <MapPin className="h-4 w-4 text-primary" />
                   <Select value={location} onValueChange={setLocation}>
-                    <SelectTrigger className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium focus:ring-0 focus:border-none h-12">
+                    <SelectTrigger
+                      className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium focus:ring-0 focus:border-none h-12"
+                      aria-label="Select location"
+                    >
                       <SelectValue placeholder="Location" />
                     </SelectTrigger>
                     <SelectContent className="bg-white border border-gray-300 rounded-xl shadow-lg">

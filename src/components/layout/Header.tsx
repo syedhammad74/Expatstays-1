@@ -147,11 +147,7 @@ const Header = () => {
                   className="flex items-center space-x-2 sm:space-x-1"
                 >
                   <div className="flex items-center space-x-1 sm:space-x-3">
-                    <Image
-                      src={Logo}
-                      alt="Expat Stays"
-                      className="h-6 w-auto sm:h-8"
-                    />
+                    <Image src={Logo} alt="" className="h-6 w-auto sm:h-8" />
                     <span className="text-lg sm:text-xl lg:text-2xl font-bold text-[#0B2B26]">
                       Expat Stays
                     </span>
