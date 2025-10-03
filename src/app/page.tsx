@@ -119,6 +119,8 @@ export default function Home() {
   // Simple navigation (replaced Embla Carousel)
   const goToSlide = (index: number) => {
     setCurrentServiceIndex(index);
+    setIsAutoPlaying(false); // Pause auto-play when manually navigating
+    setTimeout(() => setIsAutoPlaying(true), 10000); // Resume auto-play after 10 seconds
   };
 
   // Fetch featured properties for landing page
@@ -166,7 +168,7 @@ export default function Home() {
         // Fallback to hardcoded properties with real IDs
         const fallbackProperties = [
           {
-            id: "prop_islamabad_dam_view",
+            id: "apartment_dam_view_islamabad",
             title: "2-Bedroom Apartment with Stunning Dam View",
             images: ["/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg"],
             location: {
@@ -182,7 +184,7 @@ export default function Home() {
             propertyType: "apartment",
           },
           {
-            id: "prop_gulberg_greens",
+            id: "gulberg_greens_apartment",
             title: "2 Bedroom Apartment With Kitchen | Gulberg Greens",
             images: ["/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"],
             location: {
@@ -198,7 +200,7 @@ export default function Home() {
             propertyType: "apartment",
           },
           {
-            id: "prop_farmhouse_islamabad",
+            id: "famhouse_islamabad_dam_view",
             title: "Luxury Farmhouse | Islamabad Hillside",
             images: ["/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg"],
             location: {
@@ -226,7 +228,7 @@ export default function Home() {
         console.log("🔧 Force showing properties for testing...");
         const testProperties = [
           {
-            id: "prop_islamabad_dam_view",
+            id: "apartment_dam_view_islamabad",
             title: "2-Bedroom Apartment with Stunning Dam View",
             images: ["/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg"],
             location: {
@@ -242,7 +244,7 @@ export default function Home() {
             propertyType: "apartment",
           },
           {
-            id: "prop_gulberg_greens",
+            id: "gulberg_greens_apartment",
             title: "2 Bedroom Apartment With Kitchen | Gulberg Greens",
             images: ["/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"],
             location: {
@@ -258,7 +260,7 @@ export default function Home() {
             propertyType: "apartment",
           },
           {
-            id: "prop_farmhouse_islamabad",
+            id: "famhouse_islamabad_dam_view",
             title: "Luxury Farmhouse | Islamabad Hillside",
             images: ["/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg"],
             location: {

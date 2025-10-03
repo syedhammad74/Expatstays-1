@@ -311,6 +311,11 @@ export default function PropertiesPage() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
+  // Handle property navigation
+  const handleViewDetails = (slug: string) => {
+    router.push(`/properties/${slug}`);
+  };
+
   // Memoize property conversion to prevent recalculation
   const convertToPropertyCard = useCallback(
     (property: Property): PropertyCardProps => {
@@ -361,6 +366,7 @@ export default function PropertiesPage() {
         amenities: property.amenities || [],
         isVerified: true,
         isAvailable: property.availability?.isActive || true,
+        onViewDetails: handleViewDetails,
         views:
           property.id === "famhouse_islamabad_dam_view"
             ? 234
