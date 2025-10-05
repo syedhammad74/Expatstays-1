@@ -55,9 +55,19 @@ const Header = () => {
   const [isSticky, setIsSticky] = React.useState(false);
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
   const [isVisible, setIsVisible] = React.useState(true);
-  const [scrollDelta, setScrollDelta] = React.useState(0);
-  const [lockout, setLockout] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
   const { user, loading } = useAuth();
+
+  // Detect mobile device
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024); // lg breakpoint
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   React.useEffect(() => {
     let lastY = window.scrollY;
@@ -69,40 +79,31 @@ const Header = () => {
           const currentY = window.scrollY;
           setIsSticky(currentY > 12);
 
-          // Always show header near top
-          if (currentY < 50) {
+          // Simplified mobile behavior - always show header on mobile
+          if (isMobile) {
             setIsVisible(true);
-            setScrollDelta(0);
             lastY = currentY;
             ticking = false;
             return;
           }
 
-          // Debounce lockout to prevent rapid toggling
-          if (lockout) {
+          // Desktop behavior - hide/show on scroll
+          if (currentY < 50) {
+            setIsVisible(true);
             lastY = currentY;
             ticking = false;
             return;
           }
 
           const delta = currentY - lastY;
-          const newDelta = scrollDelta + delta;
 
-          // Hide header if scrolled down more than 50px (increased threshold)
-          if (delta > 0 && newDelta > 50 && isVisible) {
+          // Hide header if scrolled down more than 100px
+          if (delta > 0 && currentY > lastY + 100 && isVisible) {
             setIsVisible(false);
-            setScrollDelta(0);
-            setLockout(true);
-            setTimeout(() => setLockout(false), 200); // Reduced timeout
           }
-          // Show header if scrolled up more than 20px (increased threshold)
-          else if (delta < 0 && Math.abs(newDelta) > 20 && !isVisible) {
+          // Show header if scrolled up more than 50px
+          else if (delta < 0 && currentY < lastY - 50 && !isVisible) {
             setIsVisible(true);
-            setScrollDelta(0);
-            setLockout(true);
-            setTimeout(() => setLockout(false), 200); // Reduced timeout
-          } else {
-            setScrollDelta(newDelta);
           }
 
           lastY = currentY;
@@ -114,7 +115,7 @@ const Header = () => {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isVisible, lockout, scrollDelta]);
+  }, [isVisible, isMobile]);
 
   // Ensure header is visible when at top of page
   React.useEffect(() => {
@@ -126,12 +127,18 @@ const Header = () => {
   return (
     <>
       {isVisible && (
-        <div className="sticky top-0 left-0 right-0 z-50 w-full px-4 pt-6 animate-slide-down">
+        <div
+          className={cn(
+            "sticky top-0 left-0 right-0 z-50 w-full",
+            isMobile ? "px-2 pt-2" : "px-4 pt-6"
+          )}
+        >
           <header
             className={cn(
               "w-auto mx-auto",
               "bg-white/95 backdrop-blur-xl border border-[#EBEBEB]/50",
-              "rounded-full shadow-lg",
+              isMobile ? "rounded-2xl" : "rounded-full",
+              "shadow-lg",
               isSticky ? "shadow-xl" : "shadow-md"
             )}
             style={{
@@ -139,16 +146,29 @@ const Header = () => {
               backdropFilter: "blur(16px)",
             }}
           >
-            <div className="px-4 sm:px-6 lg:px-8">
-              <div className="flex items-center justify-between h-16">
+            <div className={cn("px-4 sm:px-6 lg:px-8", isMobile ? "px-3" : "")}>
+              <div
+                className={cn(
+                  "flex items-center justify-between",
+                  isMobile ? "h-14" : "h-16"
+                )}
+              >
                 {/* Logo */}
-                <Link
-                  href="/"
-                  className="flex items-center space-x-2 sm:space-x-1"
-                >
-                  <div className="flex items-center space-x-1 sm:space-x-3">
-                    <Image src={Logo} alt="" className="h-6 w-auto sm:h-8" />
-                    <span className="text-lg sm:text-xl lg:text-2xl font-bold text-[#0B2B26]">
+                <Link href="/" className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-2">
+                    <Image
+                      src={Logo}
+                      alt="Expat Stays"
+                      className={cn("w-auto", isMobile ? "h-5" : "h-6 sm:h-8")}
+                    />
+                    <span
+                      className={cn(
+                        "font-bold text-[#0B2B26]",
+                        isMobile
+                          ? "text-base"
+                          : "text-lg sm:text-xl lg:text-2xl"
+                      )}
+                    >
                       Expat Stays
                     </span>
                   </div>
@@ -229,86 +249,89 @@ const Header = () => {
                 <div className="lg:hidden">
                   <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                     <SheetTrigger asChild>
-                      <div className="hover-scale">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-9 w-9 text-[#235347] hover:bg-[#F2F2F2] transition-all duration-200"
-                          aria-label="Open menu"
-                        >
-                          {isMenuOpen ? (
-                            <div key="close">
-                              <X className="h-5 w-5" />
-                            </div>
-                          ) : (
-                            <div key="menu">
-                              <Menu className="h-5 w-5" />
-                            </div>
-                          )}
-                        </Button>
-                      </div>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="h-10 w-10 text-[#235347] hover:bg-[#F2F2F2] active:bg-[#E5E5E5] touch-manipulation"
+                        aria-label="Open menu"
+                      >
+                        {isMenuOpen ? (
+                          <X className="h-5 w-5" />
+                        ) : (
+                          <Menu className="h-5 w-5" />
+                        )}
+                      </Button>
                     </SheetTrigger>
                     <SheetContent
                       side="right"
-                      className="w-[300px] sm:w-[350px] bg-white/95 backdrop-blur-xl border-l border-[#EBEBEB]"
+                      className="w-[280px] sm:w-[320px] bg-white border-l border-[#EBEBEB] p-0"
                     >
-                      <div className="p-6 h-full flex flex-col animate-fade-in-up">
-                        <div className="mb-6 animate-fade-in-up delay-100"></div>
-                        <nav className="flex-1">
-                          <div className="space-y-2">
-                            {navLinks.map((link, index) => (
-                              <div
+                      <div className="flex flex-col h-full">
+                        {/* Header */}
+                        <div className="flex items-center justify-between p-4 border-b border-[#EBEBEB]">
+                          <span className="text-lg font-semibold text-[#0B2B26]">
+                            Menu
+                          </span>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={() => setIsMenuOpen(false)}
+                            className="h-8 w-8 text-[#235347] hover:bg-[#F2F2F2]"
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
+                        </div>
+
+                        {/* Navigation */}
+                        <nav className="flex-1 p-4">
+                          <div className="space-y-1">
+                            {navLinks.map((link) => (
+                              <Link
                                 key={link.href}
-                                className="animate-fade-in-up"
+                                href={link.href}
+                                onClick={() => setIsMenuOpen(false)}
+                                className="block px-3 py-3 text-base font-medium text-[#235347] hover:bg-[#F2F2F2] active:bg-[#E5E5E5] rounded-lg transition-colors duration-150 touch-manipulation"
                               >
-                                <Link
-                                  href={link.href}
-                                  onClick={() => setIsMenuOpen(false)}
-                                  className="block px-3 py-2 text-base font-medium text-[#235347] hover:bg-[#F2F2F2] hover:text-[#8EB69B] rounded-md transition-all duration-200"
-                                >
-                                  {link.label}
-                                </Link>
-                              </div>
+                                {link.label}
+                              </Link>
                             ))}
                           </div>
                         </nav>
-                        <div className="border-t border-[#EBEBEB] pt-4 space-y-3 animate-fade-in-up delay-300">
-                          <div className="hover-scale">
-                            <Button
-                              className="w-full bg-[#8EB69B] text-[#0B2B26] hover:bg-[#7AA589] font-medium transition-all duration-200"
-                              onClick={() => setIsMenuOpen(false)}
-                              asChild
-                            >
-                              <Link href="/properties">Find A House</Link>
-                            </Button>
-                          </div>
+
+                        {/* Actions */}
+                        <div className="border-t border-[#EBEBEB] p-4 space-y-3">
+                          <Button
+                            className="w-full bg-[#8EB69B] text-[#0B2B26] hover:bg-[#7AA589] active:bg-[#6A9A79] font-medium py-3 touch-manipulation"
+                            onClick={() => setIsMenuOpen(false)}
+                            asChild
+                          >
+                            <Link href="/properties">Find A House</Link>
+                          </Button>
+
                           {!loading && !user && (
-                            <div className="space-y-2 animate-fade-in delay-400">
-                              <div className="hover-scale">
-                                <Link href="/auth/signin">
-                                  <Button
-                                    variant="outline"
-                                    className="w-full border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-[#0B2B26] transition-all duration-200"
-                                    onClick={() => setIsMenuOpen(false)}
-                                  >
-                                    Sign In
-                                  </Button>
-                                </Link>
-                              </div>
-                              <div className="hover-scale">
-                                <Link href="/auth/signup">
-                                  <Button
-                                    className="w-full bg-[#0B2B26] text-white hover:bg-[#163832] transition-all duration-200"
-                                    onClick={() => setIsMenuOpen(false)}
-                                  >
-                                    Sign Up
-                                  </Button>
-                                </Link>
-                              </div>
+                            <div className="space-y-2">
+                              <Link href="/auth/signin">
+                                <Button
+                                  variant="outline"
+                                  className="w-full border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-[#0B2B26] active:bg-[#7AA589] active:text-[#0B2B26] py-3 touch-manipulation"
+                                  onClick={() => setIsMenuOpen(false)}
+                                >
+                                  Sign In
+                                </Button>
+                              </Link>
+                              <Link href="/auth/signup">
+                                <Button
+                                  className="w-full bg-[#0B2B26] text-white hover:bg-[#163832] active:bg-[#0F1F1E] py-3 touch-manipulation"
+                                  onClick={() => setIsMenuOpen(false)}
+                                >
+                                  Sign Up
+                                </Button>
+                              </Link>
                             </div>
                           )}
+
                           {user && (
-                            <div className="pt-3 border-t border-[#EBEBEB] animate-fade-in delay-500">
+                            <div className="pt-2">
                               <UserMenu />
                             </div>
                           )}
