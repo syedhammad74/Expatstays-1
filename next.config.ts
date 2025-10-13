@@ -1,14 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Performance optimizations
   reactStrictMode: true,
   poweredByHeader: false,
 
-  // Experimental features for performance
   experimental: {
-    optimizeCss: true,
-    scrollRestoration: true,
     optimizePackageImports: [
       "lucide-react",
       "@radix-ui/react-icons",
@@ -16,6 +12,9 @@ const nextConfig: NextConfig = {
       "@hookform/resolvers",
       "zod",
     ],
+    serverComponentsExternalPackages: ["sharp"],
+    esmExternals: true,
+    serverMinification: true,
     turbo: {
       rules: {
         "*.svg": {
@@ -24,14 +23,15 @@ const nextConfig: NextConfig = {
         },
       },
     },
-    serverComponentsExternalPackages: ["sharp"],
-    esmExternals: true,
-    serverMinification: true,
   },
 
-  // Optimized image settings for performance
   images: {
     remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "3000",
+      },
       {
         protocol: "https",
         hostname: "localhost",
@@ -49,24 +49,16 @@ const nextConfig: NextConfig = {
         hostname: "storage.googleapis.com",
       },
     ],
-    formats: ["image/webp", "image/avif"], // Re-enabled AVIF for better compression
-    deviceSizes: [640, 750, 828, 1080, 1200, 1920], // Added 1920 for LCP optimization
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512], // Added 512 for better LCP
-    minimumCacheTTL: 31536000, // 1 year
+    formats: ["image/webp", "image/avif"],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
+    minimumCacheTTL: 31536000,
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
-    unoptimized: false,
-    loader: "default",
-    // LCP optimization settings
   },
 
-  // Compression and optimization
   compress: true,
-
-  // Advanced compression settings
   swcMinify: true,
-
-  // Advanced headers for maximum performance
   async headers() {
     return [
       {
@@ -92,10 +84,14 @@ const nextConfig: NextConfig = {
             key: "X-DNS-Prefetch-Control",
             value: "on",
           },
-          {
-            key: "Strict-Transport-Security",
-            value: "max-age=31536000; includeSubDomains",
-          },
+          ...(process.env.NODE_ENV === "production"
+            ? [
+                {
+                  key: "Strict-Transport-Security",
+                  value: "max-age=31536000; includeSubDomains",
+                },
+              ]
+            : []),
         ],
       },
       {
@@ -135,17 +131,7 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source:
-          "/(.*\\.(js|css|png|jpg|jpeg|gif|svg|webp|avif|ico|woff|woff2|ttf|otf))",
-        headers: [
-          {
-            key: "Cache-Control",
-            value: "public, max-age=31536000, immutable",
-          },
-        ],
-      },
-      {
-        source: "/(.*\\.(html|json))",
+        source: "/:path*\\.(html|json)",
         headers: [
           {
             key: "Cache-Control",
@@ -154,12 +140,8 @@ const nextConfig: NextConfig = {
         ],
       },
       {
-        source: "/(.*\\.(css|js))",
+        source: "/:path*\\.(css|js)",
         headers: [
-          {
-            key: "Content-Encoding",
-            value: "gzip",
-          },
           {
             key: "Cache-Control",
             value: "public, max-age=31536000, immutable",
@@ -169,9 +151,7 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  // Advanced webpack optimizations
   webpack: (config, { dev, isServer }) => {
-    // Production optimizations
     if (!dev && !isServer) {
       config.optimization = {
         ...config.optimization,
@@ -226,49 +206,56 @@ const nextConfig: NextConfig = {
         moduleIds: "deterministic",
       };
 
-      // Tree shaking optimization
       config.optimization.providedExports = true;
       config.optimization.usedExports = true;
 
-      // Remove console logs and optimize for modern browsers
-      config.optimization.minimizer = config.optimization.minimizer || [];
-      config.optimization.minimizer.push(
-        new (require("terser-webpack-plugin"))({
-          terserOptions: {
-            compress: {
-              drop_console: true,
-              drop_debugger: true,
-              // Remove legacy JavaScript features
-              ecma: 2020,
-              passes: 2,
+      try {
+        const TerserPlugin = require("terser-webpack-plugin");
+        config.optimization.minimizer = config.optimization.minimizer || [];
+        config.optimization.minimizer.push(
+          new TerserPlugin({
+            terserOptions: {
+              compress: {
+                drop_console: true,
+                drop_debugger: true,
+                ecma: 2020,
+                passes: 2,
+              },
+              mangle: {
+                safari10: false,
+              },
+              format: {
+                ecma: 2020,
+              },
             },
-            mangle: {
-              safari10: false,
-            },
-            format: {
-              ecma: 2020,
-            },
-          },
-        })
-      );
+          })
+        );
+      } catch (error) {
+        console.warn(
+          "TerserPlugin not available, skipping minification optimization"
+        );
+      }
     }
 
-    // Bundle analyzer in development
     if (dev && process.env.ANALYZE === "true") {
-      const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-      config.plugins.push(
-        new BundleAnalyzerPlugin({
-          analyzerMode: "server",
-          openAnalyzer: true,
-        })
-      );
+      try {
+        const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
+        config.plugins.push(
+          new BundleAnalyzerPlugin({
+            analyzerMode: "server",
+            openAnalyzer: true,
+          })
+        );
+      } catch (error) {
+        console.warn(
+          "BundleAnalyzerPlugin not available, skipping bundle analysis"
+        );
+      }
     }
 
-    // Remove legacy JavaScript polyfills for modern browsers
     if (!dev && !isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
-        // Remove Node.js polyfills
         fs: false,
         net: false,
         tls: false,
@@ -287,18 +274,15 @@ const nextConfig: NextConfig = {
     return config;
   },
 
-  // Output configuration
   output: "standalone",
 
-  // Build optimizations
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
 
-  // Performance monitoring
   onDemandEntries: {
     maxInactiveAge: 25 * 1000,
     pagesBufferLength: 2,

@@ -414,131 +414,127 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
       />
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen bg-white overflow-hidden">
         <PerformanceOptimizer />
         <Header />
-        {/* Hero Section - LCP Optimized */}
+        {/* Hero Section - Clean & Professional */}
         <section
-          className="hero-bg py-16 lg:py-24"
+          className="relative py-16 bg-white"
           style={{ contain: "layout style paint" }}
         >
-          <div className="hero-container">
-            <div className="hero-content">
-              {/* Left Panel */}
-              <div className="hero-text flex-1">
-                <div className="badge badge-primary mb-4 inline-block">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+              {/* Left Panel - Content */}
+              <div className="text-center lg:text-left">
+                <div className="inline-block px-5 py-2 bg-[#8EB69B] text-white rounded-full text-md font-medium mb-6">
                   Luxury Rentals
                 </div>
-                <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-dark mb-6 leading-tight">
-                  Find Your <span className="text-primary">Perfect Home</span>
+
+                <h1 className="lg:text-6xl font-bold text-[#0B2B26] leading-tight">
+                  Find Your <span className="text-[#8EB69B]">Perfect Home</span>
                 </h1>
-                <p className="text-lg text-gray mb-8">
+
+                <p className="text-base text-[#235347] mb-10 max-w-lg mx-auto lg:mx-0">
                   Curated luxury properties for modern living. Minimal,
                   beautiful, and effortless.
                 </p>
-                <div className="hero-buttons">
+
+                <div className="flex flex-col sm:flex-row gap-8 justify-center lg:justify-start">
                   <button
                     onClick={handleViewAllProperties}
-                    className="btn btn-primary"
+                    className="px-6 py-3 bg-[#18685c] text-white font-semibold rounded-2xl hover:bg-[#7AA589] transition-all duration-200 hover:shadow-md"
                   >
                     Explore Properties
                   </button>
+
                   <button
                     onClick={() => router.push("/contact")}
-                    className="btn btn-secondary"
+                    className="px-6 py-3 border-2 border-[#18685c] text-[#0B2B26] font-semibold rounded-2xl hover:bg-[#0B2B26] hover:text-white transition-all duration-200 hover:shadow-md"
                   >
                     Book Now
                   </button>
                 </div>
               </div>
 
-              {/* Right Panel: Simple Carousel */}
+              {/* Right Panel: Square Carousel */}
               <div
                 ref={heroRef}
-                className="relative w-full lg:w-1/2 flex items-center justify-center"
+                className="relative w-full lg:w-2/4 flex items-center justify-center"
               >
-                {/* Carousel Container */}
-                {/* Carousel Container */}
-                <div className="hero-carousel relative">
-                  {/* Simple Carousel */}
-                  <div
-                    className="w-full h-full overflow-hidden"
-                    style={{
-                      touchAction: "manipulation",
-                      userSelect: "none",
-                      WebkitUserSelect: "none",
-                      WebkitTouchCallout: "none",
-                    }}
-                  >
-                    <div className="flex">
-                      {carouselSlides.map((slide, index) => (
-                        <div
-                          key={index}
-                          className={`flex-[0_0_100%] min-w-0 relative h-[300px] sm:h-[400px] lg:h-[500px] ${
-                            index === currentServiceIndex ? "block" : "hidden"
-                          }`}
-                        >
-                          <Image
-                            src={slide.image}
-                            alt={slide.alt}
-                            fill
-                            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
-                            className={`object-cover object-center select-none ${
-                              index === 0 ? "lcp-image" : ""
+                <div className="relative w-full max-w-3xl">
+                  <div className="relative overflow-hidden rounded-xl shadow-lg">
+                    <div
+                      className="w-full h-[100%] overflow-hidden"
+                      style={{
+                        touchAction: "manipulation",
+                        userSelect: "none",
+                        WebkitUserSelect: "none",
+                        WebkitTouchCallout: "none",
+                      }}
+                    >
+                      <div className="flex">
+                        {carouselSlides.map((slide, index) => (
+                          <div
+                            key={index}
+                            className={`flex-[0_0_100%] min-w-0 relative aspect-[4/2.5] ${
+                              index === currentServiceIndex ? "block" : "hidden"
                             }`}
-                            priority={index === 0}
-                            fetchPriority={index === 0 ? "high" : "auto"}
-                            loading={index === 0 ? "eager" : "lazy"}
-                            quality={index === 0 ? 90 : 85}
-                            placeholder="blur"
-                            blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                            onLoad={
-                              index === 0
-                                ? () => {
-                                    // LCP optimization - mark as loaded
-                                    if (typeof window !== "undefined") {
-                                      document.documentElement.classList.add(
-                                        "lcp-loaded"
-                                      );
+                          >
+                            <Image
+                              src={slide.image}
+                              alt={slide.alt}
+                              fill
+                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 700px"
+                              className={`object-cover object-center select-none transition-all duration-500 ${
+                                index === 0 ? "lcp-image" : ""
+                              }`}
+                              priority={index === 0}
+                              fetchPriority={index === 0 ? "high" : "auto"}
+                              loading={index === 0 ? "eager" : "lazy"}
+                              quality={index === 0 ? 90 : 85}
+                              placeholder="blur"
+                              blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
+                              onLoad={
+                                index === 0
+                                  ? () => {
+                                      // LCP optimization - mark as loaded
+                                      if (typeof window !== "undefined") {
+                                        document.documentElement.classList.add(
+                                          "lcp-loaded"
+                                        );
+                                      }
                                     }
-                                  }
-                                : undefined
-                            }
-                          />
-                          {/* Subtle overlay for better contrast */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
+                                  : undefined
+                              }
+                            />
 
-                          {/* Slide title overlay */}
-                          <div className="absolute bottom-4 left-4 right-4">
-                            <h3 className="text-white text-lg font-semibold drop-shadow-lg">
-                              {slide.title}
-                            </h3>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+
+                            <div className="absolute bottom-3 left-3 right-3">
+                              <h3 className="text-white text-sm font-semibold drop-shadow-lg">
+                                {slide.title}
+                              </h3>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
 
-                    {/* Carousel Navigation Dots */}
-                    <div className="carousel-dots">
+                    <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-1.5">
                       {carouselSlides.map((_, index) => (
                         <button
                           key={index}
                           onClick={() => goToSlide(index)}
-                          className={`carousel-dot ${
-                            index === currentServiceIndex ? "active" : ""
+                          className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                            index === currentServiceIndex
+                              ? "bg-white scale-125"
+                              : "bg-white/60 hover:bg-white/80"
                           }`}
                           aria-label={`Go to slide ${index + 1}`}
-                        >
-                          <span className="carousel-dot-inner" />
-                        </button>
+                        />
                       ))}
                     </div>
                   </div>
-                </div>
-
-                {/* Touch Instructions (visible on mobile) */}
-                <div className="hidden sm:block lg:hidden mt-4 text-xs text-gray-500 text-center">
-                  Swipe to navigate • Touch to pause auto-play
                 </div>
               </div>
             </div>
@@ -546,30 +542,36 @@ export default function Home() {
         </section>
 
         {/* Booking Section */}
-        <section className="section lg:-top-36 ">
-          <div className="container">
+        <section
+          className="relative py-16 bg-[#fefffe] "
+          style={{
+            backgroundImage: `radial-gradient(circle at 2px 1px, rgba(0,0,0,0.02) 2px, transparent 0)`,
+            backgroundSize: "20px 20px",
+          }}
+        >
+          <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-3xl lg:text-4xl font-bold text-dark mb-4">
-                Book Your <span className="text-primary">Perfect Stay</span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0B2B26] mb-4">
+                Book Your <span className="text-[#8EB69B]">Perfect Stay</span>
               </h2>
-              <p className="text-lg text-gray max-w-2xl mx-auto">
+              <p className="text-base text-[#235347] max-w-2xl mx-auto">
                 Find and book luxury properties in seconds with our intuitive
                 search
               </p>
             </div>
             {error && (
-              <div className="mb-4 w-full max-w-4xl mx-auto bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm font-bold animate-fade-in">
+              <div className="mb-6 w-full max-w-4xl mx-auto bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm font-medium">
                 {error}
               </div>
             )}
-            <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-6">
+            <div className="max-w-4xl mx-auto bg-white rounded-full shadow-lg border border-gray-100 p-4 ">
               <form
                 onSubmit={handleSearch}
-                className="flex flex-col lg:flex-row gap-4"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-3"
               >
                 {/* Location Field */}
-                <div className="flex items-center w-full lg:min-w-[200px] h-12 bg-white border border-gray-300 rounded-xl px-4 gap-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 transition-colors duration-150">
-                  <MapPin className="h-4 w-4 text-primary" />
+                <div className="flex items-center w-full h-12 border border-gray-200 rounded-3xl px-4 gap-2  focus-within:ring-2 focus-within:ring-[#8EB69B]/20 transition-all duration-200">
+                  <MapPin className="h-4 w-4 text-[#8EB69B]" />
                   <Select value={location} onValueChange={setLocation}>
                     <SelectTrigger
                       className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium focus:ring-0 focus:border-none h-12"
@@ -577,7 +579,7 @@ export default function Home() {
                     >
                       <SelectValue placeholder="Location" />
                     </SelectTrigger>
-                    <SelectContent className="bg-white border border-gray-300 rounded-xl shadow-lg">
+                    <SelectContent className=" rounded-lg shadow-lg">
                       <SelectItem value="Dubai">Dubai</SelectItem>
                       <SelectItem value="Abu Dhabi">Abu Dhabi</SelectItem>
                       <SelectItem value="Palm Jumeirah">
@@ -592,13 +594,13 @@ export default function Home() {
                   </Select>
                 </div>
                 {/* Date Field */}
-                <div className="flex items-center w-full lg:min-w-[250px] h-12 bg-white border border-gray-300 rounded-xl px-4 gap-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 transition-colors duration-150">
-                  <CalendarIcon className="h-4 w-4 text-primary" />
+                <div className="flex items-center w-full h-12 bg-white border border-gray-200 rounded-3xl px-3 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/20 transition-all duration-200">
+                  <CalendarIcon className="h-4 w-4 text-[#8EB69B]" />
                   <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>
                       <Button
                         variant="ghost"
-                        className="w-full justify-between bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium text-dark hover:bg-transparent focus:ring-0 focus:border-none h-12"
+                        className="w-full justify-between bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium text-[#0B2B26] hover:bg-transparent focus:ring-0 focus:border-none h-12"
                       >
                         {dateRange?.from && dateRange?.to
                           ? `${format(dateRange.from, "MMM d")} – ${format(
@@ -608,12 +610,12 @@ export default function Home() {
                           : "Check in – Check out"}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="p-0 bg-white rounded-2xl shadow-2xl border border-gray-300 min-w-[300px]">
+                    <PopoverContent className="p-0 bg-white rounded-xl shadow-xl border border-gray-200 min-w-[300px]">
                       <div className="px-6 pt-6 pb-2">
-                        <h3 className="text-lg font-bold text-dark">
+                        <h3 className="text-lg font-bold text-[#0B2B26]">
                           Select your stay dates
                         </h3>
-                        <p className="text-sm text-primary">
+                        <p className="text-sm text-[#8EB69B]">
                           Choose check-in and check-out
                         </p>
                       </div>
@@ -624,7 +626,7 @@ export default function Home() {
                           setDateRange(range)
                         }
                         numberOfMonths={1}
-                        className="rounded-2xl bg-light p-4"
+                        className="rounded-xl bg-gray-50 p-4"
                         initialFocus
                         onDayMouseEnter={setHoveredDate}
                         onDayMouseLeave={() => setHoveredDate(undefined)}
@@ -634,15 +636,15 @@ export default function Home() {
                           ...(hoveredDate ? { hovered: hoveredDate } : {}),
                         }}
                         modifiersClassNames={{
-                          selected: "bg-primary text-white rounded-full",
-                          range_start: "bg-primary text-white rounded-l-full",
-                          range_end: "bg-primary text-white rounded-r-full",
-                          range_middle: "bg-primary/20 text-dark",
-                          hovered: "bg-primary/30 text-dark",
+                          selected: "bg-[#8EB69B] text-white rounded-full",
+                          range_start: "bg-[#8EB69B] text-white rounded-l-full",
+                          range_end: "bg-[#8EB69B] text-white rounded-r-full",
+                          range_middle: "bg-[#8EB69B]/20 text-[#0B2B26]",
+                          hovered: "bg-[#8EB69B]/30 text-[#0B2B26]",
                           today:
-                            "border-2 border-primary bg-white text-dark font-bold",
-                          focus: "ring-2 ring-primary ring-offset-2",
-                          active: "ring-2 ring-secondary ring-offset-2",
+                            "border-2 border-[#8EB69B] bg-white text-[#0B2B26] font-bold",
+                          focus: "ring-2 ring-[#8EB69B] ring-offset-2",
+                          active: "ring-2 ring-[#7AA589] ring-offset-2",
                           disabled: "opacity-40 cursor-not-allowed",
                         }}
                         disabled={(date: Date) => {
@@ -652,11 +654,11 @@ export default function Home() {
                           return false;
                         }}
                       />
-                      <div className="flex justify-between items-center px-4 py-2 border-t border-gray-300">
+                      <div className="flex justify-between items-center px-4 py-2 border-t border-gray-200">
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-primary"
+                          className="text-[#8EB69B] hover:text-[#7AA589]"
                           onClick={() => setDateRange(undefined)}
                         >
                           Clear
@@ -664,6 +666,7 @@ export default function Home() {
                         <Button
                           variant="ghost"
                           size="sm"
+                          className="text-[#8EB69B] hover:text-[#7AA589]"
                           onClick={() => {
                             setHoveredDate(undefined);
                             if (dateRange?.from && dateRange?.to) {
@@ -678,19 +681,19 @@ export default function Home() {
                   </Popover>
                 </div>
                 {/* Guests Field */}
-                <div className="flex items-center w-full lg:min-w-[150px] h-12 bg-white border border-gray-300 rounded-xl px-4 gap-2 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/30 transition-colors duration-150">
-                  <Users className="h-4 w-4 text-primary" />
+                <div className="flex items-center w-full h-12 bg-white border border-gray-200 rounded-3xl px-3 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/20 transition-all duration-200">
+                  <Users className="h-4 w-4 text-[#8EB69B]" />
                   <Popover open={guestsOpen} onOpenChange={setGuestsOpen}>
                     <PopoverTrigger asChild>
                       <Button
                         variant="ghost"
-                        className="w-full justify-between bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium text-dark hover:bg-transparent focus:ring-0 focus:border-none h-12"
+                        className="w-full justify-between bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium text-[#0B2B26] hover:bg-transparent focus:ring-0 focus:border-none h-12"
                       >
                         {guestsSummary() || "Select Guests"}
                       </Button>
                     </PopoverTrigger>
-                    <PopoverContent className="w-full lg:w-80 bg-white rounded-2xl shadow-xl border border-gray-300 z-50 p-6 animate-fade-in">
-                      <div className="flex flex-col gap-4 lg:gap-5">
+                    <PopoverContent className="w-full lg:w-80 bg-white rounded-xl shadow-lg border border-gray-200 z-50 p-6">
+                      <div className="flex flex-col gap-4">
                         {[
                           { label: "Adult", sub: "Ages 13+", key: "adults" },
                           {
@@ -705,10 +708,10 @@ export default function Home() {
                             className="flex items-center justify-between gap-2"
                           >
                             <div>
-                              <div className="font-semibold text-dark text-sm">
+                              <div className="font-semibold text-[#0B2B26] text-sm">
                                 {g.label}
                               </div>
-                              <div className="text-xs text-primary">
+                              <div className="text-xs text-[#8EB69B]">
                                 {g.sub}
                               </div>
                             </div>
@@ -716,7 +719,7 @@ export default function Home() {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="rounded-full border border-gray-300 text-primary h-8 w-8"
+                                className="rounded-full border border-gray-200 text-[#8EB69B] hover:text-[#7AA589] hover:border-[#8EB69B] h-8 w-8"
                                 onClick={() =>
                                   setGuests((prev) => ({
                                     ...prev,
@@ -730,13 +733,13 @@ export default function Home() {
                               >
                                 -
                               </Button>
-                              <span className="w-6 text-center font-semibold text-dark text-sm">
+                              <span className="w-6 text-center font-semibold text-[#0B2B26] text-sm">
                                 {guests[g.key as keyof typeof guests]}
                               </span>
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="rounded-full border border-gray-300 text-primary h-8 w-8"
+                                className="rounded-full border border-gray-200 text-[#8EB69B] hover:text-[#7AA589] hover:border-[#8EB69B] h-8 w-8"
                                 onClick={() =>
                                   setGuests((prev) => ({
                                     ...prev,
@@ -752,10 +755,11 @@ export default function Home() {
                           </div>
                         ))}
                       </div>
-                      <div className="flex justify-end mt-4 lg:mt-6">
+                      <div className="flex justify-end mt-4">
                         <Button
                           variant="ghost"
                           size="sm"
+                          className="text-[#8EB69B] hover:text-[#7AA589]"
                           onClick={() => setGuestsOpen(false)}
                         >
                           Close
@@ -765,13 +769,13 @@ export default function Home() {
                   </Popover>
                 </div>
                 {/* Search Button */}
-                <div className="flex-shrink-0 w-full lg:w-auto">
+                <div className="w-full sm:col-span-2 lg:col-span-1 rounded-3xl">
                   <Button
-                    className="h-12 px-6 bg-primary text-white font-semibold rounded-xl shadow-md hover:bg-secondary transition-colors duration-150 flex items-center gap-2 w-full lg:w-auto"
+                    className="h-12 px-4 bg-[#8EB69B] text-white font-semibold rounded-full shadow-md hover:bg-[#7AA589] transition-all duration-200 flex items-center gap-2 w-full hover:shadow-lg"
                     onClick={handleFind}
                   >
                     <Search className="h-4 w-4" />
-                    Find
+                    Find Properties
                   </Button>
                 </div>
               </form>
@@ -782,7 +786,7 @@ export default function Home() {
         {/* Featured Properties Section - Below Fold Optimization */}
         <section
           id="properties-section"
-          className="section bg-light below-fold"
+          className="section bg-[#e4faea] below-fold"
         >
           <div className="container">
             <div className="text-center mb-12 performance-hint">
@@ -796,11 +800,11 @@ export default function Home() {
             </div>
 
             {propertiesLoading ? (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className="bg-gray-200 rounded-2xl h-96 animate-pulse"
+                    className="bg-gray-200 rounded-3xl h-96 animate-pulse"
                   />
                 ))}
               </div>
@@ -821,14 +825,14 @@ export default function Home() {
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
                 {featuredProperties.map((property) => (
                   <div
                     key={property.id}
                     className="card hover-lift cursor-pointer"
                     onClick={() => handlePropertyClick(property.id)}
                   >
-                    <div className="relative h-48 overflow-hidden">
+                    <div className="relative h-56 overflow-hidden">
                       <Image
                         src={
                           property.images?.[0] || "/placeholder-property.jpg"
@@ -836,7 +840,7 @@ export default function Home() {
                         alt={property.title}
                         fill
                         className="img-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 35vw"
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                         loading="lazy"
@@ -906,7 +910,7 @@ export default function Home() {
         </section>
 
         {/* Exclusive Services Section: Animated Icons */}
-        <section className="mb-16 lg:mb-24">
+        <section className="mb-16 lg:mb-24 mt-8">
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-center mb-12 lg:mb-16">
               <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-dark mb-4">
