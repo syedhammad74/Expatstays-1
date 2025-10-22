@@ -21,7 +21,10 @@ import {
 import Image from "next/image";
 import { getLocalImage } from "@/lib/imageUtils";
 // Removed framer-motion for performance
-import { useRef, useState, useEffect, useCallback } from "react";
+import { useRef, useState, useEffect, useCallback, useMemo } from "react";
+import PropertyCardProps, {
+  PropertyCard,
+} from "@/components/molecular/PropertyCard";
 const Header = dynamic(() => import("@/components/layout/Header"), {
   loading: () => <div className="h-16 bg-white border-b border-gray-200" />,
 });
@@ -80,6 +83,74 @@ export default function Home() {
   // Properties state for landing page
   const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
   const [propertiesLoading, setPropertiesLoading] = useState(true);
+
+  // Convert properties to PropertyCard format (same as properties page)
+  const convertToPropertyCard = useCallback(
+    (property: Property): PropertyCardProps => {
+      // Generate multiple images for properties that don't have them
+      const generateImages = (property: Property): string[] => {
+        if (property.images && property.images.length > 0) {
+          return property.images;
+        }
+
+        // Special handling for farmhouse property
+        if (property.id === "famhouse_islamabad_dam_view") {
+          const farmhouseImages: string[] = [];
+          for (let i = 0; i < 8; i++) {
+            farmhouseImages.push(getLocalImage("farmhouse", i));
+          }
+          return farmhouseImages;
+        }
+
+        // Generate deterministic image count based on property type
+        const imageCount = Math.min(
+          5,
+          Math.max(
+            3,
+            ((property.id.charCodeAt(0) + property.id.length) % 3) + 3
+          )
+        );
+        const images: string[] = [];
+
+        for (let i = 0; i < imageCount; i++) {
+          images.push(getLocalImage(property.propertyType, i));
+        }
+
+        return images;
+      };
+
+      return {
+        slug: property.id,
+        imageUrl: property.images?.[0] || getLocalImage("villa", 0),
+        images: generateImages(property),
+        title: property.title,
+        bedrooms: property.capacity.bedrooms,
+        guests: property.capacity.maxGuests,
+        location: `${property.location.city}, ${property.location.country}`,
+        price: property.pricing.basePrice,
+        rating: property.rating || 4.8,
+        bathrooms: property.capacity.bathrooms,
+        propertyType: property.propertyType,
+        amenities: property.amenities || [],
+        isVerified: true,
+        isAvailable: property.availability?.isActive || true,
+        onViewDetails: handlePropertyClick,
+        views:
+          property.id === "famhouse_islamabad_dam_view"
+            ? 234
+            : ((property.id.charCodeAt(0) * 17 + property.id.charCodeAt(1)) %
+                100) +
+              10,
+        isFeatured: property.id === "famhouse_islamabad_dam_view",
+      };
+    },
+    []
+  );
+
+  // Memoize converted properties
+  const memoizedProperties = useMemo(() => {
+    return featuredProperties.map(convertToPropertyCard);
+  }, [featuredProperties, convertToPropertyCard]);
 
   // Carousel data with diverse images
   const carouselSlides = [
@@ -742,122 +813,9 @@ export default function Home() {
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                {featuredProperties.map((property, index) => (
-                  <div
-                    key={property.id}
-                    className="group relative bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-[#7AA589]/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer shadow-sm hover:shadow-lg flex flex-col"
-                    onClick={() => handlePropertyClick(property.id)}
-                    style={{
-                      animationDelay: `${index * 100}ms`,
-                      animation: "fadeInUp 0.6s ease-out forwards",
-                    }}
-                  >
-                    {/* Image Container */}
-                    <div className="relative h-64 overflow-hidden bg-gray-100">
-                      <Image
-                        src={
-                          property.images?.[0] ||
-                          getLocalImage(property.propertyType || "villa", 0)
-                        }
-                        alt={property.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        placeholder="blur"
-                        blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                        loading="lazy"
-                      />
-
-                      {/* Featured Badge */}
-                      {property.featured && (
-                        <div className="absolute top-4 right-4">
-                          <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#7AA589] text-white text-xs font-medium rounded-full">
-                            <Star className="h-3 w-3 fill-current" />
-                            Featured
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Rating */}
-                      <div className="absolute bottom-4 left-4 flex items-center gap-1 bg-white/95 px-3 py-1.5 rounded-full">
-                        <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium text-[#0B2B26]">
-                          {property.rating || 4.8}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="p-6 flex flex-col flex-1">
-                      {/* Location */}
-                      <div className="flex items-center gap-2 text-[#7AA589] mb-5">
-                        <MapPin className="h-4 w-4" />
-                        <span className="text-sm font-medium">
-                          {property.location?.city}, {property.location?.state}
-                        </span>
-                      </div>
-
-                      {/* Title - Fixed Height */}
-                      <div className="h-16 mb-4">
-                        <h3 className="text-xl font-semibold text-[#0B2B26] line-clamp-2 group-hover:text-[#7AA589] transition-colors duration-300 leading-tight">
-                          {property.title}
-                        </h3>
-                      </div>
-
-                      {/* Description - Fixed Height */}
-                      <div className="h-12 mb-5">
-                        <p className="text-sm text-[#235347]/80 font-medium leading-relaxed line-clamp-2">
-                          Luxury accommodation with premium amenities and
-                          exceptional service for an unforgettable stay
-                          experience.
-                        </p>
-                      </div>
-
-                      {/* Features - Fixed Height */}
-                      <div className="h-8 mb-6">
-                        <div className="flex items-center gap-8 text-sm text-[#235347]/70 font-medium">
-                          <span className="flex items-center gap-2">
-                            <Users className="h-4 w-4" />
-                            {property.capacity?.maxGuests} guests
-                          </span>
-                          <span className="flex items-center gap-2">
-                            <div className="w-4 h-4 bg-[#7AA589]/20 rounded-sm flex items-center justify-center">
-                              <div className="w-2 h-2 bg-[#7AA589] rounded-sm"></div>
-                            </div>
-                            {property.capacity?.bedrooms} bedrooms
-                          </span>
-                          <span className="flex items-center gap-2">
-                            <div className="w-4 h-4 bg-[#7AA589]/20 rounded-sm flex items-center justify-center">
-                              <div className="w-2 h-2 bg-[#7AA589] rounded-sm"></div>
-                            </div>
-                            {property.capacity?.bathrooms || 2} bathrooms
-                          </span>
-                        </div>
-                      </div>
-
-                      {/* Price and CTA - Fixed at Bottom */}
-                      <div className="flex items-center justify-between pt-2 border-t border-gray-100 mt-auto">
-                        <div>
-                          <div className="text-2xl font-semibold text-[#7AA589] mb-1">
-                            ${property.pricing?.basePrice || "299"}
-                          </div>
-                          <div className="text-sm text-[#235347]/60 font-medium">
-                            per night
-                          </div>
-                        </div>
-                        <button
-                          className="px-6 py-2.5 bg-[#7AA589] text-white font-medium rounded-full hover:bg-[#6A9A79] transition-all duration-300 shadow-sm hover:shadow-md"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handlePropertyClick(property.id);
-                          }}
-                        >
-                          View Details
-                        </button>
-                      </div>
-                    </div>
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {memoizedProperties.map((property) => (
+                  <PropertyCard key={property.slug} {...property} />
                 ))}
               </div>
             )}
