@@ -105,8 +105,6 @@ export default function RootLayout({
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
           rel="stylesheet"
-          media="print"
-          onLoad="this.media='all'"
         />
         <noscript>
           <link
@@ -137,15 +135,8 @@ export default function RootLayout({
           rel="preload"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
           as="style"
-          onLoad="this.onload=null;this.rel='stylesheet'"
         />
         <link rel="modulepreload" href="/_next/static/chunks/app/page.js" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
         <link rel="dns-prefetch" href="//firebasestorage.googleapis.com" />
         <link rel="dns-prefetch" href="//storage.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />
@@ -282,7 +273,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="font-sans antialiased">
+      <body className="font-sans antialiased" suppressHydrationWarning={true}>
         <AuthProvider>
           <ScrollToTop />
           <main className="min-h-screen">{children}</main>

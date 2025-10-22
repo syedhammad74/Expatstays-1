@@ -144,7 +144,7 @@ const Header = () => {
               backdropFilter: "blur(16px)",
             }}
           >
-            <div className={cn("px-6 sm:px-8 lg:px-10", isMobile && "px-6")}>
+            <div className={cn(" ", isMobile && "px-6")}>
               <div
                 className={cn(
                   "flex items-center justify-between",
@@ -154,7 +154,7 @@ const Header = () => {
                 {/* Logo */}
                 <Link
                   href="/"
-                  className="flex items-center focus:outline-none focus:ring-2 focus:ring-[#8EB69B]/20 focus:ring-offset-2 rounded-lg"
+                  className="flex items-center "
                   aria-label="Expat Stays - Home"
                 >
                   <Image
@@ -167,7 +167,7 @@ const Header = () => {
                   />
                   <span
                     className={cn(
-                      "font-bold text-[#0B2B26] transition-colors pr-1",
+                      "font-bold text-[#0B2B26] transition-colors pr-1 -left-3",
                       isMobile ? "text-lg" : "text-xl sm:text-2xl"
                     )}
                   >
@@ -177,7 +177,7 @@ const Header = () => {
 
                 {/* Desktop Navigation */}
                 <nav
-                  className="hidden xl:flex items-center space-x-1"
+                  className="hidden xl:flex items-center px-8"
                   role="navigation"
                   aria-label="Main navigation"
                 >
@@ -191,7 +191,7 @@ const Header = () => {
                 </nav>
 
                 {/* Desktop Actions */}
-                <div className="hidden lg:flex items-center space-x-3 xl:space-x-4">
+                <div className="hidden lg:flex items-center space-x-3 ">
                   <Button
                     variant="ghost"
                     size="icon"
@@ -211,12 +211,9 @@ const Header = () => {
                     <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#8EB69B] rounded-full animate-pulse" />
                   </Button>
 
-                  <div className="h-6 w-px bg-[#EBEBEB]" />
+                  <div className="h-6 w-px " />
 
-                  <Button
-                    className="bg-[#8EB69B] text-[#0B2B26] hover:bg-[#7AA589] font-medium transition-all duration-200 px-7 py-2.5"
-                    asChild
-                  >
+                  <Button className=" text-white bg-[#7AA589] hover:bg-[#6A9A79] hover:shadow-black/30 font-medium px-7 py-2.5">
                     <Link href="/properties">Find A House</Link>
                   </Button>
 
@@ -233,7 +230,7 @@ const Header = () => {
                           <Link href="/auth/signin">Sign In</Link>
                         </Button>
                         <Button
-                          className="bg-[#0B2B26] text-white hover:bg-[#163832] font-medium transition-all duration-200 px-5 py-2"
+                          className="bg-[#0B2B26] text-white hover:shadow-black/20 hover:bg-[#163832] font-medium transition-all duration-200 px-5 py-2"
                           asChild
                         >
                           <Link href="/auth/signup">Sign Up</Link>
@@ -303,7 +300,7 @@ const Header = () => {
                         {/* Mobile Actions */}
                         <div className="border-t border-[#EBEBEB] p-8 space-y-5">
                           <Button
-                            className="w-full bg-[#8EB69B] text-[#0B2B26] hover:bg-[#7AA589] active:bg-[#6A9A79] font-medium py-4 touch-manipulation text-lg"
+                            className="w-full bg-[#7AA589] text-[white] hover:bg-[#5A8A69] active:bg-[#5A8A69] hover:shadow-black/30 font-medium py-4 touch-manipulation text-lg"
                             onClick={() => setIsMenuOpen(false)}
                             asChild
                           >
@@ -314,14 +311,14 @@ const Header = () => {
                             <div className="space-y-4">
                               <Button
                                 variant="outline"
-                                className="w-full border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-[#0B2B26] active:bg-[#7AA589] active:text-[#0B2B26] py-4 touch-manipulation text-lg"
+                                className="w-full border-[#7AA589] text-[#7AA589] hover:bg-[#7AA589] hover:text-[#0B2B26] active:bg-[#6A9A79] active:text-[#0B2B26] py-4 touch-manipulation text-lg"
                                 onClick={() => setIsMenuOpen(false)}
                                 asChild
                               >
                                 <Link href="/auth/signin">Sign In</Link>
                               </Button>
                               <Button
-                                className="w-full bg-[#0B2B26] text-white hover:bg-[#163832] active:bg-[#0F1F1E] py-4 touch-manipulation text-lg"
+                                className="w-full bg-[#0B2B26] text-white hover:shadow-black/20 hover:bg-[#163832] active:bg-[#0F1F1E] py-4 touch-manipulation text-lg"
                                 onClick={() => setIsMenuOpen(false)}
                                 asChild
                               >

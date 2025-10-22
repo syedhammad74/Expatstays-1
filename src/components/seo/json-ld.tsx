@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 interface JsonLdProps {
-  data: Record<string, any> | Record<string, any>[];
+  data: Record<string, unknown> | Record<string, unknown>[];
 }
 
 export function JsonLd({ data }: JsonLdProps) {

@@ -245,7 +245,7 @@ export default function Home() {
           propertyType: "farmhouse",
         },
       ];
-      setFeaturedProperties(fallbackProperties as any);
+      setFeaturedProperties(fallbackProperties as Property[]);
     } finally {
       setPropertiesLoading(false);
     }
@@ -308,7 +308,7 @@ export default function Home() {
             propertyType: "farmhouse",
           },
         ];
-        setFeaturedProperties(testProperties as any);
+        setFeaturedProperties(testProperties as Property[]);
         setPropertiesLoading(false);
       }
     }, 2000); // Wait 2 seconds, then force show properties
@@ -426,12 +426,12 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
               {/* Left Panel - Content */}
               <div className="text-center lg:text-left">
-                <div className="inline-block px-5 py-2 bg-[#8EB69B] text-white rounded-full text-md font-medium mb-6">
+                <div className="inline-block px-5 py-2 bg-[#7AA589] text-white rounded-full text-md font-medium mb-6">
                   Luxury Rentals
                 </div>
 
-                <h1 className="lg:text-6xl font-bold text-[#0B2B26] leading-tight">
-                  Find Your <span className="text-[#8EB69B]">Perfect Home</span>
+                <h1 className="lg:text-6xl font-bold text-black leading-tight">
+                  Find Your <span className="text-[#7AA589]">Perfect Home</span>
                 </h1>
 
                 <p className="text-base text-[#235347] mb-10 max-w-lg mx-auto lg:mx-0">
@@ -442,14 +442,14 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-8 justify-center lg:justify-start">
                   <button
                     onClick={handleViewAllProperties}
-                    className="px-6 py-3 bg-[#18685c] text-white font-semibold rounded-2xl hover:bg-[#7AA589] transition-all duration-200 hover:shadow-md"
+                    className="px-6 py-3 bg-[#7AA589] text-white font-semibold rounded-2xl hover:bg-[#5A8A69] transition-all duration-200 hover:shadow-md"
                   >
                     Explore Properties
                   </button>
 
                   <button
                     onClick={() => router.push("/contact")}
-                    className="px-6 py-3 border-2 border-[#18685c] text-[#0B2B26] font-semibold rounded-2xl hover:bg-[#0B2B26] hover:text-white transition-all duration-200 hover:shadow-md"
+                    className="px-6 py-3 border-2 border-[#7AA589] hover:border-[#5A8A69] text-[#7AA589] font-semibold rounded-2xl hover:bg-[#5A8A69] hover:text-white transition-all duration-200 hover:shadow-md"
                   >
                     Book Now
                   </button>
@@ -551,8 +551,8 @@ export default function Home() {
         >
           <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
             <div className="text-center mb-12">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#0B2B26] mb-4">
-                Book Your <span className="text-[#8EB69B]">Perfect Stay</span>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[black] mb-4">
+                Book Your <span className="text-[#7AA589]">Perfect Stay</span>
               </h2>
               <p className="text-base text-[#235347] max-w-2xl mx-auto">
                 Find and book luxury properties in seconds with our intuitive
@@ -570,8 +570,8 @@ export default function Home() {
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-3"
               >
                 {/* Location Field */}
-                <div className="flex items-center w-full h-12 border border-gray-200 rounded-3xl px-4 gap-2  focus-within:ring-2 focus-within:ring-[#8EB69B]/20 transition-all duration-200">
-                  <MapPin className="h-4 w-4 text-[#8EB69B]" />
+                <div className="flex items-center w-full h-12 border border-gray-200 rounded-3xl px-4 gap-2  focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
+                  <MapPin className="h-4 w-4 text-[#7AA589]" />
                   <Select value={location} onValueChange={setLocation}>
                     <SelectTrigger
                       className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium focus:ring-0 focus:border-none h-12"
@@ -594,8 +594,8 @@ export default function Home() {
                   </Select>
                 </div>
                 {/* Date Field */}
-                <div className="flex items-center w-full h-12 bg-white border border-gray-200 rounded-3xl px-3 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/20 transition-all duration-200">
-                  <CalendarIcon className="h-4 w-4 text-[#8EB69B]" />
+                <div className="flex items-center w-full h-12 bg-white border border-gray-200 rounded-3xl px-3 gap-2 focus-within:border-[#7AA589] focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
+                  <CalendarIcon className="h-4 w-4 text-[#7AA589]" />
                   <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>
                       <Button
@@ -615,7 +615,7 @@ export default function Home() {
                         <h3 className="text-lg font-bold text-[#0B2B26]">
                           Select your stay dates
                         </h3>
-                        <p className="text-sm text-[#8EB69B]">
+                        <p className="text-sm text-[#7AA589]">
                           Choose check-in and check-out
                         </p>
                       </div>
@@ -636,14 +636,14 @@ export default function Home() {
                           ...(hoveredDate ? { hovered: hoveredDate } : {}),
                         }}
                         modifiersClassNames={{
-                          selected: "bg-[#8EB69B] text-white rounded-full",
-                          range_start: "bg-[#8EB69B] text-white rounded-l-full",
-                          range_end: "bg-[#8EB69B] text-white rounded-r-full",
-                          range_middle: "bg-[#8EB69B]/20 text-[#0B2B26]",
-                          hovered: "bg-[#8EB69B]/30 text-[#0B2B26]",
+                          selected: "bg-[#7AA589] text-white rounded-full",
+                          range_start: "bg-[#7AA589] text-white rounded-l-full",
+                          range_end: "bg-[#7AA589] text-white rounded-r-full",
+                          range_middle: "bg-[#7AA589]/20 text-[#0B2B26]",
+                          hovered: "bg-[#7AA589]/30 text-[#0B2B26]",
                           today:
-                            "border-2 border-[#8EB69B] bg-white text-[#0B2B26] font-bold",
-                          focus: "ring-2 ring-[#8EB69B] ring-offset-2",
+                            "border-2 border-[#7AA589] bg-white text-[#0B2B26] font-bold",
+                          focus: "ring-2 ring-[#7AA589] ring-offset-2",
                           active: "ring-2 ring-[#7AA589] ring-offset-2",
                           disabled: "opacity-40 cursor-not-allowed",
                         }}
@@ -658,7 +658,7 @@ export default function Home() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-[#8EB69B] hover:text-[#7AA589]"
+                          className="text-[#7AA589] hover:text-[#6A9A79]"
                           onClick={() => setDateRange(undefined)}
                         >
                           Clear
@@ -666,7 +666,7 @@ export default function Home() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-[#8EB69B] hover:text-[#7AA589]"
+                          className="text-[#7AA589] hover:text-[#6A9A79]"
                           onClick={() => {
                             setHoveredDate(undefined);
                             if (dateRange?.from && dateRange?.to) {
@@ -681,8 +681,8 @@ export default function Home() {
                   </Popover>
                 </div>
                 {/* Guests Field */}
-                <div className="flex items-center w-full h-12 bg-white border border-gray-200 rounded-3xl px-3 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/20 transition-all duration-200">
-                  <Users className="h-4 w-4 text-[#8EB69B]" />
+                <div className="flex items-center w-full h-12 bg-white border border-gray-200 rounded-3xl px-3 gap-2 focus-within:border-[#7AA589] focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
+                  <Users className="h-4 w-4 text-[#7AA589]" />
                   <Popover open={guestsOpen} onOpenChange={setGuestsOpen}>
                     <PopoverTrigger asChild>
                       <Button
@@ -711,7 +711,7 @@ export default function Home() {
                               <div className="font-semibold text-[#0B2B26] text-sm">
                                 {g.label}
                               </div>
-                              <div className="text-xs text-[#8EB69B]">
+                              <div className="text-xs text-[#7AA589]">
                                 {g.sub}
                               </div>
                             </div>
@@ -719,7 +719,7 @@ export default function Home() {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="rounded-full border border-gray-200 text-[#8EB69B] hover:text-[#7AA589] hover:border-[#8EB69B] h-8 w-8"
+                                className="rounded-full border border-gray-200 text-[#7AA589] hover:text-[#6A9A79] hover:border-[#7AA589] h-8 w-8"
                                 onClick={() =>
                                   setGuests((prev) => ({
                                     ...prev,
@@ -739,7 +739,7 @@ export default function Home() {
                               <Button
                                 variant="ghost"
                                 size="icon"
-                                className="rounded-full border border-gray-200 text-[#8EB69B] hover:text-[#7AA589] hover:border-[#8EB69B] h-8 w-8"
+                                className="rounded-full border border-gray-200 text-[#7AA589] hover:text-[#6A9A79] hover:border-[#7AA589] h-8 w-8"
                                 onClick={() =>
                                   setGuests((prev) => ({
                                     ...prev,
@@ -759,7 +759,7 @@ export default function Home() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="text-[#8EB69B] hover:text-[#7AA589]"
+                          className="text-[#7AA589] hover:text-[#6A9A79]"
                           onClick={() => setGuestsOpen(false)}
                         >
                           Close
@@ -771,7 +771,7 @@ export default function Home() {
                 {/* Search Button */}
                 <div className="w-full sm:col-span-2 lg:col-span-1 rounded-3xl">
                   <Button
-                    className="h-12 px-4 bg-[#8EB69B] text-white font-semibold rounded-full shadow-md hover:bg-[#7AA589] transition-all duration-200 flex items-center gap-2 w-full hover:shadow-lg"
+                    className="h-12 px-4 bg-[#7AA589] text-white font-semibold rounded-full shadow-md hover:bg-[#6A9A79] hover:shadow-lg hover:shadow-black/30 transition-all duration-200 flex items-center gap-2 w-full"
                     onClick={handleFind}
                   >
                     <Search className="h-4 w-4" />
@@ -783,106 +783,168 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Featured Properties Section - Below Fold Optimization */}
+        {/* Featured Properties Section - Professional & Mature */}
         <section
           id="properties-section"
-          className="section bg-[#e4faea] below-fold"
+          className="relative py-10 overflow-hidden bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC]"
         >
-          <div className="container">
-            <div className="text-center mb-12 performance-hint">
-              <h2 className="text-3xl lg:text-4xl font-bold text-dark mb-4">
-                Featured <span className="text-primary">Properties</span>
+          {/* Simple Background Elements */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {/* Subtle dot pattern */}
+            <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_1px_1px,rgba(122,165,137,0.4)_1px,transparent_0)] bg-[length:24px_24px]"></div>
+          </div>
+
+          <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+            {/* Clean Header */}
+            <div className="text-center mb-20 lg:mb-24">
+              <div className="inline-block px-5 py-2 bg-[#7AA589] text-white rounded-full text-md font-medium mb-6">
+                Premium Collection
+              </div>
+
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0B2B26] leading-tight mb-6">
+                Featured <span className="text-[#7AA589]">Properties</span>
               </h2>
-              <p className="text-lg text-gray max-w-2xl mx-auto">
+
+              <p className="text-lg text-[#235347] max-w-2xl mx-auto">
                 Discover our handpicked luxury properties, perfect for your next
                 stay
               </p>
             </div>
 
             {propertiesLoading ? (
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className="bg-gray-200 rounded-3xl h-96 animate-pulse"
+                    className="bg-white rounded-2xl h-[480px] animate-pulse border border-gray-200 shadow-sm"
                   />
                 ))}
               </div>
             ) : featuredProperties.length === 0 ? (
-              <div className="text-center py-12">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <div className="text-center py-24">
+                <div className="inline-flex items-center justify-center w-20 h-20 bg-[#7AA589]/5 rounded-full mb-10">
+                  <div className="w-8 h-8 bg-[#7AA589]/20 rounded-full"></div>
+                </div>
+                <h3 className="text-3xl font-light text-[#0B2B26] mb-6">
                   No properties available
                 </h3>
-                <p className="text-gray-600 mb-4">
+                <p className="text-[#235347]/70 mb-10 max-w-lg mx-auto font-light text-lg">
                   Loading properties... If this persists, please refresh the
                   page.
                 </p>
                 <Button
                   onClick={() => window.location.reload()}
-                  className="bg-[#8EB69B] text-white hover:bg-[#163832]"
+                  className="bg-[#7AA589] text-white hover:bg-[#6A9A79] px-10 py-4 rounded-full transition-all duration-300 font-light text-base"
                 >
                   Refresh Page
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-                {featuredProperties.map((property) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                {featuredProperties.map((property, index) => (
                   <div
                     key={property.id}
-                    className="card hover-lift cursor-pointer"
+                    className="group relative bg-white rounded-2xl overflow-hidden border border-gray-200 hover:border-[#7AA589]/30 transition-all duration-300 hover:-translate-y-1 cursor-pointer shadow-sm hover:shadow-lg flex flex-col"
                     onClick={() => handlePropertyClick(property.id)}
+                    style={{
+                      animationDelay: `${index * 100}ms`,
+                      animation: "fadeInUp 0.6s ease-out forwards",
+                    }}
                   >
-                    <div className="relative h-56 overflow-hidden">
+                    {/* Image Container */}
+                    <div className="relative h-64 overflow-hidden bg-gray-100">
                       <Image
                         src={
                           property.images?.[0] || "/placeholder-property.jpg"
                         }
                         alt={property.title}
                         fill
-                        className="img-cover"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 35vw"
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         placeholder="blur"
                         blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                         loading="lazy"
                       />
+
+                      {/* Featured Badge */}
                       {property.featured && (
-                        <div className="absolute top-3 right-3">
-                          <span className="badge badge-primary text-xs">
+                        <div className="absolute top-4 right-4">
+                          <span className="inline-flex items-center gap-1 px-3 py-1 bg-[#7AA589] text-white text-xs font-medium rounded-full">
+                            <Star className="h-3 w-3 fill-current" />
                             Featured
                           </span>
                         </div>
                       )}
-                      <div className="absolute bottom-3 left-3 flex items-center gap-1 text-white">
-                        <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                        <span className="text-sm font-medium">
+
+                      {/* Rating */}
+                      <div className="absolute bottom-4 left-4 flex items-center gap-1 bg-white/95 px-3 py-1.5 rounded-full">
+                        <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                        <span className="text-sm font-medium text-[#0B2B26]">
                           {property.rating || 4.8}
                         </span>
                       </div>
                     </div>
-                    <div className="p-4">
-                      <div className="flex items-center gap-1 text-gray mb-2">
+
+                    {/* Content */}
+                    <div className="p-6 flex flex-col flex-1">
+                      {/* Location */}
+                      <div className="flex items-center gap-2 text-[#7AA589] mb-5">
                         <MapPin className="h-4 w-4" />
-                        <span className="text-sm">
+                        <span className="text-sm font-medium">
                           {property.location?.city}, {property.location?.state}
                         </span>
                       </div>
-                      <h3 className="text-lg font-semibold text-dark mb-2">
-                        {property.title}
-                      </h3>
-                      <div className="flex items-center gap-4 text-sm text-gray mb-4">
-                        <span>{property.capacity?.maxGuests} guests</span>
-                        <span>•</span>
-                        <span>{property.capacity?.bedrooms} bedrooms</span>
+
+                      {/* Title - Fixed Height */}
+                      <div className="h-16 mb-4">
+                        <h3 className="text-xl font-semibold text-[#0B2B26] line-clamp-2 group-hover:text-[#7AA589] transition-colors duration-300 leading-tight">
+                          {property.title}
+                        </h3>
                       </div>
-                      <div className="flex items-center justify-between">
+
+                      {/* Description - Fixed Height */}
+                      <div className="h-12 mb-5">
+                        <p className="text-sm text-[#235347]/80 font-medium leading-relaxed line-clamp-2">
+                          Luxury accommodation with premium amenities and
+                          exceptional service for an unforgettable stay
+                          experience.
+                        </p>
+                      </div>
+
+                      {/* Features - Fixed Height */}
+                      <div className="h-8 mb-6">
+                        <div className="flex items-center gap-8 text-sm text-[#235347]/70 font-medium">
+                          <span className="flex items-center gap-2">
+                            <Users className="h-4 w-4" />
+                            {property.capacity?.maxGuests} guests
+                          </span>
+                          <span className="flex items-center gap-2">
+                            <div className="w-4 h-4 bg-[#7AA589]/20 rounded-sm flex items-center justify-center">
+                              <div className="w-2 h-2 bg-[#7AA589] rounded-sm"></div>
+                            </div>
+                            {property.capacity?.bedrooms} bedrooms
+                          </span>
+                          <span className="flex items-center gap-2">
+                            <div className="w-4 h-4 bg-[#7AA589]/20 rounded-sm flex items-center justify-center">
+                              <div className="w-2 h-2 bg-[#7AA589] rounded-sm"></div>
+                            </div>
+                            {property.capacity?.bathrooms || 2} bathrooms
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Price and CTA - Fixed at Bottom */}
+                      <div className="flex items-center justify-between pt-2 border-t border-gray-100 mt-auto">
                         <div>
-                          <div className="text-xl font-bold text-primary">
-                            ${property.pricing?.basePrice}
+                          <div className="text-2xl font-semibold text-[#7AA589] mb-1">
+                            ${property.pricing?.basePrice || "299"}
                           </div>
-                          <div className="text-sm text-gray">per night</div>
+                          <div className="text-sm text-[#235347]/60 font-medium">
+                            per night
+                          </div>
                         </div>
                         <button
-                          className="btn btn-secondary text-sm"
+                          className="px-6 py-2.5 bg-[#7AA589] text-white font-medium rounded-full hover:bg-[#6A9A79] transition-all duration-300 shadow-sm hover:shadow-md"
                           onClick={(e) => {
                             e.stopPropagation();
                             handlePropertyClick(property.id);
@@ -897,10 +959,11 @@ export default function Home() {
               </div>
             )}
 
-            <div className="text-center mt-8 lg:mt-12">
+            {/* Clean CTA Section */}
+            <div className="text-center mt-16 lg:mt-20">
               <Button
                 variant="outline"
-                className="border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-[#051F20] transition-colors duration-150"
+                className="border-[#7AA589] text-[#7AA589] hover:bg-[#7AA589] hover:text-[#051F20] transition-colors duration-150"
                 onClick={handleViewAllProperties}
               >
                 View All Properties <ArrowRight className="h-4 w-4 ml-2" />
@@ -914,7 +977,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-center mb-12 lg:mb-16">
               <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-dark mb-4">
-                Exclusive <span className="text-[#8EB69B]">Services</span>
+                Exclusive <span className="text-[#7AA589]">Services</span>
               </h2>
               <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
                 Premium services designed to elevate your luxury living
@@ -933,7 +996,7 @@ export default function Home() {
                     "Quality Assurance",
                     "Regular Inspections",
                   ],
-                  gradient: "from-[#8EB69B] to-[#235347]",
+                  gradient: "from-[#7AA589] to-[#235347]",
                 },
                 {
                   icon: Users,
@@ -944,7 +1007,7 @@ export default function Home() {
                     "Local Expertise",
                     "24/7 Support",
                   ],
-                  gradient: "from-[#DAF1DE] to-[#8EB69B]",
+                  gradient: "from-[#DAF1DE] to-[#7AA589]",
                 },
                 {
                   icon: Star,
@@ -980,7 +1043,7 @@ export default function Home() {
                     <div className="space-y-2 lg:space-y-3">
                       {service.features.map((feature, j) => (
                         <div key={feature} className="flex items-center gap-3">
-                          <div className="w-2 h-2 rounded-full bg-[#8EB69B]" />
+                          <div className="w-2 h-2 rounded-full bg-[#7AA589]" />
                           <span className="text-xs lg:text-sm text-[#163832] font-bold">
                             {feature}
                           </span>
@@ -999,7 +1062,7 @@ export default function Home() {
           <div className="max-w-6xl mx-auto px-4">
             <div className="text-center mb-12 lg:mb-16">
               <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-dark mb-4">
-                Guest <span className="text-[#8EB69B]">Experiences</span>
+                Guest <span className="text-[#7AA589]">Experiences</span>
               </h2>
               <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
                 Real stories from our satisfied guests who experienced luxury
@@ -1053,7 +1116,7 @@ export default function Home() {
                               className="object-cover"
                             />
                           </div>
-                          <div className="absolute -bottom-1 -right-1 w-4 lg:w-5 h-4 lg:h-5 bg-[#8EB69B] rounded-full flex items-center justify-center">
+                          <div className="absolute -bottom-1 -right-1 w-4 lg:w-5 h-4 lg:h-5 bg-[#7AA589] rounded-full flex items-center justify-center">
                             <Star className="h-2 lg:h-3 w-2 lg:w-3 text-white fill-white" />
                           </div>
                         </div>
@@ -1067,7 +1130,7 @@ export default function Home() {
                         </div>
                       </div>
                       <div className="flex items-center gap-1">
-                        <Star className="h-3 lg:h-4 w-3 lg:w-4 fill-[#8EB69B] text-[#8EB69B]" />
+                        <Star className="h-3 lg:h-4 w-3 lg:w-4 fill-[#7AA589] text-[#7AA589]" />
                         <span className="text-xs lg:text-sm font-semibold text-[#163832]">
                           {testimonial.rating}
                         </span>
@@ -1086,7 +1149,7 @@ export default function Home() {
                       <div className="bg-[#DAF1DE] text-[#163832] px-2 lg:px-3 py-1 rounded-full text-xs font-semibold">
                         {testimonial.badge}
                       </div>
-                      <div className="text-[#8EB69B] text-xs lg:text-sm">
+                      <div className="text-[#7AA589] text-xs lg:text-sm">
                         ★ Verified Review
                       </div>
                     </div>
@@ -1096,7 +1159,7 @@ export default function Home() {
             </div>
 
             <div className="text-center mt-8 lg:mt-12">
-              <div className="inline-flex items-center gap-3 lg:gap-4 bg-gradient-to-r from-[#DAF1DE] to-[#8EB69B] px-6 lg:px-8 py-3 lg:py-4 rounded-full">
+              <div className="inline-flex items-center gap-3 lg:gap-4 bg-gradient-to-r from-[#DAF1DE] to-[#7AA589] px-6 lg:px-8 py-3 lg:py-4 rounded-full">
                 <div className="flex items-center gap-1">
                   <Star className="h-4 lg:h-5 w-4 lg:w-5 fill-[#051F20] text-[#051F20]" />
                   <span className="font-bold text-[#051F20] text-sm lg:text-base">
@@ -1121,8 +1184,8 @@ export default function Home() {
         <section className="py-16 lg:py-32 relative overflow-hidden">
           <div className="max-w-6xl mx-auto px-4">
             <div className="relative">
-              <div className="hidden lg:block pointer-events-none absolute -top-8 -left-10 w-64 h-64 bg-gradient-to-br from-[#DAF1DE] to-[#8EB69B]/50 blur-3xl rounded-full" />
-              <div className="hidden lg:block pointer-events-none absolute -bottom-10 -right-10 w-72 h-72 bg-gradient-to-br from-[#8EB69B]/40 to-[#163832]/30 blur-3xl rounded-full" />
+              <div className="hidden lg:block pointer-events-none absolute -top-8 -left-10 w-64 h-64 bg-gradient-to-br from-[#DAF1DE] to-[#7AA589]/50 blur-3xl rounded-full" />
+              <div className="hidden lg:block pointer-events-none absolute -bottom-10 -right-10 w-72 h-72 bg-gradient-to-br from-[#7AA589]/40 to-[#163832]/30 blur-3xl rounded-full" />
               <div className="bg-white/95 rounded-2xl border border-[#DAF1DE]/70 shadow-xl overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                   {/* Left: Image with badge */}
@@ -1149,7 +1212,7 @@ export default function Home() {
                       <h3 className="text-3xl lg:text-4xl font-semibold text-[#051F20]">
                         Isa Husain
                       </h3>
-                      <div className="hidden lg:block h-1 w-20 bg-gradient-to-r from-[#8EB69B] to-[#235347] rounded-full mt-2" />
+                      <div className="hidden lg:block h-1 w-20 bg-gradient-to-r from-[#7AA589] to-[#235347] rounded-full mt-2" />
                       <p className="text-[#235347] text-sm lg:text-base">
                         Founder, Expat Stays
                       </p>
@@ -1157,22 +1220,22 @@ export default function Home() {
 
                     <div className="space-y-4 text-[#235347] text-sm lg:text-base leading-relaxed">
                       <p>
-                        I'm Isa Hussain, a British Pakistani who moved to
+                        I&apos;m Isa Hussain, a British Pakistani who moved to
                         Islamabad over 20 years ago—and never looked back.
-                        Through Expat Stays, I've combined my love for premium
-                        living with my mission to make Pakistan feel like home
-                        for every overseas Pakistani.
+                        Through Expat Stays, I&apos;ve combined my love for
+                        premium living with my mission to make Pakistan feel
+                        like home for every overseas Pakistani.
                       </p>
                       <p>
-                        I know exactly what it's like to land in Islamabad after
-                        a long flight, craving comfort, reliability, and a touch
-                        of luxury. That's why I created Expat Stays—a curated
-                        collection of modern, fully serviced properties designed
-                        with overseas guests in mind. Whether you're visiting
-                        for business, family, or just to reconnect with your
-                        roots, you deserve more than just a place to sleep. You
-                        deserve a space that feels like home the moment you walk
-                        in.
+                        I know exactly what it&apos;s like to land in Islamabad
+                        after a long flight, craving comfort, reliability, and a
+                        touch of luxury. That&apos;s why I created Expat Stays—a
+                        curated collection of modern, fully serviced properties
+                        designed with overseas guests in mind. Whether
+                        you&apos;re visiting for business, family, or just to
+                        reconnect with your roots, you deserve more than just a
+                        place to sleep. You deserve a space that feels like home
+                        the moment you walk in.
                       </p>
                       <p>
                         From stylish city apartments to peaceful getaways, every
@@ -1217,7 +1280,7 @@ export default function Home() {
                           "International standards with uniquely Pakistani warmth",
                         ].map((item) => (
                           <div key={item} className="flex items-start gap-2">
-                            <CheckCircle className="h-4 w-4 text-[#8EB69B] mt-0.5" />
+                            <CheckCircle className="h-4 w-4 text-[#7AA589] mt-0.5" />
                             <span className="text-sm lg:text-base text-[#235347]">
                               {item}
                             </span>
@@ -1237,7 +1300,7 @@ export default function Home() {
           <div className="max-w-5xl mx-auto px-4">
             {/* Enhanced Decorative Elements */}
             <div className="absolute top-16 left-8 pointer-events-none hidden lg:block">
-              <div className="w-28 h-28 bg-[#8EB69B]/20 rounded-full"></div>
+              <div className="w-28 h-28 bg-[#7AA589]/20 rounded-full"></div>
             </div>
             <div className="absolute bottom-16 right-8 pointer-events-none hidden lg:block">
               <div className="w-20 h-20 bg-[#DAF1DE]/30 rounded-full"></div>
@@ -1248,7 +1311,7 @@ export default function Home() {
 
             <div className="text-center mb-12 lg:mb-16 relative z-10">
               <div className="inline-flex items-center gap-3 mb-4">
-                <div className="p-3 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full shadow-xl">
+                <div className="p-3 bg-gradient-to-br from-[#7AA589] to-[#235347] rounded-full shadow-xl">
                   <Instagram className="h-6 w-6 text-white" />
                 </div>
                 <Badge className="bg-[#235347]/20 text-[#235347] border-none px-4 py-2 rounded-full text-sm font-semibold">
@@ -1257,7 +1320,7 @@ export default function Home() {
               </div>
 
               <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-dark mb-4">
-                Follow Our <span className="text-[#8EB69B]">Journey</span>
+                Follow Our <span className="text-[#7AA589]">Journey</span>
               </h2>
               <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto leading-relaxed">
                 Discover luxury properties, travel tips, and behind-the-scenes
@@ -1274,7 +1337,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-br from-white/98 to-white/95 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/60 shadow-xl group-hover:shadow-2xl transition-all duration-500" />
                   <div className="relative p-6 lg:p-8">
                     <div className="flex items-center gap-4 mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full flex items-center justify-center shadow-lg overflow-hidden ring-2 ring-white/50">
+                      <div className="w-16 h-16 bg-gradient-to-br from-[#7AA589] to-[#235347] rounded-full flex items-center justify-center shadow-lg overflow-hidden ring-2 ring-white/50">
                         <Image
                           src="/media/Close Ups June 25 2025/logo1.png"
                           alt="ExpatStays Logo"
@@ -1298,7 +1361,7 @@ export default function Home() {
                             </span>
                           </div>
                           <div className="flex items-center gap-1">
-                            <MessageCircle className="h-4 w-4 text-[#8EB69B]" />
+                            <MessageCircle className="h-4 w-4 text-[#7AA589]" />
                             <span className="text-xs text-[#235347] font-semibold">
                               4 posts
                             </span>
@@ -1314,7 +1377,7 @@ export default function Home() {
                     </p>
 
                     <Button
-                      className="w-full bg-gradient-to-r from-[#8EB69B] to-[#235347] text-white hover:from-[#235347] hover:to-[#163832] transition-colors duration-200 py-4 text-base font-semibold shadow-lg"
+                      className="w-full bg-gradient-to-r from-[#7AA589] to-[#235347] text-white hover:from-[#235347] hover:to-[#163832] transition-colors duration-200 py-4 text-base font-semibold shadow-lg"
                       onClick={() =>
                         window.open(
                           "https://www.instagram.com/expatstays?igsh=dnJ0ZHg3ZW0xbjV2",
@@ -1348,7 +1411,7 @@ export default function Home() {
                           @isa_unscripted
                         </h3>
                         <p className="text-sm lg:text-base text-[#235347] mb-2">
-                          Isa's Personal Journey
+                          Isa&apos;s Personal Journey
                         </p>
                         <div className="flex items-center gap-4">
                           <div className="flex items-center gap-1">
@@ -1358,7 +1421,7 @@ export default function Home() {
                             </span>
                           </div>
                           <div className="flex items-center gap-1">
-                            <MessageCircle className="h-4 w-4 text-[#8EB69B]" />
+                            <MessageCircle className="h-4 w-4 text-[#7AA589]" />
                             <span className="text-xs text-[#235347] font-semibold">
                               121 posts
                             </span>
@@ -1397,7 +1460,7 @@ export default function Home() {
                   <div className="group relative hover:-translate-y-2 transition-transform duration-300">
                     <div className="w-full max-w-sm mx-auto">
                       <div
-                        className="relative aspect-[9/16] rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-[#8EB69B] to-[#235347] p-1 cursor-pointer"
+                        className="relative aspect-[9/16] rounded-2xl lg:rounded-3xl overflow-hidden shadow-xl group-hover:shadow-2xl transition-all duration-500 bg-gradient-to-br from-[#7AA589] to-[#235347] p-1 cursor-pointer"
                         onClick={() =>
                           window.open(
                             "https://www.instagram.com/isa_unscripted?igsh=bTBxbjN5OXkxaWdn",
@@ -1412,7 +1475,7 @@ export default function Home() {
                               src="/media/Video.mp4"
                               muted={true}
                               enableMuteToggle
-                              poster="/media/Close Ups June 25 2025/IMG_1017-compressed.webp"
+                              poster="/media/Close Ups June 25 2025/IMG_1017.PNG"
                               className="w-full h-full object-cover object-center"
                               onClick={() =>
                                 window.open(
@@ -1436,7 +1499,7 @@ export default function Home() {
                           <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                             <div className="bg-white/20 backdrop-blur-sm rounded-full p-3">
                               <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center shadow-lg">
-                                <Instagram className="h-6 w-6 text-[#8EB69B]" />
+                                <Instagram className="h-6 w-6 text-[#7AA589]" />
                               </div>
                             </div>
                           </div>
@@ -1444,7 +1507,7 @@ export default function Home() {
                       </div>
 
                       {/* Image Label */}
-                      <div className="absolute -bottom-2 -right-2 bg-[#8EB69B] text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg ring-2 ring-white/50">
+                      <div className="absolute -bottom-2 -right-2 bg-[#7AA589] text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg ring-2 ring-white/50">
                         @isa_unscripted
                       </div>
                     </div>
@@ -1458,7 +1521,7 @@ export default function Home() {
 
             {/* Enhanced Call to Action */}
             <div className="text-center mt-16 lg:mt-20">
-              <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#DAF1DE] to-[#8EB69B] px-8 lg:px-12 py-4 lg:py-6 rounded-full shadow-xl hover:shadow-2xl transition-shadow duration-200">
+              <div className="inline-flex items-center gap-4 bg-gradient-to-r from-[#DAF1DE] to-[#7AA589] px-8 lg:px-12 py-4 lg:py-6 rounded-full shadow-xl hover:shadow-2xl transition-shadow duration-200">
                 <Instagram className="h-6 w-6 text-[#051F20]" />
                 <span className="text-[#051F20] font-bold text-lg">
                   Join our Instagram community

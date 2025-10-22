@@ -70,7 +70,7 @@ const Footer = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={social.label}
-                    className="w-10 h-10 bg-[#8EB69B]/10 rounded-full flex items-center justify-center text-[#8EB69B] hover:bg-[#8EB69B] hover:text-[#051F20] transition-all duration-200"
+                    className="w-10 h-10 bg-[#7AA589]/10 rounded-full flex items-center justify-center text-[#7AA589] hover:bg-[#7AA589] hover:text-[#051F20] transition-all duration-200"
                   >
                     <social.icon className="h-5 w-5" />
                   </a>

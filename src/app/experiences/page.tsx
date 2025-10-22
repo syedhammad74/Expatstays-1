@@ -612,8 +612,9 @@ export default function ExperiencesPage() {
               Not Sure What to Choose?
             </h2>
             <p className="text-xl text-white/80 max-w-2xl mx-auto mb-8">
-              Let our concierge guide your next experience. We'll help you find
-              the perfect adventure that matches your preferences and schedule.
+              Let our concierge guide your next experience. We&apos;ll help you
+              find the perfect adventure that matches your preferences and
+              schedule.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

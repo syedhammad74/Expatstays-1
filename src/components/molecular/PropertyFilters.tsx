@@ -31,7 +31,7 @@ export interface PropertyFiltersProps {
     bedrooms: string;
     amenities: string[];
   };
-  onFiltersChange: (filters: any) => void;
+  onFiltersChange: (filters: PropertyFiltersProps["filters"]) => void;
   onClearFilters: () => void;
   showFilters: boolean;
   onToggleFilters: () => void;

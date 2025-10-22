@@ -303,7 +303,7 @@ export interface PropertyManagement {
   updates: {
     type: "pricing" | "availability" | "amenities" | "images" | "description";
     timestamp: string;
-    changes: Record<string, any>;
+    changes: Record<string, unknown>;
   }[];
   maintenance: {
     scheduled: {

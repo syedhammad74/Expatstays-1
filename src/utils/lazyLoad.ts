@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import React from "react";
 
 export const lazyLoadComponent = (
-  importFunc: () => Promise<any>,
+  importFunc: () => Promise<{ default: React.ComponentType }>,
   options = {}
 ) => {
   return dynamic(importFunc, {

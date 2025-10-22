@@ -15,7 +15,7 @@ interface OptimizedImageProps {
   sizes?: string;
   placeholder?: "blur" | "empty";
   blurDataURL?: string;
-  [key: string]: any; // Allow additional props to pass through
+  [key: string]: unknown;
 }
 
 const OptimizedImage = ({

@@ -125,7 +125,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
 
             {/* Featured badge */}
             {isFeatured && (
-              <div className="absolute top-3 right-3 bg-[#8EB69B] text-white text-xs font-medium px-2 py-1 rounded-full">
+              <div className="absolute top-3 right-3 bg-[#7AA589] text-white text-xs font-medium px-2 py-1 rounded-full">
                 Featured
               </div>
             )}
@@ -208,7 +208,7 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
             <Button
               onClick={handleViewDetails}
               size="sm"
-              className="bg-[#8EB69B] hover:bg-[#7BA68A] text-white"
+              className="bg-[#7AA589] hover:bg-[#6A9A79] text-white"
             >
               View Details
             </Button>

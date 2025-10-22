@@ -944,7 +944,7 @@ export default function PropertiesPage() {
               setFilteredProperties(properties);
               // Removed tracking for performance
             }}
-            className="bg-[#8EB69B] text-white hover:bg-[#235347] px-8 py-3 rounded-2xl font-semibold shadow-lg transition-colors duration-150"
+            className="bg-[#7AA589] text-white hover:bg-[#6A9A79] px-8 py-3 rounded-2xl font-semibold shadow-lg transition-colors duration-150"
           >
             Clear Filters
           </Button>
@@ -1045,7 +1045,7 @@ export default function PropertiesPage() {
                 </Button>
                 <Button
                   variant="ghost"
-                  className="border-2 border-[#8EB69B] text-[#8EB69B] hover:bg-[#8EB69B] hover:text-white transition-colors duration-150 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full w-full sm:w-auto"
+                  className="border-2 border-[#7AA589] text-[#7AA589] hover:bg-[#7AA589] hover:text-white transition-colors duration-150 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full w-full sm:w-auto"
                 >
                   Schedule a Consultation
                 </Button>
@@ -1166,11 +1166,11 @@ export default function PropertiesPage() {
                     }}
                     modifiersClassNames={{
                       selected:
-                        "bg-[#8EB69B] text-white rounded-full shadow-lg transition-colors duration-150",
+                        "bg-[#7AA589] text-white rounded-full shadow-lg transition-colors duration-150",
                       range_start:
-                        "bg-[#8EB69B] text-white rounded-l-full shadow-lg relative z-10 transition-colors duration-150",
+                        "bg-[#7AA589] text-white rounded-l-full shadow-lg relative z-10 transition-colors duration-150",
                       range_end:
-                        "bg-[#8EB69B] text-white rounded-r-full shadow-lg relative z-10 transition-colors duration-150",
+                        "bg-[#7AA589] text-white rounded-r-full shadow-lg relative z-10 transition-colors duration-150",
                       range_middle:
                         "bg-[#DAF1DE] text-[#051F20] opacity-80 transition-colors duration-150",
                       hovered:
@@ -1298,7 +1298,7 @@ export default function PropertiesPage() {
             {/* Search Button */}
             <div className="flex-shrink-0 w-full lg:w-auto">
               <Button
-                className="h-12 lg:h-14 px-6 lg:px-8 bg-[#8EB69B] text-[#051F20] font-semibold rounded-lg lg:rounded-full shadow-md hover:bg-[#235347] hover:text-[#DAF1DE] transition-colors duration-150 flex items-center gap-2 w-full lg:w-auto text-sm lg:text-base disabled:opacity-50"
+                className="h-12 lg:h-14 px-6 lg:px-8 bg-[#7AA589] text-[#051F20] font-semibold rounded-lg lg:rounded-full shadow-md hover:bg-[#6A9A79] hover:text-[#DAF1DE] transition-colors duration-150 flex items-center gap-2 w-full lg:w-auto text-sm lg:text-base disabled:opacity-50"
                 onClick={handleFind}
                 disabled={searchLoading}
               >
@@ -1365,8 +1365,8 @@ export default function PropertiesPage() {
                   onClick={() => setUseVirtualScrolling(false)}
                   className={`rounded-xl px-4 py-2 font-semibold transition-colors duration-150 ${
                     !useVirtualScrolling
-                      ? "bg-[#8EB69B] text-white shadow-md"
-                      : "text-[#8EB69B] hover:bg-[#8EB69B]/10"
+                      ? "bg-[#7AA589] text-white shadow-md"
+                      : "text-[#7AA589] hover:bg-[#7AA589]/10"
                   }`}
                 >
                   <Grid className="w-4 h-4 mr-2" />
@@ -1379,8 +1379,8 @@ export default function PropertiesPage() {
                   disabled={filteredProperties.length <= 20}
                   className={`rounded-xl px-4 py-2 font-semibold transition-colors duration-150 ${
                     useVirtualScrolling
-                      ? "bg-[#8EB69B] text-white shadow-md"
-                      : "text-[#8EB69B] hover:bg-[#8EB69B]/10"
+                      ? "bg-[#7AA589] text-white shadow-md"
+                      : "text-[#7AA589] hover:bg-[#7AA589]/10"
                   }`}
                 >
                   <List className="w-4 h-4 mr-2" />

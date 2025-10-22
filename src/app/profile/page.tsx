@@ -825,7 +825,7 @@ export default function ProfilePage() {
                       Saved Properties
                     </CardTitle>
                     <CardDescription className="text-[#235347]/70">
-                      Properties you've saved for future reference
+                      Properties you&apos;ve saved for future reference
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
@@ -860,7 +860,8 @@ export default function ProfilePage() {
                       Recommended for You
                     </CardTitle>
                     <CardDescription className="text-[#235347]/70">
-                      Properties we think you'll love based on your preferences
+                      Properties we think you&apos;ll love based on your
+                      preferences
                     </CardDescription>
                   </CardHeader>
                   <CardContent>
