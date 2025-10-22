@@ -135,7 +135,7 @@ export default function Home() {
     setTimeout(() => setIsAutoPlaying(true), 10000); // Resume auto-play after 10 seconds
   };
 
-  // Fetch featured properties for landing page
+  // Fetch properties for landing page (same as properties page)
   const fetchFeaturedProperties = useCallback(async () => {
     try {
       setPropertiesLoading(true);
@@ -146,49 +146,20 @@ export default function Home() {
       const { propertyService } = await import("@/lib/services/properties");
       const allProperties = await propertyService.getAllProperties();
       if (process.env.NODE_ENV === "development") {
-        console.log("📊 All properties:", allProperties.length);
+        console.log("📊 All properties loaded:", allProperties.length);
       }
 
-      // Always ensure we have properties
-      if (allProperties.length === 0) {
+      // Show all properties (same as properties page)
+      if (allProperties.length > 0) {
+        if (process.env.NODE_ENV === "development") {
+          console.log("✅ Displaying all properties on landing page");
+        }
+        setFeaturedProperties(allProperties);
+      } else {
         if (process.env.NODE_ENV === "development") {
           console.log("⚠️ No properties from service, using fallback");
         }
         throw new Error("No properties available from service");
-      }
-
-      // Get first 3 properties or featured ones
-      const featured = allProperties.filter((p) => p.featured).slice(0, 3);
-      if (process.env.NODE_ENV === "development") {
-        console.log("⭐ Featured properties:", featured.length);
-      }
-
-      if (featured.length > 0) {
-        if (featured.length < 3) {
-          // If not enough featured properties, fill with regular ones
-          const regular = allProperties
-            .filter((p) => !p.featured)
-            .slice(0, 3 - featured.length);
-          const finalProperties = [...featured, ...regular];
-          if (process.env.NODE_ENV === "development") {
-            console.log(
-              "🏠 Final properties for display:",
-              finalProperties.length
-            );
-          }
-          setFeaturedProperties(finalProperties);
-        } else {
-          if (process.env.NODE_ENV === "development") {
-            console.log("🏠 Using featured properties:", featured.length);
-          }
-          setFeaturedProperties(featured);
-        }
-      } else {
-        // No featured properties, use first 3 available
-        if (process.env.NODE_ENV === "development") {
-          console.log("🏠 No featured properties, using first 3 available");
-        }
-        setFeaturedProperties(allProperties.slice(0, 3));
       }
     } catch (err) {
       if (process.env.NODE_ENV === "development") {
@@ -251,72 +222,7 @@ export default function Home() {
     }
   }, []);
 
-  // Force show properties after a short delay (for testing)
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (featuredProperties.length === 0) {
-        if (process.env.NODE_ENV === "development") {
-          console.log("🔧 Force showing properties for testing...");
-        }
-        const testProperties = [
-          {
-            id: "apartment_dam_view_islamabad",
-            title: "2-Bedroom Apartment with Stunning Dam View",
-            images: ["/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg"],
-            location: {
-              city: "Islamabad",
-              state: "Islamabad Capital Territory",
-              country: "Pakistan",
-            },
-            pricing: { basePrice: 150 },
-            capacity: { maxGuests: 4, bedrooms: 2, bathrooms: 2 },
-            rating: 4.8,
-            featured: true,
-            availability: { isActive: true },
-            propertyType: "apartment",
-          },
-          {
-            id: "gulberg_greens_apartment",
-            title: "2 Bedroom Apartment With Kitchen | Gulberg Greens",
-            images: ["/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"],
-            location: {
-              city: "Islamabad",
-              state: "Islamabad Capital Territory",
-              country: "Pakistan",
-            },
-            pricing: { basePrice: 200 },
-            capacity: { maxGuests: 6, bedrooms: 2, bathrooms: 2 },
-            rating: 4.9,
-            featured: true,
-            availability: { isActive: true },
-            propertyType: "apartment",
-          },
-          {
-            id: "famhouse_islamabad_dam_view",
-            title: "Luxury Farmhouse | Islamabad Hillside",
-            images: ["/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg"],
-            location: {
-              city: "Islamabad",
-              state: "Islamabad Capital Territory",
-              country: "Pakistan",
-            },
-            pricing: { basePrice: 300 },
-            capacity: { maxGuests: 8, bedrooms: 3, bathrooms: 3 },
-            rating: 4.7,
-            featured: true,
-            availability: { isActive: true },
-            propertyType: "farmhouse",
-          },
-        ];
-        setFeaturedProperties(testProperties as Property[]);
-        setPropertiesLoading(false);
-      }
-    }, 2000); // Wait 2 seconds, then force show properties
-
-    return () => clearTimeout(timeout);
-  }, [featuredProperties.length]);
-
-  // Fetch featured properties for landing page
+  // Fetch properties for landing page on mount
   useEffect(() => {
     fetchFeaturedProperties();
   }, [fetchFeaturedProperties]);
@@ -419,52 +325,52 @@ export default function Home() {
         <Header />
         {/* Hero Section - Clean & Professional */}
         <section
-          className="relative py-16 bg-white"
+          className="relative pt-8 md:pt-12 lg:pt-20 pb-12 md:pb-16 lg:pb-20 bg-white"
           style={{ contain: "layout style paint" }}
         >
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
               {/* Left Panel - Content */}
-              <div className="text-center lg:text-left">
-                <div className="inline-block px-5 py-2 bg-[#7AA589] text-white rounded-full text-md font-medium mb-6">
+              <div className="text-center lg:text-left space-y-6 md:space-y-8">
+                <div className="inline-block px-4 py-2 bg-[#7AA589] text-white rounded-full text-sm font-medium">
                   Luxury Rentals
                 </div>
 
-                <h1 className="lg:text-6xl font-bold text-black leading-tight">
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-black leading-tight">
                   Find Your <span className="text-[#7AA589]">Perfect Home</span>
                 </h1>
 
-                <p className="text-base text-[#235347] mb-10 max-w-lg mx-auto lg:mx-0">
+                <p className="text-base sm:text-lg text-[#235347] max-w-lg mx-auto lg:mx-0 leading-relaxed">
                   Curated luxury properties for modern living. Minimal,
                   beautiful, and effortless.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-8 justify-center lg:justify-start">
+                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
                   <button
                     onClick={handleViewAllProperties}
-                    className="px-6 py-3 bg-[#7AA589] text-white font-semibold rounded-2xl hover:bg-[#5A8A69] transition-all duration-200 hover:shadow-md"
+                    className="px-8 py-3.5 bg-[#7AA589] text-white font-semibold rounded-full hover:bg-[#6A9A79] transition-all duration-200 hover:shadow-lg"
                   >
                     Explore Properties
                   </button>
 
                   <button
                     onClick={() => router.push("/contact")}
-                    className="px-6 py-3 border-2 border-[#7AA589] hover:border-[#5A8A69] text-[#7AA589] font-semibold rounded-2xl hover:bg-[#5A8A69] hover:text-white transition-all duration-200 hover:shadow-md"
+                    className="px-8 py-3.5 border-2 border-[#7AA589] text-[#7AA589] font-semibold rounded-full hover:bg-[#7AA589] hover:text-white transition-all duration-200 hover:shadow-lg"
                   >
                     Book Now
                   </button>
                 </div>
               </div>
 
-              {/* Right Panel: Square Carousel */}
+              {/* Right Panel: Carousel */}
               <div
                 ref={heroRef}
-                className="relative w-full lg:w-2/4 flex items-center justify-center"
+                className="relative w-full flex items-center justify-center order-first lg:order-last"
               >
-                <div className="relative w-full max-w-3xl">
-                  <div className="relative overflow-hidden rounded-xl shadow-lg">
+                <div className="relative w-full max-w-2xl">
+                  <div className="relative overflow-hidden rounded-2xl shadow-2xl">
                     <div
-                      className="w-full h-[100%] overflow-hidden"
+                      className="w-full overflow-hidden"
                       style={{
                         touchAction: "manipulation",
                         userSelect: "none",
@@ -476,7 +382,7 @@ export default function Home() {
                         {carouselSlides.map((slide, index) => (
                           <div
                             key={index}
-                            className={`flex-[0_0_100%] min-w-0 relative aspect-[4/2.5] ${
+                            className={`flex-[0_0_100%] min-w-0 relative aspect-[16/10] ${
                               index === currentServiceIndex ? "block" : "hidden"
                             }`}
                           >
@@ -543,18 +449,18 @@ export default function Home() {
 
         {/* Booking Section */}
         <section
-          className="relative py-16 bg-[#fefffe] "
+          className="relative py-12 md:py-16 lg:py-20 bg-[#fefffe]"
           style={{
             backgroundImage: `radial-gradient(circle at 2px 1px, rgba(0,0,0,0.02) 2px, transparent 0)`,
             backgroundSize: "20px 20px",
           }}
         >
-          <div className="max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
-            <div className="text-center mb-12">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[black] mb-4">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-8 md:mb-12">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mb-3 md:mb-4">
                 Book Your <span className="text-[#7AA589]">Perfect Stay</span>
               </h2>
-              <p className="text-base text-[#235347] max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg text-[#235347] max-w-2xl mx-auto">
                 Find and book luxury properties in seconds with our intuitive
                 search
               </p>
@@ -564,22 +470,22 @@ export default function Home() {
                 {error}
               </div>
             )}
-            <div className="max-w-4xl mx-auto bg-white rounded-full shadow-lg border border-gray-100 p-4 ">
+            <div className="max-w-5xl mx-auto bg-white rounded-3xl lg:rounded-full shadow-xl border border-gray-100 p-4 md:p-5">
               <form
                 onSubmit={handleSearch}
-                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 px-3"
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4"
               >
                 {/* Location Field */}
-                <div className="flex items-center w-full h-12 border border-gray-200 rounded-3xl px-4 gap-2  focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
-                  <MapPin className="h-4 w-4 text-[#7AA589]" />
+                <div className="flex items-center w-full h-14 border border-gray-200 rounded-full px-4 gap-3 focus-within:border-[#7AA589] focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
+                  <MapPin className="h-5 w-5 text-[#7AA589] flex-shrink-0" />
                   <Select value={location} onValueChange={setLocation}>
                     <SelectTrigger
-                      className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium focus:ring-0 focus:border-none h-12"
+                      className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium focus:ring-0 focus:border-none h-14"
                       aria-label="Select location"
                     >
                       <SelectValue placeholder="Location" />
                     </SelectTrigger>
-                    <SelectContent className=" rounded-lg shadow-lg">
+                    <SelectContent className="rounded-xl shadow-lg">
                       <SelectItem value="Islamabad">Islamabad</SelectItem>
                       <SelectItem value="Gulberg Greens">
                         Gulberg Greens
@@ -589,8 +495,8 @@ export default function Home() {
                   </Select>
                 </div>
                 {/* Date Field */}
-                <div className="flex items-center w-full h-12 bg-white border border-gray-200 rounded-3xl px-3 gap-2 focus-within:border-[#7AA589] focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
-                  <CalendarIcon className="h-4 w-4 text-[#7AA589]" />
+                <div className="flex items-center w-full h-14 bg-white border border-gray-200 rounded-full px-4 gap-3 focus-within:border-[#7AA589] focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
+                  <CalendarIcon className="h-5 w-5 text-[#7AA589] flex-shrink-0" />
                   <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>
                       <Button
@@ -676,13 +582,13 @@ export default function Home() {
                   </Popover>
                 </div>
                 {/* Guests Field */}
-                <div className="flex items-center w-full h-12 bg-white border border-gray-200 rounded-3xl px-3 gap-2 focus-within:border-[#7AA589] focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
-                  <Users className="h-4 w-4 text-[#7AA589]" />
+                <div className="flex items-center w-full h-14 bg-white border border-gray-200 rounded-full px-4 gap-3 focus-within:border-[#7AA589] focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
+                  <Users className="h-5 w-5 text-[#7AA589] flex-shrink-0" />
                   <Popover open={guestsOpen} onOpenChange={setGuestsOpen}>
                     <PopoverTrigger asChild>
                       <Button
                         variant="ghost"
-                        className="w-full justify-between bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium text-[#0B2B26] hover:bg-transparent focus:ring-0 focus:border-none h-12"
+                        className="w-full justify-between bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium text-[#0B2B26] hover:bg-transparent focus:ring-0 focus:border-none h-14"
                       >
                         {guestsSummary() || "Select Guests"}
                       </Button>
@@ -764,9 +670,9 @@ export default function Home() {
                   </Popover>
                 </div>
                 {/* Search Button */}
-                <div className="w-full sm:col-span-2 lg:col-span-1 rounded-3xl">
+                <div className="w-full sm:col-span-2 lg:col-span-1">
                   <Button
-                    className="h-12 px-4 bg-[#7AA589] text-white font-semibold rounded-full shadow-md hover:bg-[#6A9A79] hover:shadow-lg hover:shadow-black/30 transition-all duration-200 flex items-center gap-2 w-full"
+                    className="h-14 px-6 bg-[#7AA589] text-white font-semibold rounded-full shadow-md hover:bg-[#6A9A79] hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 w-full"
                     onClick={handleFind}
                   >
                     <Search className="h-4 w-4" />
@@ -778,7 +684,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Featured Properties Section - Professional & Mature */}
+        {/* Properties Section - Professional & Mature */}
         <section
           id="properties-section"
           className="relative py-10 overflow-hidden bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC]"
@@ -797,7 +703,7 @@ export default function Home() {
               </div>
 
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0B2B26] leading-tight mb-6">
-                Featured <span className="text-[#7AA589]">Properties</span>
+                Our <span className="text-[#7AA589]">Properties</span>
               </h2>
 
               <p className="text-lg text-[#235347] max-w-2xl mx-auto">
