@@ -207,7 +207,7 @@ export default function Home() {
     setTimeout(() => setIsAutoPlaying(true), 10000); // Resume auto-play after 10 seconds
   };
 
-  // Fetch properties for landing page (same as properties page)
+  // Fetch properties for landing page (show exact same 3 as properties page)
   const fetchFeaturedProperties = useCallback(async () => {
     try {
       setPropertiesLoading(true);
@@ -221,17 +221,31 @@ export default function Home() {
         console.log("📊 All properties loaded:", allProperties.length);
       }
 
-      // Show all properties (same as properties page)
-      if (allProperties.length > 0) {
+      // Show only the exact same 3 properties that appear on properties page
+      // These are the specific property IDs from properties page hardcoded list
+      const featuredPropertyIds = [
+        "famhouse_islamabad_dam_view",
+        "apartment_dam_view_islamabad",
+        "gulberg_greens_2bed_apartment",
+      ];
+
+      // Filter to get only these 3 properties in the same order
+      const exactProperties = featuredPropertyIds
+        .map((id) => allProperties.find((p) => p.id === id))
+        .filter((p): p is Property => p !== undefined);
+
+      if (exactProperties.length > 0) {
         if (process.env.NODE_ENV === "development") {
-          console.log("✅ Displaying all properties on landing page");
+          console.log(
+            `✅ Displaying ${exactProperties.length} featured properties on landing page`
+          );
         }
-        setFeaturedProperties(allProperties);
+        setFeaturedProperties(exactProperties);
       } else {
         if (process.env.NODE_ENV === "development") {
-          console.log("⚠️ No properties from service, using fallback");
+          console.log("⚠️ No featured properties found, using fallback");
         }
-        throw new Error("No properties available from service");
+        throw new Error("Featured properties not available");
       }
     } catch (err) {
       if (process.env.NODE_ENV === "development") {
@@ -775,12 +789,11 @@ export default function Home() {
               </div>
 
               <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0B2B26] leading-tight mb-6">
-                Our <span className="text-[#7AA589]">Properties</span>
+                Featured <span className="text-[#7AA589]">Properties</span>
               </h2>
 
               <p className="text-lg text-[#235347] max-w-2xl mx-auto">
-                Discover our handpicked luxury properties, perfect for your next
-                stay
+                Discover our top 3 luxury properties, perfect for your next stay
               </p>
             </div>
 
