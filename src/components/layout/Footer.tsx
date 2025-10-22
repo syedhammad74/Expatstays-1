@@ -36,8 +36,8 @@ const Footer = () => {
   ];
 
   const contactInfo = [
-    { icon: MapPin, text: "123 Luxury Lane, Dubai, UAE" },
-    { icon: Phone, text: "+971 (0)0 000 0000" },
+    { icon: MapPin, text: "Islamabad, Pakistan" },
+    { icon: Phone, text: "+92 308 7496089" },
     { icon: Mail, text: "contact@myexpatstays.com" },
   ];
 

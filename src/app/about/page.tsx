@@ -91,7 +91,7 @@ const team = [
 const differentiators = [
   {
     icon: CheckCircle,
-    text: "Curated portfolio across the UAE",
+    text: "Curated portfolio across Pakistan",
     detail: "500+ handpicked properties",
   },
   {
@@ -129,7 +129,7 @@ const testimonials = [
     role: "Tech Executive",
     avatar: "/media/Close Ups June 25 2025/DSC01827.jpg",
     rating: 5,
-    location: "Dubai Marina",
+    location: "Islamabad",
   },
   {
     quote:
@@ -147,7 +147,7 @@ const testimonials = [
     role: "Consultant",
     avatar: "/media/Close Ups June 25 2025/DSC01832.jpg",
     rating: 5,
-    location: "Downtown Dubai",
+    location: "Gulberg Greens",
   },
 ];
 
@@ -172,7 +172,7 @@ const achievements = [
   {
     icon: Trophy,
     title: "Best Luxury Rental Platform 2024",
-    description: "Awarded by Dubai Tourism Board",
+    description: "Awarded by Pakistan Tourism Board",
     year: "2024",
   },
   {
@@ -306,8 +306,8 @@ export default function AboutPage() {
             />
           </h1>
           <p className="text-base lg:text-lg text-[#235347] mb-6 lg:mb-10 max-w-md">
-            We curate the world's most extraordinary stays and experiences for
-            modern expats and global citizens.
+            We curate the world&apos;s most extraordinary stays and experiences
+            for modern expats and global citizens.
           </p>
         </div>
         {/* Right: Hero Image with Decorative Orbs */}
@@ -370,7 +370,7 @@ export default function AboutPage() {
               <p>
                 What started as a curated collection of premium properties has
                 evolved into a comprehensive luxury living platform, serving
-                thousands of discerning guests across the UAE and beyond.
+                thousands of discerning guests across Pakistan and beyond.
               </p>
               <p>
                 Today, we continue to push boundaries, combining cutting-edge
@@ -492,8 +492,8 @@ export default function AboutPage() {
             What Our Guests Say
           </h2>
           <p className="text-base lg:text-lg xl:text-xl text-[#235347] max-w-3xl mx-auto leading-relaxed">
-            Real experiences from real guests who've experienced the Expat Stays
-            difference across the UAE.
+            Real experiences from real guests who&apos;ve experienced the Expat
+            Stays difference across Pakistan.
           </p>
         </div>
 
@@ -548,7 +548,7 @@ export default function AboutPage() {
                 {/* Quote */}
                 <blockquote className="text-sm lg:text-base text-[#235347] leading-relaxed italic mb-4 lg:mb-6 relative">
                   <div className="absolute -top-1 lg:-top-2 -left-1 lg:-left-2 text-2xl lg:text-4xl text-[#8EB69B]/30">
-                    "
+                    &quot;
                   </div>
                   {testimonial.quote}
                 </blockquote>
@@ -686,9 +686,9 @@ export default function AboutPage() {
               Start Your Luxury Journey Today
             </h2>
             <p className="text-base lg:text-lg xl:text-xl text-[#235347] mb-6 lg:mb-8 max-w-2xl mx-auto leading-relaxed">
-              Join thousands of satisfied guests who've discovered the Expat
-              Luxe difference. Experience unparalleled luxury and personalized
-              service.
+              Join thousands of satisfied guests who&apos;ve discovered the
+              Expat Luxe difference. Experience unparalleled luxury and
+              personalized service.
             </p>
 
             {/* Feature highlights */}

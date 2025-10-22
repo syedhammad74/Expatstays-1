@@ -67,7 +67,7 @@ export default function Home() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [guests, setGuests] = useState({ adults: 1, children: 0, infants: 0 });
   const [guestsOpen, setGuestsOpen] = useState(false);
-  const [location, setLocation] = useState("Dubai");
+  const [location, setLocation] = useState("Islamabad");
   const router = useRouter();
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -580,16 +580,11 @@ export default function Home() {
                       <SelectValue placeholder="Location" />
                     </SelectTrigger>
                     <SelectContent className=" rounded-lg shadow-lg">
-                      <SelectItem value="Dubai">Dubai</SelectItem>
-                      <SelectItem value="Abu Dhabi">Abu Dhabi</SelectItem>
-                      <SelectItem value="Palm Jumeirah">
-                        Palm Jumeirah
+                      <SelectItem value="Islamabad">Islamabad</SelectItem>
+                      <SelectItem value="Gulberg Greens">
+                        Gulberg Greens
                       </SelectItem>
-                      <SelectItem value="JLT">JLT</SelectItem>
-                      <SelectItem value="Emirates Hills">
-                        Emirates Hills
-                      </SelectItem>
-                      <SelectItem value="City Walk">City Walk</SelectItem>
+                      <SelectItem value="D-17">D-17</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

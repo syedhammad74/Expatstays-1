@@ -224,13 +224,13 @@ export default function ContactPage() {
     {
       icon: MapPin,
       title: "Office",
-      content: "Business Bay, Dubai, UAE",
+      content: "Islamabad, Pakistan",
       link: "https://maps.google.com",
     },
     {
       icon: Clock,
       title: "Hours",
-      content: "Mon-Fri: 9AM-6PM GST",
+      content: "Mon-Fri: 9AM-6PM PKT",
       link: null,
     },
   ];
@@ -289,7 +289,7 @@ export default function ContactPage() {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="text-lg sm:text-xl lg:text-2xl text-[#235347] max-w-3xl mx-auto leading-relaxed mb-8 sm:mb-12 px-4"
               >
-                Ready to transform your Dubai experience? Our expert team is
+                Ready to transform your Pakistan experience? Our expert team is
                 here to guide you through every step of your luxury journey.
               </p>
 
@@ -364,34 +364,34 @@ export default function ContactPage() {
                   <CardContent className="p-8">
                     <form onSubmit={handleSubmit} className="space-y-6">
                       {/* Success/Error Messages */}
-                        {showSuccess && (
-                          <div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 flex items-center gap-3"
-                          >
-                            <CheckCircle className="w-5 h-5 text-green-600" />
-                            <span className="text-green-800 font-medium">
-                              Message sent successfully! We&apos;ll get back to
-                              you soon.
-                            </span>
-                          </div>
-                        )}
+                      {showSuccess && (
+                        <div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 flex items-center gap-3"
+                        >
+                          <CheckCircle className="w-5 h-5 text-green-600" />
+                          <span className="text-green-800 font-medium">
+                            Message sent successfully! We&apos;ll get back to
+                            you soon.
+                          </span>
+                        </div>
+                      )}
 
-                        {showError && (
-                          <div
-                            initial={{ opacity: 0, y: -10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            exit={{ opacity: 0, y: -10 }}
-                            className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-4 flex items-center gap-3"
-                          >
-                            <AlertCircle className="w-5 h-5 text-red-600" />
-                            <span className="text-red-800 font-medium">
-                              {errorMessage}
-                            </span>
-                          </div>
-                        )}
+                      {showError && (
+                        <div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-4 flex items-center gap-3"
+                        >
+                          <AlertCircle className="w-5 h-5 text-red-600" />
+                          <span className="text-red-800 font-medium">
+                            {errorMessage}
+                          </span>
+                        </div>
+                      )}
 
                       {/* Enhanced Form Fields */}
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -738,7 +738,7 @@ export default function ContactPage() {
 
         {/* Enhanced Map Section */}
         <section className="container mx-auto px-4 sm:px-8 pb-16 lg:pb-24">
-              <div
+          <div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -749,15 +749,15 @@ export default function ContactPage() {
                 Visit Our Office
               </h3>
               <p className="text-lg text-[#235347] max-w-2xl mx-auto">
-                Located in the heart of Dubai&apos;s business district, our
-                office is easily accessible and ready to welcome you.
+                Located in the heart of Islamabad, our office is easily
+                accessible and ready to welcome you.
               </p>
             </div>
 
             <div className="relative rounded-3xl overflow-hidden shadow-2xl border-2 border-[#DAF1DE] h-[500px]">
               <div className="absolute inset-0 pointer-events-none rounded-3xl shadow-[0_0_40px_0_#8EB69B33] z-0" />
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3609.123456789!2d55.2708!3d25.2048!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5f43456789abcdef%3A0x123456789abcdef!2sBusiness%20Bay%2C%20Dubai!5e0!3m2!1sen!2sae!4v1680000000000!5m2!1sen!2sae"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3318.2!2d73.0551!3d33.6844!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sIslamabad!5e0!3m2!1sen!2spk!4v1680000000000!5m2!1sen!2spk"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -767,12 +767,12 @@ export default function ContactPage() {
                 title="Expat Stays Office Map"
               ></iframe>
             </div>
-              </div>
+          </div>
         </section>
 
         {/* Enhanced CTA Section */}
         <section className="container mx-auto px-4 sm:px-8 pb-16 lg:pb-24">
-              <div
+          <div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
@@ -821,7 +821,7 @@ export default function ContactPage() {
                 </Button>
               </div>
             </div>
-              </div>
+          </div>
         </section>
       </div>
     </TooltipProvider>

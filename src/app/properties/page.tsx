@@ -55,7 +55,7 @@ export default function PropertiesPage() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [guests, setGuests] = useState({ adults: 1, children: 0, infants: 0 });
   const [guestsOpen, setGuestsOpen] = useState(false);
-  const [location, setLocation] = useState("Dubai");
+  const [location, setLocation] = useState("Islamabad");
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
   // const _searchParams = useSearchParams(); // unused
@@ -1115,12 +1115,9 @@ export default function PropertiesPage() {
                   <SelectValue placeholder="Location" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-[#DAF1DE] rounded-xl shadow-lg">
-                  <SelectItem value="Dubai">Dubai</SelectItem>
-                  <SelectItem value="Abu Dhabi">Abu Dhabi</SelectItem>
-                  <SelectItem value="Palm Jumeirah">Palm Jumeirah</SelectItem>
-                  <SelectItem value="JLT">JLT</SelectItem>
-                  <SelectItem value="Emirates Hills">Emirates Hills</SelectItem>
-                  <SelectItem value="City Walk">City Walk</SelectItem>
+                  <SelectItem value="Islamabad">Islamabad</SelectItem>
+                  <SelectItem value="Gulberg Greens">Gulberg Greens</SelectItem>
+                  <SelectItem value="D-17">D-17</SelectItem>
                 </SelectContent>
               </Select>
             </div>

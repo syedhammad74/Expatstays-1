@@ -128,15 +128,15 @@ const Header = () => {
         <div
           className={cn(
             "sticky top-0 left-0 right-0 z-50 w-full transition-all duration-300",
-            isMobile ? "px-4 pt-3" : "px-6 pt-4"
+            isMobile ? "px-4 pt-3 pb-2" : "px-6 pt-4 pb-2"
           )}
         >
           <header
             className={cn(
-              "w-full max-w-7xl py-1 flex justify-center items-center mx-auto",
+              "w-full max-w-7xl flex justify-center items-center mx-auto",
               "bg-white/95 backdrop-blur-xl border border-[#EBEBEB]/50",
-              "shadow-lg transition-shadow duration-300",
-              isMobile ? "rounded-2xl" : "rounded-full",
+              "shadow-lg transition-all duration-300",
+              isMobile ? "rounded-2xl px-4 py-2" : "rounded-full px-6 py-2",
               isSticky && "shadow-xl"
             )}
             style={{
@@ -144,31 +144,31 @@ const Header = () => {
               backdropFilter: "blur(16px)",
             }}
           >
-            <div className={cn(" ", isMobile && "px-6")}>
+            <div className="w-full">
               <div
                 className={cn(
-                  "flex items-center justify-between",
+                  "flex items-center justify-between gap-4",
                   isMobile ? "h-14" : "h-16"
                 )}
               >
                 {/* Logo */}
                 <Link
                   href="/"
-                  className="flex items-center "
+                  className="flex items-center gap-2 flex-shrink-0"
                   aria-label="Expat Stays - Home"
                 >
                   <Image
                     src={Logo}
                     alt="Expat Stays"
-                    className={cn("w-auto", isMobile ? "h-7" : "h-8 sm:h-9")}
+                    className={cn("w-auto", isMobile ? "h-7" : "h-8")}
                     priority
                     width={36}
                     height={36}
                   />
                   <span
                     className={cn(
-                      "font-bold text-[#0B2B26] transition-colors pr-1 -left-3",
-                      isMobile ? "text-lg" : "text-xl sm:text-2xl"
+                      "font-bold text-[#0B2B26] whitespace-nowrap",
+                      isMobile ? "text-lg" : "text-xl"
                     )}
                   >
                     Expat Stays
@@ -177,7 +177,7 @@ const Header = () => {
 
                 {/* Desktop Navigation */}
                 <nav
-                  className="hidden xl:flex items-center px-8"
+                  className="hidden lg:flex items-center gap-1"
                   role="navigation"
                   aria-label="Main navigation"
                 >
@@ -191,11 +191,11 @@ const Header = () => {
                 </nav>
 
                 {/* Desktop Actions */}
-                <div className="hidden lg:flex items-center space-x-3 ">
+                <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-11 w-11 text-[#235347] hover:bg-[#F2F2F2] hover:text-[#8EB69B] transition-all duration-200"
+                    className="h-10 w-10 text-[#235347] hover:bg-[#F2F2F2] hover:text-[#8EB69B] transition-all duration-200"
                     aria-label="Search properties"
                   >
                     <Search className="h-4 w-4" />
@@ -204,16 +204,19 @@ const Header = () => {
                   <Button
                     variant="ghost"
                     size="icon"
-                    className="h-11 w-11 text-[#235347] hover:bg-[#F2F2F2] hover:text-[#8EB69B] relative transition-all duration-200"
+                    className="h-10 w-10 text-[#235347] hover:bg-[#F2F2F2] hover:text-[#8EB69B] relative transition-all duration-200"
                     aria-label="Notifications"
                   >
                     <Bell className="h-4 w-4" />
-                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 bg-[#8EB69B] rounded-full animate-pulse" />
+                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#8EB69B] rounded-full animate-pulse" />
                   </Button>
 
-                  <div className="h-6 w-px " />
+                  <div className="h-6 w-px bg-[#EBEBEB] mx-1" />
 
-                  <Button className=" text-white bg-[#7AA589] hover:bg-[#6A9A79] hover:shadow-black/30 font-medium px-7 py-2.5">
+                  <Button
+                    className="text-white bg-[#7AA589] hover:bg-[#6A9A79] hover:shadow-lg font-medium px-6 py-2.5 rounded-full transition-all duration-200"
+                    asChild
+                  >
                     <Link href="/properties">Find A House</Link>
                   </Button>
 
@@ -221,16 +224,16 @@ const Header = () => {
                     (user ? (
                       <UserMenu />
                     ) : (
-                      <div className="flex items-center space-x-3">
+                      <div className="flex items-center gap-2">
                         <Button
                           variant="ghost"
-                          className="text-[#235347] font-medium hover:bg-[#F2F2F2] hover:text-[#8EB69B] transition-all duration-200 px-4 py-2"
+                          className="text-[#235347] font-medium hover:bg-[#F2F2F2] hover:text-[#8EB69B] transition-all duration-200 px-4 py-2 rounded-full"
                           asChild
                         >
                           <Link href="/auth/signin">Sign In</Link>
                         </Button>
                         <Button
-                          className="bg-[#0B2B26] text-white hover:shadow-black/20 hover:bg-[#163832] font-medium transition-all duration-200 px-5 py-2"
+                          className="bg-[#0B2B26] text-white hover:shadow-lg hover:bg-[#163832] font-medium transition-all duration-200 px-5 py-2 rounded-full"
                           asChild
                         >
                           <Link href="/auth/signup">Sign Up</Link>
@@ -240,13 +243,13 @@ const Header = () => {
                 </div>
 
                 {/* Mobile Menu */}
-                <div className="lg:hidden">
+                <div className="lg:hidden flex-shrink-0">
                   <Sheet open={isMenuOpen} onOpenChange={setIsMenuOpen}>
                     <SheetTrigger asChild>
                       <Button
                         variant="ghost"
                         size="icon"
-                        className="h-12 w-12 text-[#235347] hover:bg-[#F2F2F2] active:bg-[#E5E5E5] touch-manipulation"
+                        className="h-10 w-10 text-[#235347] hover:bg-[#F2F2F2] active:bg-[#E5E5E5] touch-manipulation rounded-full"
                         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                         onClick={toggleMenu}
                       >
@@ -259,19 +262,19 @@ const Header = () => {
                     </SheetTrigger>
                     <SheetContent
                       side="right"
-                      className="w-[320px] sm:w-[380px] bg-white border-l border-[#EBEBEB] p-0"
+                      className="w-[300px] sm:w-[360px] bg-white border-l border-[#EBEBEB] p-0"
                     >
                       <div className="flex flex-col h-full">
                         {/* Mobile Header */}
-                        <div className="flex items-center justify-between p-8 border-b border-[#EBEBEB]">
-                          <span className="text-2xl font-semibold text-[#0B2B26]">
+                        <div className="flex items-center justify-between p-6 border-b border-[#EBEBEB]">
+                          <span className="text-xl font-bold text-[#0B2B26]">
                             Menu
                           </span>
                           <Button
                             variant="ghost"
                             size="icon"
                             onClick={() => setIsMenuOpen(false)}
-                            className="h-10 w-10 text-[#235347] hover:bg-[#F2F2F2]"
+                            className="h-10 w-10 text-[#235347] hover:bg-[#F2F2F2] rounded-full"
                             aria-label="Close menu"
                           >
                             <X className="h-5 w-5" />
@@ -280,11 +283,11 @@ const Header = () => {
 
                         {/* Mobile Navigation */}
                         <nav
-                          className="flex-1 p-8"
+                          className="flex-1 p-6"
                           role="navigation"
                           aria-label="Mobile navigation"
                         >
-                          <div className="space-y-3">
+                          <div className="space-y-2">
                             {navLinks.map((link) => (
                               <NavLink
                                 key={link.href}
@@ -298,9 +301,9 @@ const Header = () => {
                         </nav>
 
                         {/* Mobile Actions */}
-                        <div className="border-t border-[#EBEBEB] p-8 space-y-5">
+                        <div className="border-t border-[#EBEBEB] p-6 space-y-4">
                           <Button
-                            className="w-full bg-[#7AA589] text-[white] hover:bg-[#5A8A69] active:bg-[#5A8A69] hover:shadow-black/30 font-medium py-4 touch-manipulation text-lg"
+                            className="w-full bg-[#7AA589] text-white hover:bg-[#6A9A79] active:bg-[#5A8A69] font-medium py-3.5 touch-manipulation text-base rounded-full"
                             onClick={() => setIsMenuOpen(false)}
                             asChild
                           >
@@ -308,17 +311,17 @@ const Header = () => {
                           </Button>
 
                           {!loading && !user && (
-                            <div className="space-y-4">
+                            <div className="space-y-3">
                               <Button
                                 variant="outline"
-                                className="w-full border-[#7AA589] text-[#7AA589] hover:bg-[#7AA589] hover:text-[#0B2B26] active:bg-[#6A9A79] active:text-[#0B2B26] py-4 touch-manipulation text-lg"
+                                className="w-full border-[#7AA589] text-[#7AA589] hover:bg-[#7AA589] hover:text-white active:bg-[#6A9A79] py-3.5 touch-manipulation text-base rounded-full"
                                 onClick={() => setIsMenuOpen(false)}
                                 asChild
                               >
                                 <Link href="/auth/signin">Sign In</Link>
                               </Button>
                               <Button
-                                className="w-full bg-[#0B2B26] text-white hover:shadow-black/20 hover:bg-[#163832] active:bg-[#0F1F1E] py-4 touch-manipulation text-lg"
+                                className="w-full bg-[#0B2B26] text-white hover:bg-[#163832] active:bg-[#0F1F1E] py-3.5 touch-manipulation text-base rounded-full"
                                 onClick={() => setIsMenuOpen(false)}
                                 asChild
                               >

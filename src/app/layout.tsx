@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
 import ScrollToTop from "@/components/ScrollToTop";
+import WhatsAppButton from "@/components/WhatsAppButton";
 
 export const metadata: Metadata = {
   title: {
@@ -279,6 +280,7 @@ export default function RootLayout({
           <main className="min-h-screen">{children}</main>
           <ConditionalFooter />
           <Toaster />
+          <WhatsAppButton />
         </AuthProvider>
       </body>
     </html>
