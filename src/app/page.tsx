@@ -19,6 +19,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import Image from "next/image";
+import { getLocalImage } from "@/lib/imageUtils";
 // Removed framer-motion for performance
 import { useRef, useState, useEffect, useCallback } from "react";
 const Header = dynamic(() => import("@/components/layout/Header"), {
@@ -756,7 +757,8 @@ export default function Home() {
                     <div className="relative h-64 overflow-hidden bg-gray-100">
                       <Image
                         src={
-                          property.images?.[0] || "/placeholder-property.jpg"
+                          property.images?.[0] ||
+                          getLocalImage(property.propertyType || "villa", 0)
                         }
                         alt={property.title}
                         fill
