@@ -351,6 +351,26 @@ export default function PropertiesPage() {
         return images;
       };
 
+      // Extract specific area from address (e.g., "D-17", "Margalla Hills", "Gulberg Greens")
+      const getDisplayLocation = (property: Property): string => {
+        const address = property.location.address;
+        // For D-17 address
+        if (address.includes("D-17")) {
+          return "D-17, Islamabad";
+        }
+        // For Margalla Hills
+        if (address.includes("Margalla Hills")) {
+          return "Margalla Hills, Islamabad";
+        }
+        // For Gulberg Greens
+        if (address.includes("Gulberg Greens")) {
+          return "Gulberg Greens, Islamabad";
+        }
+        // Default: extract first part before comma
+        const firstPart = address.split(",")[0].trim();
+        return `${firstPart}, ${property.location.city}`;
+      };
+
       return {
         slug: property.id,
         imageUrl: property.images?.[0] || getLocalImage("villa", 0),
@@ -358,7 +378,7 @@ export default function PropertiesPage() {
         title: property.title,
         bedrooms: property.capacity.bedrooms,
         guests: property.capacity.maxGuests,
-        location: `${property.location.city}, ${property.location.country}`,
+        location: getDisplayLocation(property),
         price: property.pricing.basePrice,
         rating: property.rating || 4.8,
         bathrooms: property.capacity.bathrooms,

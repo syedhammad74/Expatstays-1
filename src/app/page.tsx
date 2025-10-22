@@ -119,6 +119,26 @@ export default function Home() {
         return images;
       };
 
+      // Extract specific area from address (e.g., "D-17", "Margalla Hills", "Gulberg Greens")
+      const getDisplayLocation = (property: Property): string => {
+        const address = property.location.address;
+        // For D-17 address
+        if (address.includes("D-17")) {
+          return "D-17, Islamabad";
+        }
+        // For Margalla Hills
+        if (address.includes("Margalla Hills")) {
+          return "Margalla Hills, Islamabad";
+        }
+        // For Gulberg Greens
+        if (address.includes("Gulberg Greens")) {
+          return "Gulberg Greens, Islamabad";
+        }
+        // Default: extract first part before comma
+        const firstPart = address.split(",")[0].trim();
+        return `${firstPart}, ${property.location.city}`;
+      };
+
       return {
         slug: property.id,
         imageUrl: property.images?.[0] || getLocalImage("villa", 0),
@@ -126,7 +146,7 @@ export default function Home() {
         title: property.title,
         bedrooms: property.capacity.bedrooms,
         guests: property.capacity.maxGuests,
-        location: `${property.location.city}, ${property.location.country}`,
+        location: getDisplayLocation(property),
         price: property.pricing.basePrice,
         rating: property.rating || 4.8,
         bathrooms: property.capacity.bathrooms,
@@ -207,102 +227,223 @@ export default function Home() {
     setTimeout(() => setIsAutoPlaying(true), 10000); // Resume auto-play after 10 seconds
   };
 
-  // Fetch properties for landing page (show exact same 3 as properties page)
+  // Fetch properties for landing page (exact same 3 as properties page)
   const fetchFeaturedProperties = useCallback(async () => {
     try {
       setPropertiesLoading(true);
       if (process.env.NODE_ENV === "development") {
-        console.log("🔍 Fetching properties for landing page...");
-      }
-      // Lazy load Firebase service only when needed
-      const { propertyService } = await import("@/lib/services/properties");
-      const allProperties = await propertyService.getAllProperties();
-      if (process.env.NODE_ENV === "development") {
-        console.log("📊 All properties loaded:", allProperties.length);
+        console.log("🔍 Loading featured properties for landing page...");
       }
 
-      // Show only the exact same 3 properties that appear on properties page
-      // These are the specific property IDs from properties page hardcoded list
-      const featuredPropertyIds = [
-        "famhouse_islamabad_dam_view",
-        "apartment_dam_view_islamabad",
-        "gulberg_greens_2bed_apartment",
-      ];
-
-      // Filter to get only these 3 properties in the same order
-      const exactProperties = featuredPropertyIds
-        .map((id) => allProperties.find((p) => p.id === id))
-        .filter((p): p is Property => p !== undefined);
-
-      if (exactProperties.length > 0) {
-        if (process.env.NODE_ENV === "development") {
-          console.log(
-            `✅ Displaying ${exactProperties.length} featured properties on landing page`
-          );
-        }
-        setFeaturedProperties(exactProperties);
-      } else {
-        if (process.env.NODE_ENV === "development") {
-          console.log("⚠️ No featured properties found, using fallback");
-        }
-        throw new Error("Featured properties not available");
-      }
-    } catch (err) {
-      if (process.env.NODE_ENV === "development") {
-        console.error("❌ Failed to fetch properties:", err);
-      }
-      // Fallback to hardcoded properties with real IDs
-      const fallbackProperties = [
-        {
-          id: "apartment_dam_view_islamabad",
-          title: "2-Bedroom Apartment with Stunning Dam View",
-          images: ["/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg"],
-          location: {
-            city: "Islamabad",
-            state: "Islamabad Capital Territory",
-            country: "Pakistan",
-          },
-          pricing: { basePrice: 150 },
-          capacity: { maxGuests: 4, bedrooms: 2, bathrooms: 2 },
-          rating: 4.8,
-          featured: true,
-          availability: { isActive: true },
-          propertyType: "apartment",
-        },
-        {
-          id: "gulberg_greens_apartment",
-          title: "2 Bedroom Apartment With Kitchen | Gulberg Greens",
-          images: ["/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"],
-          location: {
-            city: "Islamabad",
-            state: "Islamabad Capital Territory",
-            country: "Pakistan",
-          },
-          pricing: { basePrice: 200 },
-          capacity: { maxGuests: 6, bedrooms: 2, bathrooms: 2 },
-          rating: 4.9,
-          featured: true,
-          availability: { isActive: true },
-          propertyType: "apartment",
-        },
+      // EXACT same hardcoded properties as properties page (lines 427-623)
+      const hardcodedProperties: Property[] = [
         {
           id: "famhouse_islamabad_dam_view",
-          title: "Luxury Farmhouse | Islamabad Hillside",
-          images: ["/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg"],
+          title: "Luxury 5-Bedroom Farmhouse with Panoramic Dam Views",
+          description:
+            "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Rawal Dam. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area. Perfect for large families and groups seeking an exclusive retreat with world-class amenities including a private swimming pool, fully equipped gym, and extensive walking tracks through the garden.",
           location: {
+            address:
+              "D-17 Islamabad Farming Cooperative Society, Margalla Gardens, Islamabad",
             city: "Islamabad",
             state: "Islamabad Capital Territory",
             country: "Pakistan",
+            coordinates: { lat: 33.6844, lng: 73.0479 },
           },
-          pricing: { basePrice: 300 },
-          capacity: { maxGuests: 8, bedrooms: 3, bathrooms: 3 },
+          propertyType: "house" as const,
+          capacity: { bedrooms: 5, bathrooms: 4, maxGuests: 12 },
+          amenities: [
+            "High-Speed WiFi",
+            "Central Air Conditioning",
+            "Gourmet Kitchen",
+            "Private Parking",
+            "24/7 Security",
+            "Private Swimming Pool",
+            "Fully Equipped Gym",
+            "Extensive Garden",
+            "Walking Track",
+            "Panoramic Dam Views",
+            "Premium Appliances",
+            "Luxury Bedding",
+            "Spacious Living Room",
+            "Formal Dining Area",
+            "Mountain Views",
+            "Family-Friendly",
+            "Pet-Friendly",
+            "Concierge Service",
+            "Multi-Level Living",
+            "Basement Storage",
+          ],
+          images: [
+            "/media/famhouse/DSC02227.jpg",
+            "/media/famhouse/DSC02228.jpg",
+            "/media/famhouse/DSC02235.jpg",
+          ],
+          pricing: {
+            basePrice: 350,
+            currency: "USD",
+            cleaningFee: 50,
+            serviceFee: 35,
+          },
+          availability: { isActive: true, minimumStay: 2, maximumStay: 30 },
+          rating: 4.9,
+          owner: {
+            uid: "owner_famhouse_islamabad",
+            name: "Ahmed Khan",
+            email: "ahmed@expatstays.com",
+          },
+          createdAt: "2024-09-16T15:00:00Z",
+          updatedAt: "2024-09-16T15:00:00Z",
+        },
+        {
+          id: "apartment_dam_view_islamabad",
+          title: "Stunning 2-Bedroom Apartment with Dam View",
+          description:
+            "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
+          location: {
+            address: "Margalla Hills, Islamabad",
+            city: "Islamabad",
+            state: "Islamabad Capital Territory",
+            country: "Pakistan",
+            coordinates: { lat: 33.6844, lng: 73.0479 },
+          },
+          propertyType: "apartment" as const,
+          capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+          amenities: [
+            "High-Speed WiFi",
+            "Air Conditioning",
+            "Modern Kitchen",
+            "Private Parking",
+            "Dam View",
+            "Cozy Living Room",
+            "High-Quality Linen",
+            "Family-Friendly",
+            "Peaceful Location",
+            "Mountain Views",
+            "Balcony",
+            "Washing Machine",
+            "Refrigerator",
+            "Microwave",
+            "Coffee Maker",
+            "Cable TV",
+            "24/7 Security",
+            "Elevator Access",
+            "Gym Access",
+            "Swimming Pool Access",
+          ],
+          images: [
+            "/media/blogs-appartments/EX-1.JPG",
+            "/media/blogs-appartments/EX-2.JPG",
+            "/media/blogs-appartments/EX-3.JPG",
+            "/media/blogs-appartments/EX-4.JPG",
+            "/media/blogs-appartments/ex-5.JPG",
+            "/media/blogs-appartments/ex-6.JPG",
+            "/media/blogs-appartments/EX-7.JPG",
+            "/media/blogs-appartments/EX-8.JPG",
+            "/media/blogs-appartments/EX-9.JPG",
+            "/media/blogs-appartments/IMG_6740.JPG",
+            "/media/blogs-appartments/IMG_6741.JPG",
+            "/media/blogs-appartments/IMG_6742.JPG",
+            "/media/blogs-appartments/IMG_6743.JPG",
+            "/media/blogs-appartments/IMG_6744.JPG",
+            "/media/blogs-appartments/IMG_6745.JPG",
+          ],
+          pricing: {
+            basePrice: 120,
+            currency: "USD",
+            cleaningFee: 25,
+            serviceFee: 15,
+          },
+          availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
           rating: 4.7,
-          featured: true,
-          availability: { isActive: true },
-          propertyType: "farmhouse",
+          owner: {
+            uid: "owner_apartment_dam_view",
+            name: "Sarah Ahmed",
+            email: "sarah@expatstays.com",
+          },
+          createdAt: "2024-09-16T15:00:00Z",
+          updatedAt: "2024-09-16T15:00:00Z",
+        },
+        {
+          id: "gulberg_greens_2bed_apartment",
+          title: "2 Bedroom Apartment With Kitchen | Gulberg Greens",
+          description:
+            "Unwind in this stylish 2-bedroom apartment with a fully equipped kitchen, cozy living area, smart TV, high-speed Wi-Fi, air conditioning, and modern decor. Perfect for families, business travelers, long stays, or weekend getaways. Located in a central area with restaurants, coffee shops, and pharmacies within the building. Separate entrance for residents. Just 25 minutes from Faisal Mosque. Comfort, design, and convenience await!",
+          location: {
+            address: "Gulberg Greens, Islamabad",
+            city: "Islamabad",
+            state: "Islamabad Capital Territory",
+            country: "Pakistan",
+            coordinates: { lat: 33.6844, lng: 73.0479 },
+          },
+          propertyType: "apartment" as const,
+          capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+          amenities: [
+            "High-Speed WiFi",
+            "Air Conditioning",
+            "Fully Equipped Kitchen",
+            "Smart TV",
+            "Private Parking",
+            "Modern Decor",
+            "Cozy Living Area",
+            "Family-Friendly",
+            "Business Traveler Friendly",
+            "Long Stay Friendly",
+            "Weekend Getaway",
+            "Central Location",
+            "Restaurants Nearby",
+            "Coffee Shops Nearby",
+            "Pharmacies Nearby",
+            "Separate Entrance",
+            "25 Minutes from Faisal Mosque",
+            "Comfort & Convenience",
+            "Washing Machine",
+            "Refrigerator",
+            "Microwave",
+            "Coffee Maker",
+            "24/7 Security",
+            "Elevator Access",
+          ],
+          images: [
+            "/media/DSC01806 HDR June 25 2025/DSC01919-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01914-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01902-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01897-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01934-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01997-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01978-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg",
+            "/media/DSC01806 HDR June 25 2025/DSC01812-HDR.jpg",
+          ],
+          pricing: {
+            basePrice: 120,
+            currency: "USD",
+            cleaningFee: 25,
+            serviceFee: 15,
+          },
+          availability: { isActive: true, minimumStay: 1, maximumStay: 30 },
+          rating: 4.7,
+          reviews: 89,
+          owner: {
+            uid: "owner_gulberg_greens",
+            name: "Ahmed Hassan",
+            email: "ahmed@expatstays.com",
+          },
+          createdAt: "2024-09-16T16:00:00Z",
+          updatedAt: "2024-09-16T16:00:00Z",
         },
       ];
-      setFeaturedProperties(fallbackProperties as Property[]);
+
+      if (process.env.NODE_ENV === "development") {
+        console.log(
+          `✅ Displaying ${hardcodedProperties.length} featured properties on landing page`
+        );
+      }
+      setFeaturedProperties(hardcodedProperties);
+    } catch (err) {
+      if (process.env.NODE_ENV === "development") {
+        console.error("❌ Failed to load properties:", err);
+      }
     } finally {
       setPropertiesLoading(false);
     }
