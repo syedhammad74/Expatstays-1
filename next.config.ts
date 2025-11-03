@@ -21,7 +21,6 @@ const nextConfig: NextConfig = {
     ],
     esmExternals: true,
     serverMinification: true,
-    optimizeCss: true,
   },
   turbopack: {
     rules: {

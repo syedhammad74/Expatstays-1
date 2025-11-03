@@ -62,16 +62,7 @@ export default function PerformanceOptimizer() {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
           if (entry.entryType === "largest-contentful-paint") {
-            if (process.env.NODE_ENV === "development") {
-              console.log("LCP:", entry.startTime);
-            }
             markLCPLoaded();
-          }
-
-          if (entry.entryType === "first-contentful-paint") {
-            if (process.env.NODE_ENV === "development") {
-              console.log("FCP:", entry.startTime);
-            }
           }
         }
       });

@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Logo from "../../../public/logo.png";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Menu, X, Search, Bell } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/hooks/use-auth";
 import { UserMenu } from "@/components/auth/UserMenu";
@@ -102,9 +102,10 @@ const Header = () => {
   }, [handleScroll]);
 
   // Close mobile menu on route change
+  const pathname = usePathname();
   useEffect(() => {
     setIsMenuOpen(false);
-  }, [usePathname()]);
+  }, [pathname]);
 
   // Close mobile menu on escape key
   useEffect(() => {

@@ -17,10 +17,6 @@ import {
   Search,
   Filter,
   X,
-  MapPin,
-  BedDouble,
-  Bath,
-  Users,
 } from "lucide-react";
 
 export interface PropertyFiltersProps {

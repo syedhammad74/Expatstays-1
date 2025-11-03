@@ -101,8 +101,7 @@ export default function PropertyBookingPage() {
         router.push("/properties");
       }
 
-      // Removed performance monitoring
-      console.log("⚡ Property loaded for booking");
+      // Property loaded for booking
     } catch (error) {
       console.error("Error loading property:", error);
       toast({

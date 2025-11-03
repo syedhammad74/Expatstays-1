@@ -1,7 +1,6 @@
 import {
   ExtendedProperty,
   PropertyImage,
-  PropertyPricing,
 } from "@/lib/types/property-extended";
 
 export class PropertyUtils {

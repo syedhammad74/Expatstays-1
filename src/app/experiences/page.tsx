@@ -17,9 +17,6 @@ import {
   MapPin,
   ChevronRight,
   BookOpen,
-  Zap,
-  Globe,
-  Shield,
 } from "lucide-react";
 import {
   Card,

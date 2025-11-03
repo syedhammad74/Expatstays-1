@@ -161,7 +161,7 @@ export default function Home() {
         isFeatured: property.id === "famhouse_islamabad_dam_view",
       };
     },
-    []
+    [handlePropertyClick]
   );
 
   // Memoize converted properties

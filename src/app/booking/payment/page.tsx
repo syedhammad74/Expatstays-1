@@ -8,7 +8,7 @@ import { propertyService } from "@/lib/services/properties";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+// Removed unused Tabs imports
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import {
@@ -20,12 +20,10 @@ import {
   CreditCard,
   CheckCircle,
   ArrowLeft,
-  ExternalLink,
 } from "lucide-react";
 import { Booking, Property } from "@/lib/types/firebase";
 import { AuthModal } from "@/components/auth/AuthModal";
-import StripeProvider from "@/components/payment/StripeProvider";
-import PaymentForm from "@/components/payment/PaymentForm";
+// Removed unused Stripe imports
 import { MockPaymentForm } from "@/components/payment/MockPaymentForm";
 import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
@@ -59,10 +57,10 @@ function BookingPaymentContent() {
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [clientSecret, setClientSecret] = useState<string | null>(null);
-  const [paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
-  const [creatingPaymentIntent, setCreatingPaymentIntent] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState<
+  const [_clientSecret, _setClientSecret] = useState<string | null>(null);
+  const [_paymentIntentId, _setPaymentIntentId] = useState<string | null>(null);
+  const [_creatingPaymentIntent, _setCreatingPaymentIntent] = useState(false);
+  const [_paymentMethod, _setPaymentMethod] = useState<
     "elements" | "checkout" | "mock"
   >(USE_MOCK_DATA ? "mock" : "elements");
   const [showAuthModal, setShowAuthModal] = useState(false);

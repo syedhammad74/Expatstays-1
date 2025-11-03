@@ -21,7 +21,6 @@ import {
   Bath,
   Users,
   DollarSign,
-  Star,
 } from "lucide-react";
 import { Property } from "@/lib/types/firebase";
 

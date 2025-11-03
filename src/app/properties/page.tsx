@@ -37,8 +37,7 @@ import { useRouter } from "next/navigation";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
 import { bookingService } from "@/lib/services/bookings";
-import { extendedPropertyService } from "@/lib/services/property-extended";
-import { ExtendedProperty } from "@/lib/types/property-extended";
+// Removed unused imports
 import { useToast } from "@/hooks/use-toast";
 // Removed performance monitoring hooks for better performance
 import dynamic from "next/dynamic";
@@ -400,7 +399,7 @@ export default function PropertiesPage() {
         isFeatured: property.id === "famhouse_islamabad_dam_view", // Mark famhouse as featured
       };
     },
-    []
+    [handleViewDetails]
   );
 
   // Memoize filtered properties to prevent unnecessary recalculations
@@ -409,7 +408,7 @@ export default function PropertiesPage() {
   }, [filteredProperties, convertToPropertyCard]);
 
   // Enhanced loadProperties with caching
-  const loadProperties = useCallback(async () => {
+  const _loadProperties = useCallback(async () => {
     try {
       setLoading(true);
       // performanceMonitor.markStart("load-properties"); // Removed performanceMonitor
@@ -724,7 +723,7 @@ export default function PropertiesPage() {
     } finally {
       setSearchLoading(false);
     }
-  }, [guests, properties, toast, from, to]); // Removed trackError for performance
+  }, [guests, properties, toast, from, to, ensureMinimumProperties]); // Removed trackError for performance
 
   // Load properties on mount and set up real-time subscription
   useEffect(() => {
@@ -863,7 +862,7 @@ export default function PropertiesPage() {
       // Always show all properties when no search query
       setFilteredProperties(properties);
     }
-  }, [debouncedSearchQuery, properties, dateRange, from, to]);
+  }, [debouncedSearchQuery, properties, dateRange, from, to, ensureMinimumProperties]);
 
   // Enable virtual scrolling for large lists
   useEffect(() => {
@@ -913,7 +912,6 @@ export default function PropertiesPage() {
       setSearchLoading(false);
     }
   }, [
-    dateRange,
     guests,
     location,
     router,
@@ -921,7 +919,7 @@ export default function PropertiesPage() {
     toast,
     from,
     to,
-  ]); // Removed performance tracking dependencies
+  ]); // Removed dateRange and performance tracking dependencies
 
   // Enhanced renderProperties with better UI
   const renderProperties = () => {

@@ -425,7 +425,7 @@ export class PropertyService {
   }
 
   // Get property statistics
-  async getPropertyStats(propertyId: string): Promise<{
+  async getPropertyStats(_propertyId: string): Promise<{
     totalBookings: number;
     totalRevenue: number;
     averageRating: number;

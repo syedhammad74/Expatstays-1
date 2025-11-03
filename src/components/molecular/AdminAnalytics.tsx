@@ -1,14 +1,9 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/atomic";
-import { Badge } from "@/components/ui/badge";
 import {
   BarChart3,
   TrendingUp,
-  TrendingDown,
   Calendar,
-  DollarSign,
-  Home,
-  Users,
 } from "lucide-react";
 import { Booking, Property } from "@/lib/types/firebase";
 

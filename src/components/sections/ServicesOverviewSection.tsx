@@ -1,9 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import dynamic from "next/dynamic";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CardSpotlight } from "@/components/ui/card-spotlight";
 import { Disclosure } from "@headlessui/react";
 // Removed framer-motion and embla-carousel for performance
 import Image from "next/image";
@@ -20,8 +17,6 @@ import {
   ArrowRight,
   ChevronDown,
   ChevronUp,
-  MapPin,
-  Clock,
 } from "lucide-react";
 
 // Carousel data with diverse images from main page
@@ -174,9 +169,7 @@ const faqs = [
 
 // ServicesOverviewSection Component
 const ServicesOverviewSection: React.FC = () => {
-  const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [isDragging, setIsDragging] = useState(false);
 
   // Simple carousel state management
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -199,13 +192,13 @@ const ServicesOverviewSection: React.FC = () => {
     setTimeout(() => setIsAutoPlaying(true), 2000);
   };
 
-  const nextSlide = () => {
+  const _nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 2000);
   };
 
-  const prevSlide = () => {
+  const _prevSlide = () => {
     setCurrentSlide(
       (prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length
     );

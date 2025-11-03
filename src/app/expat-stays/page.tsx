@@ -1,12 +1,8 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import {
   Card,
-  CardContent,
-  CardHeader,
   CardTitle,
-  CardDescription,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DecorativeElements } from "@/components/ui/decorative-elements";
