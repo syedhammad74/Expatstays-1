@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 // Removed framer-motion for performance
 import Image from "next/image";
-import { format } from "date-fns";
+import format from "date-fns/format";
 import {
   Calendar as CalendarIcon,
   MapPin,
@@ -390,7 +390,7 @@ export default function PropertyBookingPage() {
                       {image && (
                         <Image
                           src={image.url}
-                          alt=""
+                          alt={property?.title || "Property image"}
                           fill
                           className="object-cover"
                         />

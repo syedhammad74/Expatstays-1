@@ -50,9 +50,10 @@ const Calendar = dynamic(
     loading: () => (
       <div className="w-full h-[300px] bg-gray-100 animate-pulse rounded-lg" />
     ),
+    ssr: false, // Calendar doesn't need SSR
   }
 );
-import { format } from "date-fns";
+import format from "date-fns/format";
 import { useRouter } from "next/navigation";
 import { DateRange } from "react-day-picker";
 // Defer non-critical CSS loading
@@ -178,31 +179,37 @@ export default function Home() {
       title: "Luxury Villa Experience",
       image: "/media/DSC01806 HDR June 25 2025/DSC01970-HDR.jpg",
       alt: "Luxury Villa Experience",
+      priority: true, // LCP image
     },
     {
       title: "Modern Architecture",
       image: "/media/DSC01806 HDR June 25 2025/DSC01939-HDR.jpg",
       alt: "Modern Architecture",
+      priority: false,
     },
     {
       title: "Elegant Interiors",
       image: "/media/Close Ups June 25 2025/DSC01964.jpg",
       alt: "Elegant Interiors",
+      priority: false,
     },
     {
       title: "Premium Amenities",
       image: "/media/DSC01806 HDR June 25 2025/DSC01884-HDR.jpg",
       alt: "Premium Amenities",
+      priority: false,
     },
     {
       title: "Breathtaking Views",
       image: "/media/DSC01806 HDR June 25 2025/DSC01929-HDR.jpg",
       alt: "Breathtaking Views",
+      priority: false,
     },
     {
       title: "Luxury Details",
       image: "/media/Close Ups June 25 2025/DSC01835.jpg",
       alt: "Luxury Details",
+      priority: false,
     },
   ];
 
@@ -241,7 +248,7 @@ export default function Home() {
           id: "famhouse_islamabad_dam_view",
           title: "Luxury 5-Bedroom Farmhouse with Panoramic Dam Views",
           description:
-            "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Rawal Dam. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area. Perfect for large families and groups seeking an exclusive retreat with world-class amenities including a private swimming pool, fully equipped gym, and extensive walking tracks through the garden.",
+            "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Sandaymar dam view. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area. Perfect for large families and groups seeking an exclusive retreat with world-class amenities including a private swimming pool, fully equipped gym, and extensive walking tracks through the garden.",
           location: {
             address:
               "D-17 Islamabad Farming Cooperative Society, Margalla Gardens, Islamabad",
@@ -280,7 +287,7 @@ export default function Home() {
             "/media/famhouse/DSC02235.jpg",
           ],
           pricing: {
-            basePrice: 350,
+            basePrice: 300,
             currency: "USD",
             cleaningFee: 50,
             serviceFee: 35,
@@ -332,6 +339,10 @@ export default function Home() {
             "Swimming Pool Access",
           ],
           images: [
+            "/optimized/D-17/Living-room.JPG",
+            "/optimized/D-17/Living-room1.JPG",
+            "/optimized/D-17/Living-room2.JPG",
+            "/optimized/D-17/TV-launch.JPG",
             "/media/blogs-appartments/EX-1.JPG",
             "/media/blogs-appartments/EX-2.JPG",
             "/media/blogs-appartments/EX-3.JPG",
@@ -349,7 +360,7 @@ export default function Home() {
             "/media/blogs-appartments/IMG_6745.JPG",
           ],
           pricing: {
-            basePrice: 120,
+            basePrice: 35,
             currency: "USD",
             cleaningFee: 25,
             serviceFee: 15,
@@ -416,7 +427,7 @@ export default function Home() {
             "/media/DSC01806 HDR June 25 2025/DSC01812-HDR.jpg",
           ],
           pricing: {
-            basePrice: 120,
+            basePrice: 35,
             currency: "USD",
             cleaningFee: 25,
             serviceFee: 15,
@@ -559,15 +570,16 @@ export default function Home() {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
               {/* Left Panel - Content */}
               <div className="text-center lg:text-left space-y-6 md:space-y-8">
-                <div className="inline-block px-4 py-2 bg-[#7AA589] text-white rounded-full text-sm font-medium">
+                <div className="inline-block px-4 py-2 bg-brand-primary text-white rounded-full text-sm font-medium shadow-sm">
                   Luxury Rentals
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold text-black leading-tight">
-                  Find Your <span className="text-[#7AA589]">Perfect Home</span>
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-brand-dark leading-tight">
+                  Find Your{" "}
+                  <span className="text-brand-primary">Perfect Home</span>
                 </h1>
 
-                <p className="text-base sm:text-lg text-[#235347] max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                <p className="text-xs sm:text-sm md:text-base text-brand-primary max-w-lg mx-auto lg:mx-0 leading-relaxed">
                   Curated luxury properties for modern living. Minimal,
                   beautiful, and effortless.
                 </p>
@@ -575,17 +587,20 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
                   <button
                     onClick={handleViewAllProperties}
-                    className="px-8 py-3.5 bg-[#7AA589] text-white font-semibold rounded-full hover:bg-[#6A9A79] transition-all duration-200 hover:shadow-lg"
+                    className="px-8 py-3.5 bg-brand-medium-dark text-white font-semibold rounded-full hover:bg-brand-dark transition-all duration-200 shadow-md hover:shadow-lg"
                   >
                     Explore Properties
                   </button>
 
-                  <button
-                    onClick={() => router.push("/contact")}
-                    className="px-8 py-3.5 border-2 border-[#7AA589] text-[#7AA589] font-semibold rounded-full hover:bg-[#7AA589] hover:text-white transition-all duration-200 hover:shadow-lg"
+                  <a
+                    href="https://wa.me/923087496089?text=Hi%2C%20I%20am%20interested%20in%20booking%20a%20property"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-8 py-3.5 border-2 border-[#25D366] text-[#25D366] font-semibold rounded-full hover:bg-[#25D366] hover:text-white transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2"
                   >
-                    Book Now
-                  </button>
+                    <MessageCircle className="h-5 w-5" />
+                    Contact
+                  </a>
                 </div>
               </div>
 
@@ -595,7 +610,8 @@ export default function Home() {
                 className="relative w-full flex items-center justify-center order-first lg:order-last"
               >
                 <div className="relative w-full max-w-2xl">
-                  <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+                  {/* Carousel Container */}
+                  <div className="relative overflow-hidden rounded-xl shadow-lg aspect-[16/10]">
                     <div
                       className="w-full overflow-hidden"
                       style={{
@@ -617,20 +633,17 @@ export default function Home() {
                               src={slide.image}
                               alt={slide.alt}
                               fill
-                              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 80vw, 700px"
-                              className={`object-cover object-center select-none transition-all duration-500 ${
-                                index === 0 ? "lcp-image" : ""
-                              }`}
-                              priority={index === 0}
-                              fetchPriority={index === 0 ? "high" : "auto"}
-                              loading={index === 0 ? "eager" : "lazy"}
-                              quality={index === 0 ? 90 : 85}
+                              sizes="(max-width: 640px) 400px, (max-width: 1024px) 600px, 700px"
+                              className="object-cover object-center select-none"
+                              priority={slide.priority}
+                              fetchPriority={slide.priority ? "high" : "auto"}
+                              loading={slide.priority ? "eager" : "lazy"}
+                              quality={slide.priority ? 85 : 75}
                               placeholder="blur"
                               blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                               onLoad={
-                                index === 0
+                                slide.priority
                                   ? () => {
-                                      // LCP optimization - mark as loaded
                                       if (typeof window !== "undefined") {
                                         document.documentElement.classList.add(
                                           "lcp-loaded"
@@ -641,10 +654,12 @@ export default function Home() {
                               }
                             />
 
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+                            {/* Subtle gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none" />
 
-                            <div className="absolute bottom-3 left-3 right-3">
-                              <h3 className="text-white text-sm font-semibold drop-shadow-lg">
+                            {/* Image title */}
+                            <div className="absolute bottom-4 left-4 right-4">
+                              <h3 className="text-white text-sm sm:text-base font-semibold drop-shadow-lg">
                                 {slide.title}
                               </h3>
                             </div>
@@ -652,21 +667,26 @@ export default function Home() {
                         ))}
                       </div>
                     </div>
+                  </div>
 
-                    <div className="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex gap-1.5">
-                      {carouselSlides.map((_, index) => (
-                        <button
-                          key={index}
-                          onClick={() => goToSlide(index)}
-                          className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
+                  {/* Professional Pagination - BELOW the carousel */}
+                  <div className="flex justify-center gap-2 mt-6">
+                    {carouselSlides.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => goToSlide(index)}
+                        className="group p-2 rounded-full hover:bg-gray-100 transition-all duration-200"
+                        aria-label={`Go to slide ${index + 1}`}
+                      >
+                        <span
+                          className={`block w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                             index === currentServiceIndex
-                              ? "bg-white scale-125"
-                              : "bg-white/60 hover:bg-white/80"
+                              ? "bg-brand-primary scale-125 shadow-sm"
+                              : "bg-gray-400 group-hover:bg-gray-600"
                           }`}
-                          aria-label={`Go to slide ${index + 1}`}
                         />
-                      ))}
-                    </div>
+                      </button>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -675,19 +695,14 @@ export default function Home() {
         </section>
 
         {/* Booking Section */}
-        <section
-          className="relative py-12 md:py-16 lg:py-20 bg-[#fefffe]"
-          style={{
-            backgroundImage: `radial-gradient(circle at 2px 1px, rgba(0,0,0,0.02) 2px, transparent 0)`,
-            backgroundSize: "20px 20px",
-          }}
-        >
+        <section className="relative py-16 md:py-20 lg:py-24 bg-gray-50">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-8 md:mb-12">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black mb-3 md:mb-4">
-                Book Your <span className="text-[#7AA589]">Perfect Stay</span>
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-brand-dark mb-3 md:mb-4">
+                Book Your{" "}
+                <span className="text-brand-primary">Perfect Stay</span>
               </h2>
-              <p className="text-base sm:text-lg text-[#235347] max-w-2xl mx-auto">
+              <p className="text-xs sm:text-sm md:text-base text-brand-primary max-w-2xl mx-auto">
                 Find and book luxury properties in seconds with our intuitive
                 search
               </p>
@@ -703,8 +718,8 @@ export default function Home() {
                 className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4"
               >
                 {/* Location Field */}
-                <div className="flex items-center w-full h-14 border border-gray-200 rounded-full px-4 gap-3 focus-within:border-[#7AA589] focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
-                  <MapPin className="h-5 w-5 text-[#7AA589] flex-shrink-0" />
+                <div className="flex items-center w-full h-14 border border-gray-300 rounded-full px-4 gap-3 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 bg-white transition-all duration-200">
+                  <MapPin className="h-5 w-5 text-brand-primary flex-shrink-0" />
                   <Select value={location} onValueChange={setLocation}>
                     <SelectTrigger
                       className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium focus:ring-0 focus:border-none h-14"
@@ -722,8 +737,8 @@ export default function Home() {
                   </Select>
                 </div>
                 {/* Date Field */}
-                <div className="flex items-center w-full h-14 bg-white border border-gray-200 rounded-full px-4 gap-3 focus-within:border-[#7AA589] focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
-                  <CalendarIcon className="h-5 w-5 text-[#7AA589] flex-shrink-0" />
+                <div className="flex items-center w-full h-14 bg-white border border-gray-300 rounded-full px-4 gap-3 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all duration-200">
+                  <CalendarIcon className="h-5 w-5 text-brand-primary flex-shrink-0" />
                   <Popover open={calendarOpen} onOpenChange={setCalendarOpen}>
                     <PopoverTrigger asChild>
                       <Button
@@ -740,10 +755,10 @@ export default function Home() {
                     </PopoverTrigger>
                     <PopoverContent className="p-0 bg-white rounded-xl shadow-xl border border-gray-200 min-w-[300px]">
                       <div className="px-6 pt-6 pb-2">
-                        <h3 className="text-lg font-bold text-[#0B2B26]">
+                        <h3 className="text-lg font-bold text-brand-dark">
                           Select your stay dates
                         </h3>
-                        <p className="text-sm text-[#7AA589]">
+                        <p className="text-sm text-brand-primary">
                           Choose check-in and check-out
                         </p>
                       </div>
@@ -764,15 +779,17 @@ export default function Home() {
                           ...(hoveredDate ? { hovered: hoveredDate } : {}),
                         }}
                         modifiersClassNames={{
-                          selected: "bg-[#7AA589] text-white rounded-full",
-                          range_start: "bg-[#7AA589] text-white rounded-l-full",
-                          range_end: "bg-[#7AA589] text-white rounded-r-full",
-                          range_middle: "bg-[#7AA589]/20 text-[#0B2B26]",
-                          hovered: "bg-[#7AA589]/30 text-[#0B2B26]",
+                          selected: "bg-brand-primary text-white rounded-full",
+                          range_start:
+                            "bg-brand-primary text-white rounded-l-full",
+                          range_end:
+                            "bg-brand-primary text-white rounded-r-full",
+                          range_middle: "bg-brand-primary/20 text-brand-dark",
+                          hovered: "bg-brand-primary/30 text-brand-dark",
                           today:
-                            "border-2 border-[#7AA589] bg-white text-[#0B2B26] font-bold",
-                          focus: "ring-2 ring-[#7AA589] ring-offset-2",
-                          active: "ring-2 ring-[#7AA589] ring-offset-2",
+                            "border-2 border-brand-primary bg-white text-brand-dark font-bold",
+                          focus: "ring-2 ring-brand-primary ring-offset-2",
+                          active: "ring-2 ring-brand-primary ring-offset-2",
                           disabled: "opacity-40 cursor-not-allowed",
                         }}
                         disabled={(date: Date) => {
@@ -809,8 +826,8 @@ export default function Home() {
                   </Popover>
                 </div>
                 {/* Guests Field */}
-                <div className="flex items-center w-full h-14 bg-white border border-gray-200 rounded-full px-4 gap-3 focus-within:border-[#7AA589] focus-within:ring-2 focus-within:ring-[#7AA589]/20 transition-all duration-200">
-                  <Users className="h-5 w-5 text-[#7AA589] flex-shrink-0" />
+                <div className="flex items-center w-full h-14 bg-white border border-gray-300 rounded-full px-4 gap-3 focus-within:border-brand-primary focus-within:ring-2 focus-within:ring-brand-primary/20 transition-all duration-200">
+                  <Users className="h-5 w-5 text-brand-primary flex-shrink-0" />
                   <Popover open={guestsOpen} onOpenChange={setGuestsOpen}>
                     <PopoverTrigger asChild>
                       <Button
@@ -899,7 +916,7 @@ export default function Home() {
                 {/* Search Button */}
                 <div className="w-full sm:col-span-2 lg:col-span-1">
                   <Button
-                    className="h-14 px-6 bg-[#7AA589] text-white font-semibold rounded-full shadow-md hover:bg-[#6A9A79] hover:shadow-xl transition-all duration-200 flex items-center justify-center gap-2 w-full"
+                    className="h-14 px-6 bg-brand-medium-dark text-white font-semibold rounded-full shadow-md hover:bg-brand-dark hover:shadow-lg transition-all duration-200 flex items-center justify-center gap-2 w-full"
                     onClick={handleFind}
                   >
                     <Search className="h-4 w-4" />
@@ -911,39 +928,36 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Properties Section - Professional & Mature */}
+        {/* Properties Section - Professional */}
         <section
           id="properties-section"
-          className="relative py-10 overflow-hidden bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC]"
+          className="relative py-12 md:py-16 lg:py-20 bg-white"
         >
-          {/* Simple Background Elements */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {/* Subtle dot pattern */}
-            <div className="absolute inset-0 opacity-[0.03] bg-[radial-gradient(circle_at_1px_1px,rgba(122,165,137,0.4)_1px,transparent_0)] bg-[length:24px_24px]"></div>
-          </div>
+          {/* Subtle texture overlay */}
+          <div className="absolute inset-0 opacity-[0.015] bg-[radial-gradient(circle_at_1px_1px,rgba(0,0,0,0.2)_1px,transparent_0)] bg-[length:32px_32px] pointer-events-none" />
 
-          <div className="relative max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
+          <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Clean Header */}
-            <div className="text-center mb-20 lg:mb-24">
-              <div className="inline-block px-5 py-2 bg-[#7AA589] text-white rounded-full text-md font-medium mb-6">
+            <div className="text-center mb-10 lg:mb-14">
+              <div className="inline-block px-4 py-1.5 bg-brand-primary text-white rounded-full text-xs font-medium mb-5 shadow-sm">
                 Premium Collection
               </div>
 
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-[#0B2B26] leading-tight mb-6">
-                Featured <span className="text-[#7AA589]">Properties</span>
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold text-brand-dark leading-tight mb-4">
+                Featured <span className="text-brand-primary">Properties</span>
               </h2>
 
-              <p className="text-lg text-[#235347] max-w-2xl mx-auto">
+              <p className="text-xs sm:text-sm md:text-base text-brand-primary max-w-2xl mx-auto">
                 Discover our top 3 luxury properties, perfect for your next stay
               </p>
             </div>
 
             {propertiesLoading ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
                 {[1, 2, 3].map((i) => (
                   <div
                     key={i}
-                    className="bg-white rounded-2xl h-[480px] animate-pulse border border-gray-200 shadow-sm"
+                    className="bg-white rounded-2xl h-[400px] sm:h-[450px] lg:h-[480px] animate-pulse border border-gray-200 shadow-sm"
                   />
                 ))}
               </div>
@@ -967,7 +981,7 @@ export default function Home() {
                 </Button>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
                 {memoizedProperties.map((property) => (
                   <PropertyCard key={property.slug} {...property} />
                 ))}
@@ -975,10 +989,10 @@ export default function Home() {
             )}
 
             {/* Clean CTA Section */}
-            <div className="text-center mt-16 lg:mt-20">
+            <div className="text-center mt-10 lg:mt-14">
               <Button
                 variant="outline"
-                className="border-[#7AA589] text-[#7AA589] hover:bg-[#7AA589] hover:text-[#051F20] transition-colors duration-150"
+                className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white shadow-sm hover:shadow-md transition-all duration-200"
                 onClick={handleViewAllProperties}
               >
                 View All Properties <ArrowRight className="h-4 w-4 ml-2" />
@@ -987,20 +1001,20 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Exclusive Services Section: Animated Icons */}
-        <section className="mb-16 lg:mb-24 mt-8">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-12 lg:mb-16">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-dark mb-4">
-                Exclusive <span className="text-[#7AA589]">Services</span>
+        {/* Services Section */}
+        <section className="py-12 md:py-16 lg:py-20 bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10 lg:mb-14">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-brand-dark mb-4">
+                Exclusive <span className="text-brand-primary">Services</span>
               </h2>
-              <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
+              <p className="text-xs sm:text-sm lg:text-base text-brand-primary max-w-2xl mx-auto">
                 Premium services designed to elevate your luxury living
                 experience
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 lg:gap-8">
               {[
                 {
                   icon: Shield,
@@ -1011,7 +1025,7 @@ export default function Home() {
                     "Quality Assurance",
                     "Regular Inspections",
                   ],
-                  gradient: "from-[#7AA589] to-[#235347]",
+                  gradient: "from-brand-primary to-brand-medium",
                 },
                 {
                   icon: Users,
@@ -1022,7 +1036,7 @@ export default function Home() {
                     "Local Expertise",
                     "24/7 Support",
                   ],
-                  gradient: "from-[#DAF1DE] to-[#7AA589]",
+                  gradient: "from-brand-light to-brand-primary",
                 },
                 {
                   icon: Star,
@@ -1033,33 +1047,33 @@ export default function Home() {
                     "Custom Experiences",
                     "Premium Amenities",
                   ],
-                  gradient: "from-[#235347] to-[#163832]",
+                  gradient: "from-brand-primary to-brand-dark",
                 },
               ].map((service, i) => (
                 <div key={service.title} className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-xl group-hover:shadow-2xl transition-shadow duration-200" />
+                  <div className="absolute inset-0 bg-white rounded-xl border border-gray-200 shadow-md group-hover:shadow-lg transition-shadow duration-200" />
                   <div className="relative p-6 lg:p-8">
-                    {/* Animated Icon */}
+                    {/* Icon */}
                     <div
-                      className={`inline-flex p-4 lg:p-6 rounded-xl lg:rounded-2xl bg-gradient-to-br ${service.gradient} mb-4 lg:mb-6 shadow-lg`}
+                      className={`inline-flex p-4 lg:p-5 rounded-xl bg-gradient-to-br ${service.gradient} mb-4 lg:mb-6 shadow-md`}
                     >
-                      <service.icon className="h-6 lg:h-8 w-6 lg:w-8 text-white" />
+                      <service.icon className="h-6 lg:h-7 w-6 lg:w-7 text-white" />
                     </div>
 
                     {/* Content */}
-                    <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-3 lg:mb-4">
+                    <h3 className="text-lg lg:text-xl font-bold text-brand-dark mb-3 lg:mb-4">
                       {service.title}
                     </h3>
-                    <p className="text-sm lg:text-base text-[#235347] mb-4 lg:mb-6 leading-relaxed">
+                    <p className="text-xs lg:text-sm text-brand-primary mb-4 lg:mb-6 leading-relaxed">
                       {service.desc}
                     </p>
 
                     {/* Features */}
                     <div className="space-y-2 lg:space-y-3">
-                      {service.features.map((feature, j) => (
+                      {service.features.map((feature) => (
                         <div key={feature} className="flex items-center gap-3">
-                          <div className="w-2 h-2 rounded-full bg-[#7AA589]" />
-                          <span className="text-xs lg:text-sm text-[#163832] font-bold">
+                          <div className="w-1.5 h-1.5 rounded-full bg-brand-primary" />
+                          <span className="text-xs text-brand-medium font-semibold">
                             {feature}
                           </span>
                         </div>
@@ -1072,20 +1086,20 @@ export default function Home() {
           </div>
         </section>
 
-        {/* AI-Style Testimonials Section */}
-        <section className="mb-16 lg:mb-24">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-12 lg:mb-16">
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-dark mb-4">
-                Guest <span className="text-[#7AA589]">Experiences</span>
+        {/* Testimonials Section */}
+        <section className="py-12 md:py-16 lg:py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10 lg:mb-14">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-brand-dark mb-4">
+                Guest <span className="text-brand-primary">Experiences</span>
               </h2>
-              <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto">
+              <p className="text-xs sm:text-sm lg:text-base text-brand-primary max-w-2xl mx-auto">
                 Real stories from our satisfied guests who experienced luxury
                 redefined
               </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-7 lg:gap-8">
               {[
                 {
                   quote:
@@ -1196,19 +1210,17 @@ export default function Home() {
         </section>
 
         {/* About Isa Husain Section */}
-        <section className="py-16 lg:py-32 relative overflow-hidden">
-          <div className="max-w-6xl mx-auto px-4">
+        <section className="py-12 lg:py-20 relative overflow-hidden bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="relative">
-              <div className="hidden lg:block pointer-events-none absolute -top-8 -left-10 w-64 h-64 bg-gradient-to-br from-[#DAF1DE] to-[#7AA589]/50 blur-3xl rounded-full" />
-              <div className="hidden lg:block pointer-events-none absolute -bottom-10 -right-10 w-72 h-72 bg-gradient-to-br from-[#7AA589]/40 to-[#163832]/30 blur-3xl rounded-full" />
-              <div className="bg-white/95 rounded-2xl border border-[#DAF1DE]/70 shadow-xl overflow-hidden">
+              <div className="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden">
                 <div className="grid grid-cols-1 lg:grid-cols-2">
                   {/* Left: Image with badge */}
-                  <div className="relative bg-[#F0F8F4] p-6 lg:p-8 lg:border-r lg:border-[#DAF1DE]">
-                    <Badge className="absolute top-4 left-4 bg-white text-[#163832] border border-[#DAF1DE] shadow-sm px-3 py-1 rounded-full text-xs font-semibold">
+                  <div className="relative bg-brand-very-light p-6 lg:p-8 lg:border-r lg:border-gray-200">
+                    <Badge className="absolute top-4 left-4 bg-white text-brand-medium border border-gray-200 shadow-sm px-2.5 py-1 rounded-full text-xs font-semibold">
                       Founder
                     </Badge>
-                    <div className="rounded-xl overflow-hidden aspect-[4/5]">
+                    <div className="rounded-xl overflow-hidden aspect-[3/4]">
                       <Image
                         src="/media/isa.webp"
                         alt="Isa Husain - Founder of Expat Stays"
@@ -1224,16 +1236,16 @@ export default function Home() {
                   {/* Right: Content */}
                   <div className="p-7 lg:p-10 bg-white flex flex-col gap-4 lg:gap-6">
                     <div>
-                      <h3 className="text-3xl lg:text-4xl font-semibold text-[#051F20]">
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-brand-dark">
                         Isa Husain
                       </h3>
-                      <div className="hidden lg:block h-1 w-20 bg-gradient-to-r from-[#7AA589] to-[#235347] rounded-full mt-2" />
-                      <p className="text-[#235347] text-sm lg:text-base">
+                      <div className="hidden lg:block h-1 w-20 bg-gradient-to-r from-brand-primary to-brand-dark rounded-full mt-2" />
+                      <p className="text-brand-primary text-xs lg:text-sm">
                         Founder, Expat Stays
                       </p>
                     </div>
 
-                    <div className="space-y-4 text-[#235347] text-sm lg:text-base leading-relaxed">
+                    <div className="space-y-4 text-brand-primary text-xs lg:text-sm leading-relaxed">
                       <p>
                         I&apos;m Isa Hussain, a British Pakistani who moved to
                         Islamabad over 20 years ago—and never looked back.
@@ -1258,7 +1270,7 @@ export default function Home() {
                         thoughtfully furnished to match international
                         standards—with a uniquely Pakistani warmth.
                       </p>
-                      <p className="font-semibold text-[#051F20]">
+                      <p className="font-semibold text-brand-dark">
                         Welcome to your new stay in the homeland. <br /> Welcome
                         to Expat Stays.
                       </p>
@@ -1268,7 +1280,7 @@ export default function Home() {
                     <div className="flex items-center gap-3 pt-1">
                       <Button
                         variant="outline"
-                        className="border-[#DAF1DE] text-[#163832] hover:bg-[#DAF1DE] hover:text-[#051F20] rounded-full h-9 px-4"
+                        className="border-gray-300 text-brand-medium hover:bg-brand-very-light hover:text-brand-dark rounded-full h-9 px-4"
                         onClick={() =>
                           window.open(
                             "https://www.instagram.com/isa_unscripted?igsh=bTBxbjN5OXkxaWdn",
@@ -1281,11 +1293,11 @@ export default function Home() {
                       </Button>
                     </div>
 
-                    <div className="h-px bg-[#DAF1DE] my-2 lg:my-4" />
+                    <div className="h-px bg-gray-200 my-2 lg:my-4" />
 
                     {/* Experience */}
                     <div className="pt-1">
-                      <h4 className="text-sm lg:text-base font-bold text-[#051F20] mb-3">
+                      <h4 className="text-xs lg:text-sm font-bold text-brand-dark mb-3">
                         Experience
                       </h4>
                       <div className="space-y-2">
@@ -1295,8 +1307,8 @@ export default function Home() {
                           "International standards with uniquely Pakistani warmth",
                         ].map((item) => (
                           <div key={item} className="flex items-start gap-2">
-                            <CheckCircle className="h-4 w-4 text-[#7AA589] mt-0.5" />
-                            <span className="text-sm lg:text-base text-[#235347]">
+                            <CheckCircle className="h-3 w-3 text-brand-primary mt-0.5" />
+                            <span className="text-xs text-brand-primary">
                               {item}
                             </span>
                           </div>
@@ -1311,33 +1323,22 @@ export default function Home() {
         </section>
 
         {/* Instagram Section */}
-        <section className="py-16 lg:py-28 relative overflow-hidden bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC]">
-          <div className="max-w-5xl mx-auto px-4">
-            {/* Enhanced Decorative Elements */}
-            <div className="absolute top-16 left-8 pointer-events-none hidden lg:block">
-              <div className="w-28 h-28 bg-[#7AA589]/20 rounded-full"></div>
-            </div>
-            <div className="absolute bottom-16 right-8 pointer-events-none hidden lg:block">
-              <div className="w-20 h-20 bg-[#DAF1DE]/30 rounded-full"></div>
-            </div>
-            <div className="absolute top-1/2 left-1/4 pointer-events-none hidden lg:block">
-              <div className="w-12 h-12 bg-[#235347]/10 rounded-full"></div>
-            </div>
-
-            <div className="text-center mb-12 lg:mb-16 relative z-10">
+        <section className="py-12 lg:py-20 relative overflow-hidden bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center mb-10 lg:mb-14 relative z-10">
               <div className="inline-flex items-center gap-3 mb-4">
-                <div className="p-3 bg-gradient-to-br from-[#7AA589] to-[#235347] rounded-full shadow-xl">
-                  <Instagram className="h-6 w-6 text-white" />
+                <div className="p-2.5 bg-gradient-to-br from-brand-primary to-brand-dark rounded-full shadow-md">
+                  <Instagram className="h-5 w-5 text-white" />
                 </div>
-                <Badge className="bg-[#235347]/20 text-[#235347] border-none px-4 py-2 rounded-full text-sm font-semibold">
+                <Badge className="bg-brand-very-light text-brand-primary border-none px-3 py-1.5 rounded-full text-xs font-semibold">
                   Social Media
                 </Badge>
               </div>
 
-              <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-dark mb-4">
-                Follow Our <span className="text-[#7AA589]">Journey</span>
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-brand-dark mb-4">
+                Follow Our <span className="text-brand-primary">Journey</span>
               </h2>
-              <p className="text-base lg:text-lg text-[#235347] max-w-2xl mx-auto leading-relaxed">
+              <p className="text-xs sm:text-sm md:text-base text-brand-primary max-w-2xl mx-auto leading-relaxed">
                 Discover luxury properties, travel tips, and behind-the-scenes
                 moments from our curated Instagram feeds
               </p>
@@ -1349,10 +1350,10 @@ export default function Home() {
               <div className="space-y-8">
                 {/* ExpatStays Account */}
                 <div className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/98 to-white/95 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/60 shadow-xl group-hover:shadow-2xl transition-all duration-500" />
+                  <div className="absolute inset-0 bg-white rounded-xl border border-gray-200 shadow-md group-hover:shadow-lg transition-all duration-300" />
                   <div className="relative p-6 lg:p-8">
                     <div className="flex items-center gap-4 mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#7AA589] to-[#235347] rounded-full flex items-center justify-center shadow-lg overflow-hidden ring-2 ring-white/50">
+                      <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-brand-dark rounded-full flex items-center justify-center shadow-md overflow-hidden ring-2 ring-white">
                         <Image
                           src="/media/Close Ups June 25 2025/logo1.png"
                           alt="ExpatStays Logo"
@@ -1409,10 +1410,10 @@ export default function Home() {
 
                 {/* Isa Unscripted Account */}
                 <div className="group relative">
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/98 to-white/95 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/60 shadow-xl group-hover:shadow-2xl transition-all duration-500" />
+                  <div className="absolute inset-0 bg-white rounded-xl border border-gray-200 shadow-md group-hover:shadow-lg transition-all duration-300" />
                   <div className="relative p-6 lg:p-8">
                     <div className="flex items-center gap-4 mb-6">
-                      <div className="w-16 h-16 bg-gradient-to-br from-[#235347] to-[#163832] rounded-full flex items-center justify-center shadow-lg overflow-hidden ring-2 ring-white/50">
+                      <div className="w-16 h-16 bg-gradient-to-br from-brand-primary to-brand-medium rounded-full flex items-center justify-center shadow-md overflow-hidden ring-2 ring-white">
                         <Image
                           src="/media/Close Ups June 25 2025/logo2.png"
                           alt="Isa Unscripted Logo"
@@ -1486,12 +1487,14 @@ export default function Home() {
                       >
                         <div className="w-full h-full rounded-xl lg:rounded-2xl overflow-hidden relative">
                           <div className="w-full h-full relative">
-                            <InViewVideo
-                              src="/media/Video.mp4"
-                              muted={true}
-                              enableMuteToggle
-                              poster="/media/Close Ups June 25 2025/IMG_1017.PNG"
-                              className="w-full h-full object-cover object-center"
+                            {/* Video replaced with static image for performance - original video was 15MB */}
+                            <Image
+                              src="/media/Close Ups June 25 2025/IMG_1017.PNG"
+                              alt="Instagram Preview"
+                              fill
+                              className="w-full h-full object-cover object-center cursor-pointer"
+                              sizes="(max-width: 1024px) 100vw, 400px"
+                              quality={85}
                               onClick={() =>
                                 window.open(
                                   "https://www.instagram.com/isa_unscripted?igsh=bTBxbjN5OXkxaWdn",

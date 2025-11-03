@@ -25,25 +25,9 @@ export default function PerformanceOptimizer() {
       }
     };
 
-    // Speed Index optimization - preload critical resources
+    // Speed Index optimization - removed duplicate preloading (already in layout.tsx)
     const optimizeSpeedIndex = () => {
       if (typeof window !== "undefined") {
-        // Preload critical images that might be visible
-        const criticalImages = [
-          "/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg",
-          "/media/DSC01806 HDR June 25 2025/DSC01919-HDR.jpg",
-          "/media/DSC01806 HDR June 25 2025/DSC01914-HDR.jpg",
-        ];
-
-        criticalImages.forEach((src) => {
-          const link = document.createElement("link");
-          link.rel = "preload";
-          link.as = "image";
-          link.href = src;
-          link.fetchPriority = "high";
-          document.head.appendChild(link);
-        });
-
         // Mark above-the-fold content as optimized
         document.documentElement.classList.add("above-fold-optimized");
       }
@@ -78,12 +62,16 @@ export default function PerformanceOptimizer() {
       const observer = new PerformanceObserver((list) => {
         for (const entry of list.getEntries()) {
           if (entry.entryType === "largest-contentful-paint") {
-            console.log("LCP:", entry.startTime);
+            if (process.env.NODE_ENV === "development") {
+              console.log("LCP:", entry.startTime);
+            }
             markLCPLoaded();
           }
 
           if (entry.entryType === "first-contentful-paint") {
-            console.log("FCP:", entry.startTime);
+            if (process.env.NODE_ENV === "development") {
+              console.log("FCP:", entry.startTime);
+            }
           }
         }
       });

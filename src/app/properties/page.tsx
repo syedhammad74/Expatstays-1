@@ -31,7 +31,7 @@ import { getLocalImage } from "@/lib/imageUtils";
 import Image from "next/image";
 import Header from "@/components/layout/Header";
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { format } from "date-fns";
+import format from "date-fns/format";
 import { DateRange } from "react-day-picker";
 import { useRouter } from "next/navigation";
 import { Property } from "@/lib/types/firebase";
@@ -96,7 +96,7 @@ export default function PropertiesPage() {
       id: "famhouse_islamabad_dam_view",
       title: "Luxury 5-Bedroom Farmhouse with Panoramic Dam Views",
       description:
-        "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Rawal Dam. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area. Perfect for large families and groups seeking an exclusive retreat with world-class amenities including a private swimming pool, fully equipped gym, and extensive walking tracks through the garden.",
+        "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Sandaymar dam view. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area. Perfect for large families and groups seeking an exclusive retreat with world-class amenities including a private swimming pool, fully equipped gym, and extensive walking tracks through the garden.",
       location: {
         address:
           "D-17 Islamabad Farming Cooperative Society, Margalla Gardens, Islamabad",
@@ -135,7 +135,7 @@ export default function PropertiesPage() {
         "/media/famhouse/DSC02235.jpg",
       ],
       pricing: {
-        basePrice: 350,
+        basePrice: 300,
         currency: "USD",
         cleaningFee: 50,
         serviceFee: 35,
@@ -187,6 +187,10 @@ export default function PropertiesPage() {
         "Swimming Pool Access",
       ],
       images: [
+        "/optimized/D-17/Living-room.JPG",
+        "/optimized/D-17/Living-room1.JPG",
+        "/optimized/D-17/Living-room2.JPG",
+        "/optimized/D-17/TV-launch.JPG",
         "/media/blogs-appartments/EX-1.JPG",
         "/media/blogs-appartments/EX-2.JPG",
         "/media/blogs-appartments/EX-3.JPG",
@@ -204,7 +208,7 @@ export default function PropertiesPage() {
         "/media/blogs-appartments/IMG_6745.JPG",
       ],
       pricing: {
-        basePrice: 120,
+        basePrice: 35,
         currency: "USD",
         cleaningFee: 25,
         serviceFee: 15,
@@ -271,7 +275,7 @@ export default function PropertiesPage() {
         "/media/DSC01806 HDR June 25 2025/DSC01812-HDR.jpg",
       ],
       pricing: {
-        basePrice: 120,
+        basePrice: 70,
         currency: "USD",
         cleaningFee: 25,
         serviceFee: 15,
@@ -449,7 +453,7 @@ export default function PropertiesPage() {
           id: "famhouse_islamabad_dam_view",
           title: "Luxury 5-Bedroom Farmhouse with Panoramic Dam Views",
           description:
-            "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Rawal Dam. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area. Perfect for large families and groups seeking an exclusive retreat with world-class amenities including a private swimming pool, fully equipped gym, and extensive walking tracks through the garden.",
+            "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Sandaymar dam view. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area. Perfect for large families and groups seeking an exclusive retreat with world-class amenities including a private swimming pool, fully equipped gym, and extensive walking tracks through the garden.",
           location: {
             address:
               "D-17 Islamabad Farming Cooperative Society, Margalla Gardens, Islamabad",
@@ -488,7 +492,7 @@ export default function PropertiesPage() {
             "/media/famhouse/DSC02235.jpg",
           ],
           pricing: {
-            basePrice: 350,
+            basePrice: 300,
             currency: "USD",
             cleaningFee: 50,
             serviceFee: 35,
@@ -557,7 +561,7 @@ export default function PropertiesPage() {
             "/media/blogs-appartments/IMG_6745.JPG",
           ],
           pricing: {
-            basePrice: 120,
+            basePrice: 35,
             currency: "USD",
             cleaningFee: 25,
             serviceFee: 15,
@@ -624,7 +628,7 @@ export default function PropertiesPage() {
             "/media/DSC01806 HDR June 25 2025/DSC01812-HDR.jpg",
           ],
           pricing: {
-            basePrice: 120,
+            basePrice: 70,
             currency: "USD",
             cleaningFee: 25,
             serviceFee: 15,

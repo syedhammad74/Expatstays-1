@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import PropertyImageGallery from "@/components/PropertyImageGallery";
 import {
@@ -11,6 +11,7 @@ import {
   Star,
   Heart,
   Share2,
+  MessageCircle,
 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -20,8 +21,8 @@ import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
 
-export default function Page({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default function Page({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params);
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const { toast } = useToast();
@@ -50,7 +51,7 @@ export default function Page({ params }: { params: { slug: string } }) {
             id: "famhouse_islamabad_dam_view",
             title: "Luxury 5-Bedroom Farmhouse with Panoramic Dam Views",
             description:
-              "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Rawal Dam. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area.",
+              "Experience unparalleled luxury in this magnificent 5-bedroom farmhouse featuring breathtaking panoramic views of Sandaymar dam view. This premium residence spans across basement, ground, first, and second floors, offering 15,750 sqft of covered living space and 22,500 sqft of beautifully landscaped garden area.",
             location: {
               address:
                 "D-17 Islamabad Farming Cooperative Society, Margalla Gardens, Islamabad",
@@ -94,7 +95,7 @@ export default function Page({ params }: { params: { slug: string } }) {
               "/media/famhouse/DSC02239 (1).jpg",
             ],
             pricing: {
-              basePrice: 350,
+              basePrice: 300,
               currency: "USD",
               cleaningFee: 50,
               serviceFee: 35,
@@ -174,7 +175,7 @@ export default function Page({ params }: { params: { slug: string } }) {
               "/media/DSC01806 HDR June 25 2025/DSC01812-HDR.jpg",
             ],
             pricing: {
-              basePrice: 200,
+              basePrice: 70,
               currency: "USD",
               cleaningFee: 30,
               serviceFee: 20,
@@ -233,6 +234,10 @@ export default function Page({ params }: { params: { slug: string } }) {
               "Housekeeping",
             ],
             images: [
+              "/optimized/D-17/Living-room.JPG",
+              "/optimized/D-17/Living-room1.JPG",
+              "/optimized/D-17/Living-room2.JPG",
+              "/optimized/D-17/TV-launch.JPG",
               "/media/blogs-appartments/EX-1.JPG",
               "/media/blogs-appartments/EX-2.JPG",
               "/media/blogs-appartments/EX-3.JPG",
@@ -245,7 +250,7 @@ export default function Page({ params }: { params: { slug: string } }) {
               "/media/blogs-appartments/IMG_6740.JPG",
             ],
             pricing: {
-              basePrice: 120,
+              basePrice: 35,
               currency: "USD",
               cleaningFee: 25,
               serviceFee: 15,
@@ -324,7 +329,7 @@ export default function Page({ params }: { params: { slug: string } }) {
               "/media/DSC01806 HDR June 25 2025/DSC01812-HDR.jpg",
             ],
             pricing: {
-              basePrice: 120,
+              basePrice: 35,
               currency: "USD",
               cleaningFee: 25,
               serviceFee: 15,
@@ -361,7 +366,9 @@ export default function Page({ params }: { params: { slug: string } }) {
           });
         }
       } catch (error) {
-        console.error("Error loading property:", error);
+        if (process.env.NODE_ENV === "development") {
+          console.error("Error loading property:", error);
+        }
         toast({
           title: "Error",
           description: "Failed to load property details",
@@ -420,11 +427,27 @@ export default function Page({ params }: { params: { slug: string } }) {
     );
   }
 
-  const galleryImages = property.images.map((src, index) => ({
-    src,
-    alt: `Property image ${index + 1}`,
-    hint: `luxury property interior ${index + 1}`,
-  }));
+  const galleryImages = property.images.map((image, index) => {
+    // Handle both string arrays and object arrays
+    if (typeof image === 'string') {
+      return {
+        src: image,
+        alt: `Property image ${index + 1}`,
+        hint: `luxury property interior ${index + 1}`,
+      };
+    } else if (typeof image === 'object' && image !== null && 'url' in image) {
+      return {
+        src: (image as { url: string }).url,
+        alt: (image as { alt?: string }).alt || `Property image ${index + 1}`,
+        hint: (image as { caption?: string }).caption || `luxury property interior ${index + 1}`,
+      };
+    }
+    return {
+      src: String(image),
+      alt: `Property image ${index + 1}`,
+      hint: `luxury property interior ${index + 1}`,
+    };
+  }).filter(img => img.src);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-5">
@@ -519,8 +542,19 @@ export default function Page({ params }: { params: { slug: string } }) {
 
                 {/* Action Buttons */}
                 <div className="space-y-3">
-                  <Button className="w-full bg-[#8EB69B] hover:bg-[#235347] text-white h-12 text-base font-semibold rounded-xl">
-                    Book Now
+                  <Button 
+                    asChild
+                    className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white h-12 text-base font-semibold rounded-xl"
+                  >
+                    <a 
+                      href={`https://wa.me/923087496089?text=${encodeURIComponent(`Hi, I am interested in this property: ${property.title}`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2"
+                    >
+                      <MessageCircle className="h-5 w-5" />
+                      Contact
+                    </a>
                   </Button>
                   <div className="flex gap-3">
                     <Button

@@ -26,7 +26,7 @@ export default {
     extend: {
       fontFamily: {
         sans: [
-          "Nunito Sans",
+          "Inter",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",
@@ -34,7 +34,7 @@ export default {
           "sans-serif",
         ],
         body: [
-          "Nunito Sans",
+          "Inter",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",
@@ -42,7 +42,7 @@ export default {
           "sans-serif",
         ],
         headline: [
-          "Nunito Sans",
+          "Inter",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",
@@ -102,13 +102,23 @@ export default {
           border: "hsl(var(--sidebar-border))",
           ring: "hsl(var(--sidebar-ring))",
         },
+        // Professional Brand Colors (30% lighter for better visibility)
+        brand: {
+          dark: "#2A4A47", // Lighter deep green - headings, active states
+          "medium-dark": "#3F5A54", // Lighter forest - primary buttons, important actions
+          medium: "#547E75", // Lighter mid-tone - hover states
+          primary: "#6B9B8D", // Lighter main brand - accents, links (30% lighter)
+          light: "#8FB5A8", // Softer accent - subtle highlights
+          "very-light": "#EAF4F1", // Subtle backgrounds - cards, sections
+        },
+        // Keep legacy forest for backwards compatibility
         forest: {
-          dark: "#051F20",
-          "medium-dark": "#0B2B26",
-          medium: "#163832",
-          primary: "#235347",
-          light: "#8EB69B",
-          "very-light": "#DAF1DE",
+          dark: "#2A4A47",
+          "medium-dark": "#3F5A54",
+          medium: "#547E75",
+          primary: "#6B9B8D",
+          light: "#8FB5A8",
+          "very-light": "#EAF4F1",
         },
       },
       borderRadius: {

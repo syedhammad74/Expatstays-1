@@ -8,13 +8,11 @@ import { bookingService } from "@/lib/services/bookings";
 import { availabilityService } from "@/lib/services/availability";
 import { CalendarDays, Loader2, CheckCircle, Clock, Info } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import {
-  format,
-  parseISO,
-  startOfMonth,
-  endOfMonth,
-  addMonths,
-} from "date-fns";
+import format from "date-fns/format";
+import parseISO from "date-fns/parseISO";
+import startOfMonth from "date-fns/startOfMonth";
+import endOfMonth from "date-fns/endOfMonth";
+import addMonths from "date-fns/addMonths";
 
 interface AvailabilityCalendarProps {
   propertyId: string;

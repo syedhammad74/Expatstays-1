@@ -2,7 +2,7 @@
   "properties": [
     {
       "id": "famhouse_islamabad_dam_view",
-      "title": "2-Bedroom Apartment with Stunning Dam View",
+      "title": "Stunning 2-Bedroom Apartment with Dam View",
       "description": "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
       "shortDescription": "Stunning 2-bedroom apartment with dam view, perfect for families seeking peace and relaxation.",
       "location": {
@@ -17,7 +17,7 @@
         },
         "neighborhood": "Margalla Gardens",
         "landmarks": [
-          "Rawal Dam",
+          "Sandaymar dam view",
           "Margalla Hills National Park",
           "Islamabad International Airport"
         ]
@@ -65,10 +65,38 @@
       ],
       "images": [
         {
-          "url": "/media/famhouse/DSC02227.jpg",
+          "url": "/optimized/D-17/Living-room.JPG",
           "alt": "Living room with dam view",
           "caption": "Spacious living room with stunning dam view",
           "isPrimary": true,
+          "category": "interior"
+        },
+        {
+          "url": "/optimized/D-17/Living-room1.JPG",
+          "alt": "Living room view",
+          "caption": "Modern living area",
+          "isPrimary": false,
+          "category": "interior"
+        },
+        {
+          "url": "/optimized/D-17/Living-room2.JPG",
+          "alt": "Living room alternative view",
+          "caption": "Comfortable living space",
+          "isPrimary": false,
+          "category": "interior"
+        },
+        {
+          "url": "/optimized/D-17/TV-launch.JPG",
+          "alt": "TV and entertainment area",
+          "caption": "Entertainment area with TV",
+          "isPrimary": false,
+          "category": "interior"
+        },
+        {
+          "url": "/media/famhouse/DSC02227.jpg",
+          "alt": "Living room with dam view",
+          "caption": "Spacious living room with stunning dam view",
+          "isPrimary": false,
           "category": "interior"
         },
         {
@@ -87,7 +115,7 @@
         }
       ],
       "pricing": {
-        "basePrice": 120,
+        "basePrice": 35,
         "currency": "USD",
         "cleaningFee": 20,
         "serviceFee": 15,
@@ -196,7 +224,7 @@
       },
       "nearbyAttractions": [
         {
-          "name": "Rawal Dam",
+          "name": "Sandaymar dam view",
           "type": "natural",
           "distance": "0.5 km",
           "description": "Beautiful dam perfect for morning walks and picnics"
@@ -345,7 +373,7 @@
         }
       ],
       "pricing": {
-        "basePrice": 350,
+        "basePrice": 300,
         "currency": "USD",
         "cleaningFee": 50,
         "serviceFee": 35,

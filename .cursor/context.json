@@ -1,0 +1,67 @@
+{
+  "arch": {
+    "stack": [
+      "Next.js 15",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Firebase",
+      "Stripe"
+    ],
+    "decisions": [
+      {
+        "what": "Professional brand color palette (30% lighter) + Typography scale",
+        "why": "Replaced unprofessional light green colors with consistent, lighter brand colors for better visibility. Reduced text sizes by 20% for better readability. Updated: brand-primary: #6B9B8D, brand-dark: #2A4A47, brand-medium-dark: #3F5A54, brand-medium: #547E75, brand-light: #8FB5A8, brand-very-light: #EAF4F1. Applied to all sections including header navigation",
+        "when": "2025-10-25"
+      },
+      {
+        "what": "Carousel pagination placement",
+        "why": "Moved carousel dots from overlay position to below the carousel with proper spacing for better UX and professional appearance",
+        "when": "2025-10-25"
+      },
+      {
+        "what": "Standardized border radius",
+        "why": "Migrated from rounded-2xl/rounded-3xl to consistent rounded-xl throughout the app for cleaner design",
+        "when": "2025-10-25"
+      },
+      {
+        "what": "Simplified section backgrounds",
+        "why": "Removed distracting gradient backgrounds and decorative blobs, replaced with alternating white/gray-50 sections",
+        "when": "2025-10-25"
+      }
+    ]
+  },
+  "features": {
+    "performance": {
+      "files": ["next.config.ts", "src/app/layout.tsx", "src/app/page.tsx"],
+      "deps": ["sharp", "next/image"],
+      "state": "active",
+      "notes": "Image optimization: 162MB → 18.57MB (88.6% reduction). Removed duplicate CSS, fixed font conflicts, optimized carousel loading"
+    },
+    "design_system": {
+      "files": [
+        "tailwind.config.ts",
+        "src/app/globals.css",
+        "src/app/page.tsx",
+        "src/components/layout/Header.tsx"
+      ],
+      "deps": ["tailwindcss"],
+      "state": "active",
+      "notes": "Professional lighter brand colors (30% lighter). Text sizes reduced by 20%. Header with Sign In/Sign Up buttons. Consistent spacing: py-12 md:py-16 lg:py-20. Improved shadows and typography scales"
+    },
+    "responsive": {
+      "files": ["src/app/page.tsx", "src/hooks/use-mobile.tsx"],
+      "deps": [],
+      "state": "active",
+      "notes": "Mobile-first responsive grid, typography, and touch targets (min 44x44px). Aligned useIsMobile hook to lg: breakpoint (1024px). Proper section padding and spacing"
+    }
+  },
+  "debt": [
+    "Firebase Data Connect dynamically loaded but usage unclear - verify if needed",
+    "firebase-admin in package.json but only used in scripts/functions - verify if needed in Next.js app"
+  ],
+  "env": {
+    "NEXT_PUBLIC_FIREBASE_API_KEY": "Firebase configuration",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "Stripe payment integration"
+  }
+}

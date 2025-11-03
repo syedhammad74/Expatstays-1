@@ -1,10 +1,15 @@
 "use client";
 
-import { ReactNode, useState } from "react";
-import { Elements } from "@stripe/react-stripe-js";
-import { StripeElementsOptions } from "@stripe/stripe-js";
-import getStripe from "@/lib/stripe";
+import { ReactNode, useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { StripeElementsOptions, Stripe } from "@stripe/stripe-js";
 import { Loader2 } from "lucide-react";
+
+// Lazy load Stripe Elements only when needed
+const Elements = dynamic(
+  () => import("@stripe/react-stripe-js").then((mod) => mod.Elements),
+  { ssr: false }
+);
 
 interface StripeProviderProps {
   children: ReactNode;
@@ -15,7 +20,14 @@ export default function StripeProvider({
   children,
   clientSecret,
 }: StripeProviderProps) {
-  const [stripePromise] = useState(() => getStripe());
+  const [stripePromise, setStripePromise] = useState<Promise<Stripe | null> | null>(null);
+
+  useEffect(() => {
+    // Lazy load Stripe only when component mounts (not on initial page load)
+    import("@/lib/stripe").then((mod) => {
+      setStripePromise(mod.default());
+    });
+  }, []);
 
   const options: StripeElementsOptions = {
     appearance: {
@@ -41,7 +53,7 @@ export default function StripeProvider({
     ...(clientSecret ? { clientSecret } : {}),
   };
 
-  if (!stripePromise) {
+  if (!stripePromise || !Elements) {
     return (
       <div className="flex items-center justify-center p-8">
         <Loader2 className="h-8 w-8 animate-spin text-[#8EB69B]" />

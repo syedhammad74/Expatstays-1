@@ -41,18 +41,18 @@ const NavLink = React.memo(
         onClick={onClick}
         className={cn(
           "relative px-3 py-2 text-sm font-medium transition-all duration-200",
-          "hover:text-[#8EB69B] hover:bg-[#8EB69B]/10 rounded-full",
-          "focus:outline-none focus:ring-2 focus:ring-[#8EB69B]/20",
+          "hover:text-brand-primary hover:bg-brand-very-light rounded-full",
+          "focus:outline-none focus:ring-2 focus:ring-brand-primary/20",
           isActive
-            ? "text-[#0B2B26] font-semibold bg-[#8EB69B]/15"
-            : "text-[#235347]",
+            ? "text-brand-dark font-semibold bg-brand-very-light"
+            : "text-brand-primary",
           isMobile && "block w-full text-left py-3 text-base px-4 rounded-xl"
         )}
         aria-current={isActive ? "page" : undefined}
       >
         {label}
         {isActive && !isMobile && (
-          <div className="absolute left-3 right-3 h-0.5 bg-[#8EB69B] rounded-full bottom-1" />
+          <div className="absolute left-3 right-3 h-0.5 bg-brand-primary rounded-full bottom-1" />
         )}
       </Link>
     );
@@ -167,8 +167,8 @@ const Header = () => {
                   />
                   <span
                     className={cn(
-                      "font-bold text-[#0B2B26] whitespace-nowrap",
-                      isMobile ? "text-lg" : "text-xl"
+                      "font-bold text-brand-dark whitespace-nowrap",
+                      isMobile ? "text-base" : "text-lg"
                     )}
                   >
                     Expat Stays
@@ -192,29 +192,10 @@ const Header = () => {
 
                 {/* Desktop Actions */}
                 <div className="hidden lg:flex items-center gap-2 flex-shrink-0">
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-10 w-10 text-[#235347] hover:bg-[#F2F2F2] hover:text-[#8EB69B] transition-all duration-200"
-                    aria-label="Search properties"
-                  >
-                    <Search className="h-4 w-4" />
-                  </Button>
+                  <div className="h-6 w-px bg-gray-200 mx-1" />
 
                   <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-10 w-10 text-[#235347] hover:bg-[#F2F2F2] hover:text-[#8EB69B] relative transition-all duration-200"
-                    aria-label="Notifications"
-                  >
-                    <Bell className="h-4 w-4" />
-                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-[#8EB69B] rounded-full animate-pulse" />
-                  </Button>
-
-                  <div className="h-6 w-px bg-[#EBEBEB] mx-1" />
-
-                  <Button
-                    className="text-white bg-[#7AA589] hover:bg-[#6A9A79] hover:shadow-lg font-medium px-6 py-2.5 rounded-full transition-all duration-200"
+                    className="text-white bg-brand-primary hover:bg-brand-medium-dark hover:shadow-md font-medium px-5 py-2 rounded-full transition-all duration-200 text-sm"
                     asChild
                   >
                     <Link href="/properties">Find A House</Link>
@@ -227,13 +208,13 @@ const Header = () => {
                       <div className="flex items-center gap-2">
                         <Button
                           variant="ghost"
-                          className="text-[#235347] font-medium hover:bg-[#F2F2F2] hover:text-[#8EB69B] transition-all duration-200 px-4 py-2 rounded-full"
+                          className="text-brand-primary font-medium hover:bg-brand-very-light hover:text-brand-dark transition-all duration-200 px-4 py-2 rounded-full text-sm"
                           asChild
                         >
                           <Link href="/auth/signin">Sign In</Link>
                         </Button>
                         <Button
-                          className="bg-[#0B2B26] text-white hover:shadow-lg hover:bg-[#163832] font-medium transition-all duration-200 px-5 py-2 rounded-full"
+                          className="bg-brand-dark text-white hover:shadow-md hover:bg-brand-medium-dark font-medium transition-all duration-200 px-5 py-2 rounded-full text-sm"
                           asChild
                         >
                           <Link href="/auth/signup">Sign Up</Link>

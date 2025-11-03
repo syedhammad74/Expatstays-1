@@ -1,5 +1,5 @@
 "use client";
-import { IconArrowNarrowRight } from "@tabler/icons-react";
+import { ArrowRight } from "lucide-react";
 import { useState, useRef, useId, useEffect } from "react";
 import Image from "next/image";
 
@@ -166,7 +166,7 @@ const CarouselControl = ({
       title={title}
       onClick={handleClick}
     >
-      <IconArrowNarrowRight className="text-white/90 group-hover:text-white transition-colors duration-300" />
+      <ArrowRight className="text-white/90 group-hover:text-white transition-colors duration-300" />
     </button>
   );
 };

@@ -92,8 +92,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
               onError={() => setImageError(true)}
               priority={false}
               loading="lazy"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 400px"
-              quality={75}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              quality={80}
             />
 
             {/* Image counter for multiple images */}
@@ -106,7 +106,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
             {/* Favorite button */}
             <button
               onClick={handleToggleFavorite}
-              className="absolute top-3 left-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+              className="absolute top-3 left-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2"
+              aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
             >
               <Heart
                 className={`h-4 w-4 transition-colors ${
@@ -118,7 +119,8 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
             {/* Share button */}
             <button
               onClick={handleShare}
-              className="absolute top-3 left-12 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors"
+              className="absolute top-3 left-12 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2"
+              aria-label="Share property"
             >
               <Share2 className="h-4 w-4 text-gray-600" />
             </button>

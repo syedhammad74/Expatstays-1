@@ -11,10 +11,17 @@ const nextConfig: NextConfig = {
       "react-hook-form",
       "@hookform/resolvers",
       "zod",
+      "@radix-ui/react-accordion",
+      "@radix-ui/react-dialog",
+      "@radix-ui/react-dropdown-menu",
+      "@radix-ui/react-select",
+      "@radix-ui/react-tabs",
+      "@radix-ui/react-toast",
     ],
     serverComponentsExternalPackages: ["sharp"],
     esmExternals: true,
     serverMinification: true,
+    optimizeCss: true,
     turbo: {
       rules: {
         "*.svg": {
@@ -49,13 +56,13 @@ const nextConfig: NextConfig = {
         hostname: "storage.googleapis.com",
       },
     ],
-    formats: ["image/webp", "image/avif"],
+    formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
-    qualities: [75, 80, 85, 90, 95],
     minimumCacheTTL: 31536000,
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
+    unoptimized: false,
   },
 
   compress: true,
@@ -278,10 +285,10 @@ const nextConfig: NextConfig = {
   output: "standalone",
 
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
 
   onDemandEntries: {
