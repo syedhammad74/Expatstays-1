@@ -10,12 +10,10 @@ import {
   Search,
   MapPin,
   Shield,
-  Clock,
   Instagram,
   ExternalLink,
   Heart,
   MessageCircle,
-  HomeIcon,
   CheckCircle,
 } from "lucide-react";
 import Image from "next/image";
@@ -28,9 +26,7 @@ import PropertyCardProps, {
 const Header = dynamic(() => import("@/components/layout/Header"), {
   loading: () => <div className="h-16 bg-white border-b border-gray-200" />,
 });
-const InViewVideo = dynamic(() => import("@/components/InViewVideo"), {
-  loading: () => <div className="w-full h-full bg-gray-200 animate-pulse" />,
-});
+// Removed InViewVideo - not used
 import {
   Popover,
   PopoverContent,
@@ -79,7 +75,7 @@ export default function Home() {
   const [currentServiceIndex, setCurrentServiceIndex] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [isDragging, setIsDragging] = useState(false);
+  // Removed isDragging - not used
 
   // Properties state for landing page
   const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
@@ -239,7 +235,7 @@ export default function Home() {
     try {
       setPropertiesLoading(true);
       if (process.env.NODE_ENV === "development") {
-        console.log("🔍 Loading featured properties for landing page...");
+        // Loading featured properties for landing page
       }
 
       // EXACT same hardcoded properties as properties page (lines 427-623)
@@ -445,11 +441,7 @@ export default function Home() {
         },
       ];
 
-      if (process.env.NODE_ENV === "development") {
-        console.log(
-          `✅ Displaying ${hardcodedProperties.length} featured properties on landing page`
-        );
-      }
+      // Displaying featured properties on landing page
       setFeaturedProperties(hardcodedProperties);
     } catch (err) {
       if (process.env.NODE_ENV === "development") {
@@ -512,9 +504,7 @@ export default function Home() {
   // Handle property navigation
   const handlePropertyClick = useCallback(
     (propertyId: string) => {
-      if (process.env.NODE_ENV === "development") {
-        console.log("🏠 Navigating to property:", propertyId);
-      }
+      // Navigating to property
       router.push(`/properties/${propertyId}`);
     },
     [router]
@@ -1049,7 +1039,7 @@ export default function Home() {
                   ],
                   gradient: "from-brand-primary to-brand-dark",
                 },
-              ].map((service, i) => (
+              ].map((service) => (
                 <div key={service.title} className="group relative">
                   <div className="absolute inset-0 bg-white rounded-xl border border-gray-200 shadow-md group-hover:shadow-lg transition-shadow duration-200" />
                   <div className="relative p-6 lg:p-8">
@@ -1128,7 +1118,7 @@ export default function Home() {
                   avatar: "/media/DSC01806 HDR June 25 2025/DSC01929-HDR.jpg",
                   badge: "Return Guest",
                 },
-              ].map((testimonial, i) => (
+              ].map((testimonial) => (
                 <div key={testimonial.author} className="group relative">
                   <div className="absolute inset-0 bg-gradient-to-br from-white/90 to-white/70 rounded-2xl lg:rounded-3xl backdrop-blur-xl border border-white/30 shadow-xl group-hover:shadow-2xl transition-shadow duration-200" />
                   <div className="relative p-6 lg:p-8">

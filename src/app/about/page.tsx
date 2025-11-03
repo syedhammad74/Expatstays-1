@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   Users,
@@ -8,7 +8,6 @@ import {
   Trophy,
   Award,
   Star,
-  Heart,
   Shield,
   ArrowRight,
   Sparkles,
@@ -16,21 +15,11 @@ import {
   Clock,
   CheckCircle,
   Target,
-  Zap,
   Crown,
   MapPin,
   Phone,
-  Mail,
   Calendar,
-  TrendingUp,
 } from "lucide-react";
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion";
-import { getLocalImage } from "@/lib/imageUtils";
 // Removed framer-motion for performance
 import Header from "@/components/layout/Header";
 
@@ -61,65 +50,7 @@ const features = [
   },
 ];
 
-const team = [
-  {
-    name: "Alex Johnson",
-    role: "Founder & CEO",
-    image: "/media/Close Ups June 25 2025/DSC01835.jpg",
-    bio: "Former hospitality executive with 15+ years in luxury markets.",
-    experience: "15+ Years",
-    expertise: "Luxury Hospitality",
-  },
-  {
-    name: "Maria Garcia",
-    role: "Head of Operations",
-    image: "/media/Close Ups June 25 2025/DSC01964.jpg",
-    bio: "Expert in guest experience and property management.",
-    experience: "12+ Years",
-    expertise: "Guest Experience",
-  },
-  {
-    name: "Kenji Tanaka",
-    role: "Chief Technology Officer",
-    image: "/media/Close Ups June 25 2025/DSC01965.jpg",
-    bio: "Pioneering seamless digital experiences for luxury travel.",
-    experience: "10+ Years",
-    expertise: "Digital Innovation",
-  },
-];
-
-const differentiators = [
-  {
-    icon: CheckCircle,
-    text: "Curated portfolio across Pakistan",
-    detail: "500+ handpicked properties",
-  },
-  {
-    icon: CheckCircle,
-    text: "Concierge-level service",
-    detail: "24/7 personalized support",
-  },
-  {
-    icon: CheckCircle,
-    text: "Rated 4.9 by 4,000+ clients",
-    detail: "Based on verified reviews",
-  },
-  {
-    icon: CheckCircle,
-    text: "Exclusive member benefits",
-    detail: "Premium perks and upgrades",
-  },
-  {
-    icon: CheckCircle,
-    text: "Handpicked luxury properties",
-    detail: "Quality verified locations",
-  },
-  {
-    icon: CheckCircle,
-    text: "Seamless booking experience",
-    detail: "Instant confirmation",
-  },
-];
+// Removed unused team and differentiators arrays
 
 const testimonials = [
   {
@@ -196,21 +127,8 @@ export default function AboutPage() {
 
       {/* Animated Futuristic Background */}
       <div className="fixed inset-0 -z-10 pointer-events-none overflow-hidden">
-        <div
-          className="absolute top-24 left-10 w-[600px] h-[600px] bg-gradient-to-br from-[#8EB69B]/20 to-[#235347]/10 rounded-full blur-3xl"
-          animate={{ scale: [1, 1.1, 1], opacity: [0.12, 0.18, 0.12] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div
-          className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-gradient-to-br from-[#235347]/10 to-[#8EB69B]/10 rounded-full blur-2xl"
-          animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.15, 0.08] }}
-          transition={{
-            duration: 7,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-        />
+        <div className="absolute top-24 left-10 w-[600px] h-[600px] bg-gradient-to-br from-[#8EB69B]/20 to-[#235347]/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-gradient-to-br from-[#235347]/10 to-[#8EB69B]/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }} />
 
         {/* Modern Geometric Shapes - Enhanced */}
         <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/30 rotate-45 animate-[breathing_5s_ease-in-out_infinite]" />
@@ -234,57 +152,18 @@ export default function AboutPage() {
       {/* HERO SECTION */}
       <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 lg:pt-16 pb-12 lg:pb-20 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center relative z-10">
         {/* Decorative geometric shape behind text */}
-        <div
-          className="pointer-events-none absolute left-0 top-16 w-72 h-32 lg:w-[420px] lg:h-40 bg-[#DAF1DE]/30 rounded-3xl blur-2xl z-0"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 0.7, scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeInOut" }}
-        />
+        <div className="pointer-events-none absolute left-0 top-16 w-72 h-32 lg:w-[420px] lg:h-40 bg-[#DAF1DE]/30 rounded-3xl blur-2xl z-0 animate-fade-in" />
         {/* Decorative orb in whitespace between text and image */}
-        <div
-          className="pointer-events-none absolute hidden lg:block left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-[#8EB69B]/15 rounded-full blur-3xl z-0"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 0.5, scale: 1 }}
-          transition={{ duration: 1.5, ease: "easeInOut" }}
-        />
+        <div className="pointer-events-none absolute hidden lg:block left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-40 h-40 bg-[#8EB69B]/15 rounded-full blur-3xl z-0 animate-fade-in" style={{ animationDelay: '0.3s' }} />
         {/* Optionally, a sparkle accent layered on top */}
-        <div
-          className="pointer-events-none absolute hidden lg:block left-[54%] top-[44%] z-10"
-          initial={{ opacity: 0, scale: 0.8, rotate: 0 }}
-          animate={{ opacity: 0.7, scale: 1, rotate: 20 }}
-          transition={{
-            duration: 2,
-            ease: "easeInOut",
-            repeat: Infinity,
-            repeatType: "reverse",
-          }}
-        >
+        <div className="pointer-events-none absolute hidden lg:block left-[54%] top-[44%] z-10 animate-pulse">
           <Sparkles className="w-6 h-6 text-[#8EB69B] opacity-80" />
         </div>
         {/* Decorative squircle/blob in lower whitespace */}
-        <div
-          className="pointer-events-none absolute left-1/4 bottom-[-80px] lg:left-1/2 lg:bottom-[-120px] w-[420px] h-[180px] lg:w-[600px] lg:h-[260px] bg-gradient-to-br from-[#DAF1DE]/40 via-[#8EB69B]/20 to-[#0B2B26]/10 rounded-[120px] blur-3xl z-0"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 0.7, scale: 1 }}
-          transition={{ duration: 1.8, ease: "easeInOut" }}
-        />
+        <div className="pointer-events-none absolute left-1/4 bottom-[-80px] lg:left-1/2 lg:bottom-[-120px] w-[420px] h-[180px] lg:w-[600px] lg:h-[260px] bg-gradient-to-br from-[#DAF1DE]/40 via-[#8EB69B]/20 to-[#0B2B26]/10 rounded-[120px] blur-3xl z-0 animate-fade-in" style={{ animationDelay: '0.6s' }} />
         {/* Floating orb for extra depth */}
-        <div
-          className="pointer-events-none absolute left-[60%] bottom-0 w-16 h-16 bg-[#8EB69B]/20 rounded-full blur-2xl z-0"
-          animate={{ scale: [1, 1.12, 1], opacity: [0.3, 0.5, 0.3] }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-        <div
-          className="space-y-6 lg:space-y-8 relative z-10"
-          initial={{ opacity: 0, x: -40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-        >
+        <div className="pointer-events-none absolute left-[60%] bottom-0 w-16 h-16 bg-[#8EB69B]/20 rounded-full blur-2xl z-0 animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="space-y-6 lg:space-y-8 relative z-10 animate-fade-in-up">
           <div className="flex items-center gap-2 mb-4 lg:mb-6 relative">
             <Badge className="bg-[#8EB69B]/20 text-[#8EB69B] border-none px-4 lg:px-5 py-2 rounded-full text-sm lg:text-base font-semibold tracking-wide">
               ABOUT US
@@ -294,16 +173,7 @@ export default function AboutPage() {
           <h1 className="text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-[#051F20] mb-4 lg:mb-6 leading-tight relative">
             Welcome to <span className="text-[#8EB69B]">Expat Stays</span>
             {/* Animated sparkle dot */}
-            <div
-              className="absolute -right-8 top-2 w-2.5 h-2.5 bg-[#DAF1DE] rounded-full opacity-70"
-              animate={{ x: [0, 8, 0], opacity: [0.7, 1, 0.7] }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: 1,
-              }}
-            />
+            <div className="absolute -right-8 top-2 w-2.5 h-2.5 bg-[#DAF1DE] rounded-full opacity-70 animate-pulse" style={{ animationDelay: '1s' }} />
           </h1>
           <p className="text-base lg:text-lg text-[#235347] mb-6 lg:mb-10 max-w-md">
             We curate the world&apos;s most extraordinary stays and experiences
@@ -311,29 +181,11 @@ export default function AboutPage() {
           </p>
         </div>
         {/* Right: Hero Image with Decorative Orbs */}
-        <div
-          className="relative w-full h-64 lg:h-[420px] rounded-2xl overflow-hidden shadow-xl"
-          initial={{ opacity: 0, x: 40 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: "easeOut" }}
-        >
+        <div className="relative w-full h-64 lg:h-[420px] rounded-2xl overflow-hidden shadow-xl animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
           {/* Decorative blurred orb (top left) */}
-          <div
-            className="pointer-events-none absolute -top-8 -left-8 w-40 h-40 lg:w-64 lg:h-64 bg-[#8EB69B]/20 rounded-full blur-3xl z-0"
-            animate={{ scale: [1, 1.08, 1], opacity: [0.4, 0.6, 0.4] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
+          <div className="pointer-events-none absolute -top-8 -left-8 w-40 h-40 lg:w-64 lg:h-64 bg-[#8EB69B]/20 rounded-full blur-3xl z-0 animate-pulse" />
           {/* Decorative blurred orb (bottom right) */}
-          <div
-            className="pointer-events-none absolute -bottom-8 -right-8 w-24 h-24 lg:w-40 lg:h-40 bg-[#DAF1DE]/30 rounded-full blur-2xl z-0"
-            animate={{ scale: [1, 1.12, 1], opacity: [0.3, 0.5, 0.3] }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-          />
+          <div className="pointer-events-none absolute -bottom-8 -right-8 w-24 h-24 lg:w-40 lg:h-40 bg-[#DAF1DE]/30 rounded-full blur-2xl z-0 animate-pulse" style={{ animationDelay: '2s' }} />
           <Image
             src="/media/DSC01806 HDR June 25 2025/DSC01817-HDR.jpg"
             alt="About Expat Stays"
@@ -347,13 +199,7 @@ export default function AboutPage() {
       {/* OUR STORY SECTION */}
       <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
-          <div
-            className="space-y-4 lg:space-y-6 order-2 lg:order-1"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-          >
+          <div className="space-y-4 lg:space-y-6 order-2 lg:order-1 animate-fade-in-up">
             <Badge className="bg-[#8EB69B]/20 text-[#8EB69B] border-none px-4 lg:px-5 py-2 rounded-full mb-4 lg:mb-6 text-sm lg:text-base font-semibold tracking-wide">
               OUR STORY
             </Badge>
@@ -401,13 +247,7 @@ export default function AboutPage() {
             </div>
           </div>
 
-          <div
-            className="relative order-1 lg:order-2"
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
+          <div className="relative order-1 lg:order-2 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
             <div className="grid grid-cols-2 gap-4 lg:gap-6">
               <Image
                 src="/media/Close Ups June 25 2025/DSC01831.jpg"
@@ -445,24 +285,11 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.1 } },
-          }}
-        >
-          {features.map((feature, i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8">
+          {features.map((feature) => (
             <div
               key={feature.title}
-              variants={{
-                hidden: { opacity: 0, y: 40 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.6 }}
+              className="animate-fade-in-up"
             >
               <Card className="rounded-xl lg:rounded-2xl shadow-xl border border-[#8EB69B]/20 bg-white p-6 lg:p-8 text-center group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full">
                 <div
@@ -497,24 +324,11 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.15 } },
-          }}
-        >
-          {testimonials.map((testimonial, i) => (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          {testimonials.map((testimonial) => (
             <div
               key={testimonial.author}
-              variants={{
-                hidden: { opacity: 0, y: 40 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.6 }}
+              className="animate-fade-in-up"
             >
               <Card className="rounded-xl lg:rounded-2xl shadow-xl border border-[#8EB69B]/20 bg-white p-4 lg:p-6 xl:p-8 group hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 h-full">
                 {/* Header with Avatar and Info */}
@@ -576,14 +390,8 @@ export default function AboutPage() {
         </div>
 
         {/* Stats Row */}
-        <div
-          className="mt-12 lg:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          {stats.map((stat, i) => (
+        <div className="mt-12 lg:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          {stats.map((stat) => (
             <div key={stat.label} className="text-center">
               <div className="flex items-center justify-center mb-2 lg:mb-3">
                 <div className="w-10 lg:w-12 h-10 lg:h-12 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full flex items-center justify-center">
@@ -617,24 +425,11 @@ export default function AboutPage() {
           </p>
         </div>
 
-        <div
-          className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.1 } },
-          }}
-        >
-          {achievements.map((achievement, i) => (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          {achievements.map((achievement) => (
             <div
               key={achievement.title}
-              variants={{
-                hidden: { opacity: 0, y: 40 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.6 }}
+              className="animate-fade-in-up"
             >
               <Card className="rounded-xl lg:rounded-2xl shadow-xl border border-[#8EB69B]/20 bg-white p-6 lg:p-8 text-center group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 h-full">
                 <div className="w-12 lg:w-16 h-12 lg:h-16 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-xl lg:rounded-2xl flex items-center justify-center mx-auto mb-4 lg:mb-6 group-hover:scale-110 transition-transform duration-300">
@@ -658,26 +453,14 @@ export default function AboutPage() {
 
       {/* CTA SECTION */}
       <section className="container mx-auto px-4 py-12 lg:py-20">
-        <div
-          className="relative bg-gradient-to-br from-[#8EB69B]/10 via-white to-[#235347]/10 rounded-2xl lg:rounded-3xl p-6 lg:p-8 xl:p-12 2xl:p-16 text-center overflow-hidden"
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-        >
+        <div className="relative bg-gradient-to-br from-[#8EB69B]/10 via-white to-[#235347]/10 rounded-2xl lg:rounded-3xl p-6 lg:p-8 xl:p-12 2xl:p-16 text-center overflow-hidden animate-fade-in-up">
           {/* Decorative elements */}
           <div className="absolute top-0 left-0 w-20 lg:w-40 h-20 lg:h-40 bg-gradient-to-br from-[#8EB69B]/20 to-transparent rounded-full blur-3xl"></div>
           <div className="absolute bottom-0 right-0 w-24 lg:w-48 h-24 lg:h-48 bg-gradient-to-br from-[#235347]/20 to-transparent rounded-full blur-3xl"></div>
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 lg:w-32 h-16 lg:h-32 bg-gradient-to-br from-[#DAF1DE]/30 to-transparent rounded-full blur-2xl"></div>
 
           <div className="relative z-10">
-            <div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="inline-flex items-center gap-2 bg-[#8EB69B]/20 text-[#8EB69B] px-3 lg:px-4 py-2 rounded-full text-xs lg:text-sm font-semibold mb-4 lg:mb-6"
-            >
+            <div className="inline-flex items-center gap-2 bg-[#8EB69B]/20 text-[#8EB69B] px-3 lg:px-4 py-2 rounded-full text-xs lg:text-sm font-semibold mb-4 lg:mb-6 animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               <Sparkles className="w-3 lg:w-4 h-3 lg:h-4" />
               Ready to Experience Luxury?
             </div>
