@@ -314,10 +314,33 @@ export default function PropertiesPage() {
     return () => clearTimeout(timer);
   }, [searchQuery]);
 
-  // Handle property navigation
-  const handleViewDetails = (slug: string) => {
+  // Function to ensure minimum 6 properties are displayed - defined early to avoid initialization error
+  const ensureMinimumProperties = useCallback((filteredList: Property[]): Property[] => {
+    const MIN_PROPERTIES = 6;
+
+    if (filteredList.length >= MIN_PROPERTIES) {
+      return filteredList;
+    }
+
+    // If we have less than 6 properties, add more from the original list
+    const remainingProperties = properties.filter(
+      (property) =>
+        !filteredList.some((filtered) => filtered.id === property.id)
+    );
+
+    // Add remaining properties until we reach minimum
+    const additionalProperties = remainingProperties.slice(
+      0,
+      MIN_PROPERTIES - filteredList.length
+    );
+
+    return [...filteredList, ...additionalProperties];
+  }, [properties]);
+
+  // Handle property navigation - defined first to avoid initialization error
+  const handleViewDetails = useCallback((slug: string) => {
     router.push(`/properties/${slug}`);
-  };
+  }, [router]);
 
   // Memoize property conversion to prevent recalculation
   const convertToPropertyCard = useCallback(
@@ -813,29 +836,6 @@ export default function PropertiesPage() {
     if (guests.infants > 0)
       label += `, ${guests.infants} Infant${guests.infants > 1 ? "s" : ""}`;
     return label;
-  };
-
-  // Function to ensure minimum 6 properties are displayed
-  const ensureMinimumProperties = (filteredList: Property[]): Property[] => {
-    const MIN_PROPERTIES = 6;
-
-    if (filteredList.length >= MIN_PROPERTIES) {
-      return filteredList;
-    }
-
-    // If we have less than 6 properties, add more from the original list
-    const remainingProperties = properties.filter(
-      (property) =>
-        !filteredList.some((filtered) => filtered.id === property.id)
-    );
-
-    // Add remaining properties until we reach minimum
-    const additionalProperties = remainingProperties.slice(
-      0,
-      MIN_PROPERTIES - filteredList.length
-    );
-
-    return [...filteredList, ...additionalProperties];
   };
 
   // Enhanced search with debouncing

@@ -81,6 +81,15 @@ export default function Home() {
   const [featuredProperties, setFeaturedProperties] = useState<Property[]>([]);
   const [propertiesLoading, setPropertiesLoading] = useState(true);
 
+  // Handle property navigation - defined first to avoid initialization error
+  const handlePropertyClick = useCallback(
+    (propertyId: string) => {
+      // Navigating to property
+      router.push(`/properties/${propertyId}`);
+    },
+    [router]
+  );
+
   // Convert properties to PropertyCard format (same as properties page)
   const convertToPropertyCard = useCallback(
     (property: Property): PropertyCardProps => {
@@ -500,15 +509,6 @@ export default function Home() {
     params.set("infants", String(guests.infants));
     router.push(`/properties?${params.toString()}`);
   };
-
-  // Handle property navigation
-  const handlePropertyClick = useCallback(
-    (propertyId: string) => {
-      // Navigating to property
-      router.push(`/properties/${propertyId}`);
-    },
-    [router]
-  );
 
   // Handle view all properties - scroll to properties section
   const handleViewAllProperties = useCallback(() => {
