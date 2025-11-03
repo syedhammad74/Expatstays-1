@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import {
   Card,
+  CardContent,
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -99,62 +100,17 @@ export default function BlogPage() {
       {/* Enhanced Background with Decorative Shapes */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
         {/* Animated gradient orbs */}
-        <div
-          className="absolute top-24 left-10 w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl"
-          style={{ willChange: "transform, opacity" }}
-          animate={{ scale: [1, 1.04, 1], opacity: [0.13, 0.17, 0.13] }}
-          transition={{ duration: 16, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div
-          className="absolute bottom-10 right-10 w-[250px] lg:w-[500px] h-[250px] lg:h-[500px] bg-gradient-to-br from-[#8EB69B]/10 to-[#235347]/10 rounded-full blur-2xl"
-          style={{ willChange: "transform, opacity" }}
-          animate={{ scale: [1, 1.06, 1], opacity: [0.09, 0.13, 0.09] }}
-          transition={{
-            duration: 18,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-        />
+        <div className="absolute top-24 left-10 w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-10 right-10 w-[250px] lg:w-[500px] h-[250px] lg:h-[500px] bg-gradient-to-br from-[#8EB69B]/10 to-[#235347]/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }} />
 
         {/* Decorative geometric shapes */}
-        <div
-          className="absolute top-1/4 right-1/4 w-16 lg:w-32 h-16 lg:h-32 border border-[#8EB69B]/20 rounded-full"
-          style={{ willChange: "transform" }}
-          animate={{ rotate: 360 }}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-        />
-        <div
-          className="absolute bottom-1/3 left-1/6 w-12 lg:w-24 h-12 lg:h-24 bg-gradient-to-br from-[#DAF1DE]/30 to-[#8EB69B]/20 rounded-lg rotate-45"
-          style={{ willChange: "transform" }}
-          animate={{ rotate: [45, 405], scale: [1, 1.03, 1] }}
-          transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div
-          className="absolute top-1/2 right-1/6 w-8 lg:w-16 h-8 lg:h-16 border-2 border-[#8EB69B]/30 rounded-full"
-          style={{ willChange: "transform, opacity" }}
-          animate={{ scale: [1, 1.08, 1], opacity: [0.35, 0.5, 0.35] }}
-          transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-        />
+        <div className="absolute top-1/4 right-1/4 w-16 lg:w-32 h-16 lg:h-32 border border-[#8EB69B]/20 rounded-full animate-spin" style={{ animationDuration: '40s' }} />
+        <div className="absolute bottom-1/3 left-1/6 w-12 lg:w-24 h-12 lg:h-24 bg-gradient-to-br from-[#DAF1DE]/30 to-[#8EB69B]/20 rounded-lg rotate-45 animate-pulse" />
+        <div className="absolute top-1/2 right-1/6 w-8 lg:w-16 h-8 lg:h-16 border-2 border-[#8EB69B]/30 rounded-full animate-pulse" />
 
         {/* Floating dots */}
-        <div
-          className="absolute top-1/3 left-1/2 w-2 h-2 bg-[#8EB69B] rounded-full"
-          style={{ willChange: "transform, opacity" }}
-          animate={{ y: [-6, 6, -6], opacity: [0.6, 0.8, 0.6] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div
-          className="absolute bottom-1/4 right-1/3 w-1 h-1 bg-[#DAF1DE] rounded-full"
-          style={{ willChange: "transform, opacity" }}
-          animate={{ y: [6, -6, 6], opacity: [0.4, 0.7, 0.4] }}
-          transition={{
-            duration: 10,
-            repeat: Infinity,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
+        <div className="absolute top-1/3 left-1/2 w-2 h-2 bg-[#8EB69B] rounded-full animate-pulse" />
+        <div className="absolute bottom-1/4 right-1/3 w-1 h-1 bg-[#DAF1DE] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
 
         {/* Modern Geometric Shapes - Enhanced */}
         <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/30 rotate-45 animate-[breathing_5s_ease-in-out_infinite]" />
@@ -234,31 +190,15 @@ export default function BlogPage() {
             />
           </div>
           {/* Floating accent orb */}
-          <div
-            className="absolute -top-8 -right-8 w-24 h-24 bg-[#8EB69B]/20 rounded-full blur-2xl z-0"
-            animate={{ scale: [1, 1.08, 1], opacity: [0.5, 0.7, 0.5] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-          />
-          <div
-            className="absolute bottom-0 left-0 w-12 h-12 bg-[#DAF1DE]/40 rounded-full blur-xl z-0"
-            animate={{ scale: [1, 1.12, 1], opacity: [0.3, 0.5, 0.3] }}
-            transition={{
-              duration: 12,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: 2,
-            }}
-          />
+          <div className="absolute -top-8 -right-8 w-24 h-24 bg-[#8EB69B]/20 rounded-full blur-2xl z-0 animate-pulse" />
+          <div className="absolute bottom-0 left-0 w-12 h-12 bg-[#DAF1DE]/40 rounded-full blur-xl z-0 animate-pulse" style={{ animationDelay: '2s' }} />
         </div>
       </section>
 
       {/* Filter/Search Section */}
       <section className="relative z-30 max-w-5xl mx-auto -mt-14 mb-16 px-4 sm:px-8">
         <div
-          initial={{ y: -24, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7, ease: "easeOut" }}
-          className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#DAF1DE]/60 px-6 py-5"
+          className="flex flex-col md:flex-row items-center justify-between gap-4 bg-white/70 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#DAF1DE]/60 px-6 py-5 animate-fade-in-up"
           style={{
             boxShadow: "0 8px 32px 0 #DAF1DE33, 0 1.5px 8px 0 #8EB69B22",
           }}
@@ -282,10 +222,7 @@ export default function BlogPage() {
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                whileHover={{ scale: 1.06 }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ duration: 0.3 }}
-                className={`px-4 py-1.5 rounded-full font-semibold tracking-wide text-sm border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#8EB69B]/40
+                className={`px-4 py-1.5 rounded-full font-semibold tracking-wide text-sm border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#8EB69B]/40 hover:scale-105 active:scale-95
                   ${
                     activeCategory === cat
                       ? "bg-[#8EB69B] text-white border-[#8EB69B] shadow-lg"
@@ -310,31 +247,14 @@ export default function BlogPage() {
         <div className="pointer-events-none absolute bottom-1/3 right-0 w-12 lg:w-24 h-12 lg:h-24 bg-gradient-to-br from-[#8EB69B]/15 to-[#235347]/10 rounded-full opacity-50 z-0" />
 
         <div className="container mx-auto px-4 sm:px-8">
-          <div
-            className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12"
-            initial="hidden"
-            animate="visible"
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.1 } },
-            }}
-          >
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12">
             {filteredPosts.map((post, i) => (
               <div
                 key={post.slug}
-                className="group"
-                variants={{
-                  hidden: { opacity: 0, y: 20 },
-                  visible: { opacity: 1, y: 0 },
-                }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="group animate-fade-in-up"
+                style={{ animationDelay: `${i * 0.1}s` }}
               >
-                <div
-                  whileHover={{ scale: 1.025 }}
-                  whileTap={{ scale: 0.98 }}
-                  transition={{ duration: 0.3 }}
-                  className="transition-all duration-300"
-                >
+                <div className="transition-all duration-300 hover:scale-105 active:scale-95">
                   <Card className="group transition-all duration-300 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl rounded-3xl overflow-hidden border border-[#EBEBEB]/70 hover:border-[#8EB69B]/50 px-0 pb-0">
                     <div className="relative w-full aspect-[16/9] overflow-hidden rounded-3xl">
                       <Image
