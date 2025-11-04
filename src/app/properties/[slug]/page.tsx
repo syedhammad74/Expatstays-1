@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, use, useMemo, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import PropertyImageGallery from "@/components/PropertyImageGallery";
+import dynamic from "next/dynamic";
 import {
   MapPin,
   BedDouble,
@@ -20,6 +20,12 @@ import { propertyService } from "@/lib/services/properties";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { useScrollToTop } from "@/hooks/use-scroll-to-top";
+
+// Lazy load PropertyImageGallery for better code splitting
+const PropertyImageGallery = dynamic(
+  () => import("@/components/PropertyImageGallery"),
+  { ssr: true }
+);
 
 export default function Page({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
@@ -427,27 +433,29 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
     );
   }
 
-  const galleryImages = property.images.map((image, index) => {
-    // Handle both string arrays and object arrays
-    if (typeof image === 'string') {
+  const galleryImages = useMemo(() => {
+    return property.images.map((image, index) => {
+      // Handle both string arrays and object arrays
+      if (typeof image === 'string') {
+        return {
+          src: image,
+          alt: `${property.title} - Image ${index + 1}`,
+          hint: `Property image ${index + 1}`,
+        };
+      } else if (typeof image === 'object' && image !== null && 'url' in image) {
+        return {
+          src: (image as { url: string }).url,
+          alt: (image as { alt?: string }).alt || `${property.title} - Image ${index + 1}`,
+          hint: (image as { caption?: string }).caption || `Property image ${index + 1}`,
+        };
+      }
       return {
-        src: image,
-        alt: `Property image ${index + 1}`,
-        hint: `luxury property interior ${index + 1}`,
+        src: String(image),
+        alt: `${property.title} - Image ${index + 1}`,
+        hint: `Property image ${index + 1}`,
       };
-    } else if (typeof image === 'object' && image !== null && 'url' in image) {
-      return {
-        src: (image as { url: string }).url,
-        alt: (image as { alt?: string }).alt || `Property image ${index + 1}`,
-        hint: (image as { caption?: string }).caption || `luxury property interior ${index + 1}`,
-      };
-    }
-    return {
-      src: String(image),
-      alt: `Property image ${index + 1}`,
-      hint: `luxury property interior ${index + 1}`,
-    };
-  }).filter(img => img.src);
+    }).filter(img => img.src);
+  }, [property.images, property.title]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-5">
@@ -545,6 +553,7 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
                   <Button 
                     asChild
                     className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white h-12 text-base font-semibold rounded-xl"
+                    aria-label="Contact owner via WhatsApp"
                   >
                     <a 
                       href={`https://wa.me/923087496089?text=${encodeURIComponent(`Hi, I am interested in this property: ${property.title}`)}`}
@@ -552,7 +561,7 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2"
                     >
-                      <MessageCircle className="h-5 w-5" />
+                      <MessageCircle className="h-5 w-5" aria-hidden="true" />
                       Contact
                     </a>
                   </Button>
@@ -560,15 +569,32 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
                     <Button
                       variant="outline"
                       className="flex-1 h-10 border-[#8EB69B]/30 text-[#8EB69B] hover:bg-[#8EB69B]/10 rounded-xl"
+                      aria-label="Save property to favorites"
                     >
-                      <Heart className="h-4 w-4 mr-2" />
+                      <Heart className="h-4 w-4 mr-2" aria-hidden="true" />
                       Save
                     </Button>
                     <Button
                       variant="outline"
                       className="flex-1 h-10 border-[#8EB69B]/30 text-[#8EB69B] hover:bg-[#8EB69B]/10 rounded-xl"
+                      onClick={() => {
+                        if (navigator.share) {
+                          navigator.share({
+                            title: property.title,
+                            text: property.description,
+                            url: window.location.href,
+                          });
+                        } else {
+                          navigator.clipboard.writeText(window.location.href);
+                          toast({
+                            title: "Link copied",
+                            description: "Property link copied to clipboard",
+                          });
+                        }
+                      }}
+                      aria-label="Share property"
                     >
-                      <Share2 className="h-4 w-4 mr-2" />
+                      <Share2 className="h-4 w-4 mr-2" aria-hidden="true" />
                       Share
                     </Button>
                   </div>
