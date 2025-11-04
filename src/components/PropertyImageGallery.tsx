@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import React, { useState, useCallback, useMemo, memo } from "react";
+import React, { useState, useCallback, useMemo, memo, useRef, useEffect } from "react";
 import { ChevronLeft, ChevronRight, Maximize2, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -17,6 +17,9 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
   const [currentIndex, setCurrentIndex] = useState(initialImageIndex);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([initialImageIndex]));
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Ensure currentIndex is within bounds
   const safeCurrentIndex = useMemo(() => 
@@ -26,51 +29,78 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
   
   const currentImage = useMemo(() => images[safeCurrentIndex], [images, safeCurrentIndex]);
 
-  // Preload adjacent images for smoother navigation
-  const preloadAdjacentImages = useCallback((index: number) => {
+  // Preload adjacent images aggressively
+  useEffect(() => {
+    const preloadImage = (src: string) => {
+      const img = new Image();
+      img.src = src;
+    };
+
+    // Preload current, previous, and next images
     const indicesToPreload = [
-      index - 1 >= 0 ? index - 1 : images.length - 1,
-      index + 1 < images.length ? index + 1 : 0,
+      safeCurrentIndex,
+      safeCurrentIndex - 1 >= 0 ? safeCurrentIndex - 1 : images.length - 1,
+      safeCurrentIndex + 1 < images.length ? safeCurrentIndex + 1 : 0,
     ];
-    
+
     indicesToPreload.forEach((idx) => {
-      if (!loadedImages.has(idx)) {
-        const img = new window.Image();
-        img.src = images[idx].src;
+      if (!loadedImages.has(idx) && images[idx]) {
+        preloadImage(images[idx].src);
         setLoadedImages((prev) => new Set([...prev, idx]));
       }
     });
-  }, [images, loadedImages]);
+  }, [safeCurrentIndex, images, loadedImages]);
 
   const goToPrevious = useCallback(() => {
-    setCurrentIndex((prev) => {
-      const newIndex = prev === 0 ? images.length - 1 : prev - 1;
-      preloadAdjacentImages(newIndex);
-      return newIndex;
-    });
-  }, [images.length, preloadAdjacentImages]);
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  }, [images.length]);
 
   const goToNext = useCallback(() => {
-    setCurrentIndex((prev) => {
-      const newIndex = prev === images.length - 1 ? 0 : prev + 1;
-      preloadAdjacentImages(newIndex);
-      return newIndex;
-    });
-  }, [images.length, preloadAdjacentImages]);
+    setCurrentIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  }, [images.length]);
 
   const goToSlide = useCallback((slideIndex: number) => {
     setCurrentIndex(slideIndex);
-    preloadAdjacentImages(slideIndex);
-  }, [preloadAdjacentImages]);
+  }, []);
+
+  // Touch swipe handlers for mobile
+  const minSwipeDistance = 50;
+
+  const onTouchStart = useCallback((e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
+  }, []);
+
+  const onTouchMove = useCallback((e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  }, []);
+
+  const onTouchEnd = useCallback(() => {
+    if (!touchStart || !touchEnd) return;
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+    
+    if (isLeftSwipe) {
+      goToNext();
+    }
+    if (isRightSwipe) {
+      goToPrevious();
+    }
+  }, [touchStart, touchEnd, goToNext, goToPrevious]);
 
   // Close fullscreen on Escape key
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     if (e.key === "Escape" && isFullscreen) {
       setIsFullscreen(false);
+    } else if (e.key === "ArrowLeft" && isFullscreen) {
+      goToPrevious();
+    } else if (e.key === "ArrowRight" && isFullscreen) {
+      goToNext();
     }
-  }, [isFullscreen]);
+  }, [isFullscreen, goToPrevious, goToNext]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (isFullscreen) {
       window.addEventListener("keydown", handleKeyDown);
       return () => window.removeEventListener("keydown", handleKeyDown);
@@ -88,19 +118,25 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
   return (
     <div className="relative" role="region" aria-label="Property image gallery">
       {/* Main Image Container */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden group">
+      <div 
+        ref={containerRef}
+        className="relative aspect-[4/3] w-full overflow-hidden group touch-pan-y"
+        onTouchStart={onTouchStart}
+        onTouchMove={onTouchMove}
+        onTouchEnd={onTouchEnd}
+      >
         <Image
           src={currentImage.src}
           alt={currentImage.alt}
           fill
-          className="object-cover transition-opacity duration-300"
+          className="object-cover transition-opacity duration-150"
           priority={safeCurrentIndex === 0}
-          quality={75}
-          sizes="(max-width: 1024px) 100vw, 66vw"
+          quality={70}
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 66vw, 66vw"
           loading={safeCurrentIndex === 0 ? "eager" : "lazy"}
         />
 
-        {/* Navigation buttons */}
+        {/* Navigation buttons - Always visible on mobile, hover on desktop */}
         {images.length > 1 && (
           <>
             <Button
@@ -108,18 +144,18 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
               size="icon"
               onClick={goToPrevious}
               aria-label="Previous image"
-              className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full h-10 w-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              className="absolute top-1/2 left-2 md:left-4 transform -translate-y-1/2 text-white bg-black/60 hover:bg-black/80 md:bg-black/50 md:hover:bg-black/70 rounded-full h-10 w-10 md:h-12 md:w-12 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-150 z-10 touch-manipulation"
             >
-              <ChevronLeft className="h-5 w-5" />
+              <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
             </Button>
             <Button
               variant="ghost"
               size="icon"
               onClick={goToNext}
               aria-label="Next image"
-              className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-black/50 hover:bg-black/70 rounded-full h-10 w-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              className="absolute top-1/2 right-2 md:right-4 transform -translate-y-1/2 text-white bg-black/60 hover:bg-black/80 md:bg-black/50 md:hover:bg-black/70 rounded-full h-10 w-10 md:h-12 md:w-12 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-150 z-10 touch-manipulation"
             >
-              <ChevronRight className="h-5 w-5" />
+              <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
             </Button>
           </>
         )}
@@ -130,14 +166,14 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
           size="icon"
           onClick={() => setIsFullscreen(true)}
           aria-label="View image in fullscreen"
-          className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/70 rounded-full h-10 w-10 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+          className="absolute top-3 right-3 md:top-4 md:right-4 text-white bg-black/60 hover:bg-black/80 md:bg-black/50 md:hover:bg-black/70 rounded-full h-9 w-9 md:h-10 md:w-10 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-150 z-10 touch-manipulation"
         >
           <Maximize2 className="h-4 w-4" />
         </Button>
 
         {/* Image counter */}
         {images.length > 1 && (
-          <div className="absolute top-4 left-4 bg-black/50 text-white text-sm px-2 py-1 rounded">
+          <div className="absolute top-3 left-3 md:top-4 md:left-4 bg-black/60 md:bg-black/50 text-white text-xs md:text-sm px-2 py-1 rounded z-10">
             {safeCurrentIndex + 1} / {images.length}
           </div>
         )}
@@ -146,16 +182,19 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
       {/* Thumbnail Navigation - Optimized */}
       {images.length > 1 && (
         <div className="mt-4">
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+          <div 
+            className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide touch-pan-x" 
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
+          >
             {images.map((image, index) => (
               <button
                 key={`${image.src}-${index}`}
                 onClick={() => goToSlide(index)}
                 aria-label={`View image ${index + 1} of ${images.length}`}
                 aria-current={index === safeCurrentIndex ? "true" : "false"}
-                className={`relative flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 transition-all duration-150 touch-manipulation ${
                   index === safeCurrentIndex
-                    ? "border-[#8EB69B] ring-2 ring-[#8EB69B]/20"
+                    ? "border-[#8EB69B] ring-2 ring-[#8EB69B]/20 scale-105"
                     : "border-gray-200 hover:border-gray-300"
                 }`}
               >
@@ -164,9 +203,9 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
                   alt={`Thumbnail ${index + 1}`}
                   fill
                   className="object-cover"
-                  quality={60}
+                  quality={50}
                   loading="lazy"
-                  sizes="64px"
+                  sizes="80px"
                 />
               </button>
             ))}
@@ -174,10 +213,10 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
         </div>
       )}
 
-      {/* Fullscreen Modal - Lazy loaded */}
+      {/* Fullscreen Modal - Optimized */}
       {isFullscreen && (
         <div 
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-black/98 flex items-center justify-center p-4"
           onClick={() => setIsFullscreen(false)}
           role="dialog"
           aria-modal="true"
@@ -191,7 +230,7 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
               setIsFullscreen(false);
             }}
             aria-label="Close fullscreen image view"
-            className="absolute top-4 right-4 z-10 text-white bg-black/30 hover:bg-black/50 rounded-full h-12 w-12"
+            className="absolute top-4 right-4 z-10 text-white bg-black/40 hover:bg-black/60 rounded-full h-12 w-12 touch-manipulation"
           >
             <X className="h-6 w-6" />
           </Button>
@@ -199,18 +238,22 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
           <div 
             className="relative w-full h-full flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
           >
             <Image
               src={currentImage.src}
               alt={currentImage.alt}
               fill
               className="object-contain"
-              quality={85}
+              quality={80}
               sizes="100vw"
+              priority
             />
           </div>
 
-          {/* Fullscreen Navigation */}
+          {/* Fullscreen Navigation - Always visible */}
           {images.length > 1 && (
             <>
               <Button
@@ -221,7 +264,7 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
                   goToPrevious();
                 }}
                 aria-label="Previous image"
-                className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-black/30 hover:bg-black/50 rounded-full h-12 w-12"
+                className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white bg-black/40 hover:bg-black/60 rounded-full h-12 w-12 touch-manipulation"
               >
                 <ChevronLeft className="h-6 w-6" />
               </Button>
@@ -233,7 +276,7 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
                   goToNext();
                 }}
                 aria-label="Next image"
-                className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-black/30 hover:bg-black/50 rounded-full h-12 w-12"
+                className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white bg-black/40 hover:bg-black/60 rounded-full h-12 w-12 touch-manipulation"
               >
                 <ChevronRight className="h-6 w-6" />
               </Button>
