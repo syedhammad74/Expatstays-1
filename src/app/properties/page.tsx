@@ -952,7 +952,7 @@ export default function PropertiesPage() {
           <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-[#8EB69B]/10 to-[#DAF1DE]/20 rounded-full flex items-center justify-center">
             <Search className="w-16 h-16 text-[#8EB69B]" />
           </div>
-          <h2 className="text-3xl font-bold text-[#051F20] mb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-[#051F20] mb-4">
             No Properties Found
           </h2>
           <p className="text-lg text-[#8EB69B] mb-8 max-w-md mx-auto">
@@ -1044,38 +1044,40 @@ export default function PropertiesPage() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-20 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left Column - Content */}
-            <div className="space-y-6 lg:space-y-8">
+            <div className="space-y-6 lg:space-y-8 order-2 lg:order-1">
               <div className="space-y-4 lg:space-y-6">
-                <h1 className="text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-[#051F20] leading-tight tracking-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl 2xl:text-6xl font-bold text-[#051F20] leading-tight tracking-tight px-2 sm:px-0">
                   Your Home <br />
                   <span className="text-[#8EB69B]">Away From Home</span>
                 </h1>
 
-                <p className="text-base lg:text-xl text-[#4A4A4A] max-w-[540px] leading-relaxed font-light">
+                <p className="text-base sm:text-lg lg:text-xl text-[#4A4A4A] max-w-[540px] leading-relaxed font-light px-4 sm:px-0">
                   Settle into comfort with carefully selected residences
                   designed to make every stay feel familiar, welcoming, and
                   truly yours.
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3 lg:gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 px-4 sm:px-0">
                 <Button
                   onClick={scrollToProperties}
                   className="bg-[#0B2B26] text-white hover:bg-[#235347] transition-colors duration-150 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full shadow-lg w-full sm:w-auto"
+                  aria-label="Browse all available properties"
                 >
                   Browse All Properties
                 </Button>
                 <Button
                   variant="ghost"
                   className="border-2 border-[#7AA589] text-[#7AA589] hover:bg-[#7AA589] hover:text-white transition-colors duration-150 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full w-full sm:w-auto"
+                  aria-label="Schedule a consultation"
                 >
                   Schedule a Consultation
                 </Button>
               </div>
             </div>
 
-            {/* Right Column - Image Stack */}
-            <div className="relative hidden lg:block">
+            {/* Right Column - Image Stack - Hidden on mobile */}
+            <div className="relative hidden lg:block order-1 lg:order-2">
               <div className="relative space-y-4 lg:space-y-6">
                 {/* Top Image */}
                 <div className="relative h-48 sm:h-56 lg:h-72 rounded-xl lg:rounded-2xl overflow-hidden shadow-2xl">
@@ -1115,8 +1117,8 @@ export default function PropertiesPage() {
       <section className="relative flex flex-col lg:flex-row items-center justify-between py-12 lg:py-20 px-4 lg:px-8 max-w-7xl mx-auto bg-gradient-to-br from-white to-[#F9FCFB] rounded-2xl lg:rounded-3xl overflow-hidden">
         {/* Decorative blurred green blob for depth */}
         <div className="absolute -left-16 lg:-left-32 -top-16 lg:-top-32 w-[200px] lg:w-[420px] h-[200px] lg:h-[420px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl z-0" />
-        {/* Left: Image */}
-        <div className="lg:w-1/2 w-full flex justify-center items-center z-10 mb-8 lg:mb-0">
+        {/* Left: Image - Hidden on mobile */}
+        <div className="lg:w-1/2 w-full hidden lg:flex justify-center items-center z-10 mb-8 lg:mb-0">
           <div className="rounded-xl lg:rounded-2xl shadow-lg overflow-hidden w-full max-w-md">
             <Image
               src="/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"
@@ -1132,8 +1134,8 @@ export default function PropertiesPage() {
           </div>
         </div>
         {/* Right: Booking Bar */}
-        <div className="lg:w-auto w-full flex flex-col items-center z-10">
-          <h2 className="mb-6 text-2xl lg:text-3xl xl:text-4xl font-bold text-[#051F20] text-center font-[Manrope,Inter,sans-serif] tracking-tight">
+        <div className="lg:w-auto w-full flex flex-col items-center z-10 px-4 sm:px-0">
+          <h2 className="mb-6 text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-[#051F20] text-center font-[Manrope,Inter,sans-serif] tracking-tight">
             Book Your Next Stay in Seconds
           </h2>
           {/* Removed error state */}
@@ -1142,7 +1144,10 @@ export default function PropertiesPage() {
             <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
               <MapPin className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
               <Select value={location} onValueChange={setLocation}>
-                <SelectTrigger className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium focus:ring-0 focus:border-none h-12 lg:h-14">
+                <SelectTrigger 
+                  className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium focus:ring-0 focus:border-none h-12 lg:h-14"
+                  aria-label="Select location"
+                >
                   <SelectValue placeholder="Location" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-[#DAF1DE] rounded-xl shadow-lg">
@@ -1160,6 +1165,7 @@ export default function PropertiesPage() {
                   <Button
                     variant="ghost"
                     className="w-full justify-between bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium text-[#051F20] hover:bg-transparent focus:ring-0 focus:border-none h-12 lg:h-14"
+                    aria-label="Select check-in and check-out dates"
                   >
                     {dateRange?.from && dateRange?.to
                       ? `${format(dateRange.from, "MMM d")} – ${format(
@@ -1171,7 +1177,7 @@ export default function PropertiesPage() {
                 </PopoverTrigger>
                 <PopoverContent className="p-0 bg-white rounded-2xl lg:rounded-3xl shadow-2xl border border-[#DAF1DE]/80 animate-fade-in-up min-w-[300px] lg:min-w-[340px]">
                   <div className="px-4 lg:px-6 pt-4 lg:pt-6 pb-2">
-                    <h2 className="text-lg lg:text-xl font-bold text-[#051F20]">
+                    <h2 className="text-base sm:text-lg lg:text-xl font-bold text-[#051F20]">
                       Select your stay dates
                     </h2>
                     <p className="text-xs lg:text-sm text-[#8EB69B]">
@@ -1250,6 +1256,7 @@ export default function PropertiesPage() {
                   <Button
                     variant="ghost"
                     className="w-full justify-between bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium text-[#051F20] hover:bg-transparent focus:ring-0 focus:border-none h-12 lg:h-14"
+                    aria-label="Select number of guests"
                   >
                     {guestsSummary() || "Select Guests"}
                   </Button>
@@ -1348,7 +1355,7 @@ export default function PropertiesPage() {
           {/* Results Header */}
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 space-y-6 md:space-y-0">
             <div className="text-center md:text-left">
-              <h2 className="text-4xl lg:text-5xl font-bold text-[#051F20] mb-4">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#051F20] mb-4">
                 {searchQuery
                   ? `Search Results for "${searchQuery}"`
                   : "Discover Your Perfect Stay"}
@@ -1378,6 +1385,7 @@ export default function PropertiesPage() {
                     <button
                       onClick={() => setSearchQuery("")}
                       className="ml-2 text-[#8EB69B] hover:text-[#235347] transition-colors"
+                      aria-label="Clear search"
                     >
                       ✕
                     </button>
@@ -1396,6 +1404,7 @@ export default function PropertiesPage() {
                       ? "bg-[#7AA589] text-white shadow-md"
                       : "text-[#7AA589] hover:bg-[#7AA589]/10"
                   }`}
+                  aria-label="Switch to grid view"
                 >
                   <Grid className="w-4 h-4 mr-2" />
                   Grid View
@@ -1410,6 +1419,7 @@ export default function PropertiesPage() {
                       ? "bg-[#7AA589] text-white shadow-md"
                       : "text-[#7AA589] hover:bg-[#7AA589]/10"
                   }`}
+                  aria-label="Switch to virtual scrolling view"
                 >
                   <List className="w-4 h-4 mr-2" />
                   Virtual View
@@ -1427,9 +1437,9 @@ export default function PropertiesPage() {
       <section className="py-12 lg:py-20 bg-gradient-to-br from-slate-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 lg:mb-16">
-            <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4 lg:mb-6">
-              Why Choose <span className="text-[#8EB69B]">Expat Stays</span>
-            </h2>
+          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4 lg:mb-6">
+            Why Choose <span className="text-[#8EB69B]">Expat Stays</span>
+          </h2>
             <p className="text-base lg:text-lg text-[#4A4A4A] max-w-2xl mx-auto font-light">
               Trusted by Hundreds of guests worldwide for exceptional luxury
               experiences
@@ -1474,7 +1484,7 @@ export default function PropertiesPage() {
                   <div className="inline-flex items-center justify-center w-12 lg:w-16 h-12 lg:h-16 rounded-xl lg:rounded-2xl bg-gradient-to-br from-[#8EB69B]/10 to-[#DAF1DE]/20 mb-4 lg:mb-6">
                     <service.icon className="h-6 lg:h-8 w-6 lg:w-8 text-[#8EB69B]" />
                   </div>
-                  <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-3 lg:mb-4" role="heading" aria-level={3}>
+                  <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-3 lg:mb-4">
                     {service.title}
                   </h3>
                   <p className="text-sm lg:text-base text-[#4A4A4A] mb-4 lg:mb-6 leading-relaxed">
