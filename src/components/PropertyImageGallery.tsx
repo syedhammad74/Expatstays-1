@@ -16,7 +16,6 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
 }) => {
   const [currentIndex, setCurrentIndex] = useState(initialImageIndex);
   const [isFullscreen, setIsFullscreen] = useState(false);
-  const [loadedImages, setLoadedImages] = useState<Set<number>>(new Set([initialImageIndex]));
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -27,13 +26,22 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
     [currentIndex, images.length]
   );
   
-  const currentImage = useMemo(() => images[safeCurrentIndex], [images, safeCurrentIndex]);
+  const currentImage = useMemo(() => {
+    if (!images || images.length === 0) return null;
+    return images[safeCurrentIndex] || images[0];
+  }, [images, safeCurrentIndex]);
 
   // Preload adjacent images aggressively
   useEffect(() => {
+    if (typeof window === 'undefined' || !images || images.length === 0) return;
+    
     const preloadImage = (src: string) => {
-      const img = new Image();
-      img.src = src;
+      try {
+        const img = new Image();
+        img.src = src;
+      } catch (error) {
+        // Silently fail if image preload fails
+      }
     };
 
     // Preload current, previous, and next images
@@ -44,12 +52,11 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
     ];
 
     indicesToPreload.forEach((idx) => {
-      if (!loadedImages.has(idx) && images[idx]) {
+      if (images[idx] && images[idx].src) {
         preloadImage(images[idx].src);
-        setLoadedImages((prev) => new Set([...prev, idx]));
       }
     });
-  }, [safeCurrentIndex, images, loadedImages]);
+  }, [safeCurrentIndex, images]); // Include images array properly
 
   const goToPrevious = useCallback(() => {
     setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
