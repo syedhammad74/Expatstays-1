@@ -256,6 +256,8 @@ export default function AboutPage() {
                 height={700}
                 sizes="(max-width: 1024px) 50vw, 25vw"
                 className="rounded-xl lg:rounded-2xl shadow-xl object-cover border-2 border-[#8EB69B]/20 w-full h-[150px] sm:h-[200px] lg:h-[250px] xl:h-[300px]"
+                loading="lazy"
+                quality={80}
               />
               <Image
                 src="/media/Close Ups June 25 2025/DSC01832.jpg"
@@ -264,6 +266,8 @@ export default function AboutPage() {
                 height={700}
                 sizes="(max-width: 1024px) 50vw, 25vw"
                 className="rounded-xl lg:rounded-2xl shadow-xl object-cover border-2 border-[#235347]/20 mt-4 lg:mt-8 w-full h-[150px] sm:h-[200px] lg:h-[250px] xl:h-[300px]"
+                loading="lazy"
+                quality={80}
               />
             </div>
           </div>
@@ -334,13 +338,15 @@ export default function AboutPage() {
                 {/* Header with Avatar and Info */}
                 <div className="flex items-start gap-3 lg:gap-4 mb-4 lg:mb-6">
                   <div className="relative">
-                    <Image
-                      src={testimonial.avatar}
-                      alt={testimonial.author}
-                      width={64}
-                      height={64}
-                      className="rounded-full object-cover border-3 border-[#8EB69B]/30 group-hover:scale-105 transition-transform duration-300 w-12 lg:w-16 h-12 lg:h-16"
-                    />
+                      <Image
+                        src={testimonial.avatar}
+                        alt={`${testimonial.author} profile picture`}
+                        width={64}
+                        height={64}
+                        className="rounded-full object-cover border-3 border-[#8EB69B]/30 group-hover:scale-105 transition-transform duration-300 w-12 lg:w-16 h-12 lg:h-16"
+                        loading="lazy"
+                        quality={75}
+                      />
                     <div className="absolute -bottom-1 -right-1 w-4 lg:w-6 h-4 lg:h-6 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full flex items-center justify-center">
                       <CheckCircle className="w-2 lg:w-3 h-2 lg:h-3 text-white" />
                     </div>

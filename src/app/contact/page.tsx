@@ -253,53 +253,28 @@ export default function ContactPage() {
           </div>
 
           <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20">
-            <div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-center max-w-4xl mx-auto"
-            >
+            <div className="text-center max-w-4xl mx-auto animate-fade-in-up">
               {/* Enhanced badge */}
-              <div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.6, delay: 0.2 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#DAF1DE] to-[#8EB69B]/20 border border-[#8EB69B]/30 text-[#235347] text-sm font-semibold mb-8 shadow-sm"
-              >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-[#DAF1DE] to-[#8EB69B]/20 border border-[#8EB69B]/30 text-[#235347] text-sm font-semibold mb-8 shadow-sm">
                 <MessageSquare className="w-4 h-4" />
                 Get in Touch
                 <Sparkle className="w-3 h-3" />
               </div>
 
               {/* Enhanced title */}
-              <h1
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3 }}
-                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#051F20] leading-tight tracking-tight mb-4 sm:mb-6"
-              >
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-[#051F20] leading-tight tracking-tight mb-4 sm:mb-6">
                 Let&apos;s Start a
                 <span className="block text-[#8EB69B]">Conversation</span>
               </h1>
 
               {/* Enhanced subtitle */}
-              <p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-lg sm:text-xl lg:text-2xl text-[#235347] max-w-3xl mx-auto leading-relaxed mb-8 sm:mb-12 px-4"
-              >
+              <p className="text-lg sm:text-xl lg:text-2xl text-[#235347] max-w-3xl mx-auto leading-relaxed mb-8 sm:mb-12 px-4">
                 Ready to transform your Pakistan experience? Our expert team is
                 here to guide you through every step of your luxury journey.
               </p>
 
               {/* Enhanced stats */}
-              <div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.5 }}
-                className="flex flex-wrap justify-center gap-8 lg:gap-12"
-              >
+              <div className="flex flex-wrap justify-center gap-8 lg:gap-12">
                 <div className="text-center">
                   <div className="text-3xl lg:text-4xl font-bold text-[#8EB69B] mb-2">
                     500+
@@ -331,19 +306,10 @@ export default function ContactPage() {
 
         {/* Contact Form Section - Enhanced */}
         <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-          <div className="mx-auto">
-            <div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-              className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start"
-            >
+            <div className="mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start animate-fade-in-up">
               {/* Enhanced Form Card */}
-              <div
-                initial={{ opacity: 0, x: -30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              >
+              <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
                 <Card className="border-0 shadow-2xl bg-white/80 backdrop-blur-sm rounded-3xl overflow-hidden">
                   <CardHeader className="bg-gradient-to-r from-[#8EB69B]/10 to-[#DAF1DE]/20 border-b border-[#DAF1DE]/30 pb-8">
                     <div className="flex items-center gap-4 mb-4">
@@ -366,12 +332,11 @@ export default function ContactPage() {
                       {/* Success/Error Messages */}
                       {showSuccess && (
                         <div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 flex items-center gap-3"
+                          className="bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200 rounded-xl p-4 flex items-center gap-3 animate-fade-in-up"
+                          role="alert"
+                          aria-live="polite"
                         >
-                          <CheckCircle className="w-5 h-5 text-green-600" />
+                          <CheckCircle className="w-5 h-5 text-green-600" aria-hidden="true" />
                           <span className="text-green-800 font-medium">
                             Message sent successfully! We&apos;ll get back to
                             you soon.
@@ -381,12 +346,11 @@ export default function ContactPage() {
 
                       {showError && (
                         <div
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -10 }}
-                          className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-4 flex items-center gap-3"
+                          className="bg-gradient-to-r from-red-50 to-pink-50 border border-red-200 rounded-xl p-4 flex items-center gap-3 animate-fade-in-up"
+                          role="alert"
+                          aria-live="assertive"
                         >
-                          <AlertCircle className="w-5 h-5 text-red-600" />
+                          <AlertCircle className="w-5 h-5 text-red-600" aria-hidden="true" />
                           <span className="text-red-800 font-medium">
                             {errorMessage}
                           </span>
@@ -415,11 +379,14 @@ export default function ContactPage() {
                                   : "border-[#DAF1DE]"
                               }`}
                               placeholder="Enter your full name"
+                              aria-required="true"
+                              aria-invalid={errors.fullName ? "true" : "false"}
+                              aria-describedby={errors.fullName ? "fullName-error" : undefined}
                             />
                           </div>
                           {errors.fullName && (
-                            <p className="text-red-500 text-sm flex items-center gap-1">
-                              <AlertCircle className="w-4 h-4" />
+                            <p id="fullName-error" className="text-red-500 text-sm flex items-center gap-1" role="alert">
+                              <AlertCircle className="w-4 h-4" aria-hidden="true" />
                               {errors.fullName}
                             </p>
                           )}
@@ -615,12 +582,7 @@ export default function ContactPage() {
               </div>
 
               {/* Enhanced Contact Info Cards */}
-              <div
-                initial={{ opacity: 0, x: 30 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                className="space-y-6"
-              >
+                <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                 {/* Enhanced header */}
                 <div className="text-center lg:text-left mb-8">
                   <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
@@ -628,9 +590,9 @@ export default function ContactPage() {
                       <Building className="w-5 h-5 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-2xl font-bold text-[#051F20]">
+                      <h2 className="text-2xl font-bold text-[#051F20]">
                         Get in Touch
-                      </h3>
+                      </h2>
                       <p className="text-[#235347] text-sm">
                         Multiple ways to reach our team
                       </p>
@@ -643,14 +605,8 @@ export default function ContactPage() {
                   {contactInfo.map((item, index) => (
                     <div
                       key={index}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        duration: 0.6,
-                        delay: 0.4 + index * 0.1,
-                        ease: "easeOut",
-                      }}
-                      className="group relative bg-gradient-to-br from-white to-[#FAFDFC] rounded-2xl shadow-lg hover:shadow-xl border border-[#DAF1DE]/40 p-6 transition-all duration-300 hover:scale-105 overflow-hidden"
+                      className="group relative bg-gradient-to-br from-white to-[#FAFDFC] rounded-2xl shadow-lg hover:shadow-xl border border-[#DAF1DE]/40 p-6 transition-all duration-300 hover:scale-105 overflow-hidden animate-fade-in-up"
+                      style={{ animationDelay: `${0.4 + index * 0.1}s` }}
                     >
                       {/* Enhanced decorative elements */}
                       <div className="absolute top-3 right-3 flex gap-1">
@@ -738,16 +694,11 @@ export default function ContactPage() {
 
         {/* Enhanced Map Section */}
         <section className="container mx-auto px-4 sm:px-8 pb-16 lg:pb-24">
-          <div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-6xl mx-auto"
-          >
+          <div className="max-w-6xl mx-auto animate-fade-in-up">
             <div className="text-center mb-12">
-              <h3 className="text-3xl lg:text-4xl font-bold text-[#051F20] mb-4">
+                <h2 className="text-3xl lg:text-4xl font-bold text-[#051F20] mb-4">
                 Visit Our Office
-              </h3>
+              </h2>
               <p className="text-lg text-[#235347] max-w-2xl mx-auto">
                 Located in the heart of Islamabad, our office is easily
                 accessible and ready to welcome you.
@@ -772,12 +723,7 @@ export default function ContactPage() {
 
         {/* Enhanced CTA Section */}
         <section className="container mx-auto px-4 sm:px-8 pb-16 lg:pb-24">
-          <div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="relative flex flex-col lg:flex-row items-center justify-between py-16 lg:py-24 px-8 lg:px-12 max-w-7xl mx-auto bg-gradient-to-br from-white to-[#F9FCFB] rounded-3xl overflow-hidden border border-[#DAF1DE]/30 shadow-2xl"
-          >
+          <div className="relative flex flex-col lg:flex-row items-center justify-between py-16 lg:py-24 px-8 lg:px-12 max-w-7xl mx-auto bg-gradient-to-br from-white to-[#F9FCFB] rounded-3xl overflow-hidden border border-[#DAF1DE]/30 shadow-2xl animate-fade-in-up">
             {/* Enhanced decorative elements */}
             <div className="absolute -left-20 lg:-left-32 -top-20 lg:-top-32 w-[300px] h-[300px] lg:w-[500px] lg:h-[500px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl z-0" />
             <div className="absolute -right-16 lg:-right-24 -bottom-16 lg:-bottom-24 w-[200px] h-[200px] lg:w-[300px] lg:h-[300px] bg-gradient-to-br from-[#F7E9B7]/20 to-[#8EB69B]/10 rounded-full blur-3xl z-0" />
@@ -797,9 +743,9 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                <h3 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-[#051F20] leading-tight tracking-tight">
+                <h2 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-[#051F20] leading-tight tracking-tight">
                   Still have <span className="text-[#8EB69B]">questions?</span>
-                </h3>
+                </h2>
                 <p className="text-xl text-[#235347] max-w-2xl leading-relaxed">
                   Chat with our concierge or schedule a call for personalized
                   assistance. We&apos;re here to make your experience seamless

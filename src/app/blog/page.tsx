@@ -137,6 +137,9 @@ export default function BlogPage() {
             alt="Luxury background"
             fill
             className="object-cover rounded-full"
+            loading="lazy"
+            quality={60}
+            sizes="128px"
           />
         </div>
         <div className="absolute bottom-40 left-20 w-24 lg:w-48 h-24 lg:h-48 opacity-10">
@@ -145,6 +148,9 @@ export default function BlogPage() {
             alt="Property background"
             fill
             className="object-cover rounded-full"
+            loading="lazy"
+            quality={60}
+            sizes="128px"
           />
         </div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 lg:w-32 h-16 lg:h-32 opacity-5">
@@ -153,6 +159,9 @@ export default function BlogPage() {
             alt="Villa background"
             fill
             className="object-cover rounded-full"
+            loading="lazy"
+            quality={60}
+            sizes="128px"
           />
         </div>
       </div>
@@ -182,6 +191,8 @@ export default function BlogPage() {
               fill
               className="object-cover scale-110 blur-[1px]"
               priority
+              quality={85}
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
             {/* Soft green glow */}
             <div
@@ -264,6 +275,8 @@ export default function BlogPage() {
                         className="object-cover rounded-3xl shadow-md group-hover:shadow-2xl border-2 border-transparent group-hover:border-[#DAF1DE] group-focus:border-[#8EB69B] transition-all duration-300"
                         sizes="(max-width: 768px) 100vw, 33vw"
                         priority={i < 2}
+                        loading={i < 2 ? "eager" : "lazy"}
+                        quality={80}
                       />
                     </div>
                     <CardContent className="p-5 lg:p-7">

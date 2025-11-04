@@ -952,9 +952,9 @@ export default function PropertiesPage() {
           <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-[#8EB69B]/10 to-[#DAF1DE]/20 rounded-full flex items-center justify-center">
             <Search className="w-16 h-16 text-[#8EB69B]" />
           </div>
-          <h3 className="text-3xl font-bold text-[#051F20] mb-4">
+          <h2 className="text-3xl font-bold text-[#051F20] mb-4">
             No Properties Found
-          </h3>
+          </h2>
           <p className="text-lg text-[#8EB69B] mb-8 max-w-md mx-auto">
             Try adjusting your search criteria or browse all available
             properties.
@@ -1084,6 +1084,9 @@ export default function PropertiesPage() {
                     alt="Luxury Villa Interior"
                     fill
                     className="object-cover object-center"
+                    loading="lazy"
+                    quality={80}
+                    sizes="(max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                 </div>
@@ -1095,6 +1098,9 @@ export default function PropertiesPage() {
                     alt="Luxury Penthouse"
                     fill
                     className="object-cover object-center"
+                    loading="lazy"
+                    quality={80}
+                    sizes="(max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
                 </div>
@@ -1162,9 +1168,9 @@ export default function PropertiesPage() {
                 </PopoverTrigger>
                 <PopoverContent className="p-0 bg-white rounded-2xl lg:rounded-3xl shadow-2xl border border-[#DAF1DE]/80 animate-fade-in-up min-w-[300px] lg:min-w-[340px]">
                   <div className="px-4 lg:px-6 pt-4 lg:pt-6 pb-2">
-                    <h3 className="text-lg lg:text-xl font-bold text-[#051F20]">
+                    <h2 className="text-lg lg:text-xl font-bold text-[#051F20]">
                       Select your stay dates
-                    </h3>
+                    </h2>
                     <p className="text-xs lg:text-sm text-[#8EB69B]">
                       Choose check-in and check-out
                     </p>
@@ -1465,7 +1471,7 @@ export default function PropertiesPage() {
                   <div className="inline-flex items-center justify-center w-12 lg:w-16 h-12 lg:h-16 rounded-xl lg:rounded-2xl bg-gradient-to-br from-[#8EB69B]/10 to-[#DAF1DE]/20 mb-4 lg:mb-6">
                     <service.icon className="h-6 lg:h-8 w-6 lg:w-8 text-[#8EB69B]" />
                   </div>
-                  <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-3 lg:mb-4">
+                  <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-3 lg:mb-4" role="heading" aria-level={3}>
                     {service.title}
                   </h3>
                   <p className="text-sm lg:text-base text-[#4A4A4A] mb-4 lg:mb-6 leading-relaxed">
