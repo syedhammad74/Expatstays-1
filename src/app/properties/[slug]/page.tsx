@@ -388,6 +388,32 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
     loadProperty();
   }, [slug, toast]);
 
+  // Memoize gallery images - must be called before early returns
+  const galleryImages = useMemo(() => {
+    if (!property || !property.images) return [];
+    return property.images.map((image, index) => {
+      // Handle both string arrays and object arrays
+      if (typeof image === 'string') {
+        return {
+          src: image,
+          alt: `${property.title} - Image ${index + 1}`,
+          hint: `Property image ${index + 1}`,
+        };
+      } else if (typeof image === 'object' && image !== null && 'url' in image) {
+        return {
+          src: (image as { url: string }).url,
+          alt: (image as { alt?: string }).alt || `${property.title} - Image ${index + 1}`,
+          hint: (image as { caption?: string }).caption || `Property image ${index + 1}`,
+        };
+      }
+      return {
+        src: String(image),
+        alt: `${property.title} - Image ${index + 1}`,
+        hint: `Property image ${index + 1}`,
+      };
+    }).filter(img => img.src);
+  }, [property?.images, property?.title]);
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-20">
@@ -432,30 +458,6 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
       </div>
     );
   }
-
-  const galleryImages = useMemo(() => {
-    return property.images.map((image, index) => {
-      // Handle both string arrays and object arrays
-      if (typeof image === 'string') {
-        return {
-          src: image,
-          alt: `${property.title} - Image ${index + 1}`,
-          hint: `Property image ${index + 1}`,
-        };
-      } else if (typeof image === 'object' && image !== null && 'url' in image) {
-        return {
-          src: (image as { url: string }).url,
-          alt: (image as { alt?: string }).alt || `${property.title} - Image ${index + 1}`,
-          hint: (image as { caption?: string }).caption || `Property image ${index + 1}`,
-        };
-      }
-      return {
-        src: String(image),
-        alt: `${property.title} - Image ${index + 1}`,
-        hint: `Property image ${index + 1}`,
-      };
-    }).filter(img => img.src);
-  }, [property.images, property.title]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#F8FBF9] to-[#E6F2EC] pt-5">
