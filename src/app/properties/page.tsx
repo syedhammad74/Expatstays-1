@@ -39,14 +39,18 @@ import { propertyService } from "@/lib/services/properties";
 import { bookingService } from "@/lib/services/bookings";
 // Removed unused imports
 import { useToast } from "@/hooks/use-toast";
-// Removed performance monitoring hooks for better performance
+// Optimized imports - lazy load heavy components
 import dynamic from "next/dynamic";
-const Calendar = dynamic(() =>
-  import("@/components/ui/calendar").then((m) => m.Calendar)
+const Calendar = dynamic(
+  () => import("@/components/ui/calendar").then((m) => m.Calendar),
+  { ssr: false }
 );
 
-// Import PropertyCard directly for better performance
-import { PropertyCard } from "@/components/molecular/PropertyCard";
+// Lazy load PropertyCard for better code splitting
+const PropertyCard = dynamic(
+  () => import("@/components/molecular/PropertyCard").then((m) => ({ default: m.PropertyCard })),
+  { ssr: true }
+);
 
 export default function PropertiesPage() {
   // Removed performance monitoring for better mobile performance
@@ -819,7 +823,7 @@ export default function PropertiesPage() {
     }
   }, [properties.length, loading]);
 
-  // Filter properties when search criteria change
+  // Filter properties when search criteria change - optimized
   useEffect(() => {
     if (from && to) {
       filterPropertiesByAvailability();
@@ -827,7 +831,7 @@ export default function PropertiesPage() {
       // Always show properties immediately, even without search criteria
       setFilteredProperties(properties);
     }
-  }, [properties, dateRange, filterPropertiesByAvailability, from, to]);
+  }, [properties, from, to, filterPropertiesByAvailability]);
 
   // Helper for guests summary
   const guestsSummary = () => {
@@ -838,10 +842,9 @@ export default function PropertiesPage() {
     return label;
   };
 
-  // Enhanced search with debouncing
+  // Enhanced search with debouncing - optimized dependencies
   useEffect(() => {
     if (debouncedSearchQuery) {
-      // Removed tracking for performance
       const filtered = properties.filter(
         (property) =>
           property.title
@@ -862,7 +865,7 @@ export default function PropertiesPage() {
       // Always show all properties when no search query
       setFilteredProperties(properties);
     }
-  }, [debouncedSearchQuery, properties, dateRange, from, to, ensureMinimumProperties]);
+  }, [debouncedSearchQuery, properties, ensureMinimumProperties]);
 
   // Enable virtual scrolling for large lists
   useEffect(() => {
@@ -1089,9 +1092,9 @@ export default function PropertiesPage() {
                     priority
                     fetchPriority="high"
                     quality={75}
-                    sizes="(max-width: 1024px) 50vw, 33vw"
+                    sizes="(max-width: 1024px) 0px, 50vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" aria-hidden="true" />
                 </div>
 
                 {/* Bottom Image */}
@@ -1102,10 +1105,10 @@ export default function PropertiesPage() {
                     fill
                     className="object-cover object-center"
                     loading="lazy"
-                    quality={80}
-                    sizes="(max-width: 1024px) 50vw, 33vw"
+                    quality={70}
+                    sizes="(max-width: 1024px) 0px, 50vw"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" aria-hidden="true" />
                 </div>
               </div>
             </div>
@@ -1125,7 +1128,7 @@ export default function PropertiesPage() {
               alt="Luxury Bedroom"
               width={600}
               height={400}
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
+              sizes="(max-width: 1024px) 0px, 50vw"
               className="object-cover w-full h-48 sm:h-56 lg:h-72 xl:h-96"
               priority
               fetchPriority="high"

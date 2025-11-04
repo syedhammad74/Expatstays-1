@@ -18,7 +18,7 @@ import Link from "next/link";
 import { getLocalImage } from "@/lib/imageUtils";
 // Removed framer-motion for performance
 import Header from "@/components/layout/Header";
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 
 const blogPosts = [
   {
@@ -83,85 +83,87 @@ export default function BlogPage() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState("All Posts");
 
-  // Filter logic
-  const filteredPosts = blogPosts.filter((post) => {
-    const matchesCategory =
-      activeCategory === "All Posts" || post.category === activeCategory;
-    const matchesSearch =
-      post.title.toLowerCase().includes(search.toLowerCase()) ||
-      post.excerpt.toLowerCase().includes(search.toLowerCase());
-    return matchesCategory && matchesSearch;
-  });
+  // Memoized filter logic for better performance
+  const filteredPosts = useMemo(() => {
+    return blogPosts.filter((post) => {
+      const matchesCategory =
+        activeCategory === "All Posts" || post.category === activeCategory;
+      const matchesSearch =
+        post.title.toLowerCase().includes(search.toLowerCase()) ||
+        post.excerpt.toLowerCase().includes(search.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [search, activeCategory]);
+
+  // Structured data for SEO
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "Expat Stays Blog",
+    description:
+      "Insights, tips, and inspiration for luxury travel, expat living, and making the most of your stay in premier destinations.",
+    url: "https://myexpatstays.com/blog",
+    publisher: {
+      "@type": "Organization",
+      name: "Expat Stays",
+      url: "https://myexpatstays.com",
+    },
+    blogPost: blogPosts.map((post) => ({
+      "@type": "BlogPosting",
+      headline: post.title,
+      description: post.excerpt,
+      image: `https://myexpatstays.com${post.imageUrl}`,
+      datePublished: post.date,
+      author: {
+        "@type": "Organization",
+        name: post.author,
+      },
+      articleSection: post.category,
+      url: `https://myexpatstays.com/blog/${post.slug}`,
+    })),
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-background/95 relative overflow-x-hidden overflow-y-hidden">
-      <Header />
+    <>
+      {/* Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData),
+        }}
+      />
+      <div className="min-h-screen bg-gradient-to-br from-background via-background to-background/95 relative overflow-x-hidden overflow-y-hidden">
+        <Header />
 
-      {/* Enhanced Background with Decorative Shapes */}
+      {/* Optimized Background - Reduced animations for better performance */}
       <div className="absolute inset-0 -z-10 pointer-events-none overflow-hidden">
-        {/* Animated gradient orbs */}
-        <div className="absolute top-24 left-10 w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-10 right-10 w-[250px] lg:w-[500px] h-[250px] lg:h-[500px] bg-gradient-to-br from-[#8EB69B]/10 to-[#235347]/10 rounded-full blur-2xl animate-pulse" style={{ animationDelay: '2s' }} />
+        {/* Simplified gradient orbs - reduced for mobile performance */}
+        <div className="hidden lg:block absolute top-24 left-10 w-[600px] h-[600px] bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-full blur-3xl" />
+        <div className="hidden lg:block absolute bottom-10 right-10 w-[500px] h-[500px] bg-gradient-to-br from-[#8EB69B]/10 to-[#235347]/10 rounded-full blur-2xl" />
 
-        {/* Decorative geometric shapes */}
-        <div className="absolute top-1/4 right-1/4 w-16 lg:w-32 h-16 lg:h-32 border border-[#8EB69B]/20 rounded-full animate-spin" style={{ animationDuration: '40s' }} />
-        <div className="absolute bottom-1/3 left-1/6 w-12 lg:w-24 h-12 lg:h-24 bg-gradient-to-br from-[#DAF1DE]/30 to-[#8EB69B]/20 rounded-lg rotate-45 animate-pulse" />
-        <div className="absolute top-1/2 right-1/6 w-8 lg:w-16 h-8 lg:h-16 border-2 border-[#8EB69B]/30 rounded-full animate-pulse" />
-
-        {/* Floating dots */}
-        <div className="absolute top-1/3 left-1/2 w-2 h-2 bg-[#8EB69B] rounded-full animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/3 w-1 h-1 bg-[#DAF1DE] rounded-full animate-pulse" style={{ animationDelay: '1s' }} />
-
-        {/* Modern Geometric Shapes - Enhanced */}
-        <div className="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/30 rotate-45 animate-[breathing_5s_ease-in-out_infinite]" />
-        <div className="absolute top-40 right-20 w-16 h-16 bg-gradient-to-br from-[#DAF1DE]/72 to-[#8EB69B]/48 rounded-full animate-[breathing_6.5s_ease-in-out_infinite]" />
-        <div className="absolute bottom-20 left-1/4 w-24 h-24 bg-gradient-to-br from-[#235347]/78 to-[#163832]/46 rotate-12 animate-[breathing_7.5s_ease-in-out_infinite]" />
-        <div className="absolute top-1/3 left-1/2 w-12 h-12 bg-gradient-to-br from-[#8EB69B]/90 to-[#DAF1DE]/46 rotate-45 animate-[breathing_8.5s_ease-in-out_infinite]" />
-
-        {/* Large Geometric Elements */}
-        <div className="absolute -top-60 -right-40 w-80 h-80 bg-gradient-to-br from-[#8EB69B]/95 to-[#72a785]/43 rounded-full filter blur-2xl animate-[breathing_10s_ease-in-out_infinite]" />
-        <div className="absolute -bottom-60 -left-40 w-72 h-72 bg-gradient-to-br from-[#DAF1DE]/76 to-[#8EB69B]/54 rounded-full filter blur-2xl animate-[breathing_11s_ease-in-out_infinite]" />
-
-        {/* Triangle Shapes */}
-        <div className="absolute top-1/2 right-10 w-0 h-0 border-l-[30px] border-l-transparent border-b-[52px] border-b-[#8EB69B]/8 border-r-[30px] border-r-transparent animate-[breathing_9s_ease-in-out_infinite]" />
-        <div className="absolute bottom-1/4 right-1/3 w-0 h-0 border-l-[20px] border-l-transparent border-b-[35px] border-b-[#DAF1DE]/10 border-r-[20px] border-r-transparent animate-[breathing_7s_ease-in-out_infinite]" />
-
-        {/* Square Shapes */}
-        <div className="absolute top-1/4 left-20 w-16 h-16 bg-gradient-to-br from-[#235347]/6 to-[#163832]/4 rotate-45 animate-[breathing_8s_ease-in-out_infinite]" />
-        <div className="absolute bottom-1/3 right-1/4 w-12 h-12 bg-gradient-to-br from-[#8EB69B]/8 to-[#72a785]/6 rotate-12 animate-[breathing_6s_ease-in-out_infinite]" />
-
-        {/* Strategic background images */}
-        <div className="absolute top-20 right-20 w-32 lg:w-64 h-32 lg:h-64 opacity-10">
+        {/* Strategic background images - Hidden on mobile for performance */}
+        <div className="hidden lg:block absolute top-20 right-20 w-64 h-64 opacity-10">
           <Image
             src={getLocalImage("luxury", 0)}
-            alt="Luxury background"
+            alt=""
             fill
             className="object-cover rounded-full"
             loading="lazy"
-            quality={60}
-            sizes="128px"
+            quality={50}
+            sizes="256px"
+            aria-hidden="true"
           />
         </div>
-        <div className="absolute bottom-40 left-20 w-24 lg:w-48 h-24 lg:h-48 opacity-10">
+        <div className="hidden lg:block absolute bottom-40 left-20 w-48 h-48 opacity-10">
           <Image
             src={getLocalImage("property", 1)}
-            alt="Property background"
+            alt=""
             fill
             className="object-cover rounded-full"
             loading="lazy"
-            quality={60}
-            sizes="128px"
-          />
-        </div>
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 lg:w-32 h-16 lg:h-32 opacity-5">
-          <Image
-            src={getLocalImage("villa", 0)}
-            alt="Villa background"
-            fill
-            className="object-cover rounded-full"
-            loading="lazy"
-            quality={60}
-            sizes="128px"
+            quality={50}
+            sizes="192px"
+            aria-hidden="true"
           />
         </div>
       </div>
@@ -171,38 +173,36 @@ export default function BlogPage() {
         {/* Textual Hero Content */}
         <div className="flex-1 z-10 text-center lg:text-left">
           <div className="inline-block mb-4 px-5 py-2 rounded-full bg-[#DAF1DE]/60 border border-[#8EB69B]/20 shadow-sm text-[#235347] font-medium text-base tracking-wide">
-            <Sparkles className="inline-block w-5 h-5 mr-2 text-[#8EB69B] align-middle" />
-            Insights & Tips
+            <Sparkles className="inline-block w-5 h-5 mr-2 text-[#8EB69B] align-middle" aria-hidden="true" />
+            <span>Insights & Tips</span>
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold font-headline text-[#235347] mb-4 drop-shadow-lg">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold font-headline text-[#235347] mb-4 drop-shadow-lg">
             Expat Stays Blog
           </h1>
-          <p className="text-lg sm:text-xl max-w-2xl mx-auto lg:mx-0 text-[#235347]/80 font-medium bg-white/70 rounded-xl px-6 py-3 shadow-sm border border-[#DAF1DE]/40">
+          <p className="text-base sm:text-lg lg:text-xl max-w-2xl mx-auto lg:mx-0 text-[#235347]/80 font-medium bg-white/70 rounded-xl px-4 sm:px-6 py-3 shadow-sm border border-[#DAF1DE]/40">
             Insights, tips, and inspiration for luxury travel, expat living, and
             making the most of your stay in premier destinations.
           </p>
         </div>
-        {/* Decorative Hero Image */}
-        <div className="relative flex-1 flex justify-center lg:justify-end mt-10 lg:mt-0">
-          <div className="relative w-64 h-64 lg:w-80 lg:h-80 rounded-full overflow-hidden shadow-2xl border-4 border-[#DAF1DE] bg-[#F8FCF9]">
+        {/* Decorative Hero Image - Hidden on mobile for performance */}
+        <div className="relative hidden lg:flex flex-1 justify-end mt-10">
+          <div className="relative w-80 h-80 rounded-full overflow-hidden shadow-2xl border-4 border-[#DAF1DE] bg-[#F8FCF9]">
             <Image
               src={getLocalImage("villa", 0)}
               alt="Luxury villa hero"
               fill
               className="object-cover scale-110 blur-[1px]"
               priority
-              quality={85}
-              sizes="(max-width: 1024px) 100vw, 50vw"
+              quality={75}
+              sizes="320px"
             />
             {/* Soft green glow */}
             <div
               className="absolute inset-0 rounded-full pointer-events-none"
               style={{ boxShadow: "0 0 64px 0 #DAF1DE88, 0 0 0 8px #8EB69B22" }}
+              aria-hidden="true"
             />
           </div>
-          {/* Floating accent orb */}
-          <div className="absolute -top-8 -right-8 w-24 h-24 bg-[#8EB69B]/20 rounded-full blur-2xl z-0 animate-pulse" />
-          <div className="absolute bottom-0 left-0 w-12 h-12 bg-[#DAF1DE]/40 rounded-full blur-xl z-0 animate-pulse" style={{ animationDelay: '2s' }} />
         </div>
       </section>
 
@@ -216,23 +216,31 @@ export default function BlogPage() {
         >
           {/* Search */}
           <div className="flex items-center w-full md:w-auto mb-2 md:mb-0">
-            <span className="inline-flex items-center px-2 text-[#8EB69B]">
+            <label htmlFor="blog-search" className="sr-only">
+              Search blog posts
+            </label>
+            <span className="inline-flex items-center px-2 text-[#8EB69B]" aria-hidden="true">
               <Search className="w-5 h-5" />
             </span>
             <Input
+              id="blog-search"
               type="text"
               placeholder="Search blog posts..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="w-full md:w-72 rounded-full border border-[#DAF1DE] focus:ring-2 focus:ring-[#8EB69B]/40 focus:border-[#8EB69B] bg-white/90 text-[#235347] placeholder:text-[#8EB69B]/60 shadow-sm transition-all duration-300 text-base font-medium"
+              aria-label="Search blog posts"
             />
           </div>
           {/* Category Filters */}
-          <div className="flex flex-wrap gap-2 justify-center md:justify-end w-full md:w-auto">
+          <div className="flex flex-wrap gap-2 justify-center md:justify-end w-full md:w-auto" role="tablist" aria-label="Blog post categories">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
+                role="tab"
+                aria-selected={activeCategory === cat}
+                aria-controls={`category-${cat.toLowerCase().replace(/\s+/g, '-')}`}
                 className={`px-4 py-1.5 rounded-full font-semibold tracking-wide text-sm border transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#8EB69B]/40 hover:scale-105 active:scale-95
                   ${
                     activeCategory === cat
@@ -240,7 +248,6 @@ export default function BlogPage() {
                       : "bg-white text-[#235347] border-[#DAF1DE] hover:bg-[#DAF1DE]/40 hover:text-[#0B2B26]"
                   }
                 `}
-                aria-pressed={activeCategory === cat}
               >
                 {cat}
               </button>
@@ -249,48 +256,47 @@ export default function BlogPage() {
         </div>
       </section>
 
-      {/* Blog Posts Grid - Futuristic Cards */}
-      <section className="py-12 lg:py-16 relative">
-        {/* Additional decorative elements around the grid */}
-        <div className="pointer-events-none absolute top-0 left-1/4 w-10 lg:w-20 h-10 lg:h-20 border border-[#8EB69B]/20 rounded-full opacity-60 z-0" />
-        <div className="pointer-events-none absolute bottom-0 right-1/4 w-8 lg:w-16 h-8 lg:h-16 bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-lg rotate-12 opacity-60 z-0" />
-        <div className="pointer-events-none absolute top-1/2 left-0 w-6 lg:w-12 h-6 lg:h-12 border border-[#8EB69B]/30 rounded-full opacity-40 z-0" />
-        <div className="pointer-events-none absolute bottom-1/3 right-0 w-12 lg:w-24 h-12 lg:h-24 bg-gradient-to-br from-[#8EB69B]/15 to-[#235347]/10 rounded-full opacity-50 z-0" />
-
+      {/* Blog Posts Grid - Optimized Cards */}
+      <section className="py-12 lg:py-16 relative" aria-label="Blog posts">
         <div className="container mx-auto px-4 sm:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12">
-            {filteredPosts.map((post, i) => (
-              <div
-                key={post.slug}
-                className="group animate-fade-in-up"
-                style={{ animationDelay: `${i * 0.1}s` }}
-              >
-                <div className="transition-all duration-300 hover:scale-105 active:scale-95">
-                  <Card className="group transition-all duration-300 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl rounded-3xl overflow-hidden border border-[#EBEBEB]/70 hover:border-[#8EB69B]/50 px-0 pb-0">
+          {filteredPosts.length === 0 ? (
+            <div className="text-center py-20">
+              <p className="text-xl text-[#235347] mb-4">No posts found</p>
+              <p className="text-[#8EB69B]">Try adjusting your search or category filter.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8 lg:gap-12">
+              {filteredPosts.map((post, i) => (
+                <article
+                  key={post.slug}
+                  className="group"
+                  id={`category-${post.category.toLowerCase().replace(/\s+/g, '-')}`}
+                >
+                  <Card className="group transition-all duration-300 bg-white/95 hover:bg-white shadow-xl hover:shadow-2xl rounded-3xl overflow-hidden border border-[#EBEBEB]/70 hover:border-[#8EB69B]/50 px-0 pb-0 h-full flex flex-col">
                     <div className="relative w-full aspect-[16/9] overflow-hidden rounded-3xl">
                       <Image
                         src={post.imageUrl}
                         alt={post.imageHint}
                         fill
-                        className="object-cover rounded-3xl shadow-md group-hover:shadow-2xl border-2 border-transparent group-hover:border-[#DAF1DE] group-focus:border-[#8EB69B] transition-all duration-300"
-                        sizes="(max-width: 768px) 100vw, 33vw"
+                        className="object-cover rounded-3xl shadow-md group-hover:shadow-2xl border-2 border-transparent group-hover:border-[#DAF1DE] transition-all duration-300"
+                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         priority={i < 2}
                         loading={i < 2 ? "eager" : "lazy"}
-                        quality={80}
+                        quality={75}
                       />
                     </div>
-                    <CardContent className="p-5 lg:p-7">
-                      <div className="flex items-center gap-2 lg:gap-3 mb-2 lg:mb-3">
+                    <CardContent className="p-5 lg:p-7 flex-1 flex flex-col">
+                      <div className="flex items-center gap-2 lg:gap-3 mb-2 lg:mb-3 flex-wrap">
                         <div className="flex items-center gap-1 lg:gap-2 text-xs text-[#8EB69B] font-medium">
-                          <Calendar className="h-3 lg:h-4 w-3 lg:w-4" />
-                          {post.date}
+                          <Calendar className="h-3 lg:h-4 w-3 lg:w-4" aria-hidden="true" />
+                          <time dateTime={post.date}>{post.date}</time>
                         </div>
-                        <span className="text-[#DAF1DE]">•</span>
+                        <span className="text-[#DAF1DE]" aria-hidden="true">•</span>
                         <div className="flex items-center gap-1 lg:gap-2 text-xs text-[#8EB69B] font-medium">
-                          <User className="h-3 lg:h-4 w-3 lg:w-4" />
-                          {post.author}
+                          <User className="h-3 lg:h-4 w-3 lg:w-4" aria-hidden="true" />
+                          <span>{post.author}</span>
                         </div>
-                        <span className="text-[#DAF1DE]">•</span>
+                        <span className="text-[#DAF1DE]" aria-hidden="true">•</span>
                         <div className="text-xs text-[#8EB69B] font-medium">
                           {post.readTime}
                         </div>
@@ -298,26 +304,28 @@ export default function BlogPage() {
                       <CardTitle className="text-lg lg:text-xl font-extrabold tracking-tight text-[#051F20] group-hover:text-[#8EB69B] transition-colors mb-2 leading-snug">
                         {post.title}
                       </CardTitle>
-                      <p className="text-[#4A4A4A] text-sm lg:text-base mb-3 lg:mb-4 line-clamp-3 font-medium">
+                      <p className="text-[#4A4A4A] text-sm lg:text-base mb-3 lg:mb-4 line-clamp-3 font-medium flex-1">
                         {post.excerpt}
                       </p>
                       <Button
                         asChild
-                        className="mt-2 rounded-full bg-gradient-to-r from-[#8EB69B] to-[#235347] text-white hover:from-[#235347] hover:to-[#8EB69B] shadow-lg shadow-[#8EB69B]/20 hover:shadow-xl hover:shadow-[#8EB69B]/30 transition-all duration-300 px-5 lg:px-7 py-2 text-sm lg:text-base font-semibold flex items-center justify-center tracking-wide"
+                        className="mt-auto rounded-full bg-gradient-to-r from-[#8EB69B] to-[#235347] text-white hover:from-[#235347] hover:to-[#8EB69B] shadow-lg shadow-[#8EB69B]/20 hover:shadow-xl hover:shadow-[#8EB69B]/30 transition-all duration-300 px-5 lg:px-7 py-2 text-sm lg:text-base font-semibold flex items-center justify-center tracking-wide"
+                        aria-label={`Read more about ${post.title}`}
                       >
                         <Link href={`/blog/${post.slug}`}>
                           Read More
-                          <ArrowRight className="h-4 lg:h-5 w-4 lg:w-5 ml-2 transition-transform group-hover:translate-x-1" />
+                          <ArrowRight className="h-4 lg:h-5 w-4 lg:w-5 ml-2 transition-transform group-hover:translate-x-1" aria-hidden="true" />
                         </Link>
                       </Button>
                     </CardContent>
                   </Card>
-                </div>
-              </div>
-            ))}
-          </div>
+                </article>
+              ))}
+            </div>
+          )}
         </div>
       </section>
-    </div>
+      </div>
+    </>
   );
 }
