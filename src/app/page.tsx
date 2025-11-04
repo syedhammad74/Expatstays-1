@@ -602,7 +602,7 @@ export default function Home() {
                             priority={slide.priority}
                             fetchPriority={slide.priority ? "high" : "auto"}
                             loading={slide.priority ? "eager" : "lazy"}
-                            quality={slide.priority ? 85 : 75}
+                            quality={slide.priority ? 75 : 70}
                             placeholder="blur"
                             blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAABAAEDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
                             onLoad={
@@ -1103,6 +1103,9 @@ export default function Home() {
                             width={48}
                             height={48}
                             className="object-cover"
+                            loading="lazy"
+                            quality={75}
+                            sizes="48px"
                           />
                         </div>
                         <div className="absolute -bottom-1 -right-1 w-4 lg:w-5 h-4 lg:h-5 bg-[#7AA589] rounded-full flex items-center justify-center">
@@ -1184,11 +1187,12 @@ export default function Home() {
                     <Image
                       src="/media/isa.webp"
                       alt="Isa Husain - Founder of Expat Stays"
-                      width={800}
-                      height={1000}
+                      width={542}
+                      height={980}
                       className="w-full h-full object-cover"
-                      quality={90}
-                      sizes="(max-width: 1024px) 100vw, 50vw"
+                      quality={80}
+                      sizes="(max-width: 1024px) 100vw, 542px"
+                      loading="lazy"
                     />
                   </div>
                 </div>

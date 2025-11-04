@@ -164,35 +164,37 @@ const nextConfig: NextConfig = {
         splitChunks: {
           chunks: "all",
           minSize: 20000,
-          maxSize: 150000, // Reduced from 200000 to improve code splitting
+          maxSize: 120000, // Further reduced to improve code splitting
           cacheGroups: {
             firebase: {
               test: /[\\/]node_modules[\\/](firebase|@firebase)[\\/]/,
               name: "firebase",
               chunks: "async",
               priority: 30,
-              maxSize: 150000,
+              maxSize: 120000,
+              enforce: true,
             },
             vendor: {
               test: /[\\/]node_modules[\\/]/,
               name: "vendors",
               chunks: "async",
               priority: 20,
-              maxSize: 150000,
+              maxSize: 120000,
+              reuseExistingChunk: true,
             },
             radix: {
               test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
               name: "radix-ui",
               chunks: "async",
               priority: 25,
-              maxSize: 100000,
+              maxSize: 80000,
             },
             lucide: {
               test: /[\\/]node_modules[\\/]lucide-react[\\/]/,
               name: "lucide",
               chunks: "async",
               priority: 15,
-              maxSize: 50000,
+              maxSize: 40000,
             },
             commons: {
               name: "commons",
@@ -200,7 +202,7 @@ const nextConfig: NextConfig = {
               chunks: "async",
               priority: 10,
               reuseExistingChunk: true,
-              maxSize: 100000,
+              maxSize: 80000,
             },
           },
         },
@@ -224,14 +226,14 @@ const nextConfig: NextConfig = {
               compress: {
                 drop_console: true,
                 drop_debugger: true,
-                ecma: 2020,
+                ecma: 2022,
                 passes: 2,
               },
               mangle: {
                 safari10: false,
               },
               format: {
-                ecma: 2020,
+                ecma: 2022,
               },
             },
           })

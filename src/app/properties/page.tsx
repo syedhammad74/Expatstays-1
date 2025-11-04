@@ -1084,8 +1084,9 @@ export default function PropertiesPage() {
                     alt="Luxury Villa Interior"
                     fill
                     className="object-cover object-center"
-                    loading="lazy"
-                    quality={80}
+                    priority
+                    fetchPriority="high"
+                    quality={75}
                     sizes="(max-width: 1024px) 50vw, 33vw"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
@@ -1124,7 +1125,9 @@ export default function PropertiesPage() {
               height={400}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
               className="object-cover w-full h-48 sm:h-56 lg:h-72 xl:h-96"
-              quality={85}
+              priority
+              fetchPriority="high"
+              quality={75}
             />
           </div>
         </div>

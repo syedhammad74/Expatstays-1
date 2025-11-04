@@ -1,12 +1,14 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import "../styles/animations.css";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
 import { AuthProvider } from "@/hooks/use-auth";
 import ScrollToTop from "@/components/ScrollToTop";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import SkipLink from "@/components/accessibility/SkipLink";
+
+// Import animations.css but it will be loaded non-blocking via script in head
+import "../styles/animations.css";
 
 export const metadata: Metadata = {
   title: {
@@ -146,27 +148,7 @@ export default function RootLayout({
 
         {/* Preload critical resources for LCP optimization */}
         <link rel="preload" href="/logo.png" as="image" />
-        <link
-          rel="preload"
-          href="/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg"
-          as="image"
-          fetchPriority="high"
-        />
-        <link
-          rel="preload"
-          href="/media/DSC01806 HDR June 25 2025/DSC01919-HDR.jpg"
-          as="image"
-        />
-        <link
-          rel="preload"
-          href="/media/DSC01806 HDR June 25 2025/DSC01914-HDR.jpg"
-          as="image"
-        />
-        <link
-          rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
-          as="style"
-        />
+        {/* Removed preload of large HDR images - they're optimized via Next.js Image */}
         <link rel="dns-prefetch" href="//firebasestorage.googleapis.com" />
         <link rel="dns-prefetch" href="//storage.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />

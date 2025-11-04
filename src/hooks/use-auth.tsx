@@ -58,20 +58,35 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   }, []);
 
+  // Defer Firebase auth initialization to reduce blocking
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        setUser(firebaseUser);
-        await loadUserProfile(firebaseUser.uid);
-      } else {
-        setUser(null);
-        setUserProfile(null);
-      }
-      setLoading(false);
-    });
+    let mounted = true;
+    let unsubscribe: (() => void) | undefined;
+    
+    // Delay auth initialization slightly to allow page to render first
+    const timer = setTimeout(() => {
+      if (!mounted) return;
+      
+      unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+        if (!mounted) return;
+        
+        if (firebaseUser) {
+          setUser(firebaseUser);
+          await loadUserProfile(firebaseUser.uid);
+        } else {
+          setUser(null);
+          setUserProfile(null);
+        }
+        setLoading(false);
+      });
+    }, 100);
 
-    return () => unsubscribe();
-  }, [loadUserProfile]); // Added loadUserProfile as dependency
+    return () => {
+      mounted = false;
+      clearTimeout(timer);
+      if (unsubscribe) unsubscribe();
+    };
+  }, [loadUserProfile]);
 
   const createUserProfile = async (firebaseUser: FirebaseUser) => {
     const userProfile: User = {
