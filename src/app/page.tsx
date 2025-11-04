@@ -559,25 +559,25 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center">
               {/* Left Panel - Content */}
-              <div className="text-center lg:text-left space-y-6 md:space-y-8">
-                <div className="inline-block px-4 py-2 bg-brand-primary text-white rounded-full text-sm font-medium shadow-sm">
+              <div className="text-center lg:text-left space-y-4 sm:space-y-6 md:space-y-8 w-full">
+                <div className="inline-block px-4 py-2 bg-brand-primary text-white rounded-full text-sm font-medium shadow-sm mb-2 sm:mb-0">
                   Luxury Rentals
                 </div>
 
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-brand-dark leading-tight">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-bold text-brand-dark leading-tight px-2 sm:px-0">
                   Find Your{" "}
                   <span className="text-brand-primary">Perfect Home</span>
                 </h1>
 
-                <p className="text-xs sm:text-sm md:text-base text-brand-primary max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                <p className="text-sm sm:text-base md:text-lg text-brand-primary max-w-lg mx-auto lg:mx-0 leading-relaxed px-4 sm:px-0">
                   Curated luxury properties for modern living. Minimal,
                   beautiful, and effortless.
                 </p>
 
-                <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start pt-2">
+                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2 px-4 sm:px-0">
                   <button
                     onClick={handleViewAllProperties}
-                    className="px-8 py-3.5 bg-brand-medium-dark text-white font-semibold rounded-full hover:bg-brand-dark transition-all duration-200 shadow-md hover:shadow-lg"
+                    className="px-6 sm:px-8 py-3 sm:py-3.5 bg-brand-medium-dark text-white font-semibold rounded-full hover:bg-brand-dark transition-all duration-200 shadow-md hover:shadow-lg text-sm sm:text-base w-full sm:w-auto"
                   >
                     Explore Properties
                   </button>
@@ -586,7 +586,7 @@ export default function Home() {
                     href="https://wa.me/923087496089?text=Hi%2C%20I%20am%20interested%20in%20booking%20a%20property"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-8 py-3.5 border-2 border-[#25D366] text-[#25D366] font-semibold rounded-full hover:bg-[#25D366] hover:text-white transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2"
+                    className="px-6 sm:px-8 py-3 sm:py-3.5 border-2 border-[#25D366] text-[#25D366] font-semibold rounded-full hover:bg-[#25D366] hover:text-white transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2 text-sm sm:text-base w-full sm:w-auto"
                   >
                     <MessageCircle className="h-5 w-5" />
                     Contact
@@ -594,10 +594,10 @@ export default function Home() {
                 </div>
               </div>
 
-              {/* Right Panel: Carousel */}
+              {/* Right Panel: Carousel - Hidden on mobile */}
               <div
                 ref={heroRef}
-                className="relative w-full flex items-center justify-center order-first lg:order-last"
+                className="hidden lg:flex relative w-full items-center justify-center order-first lg:order-last"
               >
                 <div className="relative w-full max-w-2xl">
                   {/* Carousel Container */}
@@ -649,9 +649,9 @@ export default function Home() {
 
                             {/* Image title */}
                             <div className="absolute bottom-4 left-4 right-4">
-                              <h3 className="text-white text-sm sm:text-base font-semibold drop-shadow-lg">
+                              <p className="text-white text-sm sm:text-base font-semibold drop-shadow-lg">
                                 {slide.title}
-                              </h3>
+                              </p>
                             </div>
                           </div>
                         ))}
@@ -745,9 +745,9 @@ export default function Home() {
                     </PopoverTrigger>
                     <PopoverContent className="p-0 bg-white rounded-xl shadow-xl border border-gray-200 min-w-[300px]">
                       <div className="px-6 pt-6 pb-2">
-                        <h3 className="text-lg font-bold text-brand-dark">
+                        <h2 className="text-lg font-bold text-brand-dark">
                           Select your stay dates
-                        </h3>
+                        </h2>
                         <p className="text-sm text-brand-primary">
                           Choose check-in and check-out
                         </p>
@@ -956,9 +956,9 @@ export default function Home() {
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-[#7AA589]/5 rounded-full mb-10">
                   <div className="w-8 h-8 bg-[#7AA589]/20 rounded-full"></div>
                 </div>
-                <h3 className="text-3xl font-light text-[#0B2B26] mb-6">
+                <h2 className="text-3xl font-light text-[#0B2B26] mb-6">
                   No properties available
-                </h3>
+                </h2>
                 <p className="text-[#235347]/70 mb-10 max-w-lg mx-auto font-light text-lg">
                   Loading properties... If this persists, please refresh the
                   page.
@@ -1223,12 +1223,36 @@ export default function Home() {
                     </div>
                   </div>
 
+        {/* About Isa Husain Section */}
+        <section className="py-12 lg:py-20 relative overflow-hidden bg-gray-50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="relative">
+              <div className="bg-white rounded-xl border border-gray-200 shadow-lg overflow-hidden">
+                <div className="grid grid-cols-1 lg:grid-cols-2">
+                  {/* Left: Image with badge */}
+                  <div className="relative bg-brand-very-light p-6 lg:p-8 lg:border-r lg:border-gray-200">
+                    <Badge className="absolute top-4 left-4 bg-white text-brand-medium border border-gray-200 shadow-sm px-2.5 py-1 rounded-full text-xs font-semibold">
+                      Founder
+                    </Badge>
+                    <div className="rounded-xl overflow-hidden aspect-[3/4]">
+                      <Image
+                        src="/media/isa.webp"
+                        alt="Isa Husain - Founder of Expat Stays"
+                        width={800}
+                        height={1000}
+                        className="w-full h-full object-cover"
+                        quality={90}
+                        sizes="(max-width: 1024px) 100vw, 50vw"
+                      />
+                    </div>
+                  </div>
+
                   {/* Right: Content */}
                   <div className="p-7 lg:p-10 bg-white flex flex-col gap-4 lg:gap-6">
                     <div>
-                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-brand-dark">
+                      <h2 className="text-xl sm:text-2xl lg:text-3xl font-semibold text-brand-dark">
                         Isa Husain
-                      </h3>
+                      </h2>
                       <div className="hidden lg:block h-1 w-20 bg-gradient-to-r from-brand-primary to-brand-dark rounded-full mt-2" />
                       <p className="text-brand-primary text-xs lg:text-sm">
                         Founder, Expat Stays
@@ -1353,9 +1377,9 @@ export default function Home() {
                         />
                       </div>
                       <div>
-                        <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-1">
+                        <h2 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-1">
                           @expatstays
-                        </h3>
+                        </h2>
                         <p className="text-sm lg:text-base text-[#235347] mb-2">
                           Official Expat Stays
                         </p>
@@ -1413,9 +1437,9 @@ export default function Home() {
                         />
                       </div>
                       <div>
-                        <h3 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-1">
+                        <h2 className="text-xl lg:text-2xl font-bold text-[#051F20] mb-1">
                           @isa_unscripted
-                        </h3>
+                        </h2>
                         <p className="text-sm lg:text-base text-[#235347] mb-2">
                           Isa&apos;s Personal Journey
                         </p>

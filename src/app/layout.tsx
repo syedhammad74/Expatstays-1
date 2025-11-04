@@ -104,6 +104,19 @@ export default function RootLayout({
           href="https://fonts.gstatic.com"
           crossOrigin="anonymous"
         />
+
+        {/* Preconnect to Firebase for faster auth loading (310ms LCP savings) */}
+        <link
+          rel="preconnect"
+          href="https://expatstays-551fb.firebaseapp.com"
+        />
+        <link
+          rel="dns-prefetch"
+          href="https://expatstays-551fb.firebaseapp.com"
+        />
+        <link rel="preconnect" href="https://apis.google.com" />
+        <link rel="dns-prefetch" href="https://apis.google.com" />
+
         <link
           rel="preload"
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
@@ -154,7 +167,6 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
           as="style"
         />
-        <link rel="modulepreload" href="/_next/static/chunks/app/page.js" />
         <link rel="dns-prefetch" href="//firebasestorage.googleapis.com" />
         <link rel="dns-prefetch" href="//storage.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.googleapis.com" />

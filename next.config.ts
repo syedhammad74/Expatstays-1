@@ -57,11 +57,12 @@ const nextConfig: NextConfig = {
     ],
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
-    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384, 512, 640, 750],
     minimumCacheTTL: 31536000,
     dangerouslyAllowSVG: true,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     unoptimized: false,
+    quality: 80,
   },
 
   compress: true,
@@ -164,7 +165,7 @@ const nextConfig: NextConfig = {
         splitChunks: {
           chunks: "all",
           minSize: 20000,
-          maxSize: 200000,
+          maxSize: 150000, // Reduced from 200000 to improve code splitting
           cacheGroups: {
             firebase: {
               test: /[\\/]node_modules[\\/](firebase|@firebase)[\\/]/,
@@ -178,7 +179,7 @@ const nextConfig: NextConfig = {
               name: "vendors",
               chunks: "async",
               priority: 20,
-              maxSize: 200000,
+              maxSize: 150000,
             },
             radix: {
               test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
