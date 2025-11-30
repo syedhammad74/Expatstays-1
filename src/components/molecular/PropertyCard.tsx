@@ -80,8 +80,24 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
       onViewDetails?.(slug);
     };
 
+    const handleCardClick = (e: React.MouseEvent) => {
+      // Don't navigate if clicking on interactive elements
+      const target = e.target as HTMLElement;
+      if (
+        target.closest('button') ||
+        target.closest('a') ||
+        target.closest('[role="button"]')
+      ) {
+        return;
+      }
+      handleViewDetails();
+    };
+
     return (
-      <Card className="group transition-shadow duration-200 bg-white hover:bg-white shadow-md hover:shadow-xl rounded-xl overflow-hidden border border-[#E5E7EB]/40 hover:border-[#8EB69B]/30 h-full flex flex-col">
+      <Card 
+        onClick={handleCardClick}
+        className="group transition-shadow duration-200 bg-white hover:bg-white shadow-md hover:shadow-xl rounded-xl overflow-hidden border border-[#E5E7EB]/40 hover:border-[#8EB69B]/30 h-full flex flex-col cursor-pointer"
+      >
         <CardHeader className="p-0 relative">
           <div className="relative w-full aspect-[4/3] overflow-hidden">
             <Image
@@ -105,8 +121,11 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
 
             {/* Favorite button */}
             <button
-              onClick={handleToggleFavorite}
-              className="absolute top-3 left-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleToggleFavorite();
+              }}
+              className="absolute top-3 left-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2 z-10"
               aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
             >
               <Heart
@@ -118,8 +137,11 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
 
             {/* Share button */}
             <button
-              onClick={handleShare}
-              className="absolute top-3 left-12 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleShare();
+              }}
+              className="absolute top-3 left-12 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2 z-10"
               aria-label="Share property"
             >
               <Share2 className="h-4 w-4 text-gray-600" />
@@ -208,9 +230,12 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
               <span className="text-xs text-gray-500">per night</span>
             </div>
             <Button
-              onClick={handleViewDetails}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleViewDetails();
+              }}
               size="sm"
-              className="bg-[#7AA589] hover:bg-[#6A9A79] text-white"
+              className="bg-[#7AA589] hover:bg-[#6A9A79] text-white z-10 relative"
             >
               View Details
             </Button>

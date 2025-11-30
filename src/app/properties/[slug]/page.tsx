@@ -480,11 +480,11 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
             <Card className="border-0 shadow-xl rounded-2xl bg-white sticky top-24">
               <CardHeader className="pb-4">
                 <div className="flex items-center gap-2 mb-4">
-                  <Badge className="bg-[#8EB69B]/15 text-[#235347] border-0 text-xs font-semibold px-3 py-1.5 rounded-full">
+                  <Badge className="bg-gray-100 text-gray-700 border-0 text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-gray-100 hover:text-gray-700">
                     {property.propertyType.charAt(0).toUpperCase() +
                       property.propertyType.slice(1)}
                   </Badge>
-                  <Badge className="bg-[#235347]/10 text-[#235347] border-0 text-xs font-semibold px-3 py-1.5 rounded-full">
+                  <Badge className="bg-green-100 text-green-700 border-0 text-xs font-semibold px-3 py-1.5 rounded-full hover:bg-green-100 hover:text-green-700">
                     Verified
                   </Badge>
                 </div>
