@@ -166,7 +166,7 @@ export default function PropertiesPage() {
         coordinates: { lat: 33.6844, lng: 73.0479 },
       },
       propertyType: "apartment" as const,
-      capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+      capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4, beds: 3 } as any,
       amenities: [
         "High-Speed WiFi",
         "Air Conditioning",
@@ -211,7 +211,7 @@ export default function PropertiesPage() {
         "/media/blogs-appartments/IMG_6745.JPG",
       ],
       pricing: {
-        basePrice: 35,
+        basePrice: 50,
         currency: "USD",
         cleaningFee: 25,
         serviceFee: 15,
@@ -239,7 +239,7 @@ export default function PropertiesPage() {
         coordinates: { lat: 33.6844, lng: 73.0479 },
       },
       propertyType: "apartment" as const,
-      capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+      capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4, beds: 3 } as any,
       amenities: [
         "High-Speed WiFi",
         "Air Conditioning",
@@ -587,7 +587,7 @@ export default function PropertiesPage() {
             "/media/blogs-appartments/IMG_6745.JPG",
           ],
           pricing: {
-            basePrice: 35,
+            basePrice: 50,
             currency: "USD",
             cleaningFee: 25,
             serviceFee: 15,
@@ -615,7 +615,7 @@ export default function PropertiesPage() {
             coordinates: { lat: 33.6844, lng: 73.0479 },
           },
           propertyType: "apartment" as const,
-          capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4 },
+          capacity: { bedrooms: 2, bathrooms: 2, maxGuests: 4, beds: 3 } as any,
           amenities: [
             "High-Speed WiFi",
             "Air Conditioning",
