@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 
 const WhatsAppButton = () => {
-  const phoneNumber = "+923087496089";
+  const phoneNumber = "+923155610110";
   const message = encodeURIComponent(
     "Hello! I'm interested in learning more about Expat Stays."
   );

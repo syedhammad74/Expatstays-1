@@ -212,8 +212,8 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: "Phone",
-      content: "+971 50 123 4567",
-      link: "tel:+971501234567",
+      content: "+92 315 5610110",
+      link: "tel:+923155610110",
     },
     {
       icon: Mail,
@@ -306,7 +306,7 @@ export default function ContactPage() {
 
         {/* Contact Form Section - Enhanced */}
         <section className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24">
-            <div className="mx-auto">
+          <div className="mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start animate-fade-in-up">
               {/* Enhanced Form Card */}
               <div className="animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
@@ -373,11 +373,10 @@ export default function ContactPage() {
                               type="text"
                               value={formData.fullName}
                               onChange={handleInputChange}
-                              className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 ${
-                                errors.fullName
+                              className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 ${errors.fullName
                                   ? "border-red-300"
                                   : "border-[#DAF1DE]"
-                              }`}
+                                }`}
                               placeholder="Enter your full name"
                               aria-required="true"
                               aria-invalid={errors.fullName ? "true" : "false"}
@@ -407,11 +406,10 @@ export default function ContactPage() {
                               type="email"
                               value={formData.email}
                               onChange={handleInputChange}
-                              className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 ${
-                                errors.email
+                              className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 ${errors.email
                                   ? "border-red-300"
                                   : "border-[#DAF1DE]"
-                              }`}
+                                }`}
                               placeholder="your.email@example.com"
                             />
                           </div>
@@ -442,12 +440,11 @@ export default function ContactPage() {
                               type="tel"
                               value={formData.phone}
                               onChange={handleInputChange}
-                              className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 ${
-                                errors.phone
+                              className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 ${errors.phone
                                   ? "border-red-300"
                                   : "border-[#DAF1DE]"
-                              }`}
-                              placeholder="+971 50 123 4567"
+                                }`}
+                              placeholder="+92 315 5610110"
                             />
                           </div>
                           {errors.phone && (
@@ -472,11 +469,10 @@ export default function ContactPage() {
                               name="reason"
                               value={formData.reason}
                               onChange={handleInputChange}
-                              className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 appearance-none ${
-                                errors.reason
+                              className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 appearance-none ${errors.reason
                                   ? "border-red-300"
                                   : "border-[#DAF1DE]"
-                              }`}
+                                }`}
                             >
                               <option value="">Select a reason</option>
                               <option value="property-inquiry">
@@ -511,11 +507,10 @@ export default function ContactPage() {
                             value={formData.message}
                             onChange={handleInputChange}
                             rows={5}
-                            className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 resize-none ${
-                              errors.message
+                            className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 resize-none ${errors.message
                                 ? "border-red-300"
                                 : "border-[#DAF1DE]"
-                            }`}
+                              }`}
                             placeholder="Tell us about your requirements and how we can help you..."
                           />
                         </div>
@@ -582,7 +577,7 @@ export default function ContactPage() {
               </div>
 
               {/* Enhanced Contact Info Cards */}
-                <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+              <div className="space-y-6 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
                 {/* Enhanced header */}
                 <div className="text-center lg:text-left mb-8">
                   <div className="flex items-center justify-center lg:justify-start gap-3 mb-4">
@@ -696,7 +691,7 @@ export default function ContactPage() {
         <section className="container mx-auto px-4 sm:px-8 pb-16 lg:pb-24">
           <div className="max-w-6xl mx-auto animate-fade-in-up">
             <div className="text-center mb-12">
-                <h2 className="text-3xl lg:text-4xl font-bold text-[#051F20] mb-4">
+              <h2 className="text-3xl lg:text-4xl font-bold text-[#051F20] mb-4">
                 Visit Our Office
               </h2>
               <p className="text-lg text-[#235347] max-w-2xl mx-auto">
