@@ -1,15 +1,12 @@
 import React from "react";
-import Image from "next/image";
+import Link from "next/link";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
-  Star,
   MapPin,
   Users,
   BedDouble,
   Bath,
-  Eye,
   Heart,
   Share2,
 } from "lucide-react";
@@ -58,14 +55,18 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
     onToggleFavorite,
     onShare,
   }) => {
-    const [imageError, setImageError] = React.useState(false);
     const [isFavorite, setIsFavorite] = React.useState(false);
-
-    // Use images array if available, otherwise fallback to single imageUrl
+    const [currentImageIndex, setCurrentImageIndex] = React.useState(0);
+    const scrollContainerRef = React.useRef<HTMLDivElement>(null);
     const allImages = images.length > 0 ? images : [imageUrl];
-    const displayImageUrl = imageError
-      ? "/placeholder-property.jpg"
-      : allImages[0];
+
+    const handleScroll = () => {
+      if (scrollContainerRef.current) {
+        const { scrollLeft, clientWidth } = scrollContainerRef.current;
+        const newIndex = Math.round(scrollLeft / clientWidth);
+        setCurrentImageIndex(newIndex);
+      }
+    };
 
     const handleToggleFavorite = () => {
       setIsFavorite(!isFavorite);
@@ -76,171 +77,179 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
       onShare?.(slug);
     };
 
-    const handleViewDetails = () => {
-      onViewDetails?.(slug);
-    };
-
-    const handleCardClick = (e: React.MouseEvent) => {
-      // Don't navigate if clicking on interactive elements
-      const target = e.target as HTMLElement;
-      if (
-        target.closest('button') ||
-        target.closest('a') ||
-        target.closest('[role="button"]')
-      ) {
-        return;
-      }
-      handleViewDetails();
-    };
-
     return (
-      <Card 
-        onClick={handleCardClick}
-        className="group transition-shadow duration-200 bg-white hover:bg-white shadow-md hover:shadow-xl rounded-xl overflow-hidden border border-[#E5E7EB]/40 hover:border-[#8EB69B]/30 h-full flex flex-col cursor-pointer"
+      <Card
+        className="group transition-shadow duration-200 bg-white hover:bg-white shadow-md hover:shadow-xl rounded-xl overflow-hidden border border-[#E5E7EB]/40 hover:border-[#8EB69B]/30 h-full flex flex-col"
       >
         <CardHeader className="p-0 relative">
-          <div className="relative w-full aspect-[4/3] overflow-hidden">
-            <Image
-              src={displayImageUrl}
-              alt={title}
-              fill
-              className="object-cover"
-              onError={() => setImageError(true)}
-              priority={false}
-              loading="lazy"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              quality={80}
-            />
+          <div className="relative aspect-[4/3] overflow-hidden bg-gray-100 group">
+            {/* Scrollable Image Container - Interactive part */}
+            <div
+              ref={scrollContainerRef}
+              onScroll={handleScroll}
+              className="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide h-full w-full cursor-pointer touch-pan-x relative z-0"
+              style={{
+                scrollBehavior: "smooth",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
+              }}
+            >
+              {allImages.map((img, index) => (
+                <div
+                  key={index}
+                  className="flex-shrink-0 w-full h-full snap-center relative"
+                >
+                  <Link
+                    href={`/properties/${slug}`}
+                    className="block w-full h-full relative"
+                  >
+                    <img
+                      src={img}
+                      alt={`${title} - Image ${index + 1}`}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading={index === 0 ? "eager" : "lazy"}
+                    />
+                  </Link>
+                </div>
+              ))}
+            </div>
 
-            {/* Image counter for multiple images */}
+            {/* Image Dots Indicator */}
             {allImages.length > 1 && (
-              <div className="absolute top-3 right-3 bg-black/60 backdrop-blur-sm text-white text-xs font-medium px-2 py-1 rounded-full">
-                1 / {allImages.length}
+              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-10 px-2 py-1 bg-black/20 backdrop-blur-sm rounded-full pointer-events-none">
+                {allImages.slice(0, 5).map((_, idx) => (
+                  <div
+                    key={idx}
+                    className={`h-1.5 rounded-full transition-all duration-300 ${idx === currentImageIndex
+                      ? "bg-white w-2.5"
+                      : "bg-white/50 w-1.5"
+                      }`}
+                  />
+                ))}
               </div>
             )}
 
-            {/* Favorite button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleToggleFavorite();
-              }}
-              className="absolute top-3 left-3 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2 z-10"
-              aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-            >
-              <Heart
-                className={`h-4 w-4 transition-colors ${
-                  isFavorite ? "fill-red-500 text-red-500" : "text-gray-600"
-                }`}
-              />
-            </button>
-
-            {/* Share button */}
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleShare();
-              }}
-              className="absolute top-3 left-12 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2 z-10"
-              aria-label="Share property"
-            >
-              <Share2 className="h-4 w-4 text-gray-600" />
-            </button>
-
-            {/* Featured badge */}
-            {isFeatured && (
-              <div className="absolute top-3 right-3 bg-[#7AA589] text-white text-xs font-medium px-2 py-1 rounded-full">
-                Featured
+            {/* Top Badges */}
+            <div className="absolute top-3 left-3 right-3 flex justify-between items-start pointer-events-none z-20">
+              <div className="flex gap-2">
+                {isAvailable ? (
+                  <Badge className="bg-green-500/90 hover:bg-green-500 text-white border-0">
+                    Available
+                  </Badge>
+                ) : (
+                  <Badge variant="destructive" className="opacity-90">
+                    Booked
+                  </Badge>
+                )}
+                {isFeatured && (
+                  <Badge className="bg-brand-primary/90 hover:bg-brand-primary text-white border-0">
+                    Featured
+                  </Badge>
+                )}
               </div>
-            )}
 
-            {/* Availability status */}
-            <div className="absolute bottom-3 left-3">
-              <Badge
-                variant={isAvailable ? "default" : "destructive"}
-                className="text-xs"
-              >
-                {isAvailable ? "Available" : "Booked"}
-              </Badge>
+              {/* Action Buttons - Interactive & Above Link */}
+              <div className="flex gap-2 pointer-events-auto">
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleToggleFavorite();
+                  }}
+                  className="p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2"
+                  aria-label={
+                    isFavorite ? "Remove from favorites" : "Add to favorites"
+                  }
+                >
+                  <Heart
+                    className={`h-4 w-4 transition-colors ${isFavorite
+                      ? "fill-red-500 text-red-500"
+                      : "text-gray-600"
+                      }`}
+                  />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    handleShare();
+                  }}
+                  className="p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors focus:outline-none focus:ring-2 focus:ring-[#8EB69B] focus:ring-offset-2"
+                  aria-label="Share property"
+                >
+                  <Share2 className="h-4 w-4 text-gray-600" />
+                </button>
+              </div>
             </div>
           </div>
         </CardHeader>
 
-        <CardContent className="p-4 flex-1 flex flex-col">
-          {/* Property type and verification */}
-          <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-[#8EB69B] uppercase tracking-wide">
-              {propertyType}
-            </span>
-            {isVerified && (
-              <div className="flex items-center text-xs text-green-600">
-                <div className="w-2 h-2 bg-green-500 rounded-full mr-1" />
-                Verified
+        <Link href={`/properties/${slug}`} className="flex-grow flex flex-col">
+          <CardContent className="p-4 flex-grow flex flex-col space-y-3">
+            <div className="space-y-1">
+              <div className="flex justify-between items-start">
+                <span className="text-xs font-medium text-[#8EB69B] uppercase tracking-wide line-clamp-1">
+                  {propertyType}
+                </span>
+                {isVerified && (
+                  <div className="flex items-center text-xs text-green-600 flex-shrink-0">
+                    <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-1" />
+                    Verified
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          {/* Title */}
-          <h3 className="font-semibold text-gray-900 text-lg mb-2 line-clamp-2 group-hover:text-[#8EB69B] transition-colors">
-            {title}
-          </h3>
+              <h3 className="font-semibold text-lg text-[#0B2B26] line-clamp-1 group-hover:text-[#7AA589] transition-colors">
+                {title}
+              </h3>
 
-          {/* Location */}
-          <div className="flex items-center text-gray-600 text-sm mb-3">
-            <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
-            <span className="truncate">{location}</span>
-          </div>
-
-          {/* Property details */}
-          <div className="flex items-center text-gray-600 text-sm mb-3 space-x-4">
-            <div className="flex items-center">
-              <Users className="h-4 w-4 mr-1" />
-              <span>{guests} guests</span>
-            </div>
-            <div className="flex items-center">
-              <BedDouble className="h-4 w-4 mr-1" />
-              <span>{bedrooms} beds</span>
-            </div>
-            <div className="flex items-center">
-              <Bath className="h-4 w-4 mr-1" />
-              <span>{bathrooms} baths</span>
-            </div>
-          </div>
-
-          {/* Rating and views */}
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center">
-              <Star className="h-4 w-4 text-yellow-400 fill-current mr-1" />
-              <span className="text-sm font-medium text-gray-900">
-                {rating}
-              </span>
-            </div>
-            {views > 0 && (
-              <div className="flex items-center text-gray-500 text-xs">
-                <Eye className="h-3 w-3 mr-1" />
-                <span>{views} views</span>
+              <div className="flex items-center text-[#235347]/70 text-sm">
+                <MapPin className="h-3.5 w-3.5 mr-1" />
+                <span className="truncate">{location}</span>
               </div>
-            )}
-          </div>
-
-          {/* Price and action */}
-          <div className="flex items-center justify-between mt-auto">
-            <div className="flex flex-col">
-              <span className="text-2xl font-bold text-gray-900">${price}</span>
-              <span className="text-xs text-gray-500">per night</span>
             </div>
-            <Button
-              onClick={(e) => {
-                e.stopPropagation();
-                handleViewDetails();
-              }}
-              size="sm"
-              className="bg-[#7AA589] hover:bg-[#6A9A79] text-white z-10 relative"
-            >
-              View Details
-            </Button>
-          </div>
-        </CardContent>
+
+            <div className="grid grid-cols-3 gap-2 py-3 border-y border-[#E5E7EB]/50">
+              <div className="flex flex-col items-center justify-center text-center p-1">
+                <Users className="h-4 w-4 text-[#7AA589] mb-1" />
+                <span className="text-xs text-[#235347]/70">
+                  {guests} Guest{guests !== 1 && "s"}
+                </span>
+              </div>
+              <div className="flex flex-col items-center justify-center text-center p-1 border-x border-[#E5E7EB]/50">
+                <BedDouble className="h-4 w-4 text-[#7AA589] mb-1" />
+                <span className="text-xs text-[#235347]/70">
+                  {bedrooms} Bed{bedrooms !== 1 && "s"}
+                </span>
+              </div>
+              <div className="flex flex-col items-center justify-center text-center p-1">
+                <Bath className="h-4 w-4 text-[#7AA589] mb-1" />
+                <span className="text-xs text-[#235347]/70">
+                  {bathrooms} Bath{bathrooms !== 1 && "s"}
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between pt-1 mt-auto">
+              <div className="flex flex-col">
+                <span className="text-xs text-[#235347]/60 font-medium">
+                  Starting from
+                </span>
+                <div className="flex items-baseline gap-1">
+                  <span className="text-xl font-bold text-[#0B2B26]">
+                    ${price}
+                  </span>
+                  <span className="text-xs text-[#235347]/70">/night</span>
+                </div>
+              </div>
+              <div
+                className="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-[#7AA589] hover:bg-[#6A9A79] text-white h-9 px-3 z-10 relative pointer-events-none"
+              >
+                View Details
+              </div>
+            </div>
+          </CardContent>
+        </Link>
       </Card>
     );
   }

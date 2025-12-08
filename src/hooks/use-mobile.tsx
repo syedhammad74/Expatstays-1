@@ -1,9 +1,7 @@
 import * as React from "react";
 
 export function useIsMobile() {
-  const [isMobile, setIsMobile] = React.useState<boolean | undefined>(
-    undefined
-  );
+  const [isMobile, setIsMobile] = React.useState<boolean>(false);
 
   React.useEffect(() => {
     // Match Tailwind's lg: breakpoint (1024px) for consistency

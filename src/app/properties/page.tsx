@@ -31,7 +31,7 @@ import { getLocalImage } from "@/lib/imageUtils";
 import Image from "next/image";
 import Header from "@/components/layout/Header";
 import { useState, useEffect, useCallback, useMemo } from "react";
-import format from "date-fns/format";
+import { format } from "date-fns";
 import { DateRange } from "react-day-picker";
 import { useRouter } from "next/navigation";
 import { Property } from "@/lib/types/firebase";
@@ -212,7 +212,7 @@ export default function PropertiesPage() {
         "/media/blogs-appartments/IMG_6745.JPG",
       ],
       pricing: {
-        basePrice: 35,
+        basePrice: 50,
         currency: "USD",
         cleaningFee: 25,
         serviceFee: 15,
@@ -222,7 +222,7 @@ export default function PropertiesPage() {
       owner: {
         uid: "owner_apartment_dam_view",
         name: "Isa hussain",
-        email: "sarah@expatstays.com",
+        email: "ahmed@expatstays.com",
         phone: "+92 315 5610110",
       },
       createdAt: "2024-09-16T15:00:00Z",

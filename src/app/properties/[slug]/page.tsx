@@ -548,10 +548,7 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
                     </span>
                     <span className="text-[#4A4A4A] text-base">per night</span>
                   </div>
-                  <p className="text-sm text-[#4A4A4A]">
-                    + ${property.pricing.cleaningFee} cleaning fee + $
-                    {property.pricing.serviceFee} service fee
-                  </p>
+
                 </div>
 
                 {/* Action Buttons */}

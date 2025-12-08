@@ -51,6 +51,7 @@ const Calendar = dynamic(
 );
 import { format } from "date-fns/format";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { DateRange } from "react-day-picker";
 // Defer non-critical CSS loading
 if (typeof window !== "undefined") {
@@ -175,7 +176,9 @@ export default function Home() {
 
   // Memoize converted properties
   const memoizedProperties = useMemo(() => {
-    return featuredProperties.map(convertToPropertyCard);
+    const converted = featuredProperties.map(convertToPropertyCard);
+    console.log('[DEBUG] Featured Properties:', featuredProperties.length, 'Converted:', converted.length);
+    return converted;
   }, [featuredProperties, convertToPropertyCard]);
 
   // Carousel data with diverse images
@@ -366,7 +369,7 @@ export default function Home() {
             "/media/blogs-appartments/IMG_6745.JPG",
           ],
           pricing: {
-            basePrice: 35,
+            basePrice: 50,
             currency: "USD",
             cleaningFee: 25,
             serviceFee: 15,
@@ -376,7 +379,7 @@ export default function Home() {
           owner: {
             uid: "owner_apartment_dam_view",
             name: "Isa hussain",
-            email: "sarah@expatstays.com",
+            email: "ahmed@expatstays.com",
             phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T15:00:00Z",
@@ -454,6 +457,7 @@ export default function Home() {
       ];
 
       // Displaying featured properties on landing page
+      console.log('[DEBUG] Setting featured properties:', hardcodedProperties.length);
       setFeaturedProperties(hardcodedProperties);
     } catch (err) {
       if (process.env.NODE_ENV === "development") {
@@ -513,16 +517,7 @@ export default function Home() {
     router.push(`/properties?${params.toString()}`);
   };
 
-  // Handle view all properties - scroll to properties section
-  const handleViewAllProperties = useCallback(() => {
-    const propertiesSection = document.getElementById("properties-section");
-    if (propertiesSection) {
-      propertiesSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  }, []);
+
 
   return (
     <div className="min-h-screen bg-white overflow-hidden">
@@ -552,12 +547,12 @@ export default function Home() {
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start pt-2 px-4 sm:px-0">
-                <button
-                  onClick={handleViewAllProperties}
-                  className="px-6 sm:px-8 py-3 sm:py-3.5 bg-brand-medium-dark text-white font-semibold rounded-full hover:bg-brand-dark transition-all duration-200 shadow-md hover:shadow-lg text-sm sm:text-base w-full sm:w-auto"
+                <Link
+                  href="/properties"
+                  className="px-6 sm:px-8 py-3 sm:py-3.5 bg-brand-medium-dark text-white font-semibold rounded-full hover:bg-brand-dark transition-all duration-200 shadow-md hover:shadow-lg text-sm sm:text-base w-full sm:w-auto text-center inline-block"
                 >
                   Explore Properties
-                </button>
+                </Link>
 
                 <a
                   href="https://wa.me/923087496089?text=Hi%2C%20I%20am%20interested%20in%20booking%20a%20property"
@@ -646,8 +641,8 @@ export default function Home() {
                     >
                       <span
                         className={`block w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === currentServiceIndex
-                            ? "bg-brand-primary scale-125 shadow-sm"
-                            : "bg-gray-400 group-hover:bg-gray-600"
+                          ? "bg-brand-primary scale-125 shadow-sm"
+                          : "bg-gray-400 group-hover:bg-gray-600"
                           }`}
                       />
                     </button>
@@ -955,9 +950,11 @@ export default function Home() {
             <Button
               variant="outline"
               className="border-brand-primary text-brand-primary hover:bg-brand-primary hover:text-white shadow-sm hover:shadow-md transition-all duration-200"
-              onClick={handleViewAllProperties}
+              asChild
             >
-              View All Properties <ArrowRight className="h-4 w-4 ml-2" />
+              <Link href="/properties">
+                View All Properties <ArrowRight className="h-4 w-4 ml-2" />
+              </Link>
             </Button>
           </div>
         </div>
