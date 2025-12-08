@@ -9,10 +9,17 @@
         "city": "Islamabad",
         "state": "Islamabad Capital Territory",
         "country": "Pakistan",
-        "coordinates": { "lat": 33.6844, "lng": 73.0479 }
+        "coordinates": {
+          "lat": 33.6844,
+          "lng": 73.0479
+        }
       },
       "propertyType": "apartment",
-      "capacity": { "bedrooms": 2, "bathrooms": 2, "maxGuests": 4 },
+      "capacity": {
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "maxGuests": 4
+      },
       "amenities": [
         "WiFi",
         "Air Conditioning",
@@ -33,18 +40,23 @@
         "/media/Close Ups June 25 2025/DSC01831.jpg"
       ],
       "pricing": {
-        "basePrice": 120,
+        "basePrice": 35,
         "currency": "USD",
         "cleaningFee": 20,
         "serviceFee": 15
       },
-      "availability": { "isActive": true, "minimumStay": 1, "maximumStay": 30 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 1,
+        "maximumStay": 30
+      },
       "rating": 4.8,
       "reviewCount": 23,
       "owner": {
         "uid": "owner_islamabad",
-        "name": "Ahmed Khan",
-        "email": "ahmed@expatstays.com"
+        "name": "Isa hussain",
+        "email": "ahmed@expatstays.com",
+        "phone": "+92 315 5610110"
       },
       "createdAt": "2024-09-16T15:00:00Z",
       "updatedAt": "2024-09-16T15:00:00Z"
@@ -58,10 +70,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.076, "lng": 55.1297 }
+        "coordinates": {
+          "lat": 25.076,
+          "lng": 55.1297
+        }
       },
       "propertyType": "villa",
-      "capacity": { "bedrooms": 4, "bathrooms": 3, "maxGuests": 8 },
+      "capacity": {
+        "bedrooms": 4,
+        "bathrooms": 3,
+        "maxGuests": 8
+      },
       "amenities": [
         "WiFi",
         "Pool",
@@ -86,7 +105,11 @@
         "cleaningFee": 50,
         "serviceFee": 25
       },
-      "availability": { "isActive": true, "minimumStay": 2, "maximumStay": 14 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 2,
+        "maximumStay": 14
+      },
       "rating": 4.9,
       "reviewCount": 127,
       "owner": {
@@ -106,10 +129,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.1865, "lng": 55.2654 }
+        "coordinates": {
+          "lat": 25.1865,
+          "lng": 55.2654
+        }
       },
       "propertyType": "apartment",
-      "capacity": { "bedrooms": 3, "bathrooms": 2, "maxGuests": 6 },
+      "capacity": {
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "maxGuests": 6
+      },
       "amenities": [
         "WiFi",
         "Air Conditioning",
@@ -132,7 +162,11 @@
         "cleaningFee": 40,
         "serviceFee": 18
       },
-      "availability": { "isActive": true, "minimumStay": 1, "maximumStay": 30 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 1,
+        "maximumStay": 30
+      },
       "rating": 4.8,
       "reviewCount": 89,
       "owner": {
@@ -152,10 +186,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.2084, "lng": 55.2719 }
+        "coordinates": {
+          "lat": 25.2084,
+          "lng": 55.2719
+        }
       },
       "propertyType": "condo",
-      "capacity": { "bedrooms": 2, "bathrooms": 2, "maxGuests": 4 },
+      "capacity": {
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "maxGuests": 4
+      },
       "amenities": [
         "WiFi",
         "Beach Access",
@@ -179,7 +220,11 @@
         "cleaningFee": 35,
         "serviceFee": 15
       },
-      "availability": { "isActive": true, "minimumStay": 3, "maximumStay": 21 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 3,
+        "maximumStay": 21
+      },
       "rating": 4.7,
       "reviewCount": 156,
       "owner": {
@@ -199,10 +244,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.1972, "lng": 55.2744 }
+        "coordinates": {
+          "lat": 25.1972,
+          "lng": 55.2744
+        }
       },
       "propertyType": "apartment",
-      "capacity": { "bedrooms": 5, "bathrooms": 4, "maxGuests": 10 },
+      "capacity": {
+        "bedrooms": 5,
+        "bathrooms": 4,
+        "maxGuests": 10
+      },
       "amenities": [
         "WiFi",
         "Private Terrace",
@@ -226,7 +278,11 @@
         "cleaningFee": 80,
         "serviceFee": 35
       },
-      "availability": { "isActive": true, "minimumStay": 3, "maximumStay": 30 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 3,
+        "maximumStay": 30
+      },
       "rating": 4.9,
       "reviewCount": 203,
       "owner": {
@@ -246,10 +302,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.114, "lng": 55.1969 }
+        "coordinates": {
+          "lat": 25.114,
+          "lng": 55.1969
+        }
       },
       "propertyType": "house",
-      "capacity": { "bedrooms": 3, "bathrooms": 2, "maxGuests": 6 },
+      "capacity": {
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "maxGuests": 6
+      },
       "amenities": [
         "WiFi",
         "Garden",
@@ -272,7 +335,11 @@
         "cleaningFee": 25,
         "serviceFee": 12
       },
-      "availability": { "isActive": true, "minimumStay": 1, "maximumStay": 28 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 1,
+        "maximumStay": 28
+      },
       "rating": 4.6,
       "reviewCount": 94,
       "owner": {
@@ -292,10 +359,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.1124, "lng": 55.139 }
+        "coordinates": {
+          "lat": 25.1124,
+          "lng": 55.139
+        }
       },
       "propertyType": "apartment",
-      "capacity": { "bedrooms": 2, "bathrooms": 2, "maxGuests": 4 },
+      "capacity": {
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "maxGuests": 4
+      },
       "amenities": [
         "WiFi",
         "Beach Access",
@@ -319,7 +393,11 @@
         "cleaningFee": 45,
         "serviceFee": 22
       },
-      "availability": { "isActive": true, "minimumStay": 2, "maximumStay": 21 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 2,
+        "maximumStay": 21
+      },
       "rating": 4.8,
       "reviewCount": 118,
       "owner": {
@@ -339,10 +417,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.0657, "lng": 55.1404 }
+        "coordinates": {
+          "lat": 25.0657,
+          "lng": 55.1404
+        }
       },
       "propertyType": "studio",
-      "capacity": { "bedrooms": 1, "bathrooms": 1, "maxGuests": 2 },
+      "capacity": {
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "maxGuests": 2
+      },
       "amenities": [
         "WiFi",
         "Lake View",
@@ -363,7 +448,11 @@
         "cleaningFee": 20,
         "serviceFee": 8
       },
-      "availability": { "isActive": true, "minimumStay": 1, "maximumStay": 45 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 1,
+        "maximumStay": 45
+      },
       "rating": 4.5,
       "reviewCount": 67,
       "owner": {
@@ -383,10 +472,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.1048, "lng": 55.1728 }
+        "coordinates": {
+          "lat": 25.1048,
+          "lng": 55.1728
+        }
       },
       "propertyType": "villa",
-      "capacity": { "bedrooms": 6, "bathrooms": 5, "maxGuests": 12 },
+      "capacity": {
+        "bedrooms": 6,
+        "bathrooms": 5,
+        "maxGuests": 12
+      },
       "amenities": [
         "WiFi",
         "Private Pool",
@@ -410,7 +506,11 @@
         "cleaningFee": 100,
         "serviceFee": 45
       },
-      "availability": { "isActive": true, "minimumStay": 5, "maximumStay": 30 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 5,
+        "maximumStay": 30
+      },
       "rating": 5.0,
       "reviewCount": 45,
       "owner": {
@@ -430,10 +530,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.1996, "lng": 55.2588 }
+        "coordinates": {
+          "lat": 25.1996,
+          "lng": 55.2588
+        }
       },
       "propertyType": "loft",
-      "capacity": { "bedrooms": 1, "bathrooms": 1, "maxGuests": 3 },
+      "capacity": {
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "maxGuests": 3
+      },
       "amenities": [
         "WiFi",
         "City View",
@@ -454,7 +561,11 @@
         "cleaningFee": 30,
         "serviceFee": 12
       },
-      "availability": { "isActive": true, "minimumStay": 2, "maximumStay": 20 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 2,
+        "maximumStay": 20
+      },
       "rating": 4.7,
       "reviewCount": 78,
       "owner": {
@@ -474,10 +585,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.0778, "lng": 55.1335 }
+        "coordinates": {
+          "lat": 25.0778,
+          "lng": 55.1335
+        }
       },
       "propertyType": "apartment",
-      "capacity": { "bedrooms": 3, "bathrooms": 2, "maxGuests": 6 },
+      "capacity": {
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "maxGuests": 6
+      },
       "amenities": [
         "WiFi",
         "Burj Al Arab View",
@@ -500,7 +618,11 @@
         "cleaningFee": 55,
         "serviceFee": 28
       },
-      "availability": { "isActive": true, "minimumStay": 3, "maximumStay": 15 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 3,
+        "maximumStay": 15
+      },
       "rating": 4.9,
       "reviewCount": 134,
       "owner": {
@@ -520,10 +642,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.0518, "lng": 55.2707 }
+        "coordinates": {
+          "lat": 25.0518,
+          "lng": 55.2707
+        }
       },
       "propertyType": "villa",
-      "capacity": { "bedrooms": 4, "bathrooms": 3, "maxGuests": 8 },
+      "capacity": {
+        "bedrooms": 4,
+        "bathrooms": 3,
+        "maxGuests": 8
+      },
       "amenities": [
         "WiFi",
         "Private Garden",
@@ -545,7 +674,11 @@
         "cleaningFee": 40,
         "serviceFee": 20
       },
-      "availability": { "isActive": true, "minimumStay": 3, "maximumStay": 30 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 3,
+        "maximumStay": 30
+      },
       "rating": 4.6,
       "reviewCount": 112,
       "owner": {
@@ -565,10 +698,17 @@
         "city": "Dubai",
         "state": "Dubai",
         "country": "UAE",
-        "coordinates": { "lat": 25.0976, "lng": 55.1711 }
+        "coordinates": {
+          "lat": 25.0976,
+          "lng": 55.1711
+        }
       },
       "propertyType": "apartment",
-      "capacity": { "bedrooms": 2, "bathrooms": 2, "maxGuests": 4 },
+      "capacity": {
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "maxGuests": 4
+      },
       "amenities": [
         "WiFi",
         "Pool Access",
@@ -590,7 +730,11 @@
         "cleaningFee": 35,
         "serviceFee": 15
       },
-      "availability": { "isActive": true, "minimumStay": 2, "maximumStay": 25 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 2,
+        "maximumStay": 25
+      },
       "rating": 4.5,
       "reviewCount": 86,
       "owner": {
@@ -610,10 +754,17 @@
         "city": "Islamabad",
         "state": "Islamabad Capital Territory",
         "country": "Pakistan",
-        "coordinates": { "lat": 33.6844, "lng": 73.0479 }
+        "coordinates": {
+          "lat": 33.6844,
+          "lng": 73.0479
+        }
       },
       "propertyType": "apartment",
-      "capacity": { "bedrooms": 2, "bathrooms": 2, "maxGuests": 4 },
+      "capacity": {
+        "bedrooms": 2,
+        "bathrooms": 2,
+        "maxGuests": 4
+      },
       "amenities": [
         "High-Speed WiFi",
         "Air Conditioning",
@@ -657,13 +808,18 @@
         "cleaningFee": 25,
         "serviceFee": 15
       },
-      "availability": { "isActive": true, "minimumStay": 1, "maximumStay": 30 },
+      "availability": {
+        "isActive": true,
+        "minimumStay": 1,
+        "maximumStay": 30
+      },
       "rating": 4.7,
       "reviewCount": 89,
       "owner": {
         "uid": "owner_gulberg_greens",
-        "name": "Ahmed Hassan",
-        "email": "ahmed@expatstays.com"
+        "name": "Isa hussain",
+        "email": "ahmed@expatstays.com",
+        "phone": "+92 315 5610110"
       },
       "createdAt": "2024-09-16T16:00:00Z",
       "updatedAt": "2024-09-16T16:00:00Z"

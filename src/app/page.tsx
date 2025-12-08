@@ -165,8 +165,8 @@ export default function Home() {
           property.id === "famhouse_islamabad_dam_view"
             ? 234
             : ((property.id.charCodeAt(0) * 17 + property.id.charCodeAt(1)) %
-                100) +
-              10,
+              100) +
+            10,
         isFeatured: property.id === "famhouse_islamabad_dam_view",
       };
     },
@@ -263,7 +263,7 @@ export default function Home() {
             coordinates: { lat: 33.6844, lng: 73.0479 },
           },
           propertyType: "house" as const,
-          capacity: { bedrooms: 5, bathrooms: 4, maxGuests: 12 },
+          capacity: { bedrooms: 5, bathrooms: 5, maxGuests: 12 },
           amenities: [
             "High-Speed WiFi",
             "Central Air Conditioning",
@@ -301,8 +301,9 @@ export default function Home() {
           rating: 4.9,
           owner: {
             uid: "owner_famhouse_islamabad",
-            name: "Ahmed Khan",
+            name: "Isa hussain",
             email: "ahmed@expatstays.com",
+            phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T15:00:00Z",
           updatedAt: "2024-09-16T15:00:00Z",
@@ -365,7 +366,7 @@ export default function Home() {
             "/media/blogs-appartments/IMG_6745.JPG",
           ],
           pricing: {
-            basePrice: 50,
+            basePrice: 35,
             currency: "USD",
             cleaningFee: 25,
             serviceFee: 15,
@@ -374,8 +375,9 @@ export default function Home() {
           rating: 4.7,
           owner: {
             uid: "owner_apartment_dam_view",
-            name: "Sarah Ahmed",
+            name: "Isa hussain",
             email: "sarah@expatstays.com",
+            phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T15:00:00Z",
           updatedAt: "2024-09-16T15:00:00Z",
@@ -442,8 +444,9 @@ export default function Home() {
           reviews: 89,
           owner: {
             uid: "owner_gulberg_greens",
-            name: "Ahmed Hassan",
+            name: "Isa hussain",
             email: "ahmed@expatstays.com",
+            phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T16:00:00Z",
           updatedAt: "2024-09-16T16:00:00Z",
@@ -589,9 +592,8 @@ export default function Home() {
                       {carouselSlides.map((slide, index) => (
                         <div
                           key={index}
-                          className={`flex-[0_0_100%] min-w-0 relative aspect-[16/10] ${
-                            index === currentServiceIndex ? "block" : "hidden"
-                          }`}
+                          className={`flex-[0_0_100%] min-w-0 relative aspect-[16/10] ${index === currentServiceIndex ? "block" : "hidden"
+                            }`}
                         >
                           <Image
                             src={slide.image}
@@ -608,12 +610,12 @@ export default function Home() {
                             onLoad={
                               slide.priority
                                 ? () => {
-                                    if (typeof window !== "undefined") {
-                                      document.documentElement.classList.add(
-                                        "lcp-loaded"
-                                      );
-                                    }
+                                  if (typeof window !== "undefined") {
+                                    document.documentElement.classList.add(
+                                      "lcp-loaded"
+                                    );
                                   }
+                                }
                                 : undefined
                             }
                           />
@@ -643,11 +645,10 @@ export default function Home() {
                       aria-label={`Go to slide ${index + 1}`}
                     >
                       <span
-                        className={`block w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                          index === currentServiceIndex
+                        className={`block w-2.5 h-2.5 rounded-full transition-all duration-300 ${index === currentServiceIndex
                             ? "bg-brand-primary scale-125 shadow-sm"
                             : "bg-gray-400 group-hover:bg-gray-600"
-                        }`}
+                          }`}
                       />
                     </button>
                   ))}
@@ -710,9 +711,9 @@ export default function Home() {
                     >
                       {dateRange?.from && dateRange?.to
                         ? `${format(dateRange.from, "MMM d")} – ${format(
-                            dateRange.to,
-                            "MMM d, yyyy"
-                          )}`
+                          dateRange.to,
+                          "MMM d, yyyy"
+                        )}`
                         : "Check in – Check out"}
                     </Button>
                   </PopoverTrigger>

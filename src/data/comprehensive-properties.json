@@ -125,11 +125,21 @@
         "seasonalPricing": {
           "peak": {
             "multiplier": 1.5,
-            "periods": ["2024-12-20", "2025-01-05", "2024-07-01", "2024-08-31"]
+            "periods": [
+              "2024-12-20",
+              "2025-01-05",
+              "2024-07-01",
+              "2024-08-31"
+            ]
           },
           "offPeak": {
             "multiplier": 0.8,
-            "periods": ["2024-11-01", "2024-12-19", "2024-01-06", "2024-06-30"]
+            "periods": [
+              "2024-11-01",
+              "2024-12-19",
+              "2024-01-06",
+              "2024-06-30"
+            ]
           }
         }
       },
@@ -163,13 +173,17 @@
       },
       "owner": {
         "uid": "owner_famhouse_islamabad",
-        "name": "Ahmed Khan",
+        "name": "Isa hussain",
         "email": "ahmed@expatstays.com",
-        "phone": "+92-300-1234567",
+        "phone": "+92 315 5610110",
         "responseTime": "within an hour",
         "hostSince": "2023-01-15",
         "isSuperhost": true,
-        "languages": ["English", "Urdu", "Punjabi"]
+        "languages": [
+          "English",
+          "Urdu",
+          "Punjabi"
+        ]
       },
       "rating": {
         "overall": 4.8,
@@ -306,7 +320,11 @@
           "lng": 55.132
         },
         "neighborhood": "Dubai Marina",
-        "landmarks": ["Dubai Marina Walk", "JBR Beach", "Dubai Marina Mall"]
+        "landmarks": [
+          "Dubai Marina Walk",
+          "JBR Beach",
+          "Dubai Marina Mall"
+        ]
       },
       "propertyType": "villa",
       "propertyCategory": "luxury",
@@ -383,11 +401,21 @@
         "seasonalPricing": {
           "peak": {
             "multiplier": 2.0,
-            "periods": ["2024-12-20", "2025-01-05", "2024-11-01", "2024-12-19"]
+            "periods": [
+              "2024-12-20",
+              "2025-01-05",
+              "2024-11-01",
+              "2024-12-19"
+            ]
           },
           "offPeak": {
             "multiplier": 0.7,
-            "periods": ["2024-06-01", "2024-08-31", "2024-01-06", "2024-05-31"]
+            "periods": [
+              "2024-06-01",
+              "2024-08-31",
+              "2024-01-06",
+              "2024-05-31"
+            ]
           }
         }
       },
@@ -428,7 +456,11 @@
         "responseTime": "within 2 hours",
         "hostSince": "2022-03-10",
         "isSuperhost": true,
-        "languages": ["English", "Arabic", "French"]
+        "languages": [
+          "English",
+          "Arabic",
+          "French"
+        ]
       },
       "rating": {
         "overall": 4.9,
@@ -556,7 +588,14 @@
       "romantic",
       "budget"
     ],
-    "propertyTypes": ["apartment", "villa", "house", "condo", "hotel", "other"],
+    "propertyTypes": [
+      "apartment",
+      "villa",
+      "house",
+      "condo",
+      "hotel",
+      "other"
+    ],
     "amenities": [
       "WiFi",
       "Air Conditioning",

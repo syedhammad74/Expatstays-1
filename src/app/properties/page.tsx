@@ -109,7 +109,7 @@ export default function PropertiesPage() {
         coordinates: { lat: 33.6844, lng: 73.0479 },
       },
       propertyType: "house" as const,
-      capacity: { bedrooms: 5, bathrooms: 4, maxGuests: 12 },
+      capacity: { bedrooms: 5, bathrooms: 5, maxGuests: 12 },
       amenities: [
         "High-Speed WiFi",
         "Central Air Conditioning",
@@ -147,8 +147,9 @@ export default function PropertiesPage() {
       rating: 4.9,
       owner: {
         uid: "owner_famhouse_islamabad",
-        name: "Ahmed Khan",
+        name: "Isa hussain",
         email: "ahmed@expatstays.com",
+        phone: "+92 315 5610110",
       },
       createdAt: "2024-09-16T15:00:00Z",
       updatedAt: "2024-09-16T15:00:00Z",
@@ -211,7 +212,7 @@ export default function PropertiesPage() {
         "/media/blogs-appartments/IMG_6745.JPG",
       ],
       pricing: {
-        basePrice: 50,
+        basePrice: 35,
         currency: "USD",
         cleaningFee: 25,
         serviceFee: 15,
@@ -220,8 +221,9 @@ export default function PropertiesPage() {
       rating: 4.7,
       owner: {
         uid: "owner_apartment_dam_view",
-        name: "Sarah Ahmed",
+        name: "Isa hussain",
         email: "sarah@expatstays.com",
+        phone: "+92 315 5610110",
       },
       createdAt: "2024-09-16T15:00:00Z",
       updatedAt: "2024-09-16T15:00:00Z",
@@ -288,8 +290,9 @@ export default function PropertiesPage() {
       reviews: 89,
       owner: {
         uid: "owner_gulberg_greens",
-        name: "Ahmed Hassan",
+        name: "Isa hussain",
         email: "ahmed@expatstays.com",
+        phone: "+92 315 5610110",
       },
       createdAt: "2024-09-16T16:00:00Z",
       updatedAt: "2024-09-16T16:00:00Z",
@@ -421,8 +424,8 @@ export default function PropertiesPage() {
           property.id === "famhouse_islamabad_dam_view"
             ? 234
             : ((property.id.charCodeAt(0) * 17 + property.id.charCodeAt(1)) %
-                100) +
-              10, // Deterministic views for consistency
+              100) +
+            10, // Deterministic views for consistency
         isFeatured: property.id === "famhouse_islamabad_dam_view", // Mark famhouse as featured
       };
     },
@@ -489,7 +492,7 @@ export default function PropertiesPage() {
             coordinates: { lat: 33.6844, lng: 73.0479 },
           },
           propertyType: "house" as const,
-          capacity: { bedrooms: 5, bathrooms: 4, maxGuests: 12 },
+          capacity: { bedrooms: 5, bathrooms: 5, maxGuests: 12 },
           amenities: [
             "High-Speed WiFi",
             "Central Air Conditioning",
@@ -527,8 +530,9 @@ export default function PropertiesPage() {
           rating: 4.9,
           owner: {
             uid: "owner_famhouse_islamabad",
-            name: "Ahmed Khan",
+            name: "Isa hussain",
             email: "ahmed@expatstays.com",
+            phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T15:00:00Z",
           updatedAt: "2024-09-16T15:00:00Z",
@@ -587,7 +591,7 @@ export default function PropertiesPage() {
             "/media/blogs-appartments/IMG_6745.JPG",
           ],
           pricing: {
-            basePrice: 50,
+            basePrice: 35,
             currency: "USD",
             cleaningFee: 25,
             serviceFee: 15,
@@ -596,8 +600,9 @@ export default function PropertiesPage() {
           rating: 4.7,
           owner: {
             uid: "owner_apartment_dam_view",
-            name: "Sarah Ahmed",
+            name: "Isa hussain",
             email: "sarah@expatstays.com",
+            phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T15:00:00Z",
           updatedAt: "2024-09-16T15:00:00Z",
@@ -664,8 +669,9 @@ export default function PropertiesPage() {
           reviews: 89,
           owner: {
             uid: "owner_gulberg_greens",
-            name: "Ahmed Hassan",
+            name: "Isa hussain",
             email: "ahmed@expatstays.com",
+            phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T16:00:00Z",
           updatedAt: "2024-09-16T16:00:00Z",
@@ -1147,7 +1153,7 @@ export default function PropertiesPage() {
             <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
               <MapPin className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
               <Select value={location} onValueChange={setLocation}>
-                <SelectTrigger 
+                <SelectTrigger
                   className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium focus:ring-0 focus:border-none h-12 lg:h-14"
                   aria-label="Select location"
                 >
@@ -1172,9 +1178,9 @@ export default function PropertiesPage() {
                   >
                     {dateRange?.from && dateRange?.to
                       ? `${format(dateRange.from, "MMM d")} – ${format(
-                          dateRange.to,
-                          "MMM d, yyyy"
-                        )}`
+                        dateRange.to,
+                        "MMM d, yyyy"
+                      )}`
                       : "Check in – Check out"}
                   </Button>
                 </PopoverTrigger>
@@ -1402,11 +1408,10 @@ export default function PropertiesPage() {
                   variant={useVirtualScrolling ? "ghost" : "default"}
                   size="sm"
                   onClick={() => setUseVirtualScrolling(false)}
-                  className={`rounded-xl px-4 py-2 font-semibold transition-colors duration-150 ${
-                    !useVirtualScrolling
-                      ? "bg-[#7AA589] text-white shadow-md"
-                      : "text-[#7AA589] hover:bg-[#7AA589]/10"
-                  }`}
+                  className={`rounded-xl px-4 py-2 font-semibold transition-colors duration-150 ${!useVirtualScrolling
+                    ? "bg-[#7AA589] text-white shadow-md"
+                    : "text-[#7AA589] hover:bg-[#7AA589]/10"
+                    }`}
                   aria-label="Switch to grid view"
                 >
                   <Grid className="w-4 h-4 mr-2" />
@@ -1417,11 +1422,10 @@ export default function PropertiesPage() {
                   size="sm"
                   onClick={() => setUseVirtualScrolling(true)}
                   disabled={filteredProperties.length <= 20}
-                  className={`rounded-xl px-4 py-2 font-semibold transition-colors duration-150 ${
-                    useVirtualScrolling
-                      ? "bg-[#7AA589] text-white shadow-md"
-                      : "text-[#7AA589] hover:bg-[#7AA589]/10"
-                  }`}
+                  className={`rounded-xl px-4 py-2 font-semibold transition-colors duration-150 ${useVirtualScrolling
+                    ? "bg-[#7AA589] text-white shadow-md"
+                    : "text-[#7AA589] hover:bg-[#7AA589]/10"
+                    }`}
                   aria-label="Switch to virtual scrolling view"
                 >
                   <List className="w-4 h-4 mr-2" />
@@ -1440,9 +1444,9 @@ export default function PropertiesPage() {
       <section className="py-12 lg:py-20 bg-gradient-to-br from-slate-50 to-white">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4 lg:mb-6">
-            Why Choose <span className="text-[#8EB69B]">Expat Stays</span>
-          </h2>
+            <h2 className="text-3xl lg:text-4xl xl:text-5xl font-bold text-[#051F20] mb-4 lg:mb-6">
+              Why Choose <span className="text-[#8EB69B]">Expat Stays</span>
+            </h2>
             <p className="text-base lg:text-lg text-[#4A4A4A] max-w-2xl mx-auto font-light">
               Trusted by Hundreds of guests worldwide for exceptional luxury
               experiences

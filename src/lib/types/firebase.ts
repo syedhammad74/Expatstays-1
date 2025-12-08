@@ -35,6 +35,7 @@ export interface Property {
     uid: string;
     name: string;
     email: string;
+    phone?: string;
   };
   rating?: number;
   reviews?: number;

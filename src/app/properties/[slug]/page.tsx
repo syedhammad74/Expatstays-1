@@ -67,7 +67,7 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
               coordinates: { lat: 33.6844, lng: 73.0479 },
             },
             propertyType: "house",
-            capacity: { bedrooms: 5, bathrooms: 4, maxGuests: 12 },
+            capacity: { bedrooms: 5, bathrooms: 5, maxGuests: 12 },
             amenities: [
               "High-Speed WiFi",
               "Central Air Conditioning",
@@ -115,8 +115,9 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
             reviews: 127,
             owner: {
               uid: "owner_famhouse_islamabad",
-              name: "Ahmed Khan",
+              name: "Isa hussain",
               email: "ahmed@expatstays.com",
+              phone: "+92 315 5610110",
             },
             createdAt: "2024-09-16T15:00:00Z",
             updatedAt: "2024-09-16T15:00:00Z",
@@ -195,8 +196,9 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
             reviews: 95,
             owner: {
               uid: "owner_gulberg_greens_apartment",
-              name: "Ahmed Hassan",
+              name: "Isa hussain",
               email: "ahmed@expatstays.com",
+              phone: "+92 315 5610110",
             },
             createdAt: "2024-09-16T16:00:00Z",
             updatedAt: "2024-09-16T16:00:00Z",
@@ -256,7 +258,7 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
               "/media/blogs-appartments/IMG_6740.JPG",
             ],
             pricing: {
-              basePrice: 50,
+              basePrice: 35,
               currency: "USD",
               cleaningFee: 25,
               serviceFee: 15,
@@ -270,8 +272,9 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
             reviews: 89,
             owner: {
               uid: "owner_apartment_islamabad",
-              name: "Fatima Ali",
-              email: "fatima@expatstays.com",
+              name: "Isa hussain",
+              email: "ahmed@expatstays.com",
+              phone: "+92 315 5610110",
             },
             createdAt: "2024-09-15T10:00:00Z",
             updatedAt: "2024-09-15T10:00:00Z",
@@ -349,8 +352,9 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
             reviews: 89,
             owner: {
               uid: "owner_gulberg_greens",
-              name: "Ahmed Hassan",
+              name: "Isa hussain",
               email: "ahmed@expatstays.com",
+              phone: "+92 315 5610110",
             },
             createdAt: "2024-09-16T16:00:00Z",
             updatedAt: "2024-09-16T16:00:00Z",
@@ -552,12 +556,12 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
 
                 {/* Action Buttons */}
                 <div className="space-y-3">
-                  <Button 
+                  <Button
                     asChild
                     className="w-full bg-[#25D366] hover:bg-[#20BA5A] text-white h-12 text-base font-semibold rounded-xl"
                     aria-label="Contact owner via WhatsApp"
                   >
-                    <a 
+                    <a
                       href={`https://wa.me/923087496089?text=${encodeURIComponent(`Hi, I am interested in this property: ${property.title}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
