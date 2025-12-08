@@ -38,7 +38,7 @@ const Footer = () => {
   const contactInfo = [
     { icon: MapPin, text: "Islamabad, Pakistan" },
     { icon: Phone, text: "+92 315 5610110" },
-    { icon: Mail, text: "contact@myexpatstays.com" },
+    { icon: Mail, text: "isa@expatstays.com" },
   ];
 
   return (

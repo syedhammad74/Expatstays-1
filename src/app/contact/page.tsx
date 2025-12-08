@@ -218,8 +218,8 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: "Email",
-      content: "contact@myexpatstays.com",
-      link: "mailto:contact@myexpatstays.com",
+      content: "isa@expatstays.com",
+      link: "mailto:isa@expatstays.com",
     },
     {
       icon: MapPin,
@@ -374,8 +374,8 @@ export default function ContactPage() {
                               value={formData.fullName}
                               onChange={handleInputChange}
                               className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 ${errors.fullName
-                                  ? "border-red-300"
-                                  : "border-[#DAF1DE]"
+                                ? "border-red-300"
+                                : "border-[#DAF1DE]"
                                 }`}
                               placeholder="Enter your full name"
                               aria-required="true"
@@ -407,8 +407,8 @@ export default function ContactPage() {
                               value={formData.email}
                               onChange={handleInputChange}
                               className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 ${errors.email
-                                  ? "border-red-300"
-                                  : "border-[#DAF1DE]"
+                                ? "border-red-300"
+                                : "border-[#DAF1DE]"
                                 }`}
                               placeholder="your.email@example.com"
                             />
@@ -441,8 +441,8 @@ export default function ContactPage() {
                               value={formData.phone}
                               onChange={handleInputChange}
                               className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 ${errors.phone
-                                  ? "border-red-300"
-                                  : "border-[#DAF1DE]"
+                                ? "border-red-300"
+                                : "border-[#DAF1DE]"
                                 }`}
                               placeholder="+92 315 5610110"
                             />
@@ -470,8 +470,8 @@ export default function ContactPage() {
                               value={formData.reason}
                               onChange={handleInputChange}
                               className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 appearance-none ${errors.reason
-                                  ? "border-red-300"
-                                  : "border-[#DAF1DE]"
+                                ? "border-red-300"
+                                : "border-[#DAF1DE]"
                                 }`}
                             >
                               <option value="">Select a reason</option>
@@ -508,8 +508,8 @@ export default function ContactPage() {
                             onChange={handleInputChange}
                             rows={5}
                             className={`w-full rounded-xl border-2 bg-white/50 backdrop-blur-sm px-4 py-3 text-[#051F20] placeholder:text-[#8EB69B]/60 focus:border-[#8EB69B] focus:ring-2 focus:ring-[#8EB69B]/20 transition-all duration-300 resize-none ${errors.message
-                                ? "border-red-300"
-                                : "border-[#DAF1DE]"
+                              ? "border-red-300"
+                              : "border-[#DAF1DE]"
                               }`}
                             placeholder="Tell us about your requirements and how we can help you..."
                           />
@@ -654,9 +654,7 @@ export default function ContactPage() {
 
                 {/* Enhanced trust indicators */}
                 <div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
+
                   className="bg-gradient-to-br from-[#DAF1DE]/20 to-[#8EB69B]/10 rounded-2xl p-6 border border-[#DAF1DE]/30"
                 >
                   <div className="text-center space-y-4">
