@@ -871,16 +871,15 @@ export default function PropertiesPage() {
     // Filter by text search query
     if (debouncedSearchQuery) {
       filtered = filtered.filter(
-        (property) =>
-          property.title
-            .toLowerCase()
-            .includes(debouncedSearchQuery.toLowerCase()) ||
-          `${property.location.city}, ${property.location.country}`
-            .toLowerCase()
-            .includes(debouncedSearchQuery.toLowerCase()) ||
-          property.description
-            ?.toLowerCase()
-            .includes(debouncedSearchQuery.toLowerCase())
+        (property) => {
+          const query = debouncedSearchQuery.toLowerCase();
+          return (
+            property.title.toLowerCase().includes(query) ||
+            property.location.city.toLowerCase().includes(query) ||
+            property.location.address.toLowerCase().includes(query) ||
+            property.description?.toLowerCase().includes(query)
+          );
+        }
       );
     }
 
@@ -1387,47 +1386,6 @@ export default function PropertiesPage() {
                   </div>
                 </PopoverContent>
               </Popover>
-            </div>
-            {/* Property Type Field */}
-            <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
-              <Home className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
-              <Select value={propertyType} onValueChange={setPropertyType}>
-                <SelectTrigger
-                  className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium focus:ring-0 focus:border-none h-12 lg:h-14"
-                  aria-label="Select property type"
-                >
-                  <SelectValue placeholder="Type" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-[#DAF1DE] rounded-xl shadow-lg">
-                  <SelectItem value="all">All Types</SelectItem>
-                  <SelectItem value="apartment">Apartment</SelectItem>
-                  <SelectItem value="villa">Villa</SelectItem>
-                  <SelectItem value="house">House</SelectItem>
-                  <SelectItem value="penthouse">Penthouse</SelectItem>
-                  <SelectItem value="studio">Studio</SelectItem>
-                  <SelectItem value="townhouse">Townhouse</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            {/* Price Range Field */}
-            <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
-              <DollarSign className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
-              <Select value={priceRange} onValueChange={setPriceRange}>
-                <SelectTrigger
-                  className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium focus:ring-0 focus:border-none h-12 lg:h-14"
-                  aria-label="Select price range"
-                >
-                  <SelectValue placeholder="Price" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-[#DAF1DE] rounded-xl shadow-lg">
-                  <SelectItem value="all">All Prices</SelectItem>
-                  <SelectItem value="0-50">$0 - $50</SelectItem>
-                  <SelectItem value="50-100">$50 - $100</SelectItem>
-                  <SelectItem value="100-200">$100 - $200</SelectItem>
-                  <SelectItem value="200-500">$200 - $500</SelectItem>
-                  <SelectItem value="500+">$500+</SelectItem>
-                </SelectContent>
-              </Select>
             </div>
             {/* Search Button */}
             <div className="flex-shrink-0 w-full lg:w-auto">
