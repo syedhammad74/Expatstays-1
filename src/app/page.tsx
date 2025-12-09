@@ -503,13 +503,13 @@ export default function Home() {
     // Update displayed properties with filtered results
     setFeaturedProperties(filtered.length > 0 ? filtered : featuredProperties);
 
-    // Smooth scroll to properties section with better timing
+    // Instant jump to properties section (no smooth scroll)
     setTimeout(() => {
       const section = document.getElementById('properties-section');
       if (section) {
-        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        section.scrollIntoView({ behavior: 'auto', block: 'start' });
       }
-    }, 100);
+    }, 50);
   };
 
   // Handle search form submission
