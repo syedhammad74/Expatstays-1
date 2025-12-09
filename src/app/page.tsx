@@ -482,24 +482,34 @@ export default function Home() {
     return label;
   }, [guests.adults, guests.children, guests.infants]);
 
-  // Handle Find click with validation
+  //Handle Find click with validation - filter properties locally
   const handleFind = () => {
-    if (!location || !dateRange?.from || !dateRange?.to || guests.adults < 1) {
-      setError("Please select location, dates, and at least 1 adult.");
+    // Only require location, dates are optional
+    if (!location || guests.adults < 1) {
+      setError("Please select a location and at least 1 adult.");
       setTimeout(() => setError(null), 2000);
       return;
     }
     setError(null);
-    const params = new URLSearchParams();
-    params.set("location", location);
-    if (dateRange?.from)
-      params.set("checkin", dateRange.from.toISOString().split("T")[0]);
-    if (dateRange?.to)
-      params.set("checkout", dateRange.to.toISOString().split("T")[0]);
-    params.set("adults", String(guests.adults));
-    params.set("children", String(guests.children));
-    params.set("infants", String(guests.infants));
-    router.push(`/properties?${params.toString()}`);
+
+    // Filter properties by location
+    const filtered = featuredProperties.filter((property) => {
+      const searchTerm = location.toLowerCase();
+      const city = property.location.city.toLowerCase();
+      const address = property.location.address.toLowerCase();
+      return city.includes(searchTerm) || address.includes(searchTerm);
+    });
+
+    // Update displayed properties with filtered results
+    setFeaturedProperties(filtered.length > 0 ? filtered : featuredProperties);
+
+    // Smooth scroll to properties section with better timing
+    setTimeout(() => {
+      const section = document.getElementById('properties-section');
+      if (section) {
+        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 100);
   };
 
   // Handle search form submission
