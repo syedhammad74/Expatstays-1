@@ -28,7 +28,7 @@ const HeroSection = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
-                  Contact Us
+                  Contact Us 
                 </a>
               </Button>
             </div>
