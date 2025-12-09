@@ -18,11 +18,18 @@ const HeroSection = () => {
               <p className="text-xl text-muted-foreground max-w-xl leading-relaxed">
                 Want to find a home? We are ready to help you find one that suits your lifestyle and needs
               </p>
-              <Button 
+              <Button
+                asChild
                 size="lg"
                 className="rounded-xl px-10 py-4 text-lg font-semibold bg-primary text-primary-foreground shadow-glass hover:bg-primary/90 hover:shadow-neumorph transition-smooth border-2 border-primary animate-fade-in"
               >
-                Get Started
+                <a
+                  href="https://wa.me/923155610110?text=Hello%20Isa%20Hussain!%20I'm%20interested%20in%20learning%20more%20about%20Expat%20Stays."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Contact Us
+                </a>
               </Button>
             </div>
             {/* Statistics */}
@@ -70,9 +77,9 @@ const HeroSection = () => {
       </div>
       {/* Background Pattern */}
       <div className="absolute top-0 right-0 w-1/2 h-full opacity-[0.04] parallax-bg"
-           style={{
-             backgroundImage: 'url(/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg)'
-           }}>
+        style={{
+          backgroundImage: 'url(/media/DSC01806 HDR June 25 2025/DSC01822-HDR.jpg)'
+        }}>
       </div>
     </section>
   );
