@@ -25,6 +25,8 @@ import {
   Check,
   Loader2,
   Award,
+  Home,
+  DollarSign,
 } from "lucide-react";
 import { getLocalImage } from "@/lib/imageUtils";
 // Removed framer-motion for better mobile performance
@@ -58,7 +60,9 @@ export default function PropertiesPage() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [guests, setGuests] = useState({ adults: 1, children: 0, infants: 0 });
   const [guestsOpen, setGuestsOpen] = useState(false);
-  const [location, setLocation] = useState("Islamabad");
+  const [location, setLocation] = useState("all");
+  const [propertyType, setPropertyType] = useState<string>("all");
+  const [priceRange, setPriceRange] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
   // const _searchParams = useSearchParams(); // unused
@@ -79,11 +83,23 @@ export default function PropertiesPage() {
   // Auto-scroll to properties section when page loads with search parameters
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
+
+    // Load search params from URL
+    const urlLocation = urlParams.get("location");
+    const urlPropertyType = urlParams.get("propertyType");
+    const urlPriceRange = urlParams.get("priceRange");
+
+    if (urlLocation) setLocation(urlLocation);
+    if (urlPropertyType) setPropertyType(urlPropertyType);
+    if (urlPriceRange) setPriceRange(urlPriceRange);
+
     const hasSearchParams =
       urlParams.has("checkin") ||
       urlParams.has("checkout") ||
       urlParams.has("adults") ||
-      urlParams.has("location");
+      urlParams.has("location") ||
+      urlParams.has("propertyType") ||
+      urlParams.has("priceRange");
 
     if (hasSearchParams) {
       // Small delay to ensure page is fully loaded
@@ -850,8 +866,11 @@ export default function PropertiesPage() {
 
   // Enhanced search with debouncing - optimized dependencies
   useEffect(() => {
+    let filtered = properties;
+
+    // Filter by text search query
     if (debouncedSearchQuery) {
-      const filtered = properties.filter(
+      filtered = filtered.filter(
         (property) =>
           property.title
             .toLowerCase()
@@ -863,15 +882,43 @@ export default function PropertiesPage() {
             ?.toLowerCase()
             .includes(debouncedSearchQuery.toLowerCase())
       );
-
-      // Ensure minimum 6 properties are displayed
-      const finalFiltered = ensureMinimumProperties(filtered);
-      setFilteredProperties(finalFiltered);
-    } else {
-      // Always show all properties when no search query
-      setFilteredProperties(properties);
     }
-  }, [debouncedSearchQuery, properties, ensureMinimumProperties]);
+
+    // Filter by location
+    if (location && location !== "all") {
+      filtered = filtered.filter((property) => {
+        const searchTerm = location.toLowerCase();
+        const city = (property.location.city || "").toLowerCase();
+        const address = (property.location.address || "").toLowerCase();
+
+        // Check if location appears in either city or address
+        return city.includes(searchTerm) || address.includes(searchTerm);
+      });
+    }
+
+    // Filter by property type
+    if (propertyType && propertyType !== "all") {
+      filtered = filtered.filter(
+        (property) => property.propertyType.toLowerCase() === propertyType.toLowerCase()
+      );
+    }
+
+    // Filter by price range
+    if (priceRange && priceRange !== "all") {
+      filtered = filtered.filter((property) => {
+        const price = property.pricing.basePrice;
+        if (priceRange.includes("+")) {
+          const min = parseInt(priceRange);
+          return price >= min;
+        }
+        const [min, max] = priceRange.split("-").map(p => parseInt(p));
+        return price >= min && price <= max;
+      });
+    }
+
+    // Show actual filtered results without padding
+    setFilteredProperties(filtered);
+  }, [debouncedSearchQuery, location, propertyType, priceRange, properties]);
 
   // Enable virtual scrolling for large lists
   useEffect(() => {
@@ -1160,7 +1207,9 @@ export default function PropertiesPage() {
                   <SelectValue placeholder="Location" />
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-[#DAF1DE] rounded-xl shadow-lg">
+                  <SelectItem value="all">All Locations</SelectItem>
                   <SelectItem value="Islamabad">Islamabad</SelectItem>
+                  <SelectItem value="Margalla Hills">Margalla Hills</SelectItem>
                   <SelectItem value="Gulberg Greens">Gulberg Greens</SelectItem>
                   <SelectItem value="D-17">D-17</SelectItem>
                 </SelectContent>
@@ -1338,6 +1387,47 @@ export default function PropertiesPage() {
                   </div>
                 </PopoverContent>
               </Popover>
+            </div>
+            {/* Property Type Field */}
+            <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
+              <Home className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
+              <Select value={propertyType} onValueChange={setPropertyType}>
+                <SelectTrigger
+                  className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium focus:ring-0 focus:border-none h-12 lg:h-14"
+                  aria-label="Select property type"
+                >
+                  <SelectValue placeholder="Type" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-[#DAF1DE] rounded-xl shadow-lg">
+                  <SelectItem value="all">All Types</SelectItem>
+                  <SelectItem value="apartment">Apartment</SelectItem>
+                  <SelectItem value="villa">Villa</SelectItem>
+                  <SelectItem value="house">House</SelectItem>
+                  <SelectItem value="penthouse">Penthouse</SelectItem>
+                  <SelectItem value="studio">Studio</SelectItem>
+                  <SelectItem value="townhouse">Townhouse</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            {/* Price Range Field */}
+            <div className="flex items-center w-full lg:min-w-[160px] h-12 lg:h-14 bg-white border border-[#DAF1DE] rounded-lg lg:rounded-xl px-3 lg:px-4 gap-2 focus-within:border-[#8EB69B] focus-within:ring-2 focus-within:ring-[#8EB69B]/30 transition-colors duration-150">
+              <DollarSign className="h-4 lg:h-5 w-4 lg:w-5 text-[#8EB69B]" />
+              <Select value={priceRange} onValueChange={setPriceRange}>
+                <SelectTrigger
+                  className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm lg:text-base font-medium focus:ring-0 focus:border-none h-12 lg:h-14"
+                  aria-label="Select price range"
+                >
+                  <SelectValue placeholder="Price" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border border-[#DAF1DE] rounded-xl shadow-lg">
+                  <SelectItem value="all">All Prices</SelectItem>
+                  <SelectItem value="0-50">$0 - $50</SelectItem>
+                  <SelectItem value="50-100">$50 - $100</SelectItem>
+                  <SelectItem value="100-200">$100 - $200</SelectItem>
+                  <SelectItem value="200-500">$200 - $500</SelectItem>
+                  <SelectItem value="500+">$500+</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             {/* Search Button */}
             <div className="flex-shrink-0 w-full lg:w-auto">
