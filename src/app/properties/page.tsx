@@ -1207,8 +1207,6 @@ export default function PropertiesPage() {
                 </SelectTrigger>
                 <SelectContent className="bg-white border border-[#DAF1DE] rounded-xl shadow-lg">
                   <SelectItem value="all">All Locations</SelectItem>
-                  <SelectItem value="Islamabad">Islamabad</SelectItem>
-                  <SelectItem value="Margalla Hills">Margalla Hills</SelectItem>
                   <SelectItem value="Gulberg Greens">Gulberg Greens</SelectItem>
                   <SelectItem value="D-17">D-17</SelectItem>
                 </SelectContent>

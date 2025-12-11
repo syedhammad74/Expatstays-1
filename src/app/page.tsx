@@ -697,7 +697,6 @@ export default function Home() {
                     <SelectValue placeholder="Location" />
                   </SelectTrigger>
                   <SelectContent className="rounded-xl shadow-lg">
-                    <SelectItem value="Islamabad">Islamabad</SelectItem>
                     <SelectItem value="Gulberg Greens">
                       Gulberg Greens
                     </SelectItem>
