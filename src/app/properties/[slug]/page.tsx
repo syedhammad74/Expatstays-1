@@ -559,7 +559,7 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
                     aria-label="Contact owner via WhatsApp"
                   >
                     <a
-                      href={`https://wa.me/923087496089?text=${encodeURIComponent(`Hi, I am interested in this property: ${property.title}`)}`}
+                      href={`https://wa.me/923155610110?text=${encodeURIComponent(`Hi, I am interested in this property: ${property.title}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2"

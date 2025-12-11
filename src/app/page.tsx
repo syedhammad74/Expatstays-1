@@ -565,7 +565,7 @@ export default function Home() {
                 </Link>
 
                 <a
-                  href="https://wa.me/923087496089?text=Hi%2C%20I%20am%20interested%20in%20booking%20a%20property"
+                  href="https://wa.me/923155610110?text=Hi%2C%20I%20am%20interested%20in%20booking%20a%20property"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 sm:px-8 py-3 sm:py-3.5 border-2 border-[#25D366] text-[#25D366] font-semibold rounded-full hover:bg-[#25D366] hover:text-white transition-all duration-200 shadow-sm hover:shadow-md flex items-center justify-center gap-2 text-sm sm:text-base w-full sm:w-auto"
