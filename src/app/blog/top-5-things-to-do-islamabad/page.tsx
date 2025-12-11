@@ -41,7 +41,7 @@ const blogPost = {
   publishedDate: "December 15, 2024",
   author: "Expat Stays Team",
   category: "Travel Guides",
-  featuredImageUrl: "/media/blogs-appartments/EX-1.JPG",
+  featuredImageUrl: "/media/blogs-appartments/islamabad-mosque.png",
   readTime: "6 min read",
 };
 
@@ -84,9 +84,7 @@ export default function BlogPostDetailPage() {
 
         {post.featuredImageUrl && (
           <div
-            whileHover={{ scale: 1.015 }}
-            transition={{ duration: 0.35, ease: "easeInOut" }}
-            className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden mb-6 lg:mb-8 shadow-lg border-2 border-transparent hover:border-[#DAF1DE] focus-within:border-[#8EB69B]"
+            className="relative aspect-[16/9] w-full rounded-3xl overflow-hidden mb-6 lg:mb-8 shadow-lg border-2 border-transparent hover:border-[#DAF1DE] focus-within:border-[#8EB69B] transition-all duration-300 hover:scale-[1.01]"
           >
             <Image
               src={post.featuredImageUrl}
