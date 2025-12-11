@@ -172,11 +172,11 @@ export default function PropertiesPage() {
     },
     {
       id: "apartment_dam_view_islamabad",
-      title: "Stunning 2-Bedroom Apartment with Dam View",
+      title: "Expat-Style 2BR • 25 Mins to Faisal Mosque",
       description:
         "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen.",
       location: {
-        address: "Margalla Hills, Islamabad",
+        address: "D-17, Islamabad",
         city: "Islamabad",
         state: "Islamabad Capital Territory",
         country: "Pakistan",

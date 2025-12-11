@@ -212,11 +212,11 @@ export default function Page({ params }: { params: Promise<{ slug: string }> }) 
         if (slug === "apartment_dam_view_islamabad") {
           const apartmentProperty: Property = {
             id: "apartment_dam_view_islamabad",
-            title: "Stunning 2-Bedroom Apartment with Dam View",
+            title: "Expat-Style 2BR • 25 Mins to Faisal Mosque",
             description:
-              "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen. Located in the beautiful Margalla Hills area of Islamabad, this apartment provides easy access to the city's attractions while offering a tranquil retreat with breathtaking views of the dam and surrounding mountains.",
+              "This 2-bedroom apartment offers a stunning dam view and is perfect for families seeking a peaceful and relaxing stay. The apartment is equipped with all the amenities you need for a comfortable stay, including a modern kitchen, cozy living room, and comfortable bedrooms with high-quality linen. Located in D-17, Islamabad, this apartment provides easy access to the city's attractions while offering a tranquil retreat with breathtaking views of the dam and surrounding mountains.",
             location: {
-              address: "Margalla Hills, Islamabad",
+              address: "D-17, Islamabad",
               city: "Islamabad",
               state: "Islamabad Capital Territory",
               country: "Pakistan",
