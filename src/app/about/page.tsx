@@ -338,15 +338,15 @@ export default function AboutPage() {
                 {/* Header with Avatar and Info */}
                 <div className="flex items-start gap-3 lg:gap-4 mb-4 lg:mb-6">
                   <div className="relative">
-                      <Image
-                        src={testimonial.avatar}
-                        alt={`${testimonial.author} profile picture`}
-                        width={64}
-                        height={64}
-                        className="rounded-full object-cover border-3 border-[#8EB69B]/30 group-hover:scale-105 transition-transform duration-300 w-12 lg:w-16 h-12 lg:h-16"
-                        loading="lazy"
-                        quality={75}
-                      />
+                    <Image
+                      src={testimonial.avatar}
+                      alt={`${testimonial.author} profile picture`}
+                      width={64}
+                      height={64}
+                      className="rounded-full object-cover border-3 border-[#8EB69B]/30 group-hover:scale-105 transition-transform duration-300 w-12 lg:w-16 h-12 lg:h-16"
+                      loading="lazy"
+                      quality={75}
+                    />
                     <div className="absolute -bottom-1 -right-1 w-4 lg:w-6 h-4 lg:h-6 bg-gradient-to-br from-[#8EB69B] to-[#235347] rounded-full flex items-center justify-center">
                       <CheckCircle className="w-2 lg:w-3 h-2 lg:h-3 text-white" />
                     </div>
@@ -505,16 +505,12 @@ export default function AboutPage() {
             <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center items-center">
               <button
                 className="rounded-buttons px-6 lg:px-8 py-3 lg:py-4 bg-[#8EB69B] text-[#051F20] font-bold shadow-lg hover:shadow-[0_0_20px_#8EB69B55] hover:bg-[#235347] hover:text-[#DAF1DE] transition-all duration-200 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base min-w-[180px] lg:min-w-[200px] w-full sm:w-auto"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.97 }}
               >
                 <ArrowRight className="w-4 lg:w-5 h-4 lg:h-5" />
                 Explore Properties
               </button>
               <button
                 className="rounded-buttons px-6 lg:px-8 py-3 lg:py-4 border-2 border-[#8EB69B] text-[#8EB69B] font-bold hover:bg-[#8EB69B] hover:text-[#051F20] hover:shadow-[0_0_20px_#8EB69B55] transition-all duration-200 flex items-center justify-center gap-2 lg:gap-3 text-sm lg:text-base min-w-[180px] lg:min-w-[200px] w-full sm:w-auto"
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.97 }}
               >
                 <Phone className="w-4 lg:w-5 h-4 lg:h-5" />
                 Contact Our Team
