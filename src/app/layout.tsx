@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Inter } from "next/font/google"; // Added import
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import ConditionalFooter from "@/components/layout/ConditionalFooter";
@@ -9,6 +10,12 @@ import SkipLink from "@/components/accessibility/SkipLink";
 
 // Import animations.css but it will be loaded non-blocking via script in head
 import "../styles/animations.css";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
 
 export const metadata: Metadata = {
   title: {
@@ -92,20 +99,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={inter.variable}>
       <head>
         {/* Favicon */}
         <link rel="icon" href="/logo.png" type="image/png" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
 
-        {/* Optimized font loading - non-blocking */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
+        {/* Optimized font loading handled by next/font */}
 
         {/* Preconnect to Firebase for faster auth loading (310ms LCP savings) */}
         <link
@@ -119,39 +120,11 @@ export default function RootLayout({
         <link rel="preconnect" href="https://apis.google.com" />
         <link rel="dns-prefetch" href="https://apis.google.com" />
 
-        <link
-          rel="preload"
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-          as="style"
-        />
-        <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-          rel="stylesheet"
-          media="print"
-        />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              const fontLink = document.querySelector('link[href*="fonts.googleapis.com"][media="print"]');
-              if (fontLink) {
-                fontLink.onload = function() { this.media = 'all'; };
-              }
-            `,
-          }}
-        />
-        <noscript>
-          <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-            rel="stylesheet"
-          />
-        </noscript>
-
         {/* Preload critical resources for LCP optimization */}
         <link rel="preload" href="/logo.png" as="image" />
         {/* Removed preload of large HDR images - they're optimized via Next.js Image */}
         <link rel="dns-prefetch" href="//firebasestorage.googleapis.com" />
         <link rel="dns-prefetch" href="//storage.googleapis.com" />
-        <link rel="dns-prefetch" href="//fonts.googleapis.com" />
         <link rel="dns-prefetch" href="//fonts.gstatic.com" />
 
         {/* Structured data */}

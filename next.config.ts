@@ -92,11 +92,11 @@ const nextConfig: NextConfig = {
           },
           ...(process.env.NODE_ENV === "production"
             ? [
-                {
-                  key: "Strict-Transport-Security",
-                  value: "max-age=31536000; includeSubDomains",
-                },
-              ]
+              {
+                key: "Strict-Transport-Security",
+                value: "max-age=31536000; includeSubDomains",
+              },
+            ]
             : []),
         ],
       },
@@ -157,139 +157,7 @@ const nextConfig: NextConfig = {
     ];
   },
 
-  webpack: (config, { dev, isServer }) => {
-    if (!dev && !isServer) {
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: {
-          chunks: "all",
-          minSize: 20000,
-          maxSize: 120000, // Further reduced to improve code splitting
-          cacheGroups: {
-            firebase: {
-              test: /[\\/]node_modules[\\/](firebase|@firebase)[\\/]/,
-              name: "firebase",
-              chunks: "async",
-              priority: 30,
-              maxSize: 120000,
-              enforce: true,
-            },
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: "vendors",
-              chunks: "async",
-              priority: 20,
-              maxSize: 120000,
-              reuseExistingChunk: true,
-            },
-            radix: {
-              test: /[\\/]node_modules[\\/]@radix-ui[\\/]/,
-              name: "radix-ui",
-              chunks: "async",
-              priority: 25,
-              maxSize: 80000,
-            },
-            lucide: {
-              test: /[\\/]node_modules[\\/]lucide-react[\\/]/,
-              name: "lucide",
-              chunks: "async",
-              priority: 15,
-              maxSize: 40000,
-            },
-            commons: {
-              name: "commons",
-              minChunks: 2,
-              chunks: "async",
-              priority: 10,
-              reuseExistingChunk: true,
-              maxSize: 80000,
-            },
-          },
-        },
-        runtimeChunk: {
-          name: "runtime",
-        },
-        usedExports: true,
-        sideEffects: false,
-        moduleIds: "deterministic",
-      };
-
-      config.optimization.providedExports = true;
-      config.optimization.usedExports = true;
-
-      try {
-        const TerserPlugin = require("terser-webpack-plugin");
-        config.optimization.minimizer = config.optimization.minimizer || [];
-        config.optimization.minimizer.push(
-          new TerserPlugin({
-            terserOptions: {
-              compress: {
-                drop_console: true,
-                drop_debugger: true,
-                ecma: 2022,
-                passes: 2,
-              },
-              mangle: {
-                safari10: false,
-              },
-              format: {
-                ecma: 2022,
-              },
-            },
-          })
-        );
-      } catch (error) {
-        console.warn(
-          "TerserPlugin not available, skipping minification optimization"
-        );
-      }
-    }
-
-    if (dev && process.env.ANALYZE === "true") {
-      try {
-        const { BundleAnalyzerPlugin } = require("webpack-bundle-analyzer");
-        config.plugins.push(
-          new BundleAnalyzerPlugin({
-            analyzerMode: "server",
-            openAnalyzer: true,
-          })
-        );
-      } catch (error) {
-        console.warn(
-          "BundleAnalyzerPlugin not available, skipping bundle analysis"
-        );
-      }
-    }
-
-    if (!dev && !isServer) {
-      config.resolve.fallback = {
-        ...config.resolve.fallback,
-        fs: false,
-        net: false,
-        tls: false,
-        crypto: false,
-        stream: false,
-        url: false,
-        zlib: false,
-        http: false,
-        https: false,
-        assert: false,
-        os: false,
-        path: false,
-      };
-    }
-
-    return config;
-  },
-
   output: "standalone",
-
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
-  typescript: {
-    ignoreBuildErrors: true,
-  },
 
   onDemandEntries: {
     maxInactiveAge: 25 * 1000,

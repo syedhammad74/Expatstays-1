@@ -3,19 +3,20 @@
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MapPin, Home, DollarSign, Search } from "lucide-react";
-import React from "react";
 
 const BookingSearchWidget = () => {
   return (
     <div className="w-full">
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 items-end">
         {/* Location */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground">Location</label>
+          <label className="text-sm font-medium text-foreground ml-1">Location</label>
           <Select>
-            <SelectTrigger className="w-full h-12 bg-background border-border rounded-buttons shadow-minimal transition-smooth">
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-muted-foreground" />
+            <SelectTrigger className="w-full h-14 bg-background border-border hover:border-primary/50 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <MapPin className="h-4 w-4 text-primary" />
+                </div>
                 <SelectValue placeholder="Select Location" />
               </div>
             </SelectTrigger>
@@ -28,14 +29,16 @@ const BookingSearchWidget = () => {
             </SelectContent>
           </Select>
         </div>
-        
+
         {/* Property Type */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground">Property Type</label>
+          <label className="text-sm font-medium text-foreground ml-1">Property Type</label>
           <Select>
-            <SelectTrigger className="w-full h-12 bg-background border-border rounded-buttons shadow-minimal transition-smooth">
-              <div className="flex items-center gap-2">
-                <Home className="h-4 w-4 text-muted-foreground" />
+            <SelectTrigger className="w-full h-14 bg-background border-border hover:border-primary/50 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <Home className="h-4 w-4 text-primary" />
+                </div>
                 <SelectValue placeholder="Property Type" />
               </div>
             </SelectTrigger>
@@ -51,11 +54,13 @@ const BookingSearchWidget = () => {
 
         {/* Budget */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-foreground">Budget</label>
+          <label className="text-sm font-medium text-foreground ml-1">Budget</label>
           <Select>
-            <SelectTrigger className="w-full h-12 bg-background border-border rounded-buttons shadow-minimal transition-smooth">
-              <div className="flex items-center gap-2">
-                <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <SelectTrigger className="w-full h-14 bg-background border-border hover:border-primary/50 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                  <DollarSign className="h-4 w-4 text-primary" />
+                </div>
                 <SelectValue placeholder="Price Range" />
               </div>
             </SelectTrigger>
@@ -71,13 +76,12 @@ const BookingSearchWidget = () => {
 
         {/* Search Button */}
         <div className="space-y-2">
-          <label className="text-sm font-medium text-transparent">Search</label>
-          <Button 
-            type="submit" 
-            className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground rounded-buttons shadow-minimal hover:shadow-primary transition-smooth"
+          <Button
+            type="submit"
+            className="w-full h-14 bg-primary hover:bg-primary/90 text-primary-foreground text-base font-semibold rounded-xl shadow-lg hover:shadow-primary/30 transition-all duration-300 transform hover:-translate-y-0.5"
           >
-            <Search className="mr-2 h-4 w-4" />
-            Search Now
+            <Search className="mr-2 h-5 w-5" />
+            Find Properties
           </Button>
         </div>
       </div>
