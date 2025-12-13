@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
@@ -12,32 +12,32 @@ import { Booking, Property } from "@/lib/types/firebase";
 
 // Lazy load heavy components
 const AdminHeader = dynamic(
-  () => import("@/components/molecular/AdminHeader"),
+  () => import("@/components/molecular/AdminHeader").then((mod) => mod.AdminHeader),
   {
     loading: () => <div className="h-20 bg-gray-100 rounded animate-pulse" />,
   }
 );
 
-const AdminStats = dynamic(() => import("@/components/molecular/AdminStats"), {
+const AdminStats = dynamic(() => import("@/components/molecular/AdminStats").then((mod) => mod.AdminStats), {
   loading: () => <div className="h-32 bg-gray-100 rounded animate-pulse" />,
 });
 
 const AdminBookingsTable = dynamic(
-  () => import("@/components/molecular/AdminBookingsTable"),
+  () => import("@/components/molecular/AdminBookingsTable").then((mod) => mod.AdminBookingsTable),
   {
     loading: () => <div className="h-96 bg-gray-100 rounded animate-pulse" />,
   }
 );
 
 const AdminPropertiesTable = dynamic(
-  () => import("@/components/molecular/AdminPropertiesTable"),
+  () => import("@/components/molecular/AdminPropertiesTable").then((mod) => mod.AdminPropertiesTable),
   {
     loading: () => <div className="h-96 bg-gray-100 rounded animate-pulse" />,
   }
 );
 
 const AdminAnalytics = dynamic(
-  () => import("@/components/molecular/AdminAnalytics"),
+  () => import("@/components/molecular/AdminAnalytics").then((mod) => mod.AdminAnalytics),
   {
     loading: () => <div className="h-64 bg-gray-100 rounded animate-pulse" />,
   }
@@ -88,14 +88,14 @@ export default function AdminDashboard() {
       // Calculate analytics
       const totalBookings = bookingsData.length;
       const totalRevenue = bookingsData.reduce(
-        (sum, booking) => sum + (booking.totalAmount || 0),
+        (sum, booking) => sum + (booking.pricing.total || 0),
         0
       );
       const occupancyRate =
         propertiesData.length > 0
           ? (bookingsData.filter((b) => b.status === "confirmed").length /
-              propertiesData.length) *
-            100
+            propertiesData.length) *
+          100
           : 0;
       const totalProperties = propertiesData.length;
       const pendingBookings = bookingsData.filter(
@@ -107,7 +107,7 @@ export default function AdminDashboard() {
       const cancelledBookings = bookingsData.filter(
         (b) => b.status === "cancelled"
       ).length;
-      const activeListings = propertiesData.filter((p) => p.isAvailable).length;
+      const activeListings = propertiesData.filter((p) => p.availability.isActive).length;
 
       setAnalytics({
         totalBookings,

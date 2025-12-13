@@ -47,9 +47,6 @@ export default function SignInPage() {
         {/* Overlay Content */}
         <div className="relative left-20 pb-20 z-20 flex flex-col justify-center h-full p-4 text-white">
           <div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
             className="max-w-md"
           >
             <div className="flex items-center gap-2 mb-4">
@@ -102,12 +99,9 @@ export default function SignInPage() {
             Expat Stays
           </span>
         </div>
-        
+
         <div className="w-full max-w-[400px] sm:max-w-[500px] lg:max-w-[600px] flex flex-col justify-center rounded-2xl lg:rounded-3xl shadow-xl border border-[#DAF1DE]/60 bg-white/95 p-4 sm:p-6 lg:p-8 max-h-[90vh] overflow-y-auto">
           <div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
             className="text-center mb-3 lg:mb-4"
           >
             <h2 className="text-xl sm:text-2xl font-bold text-[#0B2B26] mb-2">
@@ -119,9 +113,6 @@ export default function SignInPage() {
           </div>
 
           <div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
             className="space-y-3 lg:space-y-4"
           >
             <SignInForm onToggleMode={() => router.push("/auth/signup")} />

@@ -115,9 +115,6 @@ function BookingSuccessContent() {
   return (
     <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-6 pt-20 md:pt-28">
       <div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
         className="text-center mb-8"
       >
         <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
@@ -133,9 +130,6 @@ function BookingSuccessContent() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Booking Details */}
         <div
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
         >
           <Card>
             <CardHeader>
@@ -202,9 +196,6 @@ function BookingSuccessContent() {
 
         {/* Payment Details */}
         <div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
         >
           <Card>
             <CardHeader>
@@ -299,9 +290,6 @@ function BookingSuccessContent() {
 
       {/* Guest Information */}
       <div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.6 }}
         className="mt-8"
       >
         <Card>
@@ -338,9 +326,6 @@ function BookingSuccessContent() {
 
       {/* Action Buttons */}
       <div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.8 }}
         className="mt-8 flex flex-col sm:flex-row gap-4 justify-center"
       >
         <Button
@@ -363,9 +348,6 @@ function BookingSuccessContent() {
 
       {/* Next Steps */}
       <div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 1 }}
         className="mt-8"
       >
         <Card className="bg-blue-50 border-blue-200">

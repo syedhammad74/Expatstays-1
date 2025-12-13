@@ -4,7 +4,7 @@ import { useState, useEffect, useMemo, useCallback } from "react";
 import { useParams, useRouter } from "next/navigation";
 // Removed framer-motion for performance
 import Image from "next/image";
-import format from "date-fns/format";
+import { format } from "date-fns";
 import {
   Calendar as CalendarIcon,
   MapPin,
@@ -124,7 +124,7 @@ export default function PropertyBookingPage() {
 
     const nights = Math.ceil(
       (dateRange.to.getTime() - dateRange.from.getTime()) /
-        (1000 * 60 * 60 * 24)
+      (1000 * 60 * 60 * 24)
     );
     const basePrice = property.pricing.basePrice * nights;
     const cleaningFee = property.pricing.cleaningFee || 0;
@@ -144,7 +144,7 @@ export default function PropertyBookingPage() {
   }, [dateRange, property]);
 
   // Optimized image URLs with proper error handling
-  type ImageObj = { url: string; [key: string]: unknown };
+  type ImageObj = { url: string;[key: string]: unknown };
   const optimizedImages = useMemo(() => {
     if (!property?.images || !Array.isArray(property.images)) return [];
 
@@ -169,13 +169,13 @@ export default function PropertyBookingPage() {
     optimizedImages.length > 0
       ? optimizedImages
       : [
-          {
-            url: "/placeholder-property.jpg",
-            optimizedUrl: "/placeholder-property.jpg",
-            thumbnailUrl: "/placeholder-property.jpg",
-            alt: property?.title || "Property image",
-          },
-        ];
+        {
+          url: "/placeholder-property.jpg",
+          optimizedUrl: "/placeholder-property.jpg",
+          thumbnailUrl: "/placeholder-property.jpg",
+          alt: property?.title || "Property image",
+        },
+      ];
 
   // Handle booking submission with performance monitoring
   const handleBooking = useCallback(async () => {
@@ -252,8 +252,10 @@ export default function PropertyBookingPage() {
           currency: property!.pricing.currency,
         },
         payment: {
-          method: paymentMethod,
+          paymentMethod: paymentMethod,
           status: "pending",
+          amount: bookingDetails!.total,
+          currency: property!.pricing.currency,
         },
         specialRequests: guestDetails.specialRequests,
         status: "pending" as BookingStatus,
@@ -339,9 +341,6 @@ export default function PropertyBookingPage() {
           <div className="lg:col-span-2 space-y-6">
             {/* Property Images Gallery */}
             <div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
               className="relative"
             >
               <div className="relative h-96 rounded-2xl overflow-hidden">
@@ -362,11 +361,10 @@ export default function PropertyBookingPage() {
                       <button
                         key={index}
                         onClick={() => setCurrentImageIndex(index)}
-                        className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                          index === currentImageIndex
-                            ? "bg-white"
-                            : "bg-white/50"
-                        }`}
+                        className={`w-3 h-3 rounded-full transition-all duration-300 ${index === currentImageIndex
+                          ? "bg-white"
+                          : "bg-white/50"
+                          }`}
                       />
                     ))}
                   </div>
@@ -380,11 +378,10 @@ export default function PropertyBookingPage() {
                     <button
                       key={index}
                       onClick={() => setCurrentImageIndex(index)}
-                      className={`relative h-20 rounded-lg overflow-hidden transition-all duration-300 ${
-                        index === currentImageIndex
-                          ? "ring-2 ring-[#8EB69B]"
-                          : "hover:opacity-80"
-                      }`}
+                      className={`relative h-20 rounded-lg overflow-hidden transition-all duration-300 ${index === currentImageIndex
+                        ? "ring-2 ring-[#8EB69B]"
+                        : "hover:opacity-80"
+                        }`}
                     >
                       {image && (
                         <Image
@@ -402,9 +399,6 @@ export default function PropertyBookingPage() {
 
             {/* Property Information */}
             <div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1 }}
             >
               <Card className="border-[#8EB69B]/20">
                 <CardHeader>
@@ -483,9 +477,6 @@ export default function PropertyBookingPage() {
           {/* Right Column - Booking Form */}
           <div className="lg:col-span-1">
             <div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
               className="sticky top-6"
             >
               <Card className="border-[#8EB69B]/20 shadow-xl">
@@ -509,9 +500,9 @@ export default function PropertyBookingPage() {
                           <CalendarIcon className="mr-2 h-4 w-4" />
                           {dateRange.from && dateRange.to
                             ? `${format(dateRange.from, "MMM d")} - ${format(
-                                dateRange.to,
-                                "MMM d, yyyy"
-                              )}`
+                              dateRange.to,
+                              "MMM d, yyyy"
+                            )}`
                             : "Select dates"}
                         </Button>
                       </PopoverTrigger>
@@ -757,6 +748,6 @@ export default function PropertyBookingPage() {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 }

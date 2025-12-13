@@ -203,8 +203,6 @@ export default function MyBookingsPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
           <div className="flex items-center justify-center h-64">
             <div
-              animate={{ rotate: 360 }}
-              transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
             >
               <Loader2 className="h-8 w-8 text-[#8EB69B]" />
             </div>
@@ -220,9 +218,6 @@ export default function MyBookingsPage() {
         <Header />
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12 pt-20 lg:pt-24 md:pt-32">
           <div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
           >
             <Alert className="max-w-md mx-auto bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-2xl shadow-xl">
               <AlertCircle className="h-4 w-4 text-[#8EB69B]" />
@@ -256,9 +251,6 @@ export default function MyBookingsPage() {
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Header Section */}
           <div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
             className="text-center space-y-4"
           >
             <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold text-[#051F20] leading-tight tracking-tight">
@@ -271,9 +263,6 @@ export default function MyBookingsPage() {
 
           {/* Booking Stats Cards */}
           <div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
             className="grid grid-cols-2 lg:grid-cols-5 gap-4 lg:gap-6"
           >
             {[
@@ -310,10 +299,6 @@ export default function MyBookingsPage() {
             ].map((stat, index) => (
               <div
                 key={stat.label}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.1 * index }}
-                whileHover={{ scale: 1.05 }}
                 className="relative group"
               >
                 <Card className="bg-white/60 backdrop-blur-xl border-[#8EB69B]/20 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden">
@@ -340,9 +325,6 @@ export default function MyBookingsPage() {
 
           {/* Booking Tabs */}
           <div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
           >
             <Tabs
               value={filter}
@@ -379,319 +361,291 @@ export default function MyBookingsPage() {
                 ))}
               </TabsList>
 
-                <TabsContent key={filter} value={filter} className="space-y-6">
-                  {filteredBookings.length === 0 ? (
-                    <div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.5 }}
-                    >
-                      <Card className="bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-3xl shadow-xl">
-                        <CardContent className="flex flex-col items-center justify-center py-16">
-                          <div
-                            initial={{ scale: 0 }}
-                            animate={{ scale: 1 }}
-                            transition={{
-                              duration: 0.6,
-                              delay: 0.2,
-                              type: "spring",
-                            }}
-                            className="w-24 h-24 bg-gradient-to-br from-[#8EB69B]/20 to-[#0B2B26]/20 rounded-full flex items-center justify-center mb-6"
-                          >
-                            <Calendar className="h-12 w-12 text-[#8EB69B]" />
-                          </div>
-                          <h3
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.4 }}
-                            className="text-2xl lg:text-3xl font-bold text-[#163832] mb-3 text-center"
-                          >
-                            No {filter === "all" ? "" : filter} bookings found
-                          </h3>
-                          <p
-                            initial={{ opacity: 0, y: 10 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6, delay: 0.5 }}
-                            className="text-lg text-[#235347]/70 text-center mb-8 max-w-md"
-                          >
-                            {filter === "all"
-                              ? "You haven't made any bookings yet. Start exploring our amazing luxury properties!"
-                              : `You don't have any ${filter} bookings at the moment.`}
-                          </p>
-                          {filter === "all" && (
-                            <div
-                              initial={{ opacity: 0, y: 10 }}
-                              animate={{ opacity: 1, y: 0 }}
-                              transition={{ duration: 0.6, delay: 0.6 }}
-                            >
-                              <Button
-                                asChild
-                                size="lg"
-                                className="bg-[#8EB69B] hover:bg-[#0B2B26] text-white rounded-full px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
-                              >
-                                <Link href="/properties">
-                                  <Sparkles className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />
-                                  Discover Properties
-                                  <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
-                                </Link>
-                              </Button>
-                            </div>
-                          )}
-                        </CardContent>
-                      </Card>
-                    </div>
-                  ) : (
-                    <div
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.5 }}
-                      className="space-y-6"
-                    >
-                      {filteredBookings.map((booking, index) => (
+              <TabsContent key={filter} value={filter} className="space-y-6">
+                {filteredBookings.length === 0 ? (
+                  <div
+                  >
+                    <Card className="bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-3xl shadow-xl">
+                      <CardContent className="flex flex-col items-center justify-center py-16">
                         <div
-                          key={booking.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ duration: 0.6, delay: index * 0.1 }}
-                          whileHover={{ y: -5 }}
-                          className="group"
+                          className="w-24 h-24 bg-gradient-to-br from-[#8EB69B]/20 to-[#0B2B26]/20 rounded-full flex items-center justify-center mb-6"
                         >
-                          <Card className="bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
-                            <CardContent className="p-0">
-                              <div className="grid grid-cols-1 lg:grid-cols-4 gap-0">
-                                {/* Property Image */}
-                                <div className="lg:col-span-1 relative">
-                                  <div className="aspect-[4/3] lg:aspect-auto lg:h-full relative overflow-hidden">
-                                    {booking.propertyDetails?.images?.[0] ? (
-                                      <Image
-                                        src={booking.propertyDetails.images[0]}
-                                        alt="Property"
-                                        fill
-                                        className="object-cover transition-transform duration-700 group-hover:scale-110"
-                                      />
-                                    ) : (
-                                      <div className="w-full h-full bg-gradient-to-br from-[#8EB69B]/10 to-[#0B2B26]/10 flex items-center justify-center">
-                                        <Home className="h-16 w-16 text-[#8EB69B]/50" />
-                                      </div>
-                                    )}
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+                          <Calendar className="h-12 w-12 text-[#8EB69B]" />
+                        </div>
+                        <h3
+                          className="text-2xl lg:text-3xl font-bold text-[#163832] mb-3 text-center"
+                        >
+                          No {filter === "all" ? "" : filter} bookings found
+                        </h3>
+                        <p
+                          className="text-lg text-[#235347]/70 text-center mb-8 max-w-md"
+                        >
+                          {filter === "all"
+                            ? "You haven't made any bookings yet. Start exploring our amazing luxury properties!"
+                            : `You don't have any ${filter} bookings at the moment.`}
+                        </p>
+                        {filter === "all" && (
+                          <div
+                          >
+                            <Button
+                              asChild
+                              size="lg"
+                              className="bg-[#8EB69B] hover:bg-[#0B2B26] text-white rounded-full px-8 py-4 text-lg font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
+                            >
+                              <Link href="/properties">
+                                <Sparkles className="h-5 w-5 mr-2 group-hover:rotate-12 transition-transform duration-300" />
+                                Discover Properties
+                                <ArrowRight className="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform duration-300" />
+                              </Link>
+                            </Button>
+                          </div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </div>
+                ) : (
+                  <div
+                    className="space-y-6"
+                  >
+                    {filteredBookings.map((booking, index) => (
+                      <div
+                        key={booking.id}
+                        className="group"
+                      >
+                        <Card className="bg-white/80 backdrop-blur-xl border-[#8EB69B]/20 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden">
+                          <CardContent className="p-0">
+                            <div className="grid grid-cols-1 lg:grid-cols-4 gap-0">
+                              {/* Property Image */}
+                              <div className="lg:col-span-1 relative">
+                                <div className="aspect-[4/3] lg:aspect-auto lg:h-full relative overflow-hidden">
+                                  {booking.propertyDetails?.images?.[0] ? (
+                                    <Image
+                                      src={booking.propertyDetails.images[0]}
+                                      alt="Property"
+                                      fill
+                                      className="object-cover transition-transform duration-700 group-hover:scale-110"
+                                    />
+                                  ) : (
+                                    <div className="w-full h-full bg-gradient-to-br from-[#8EB69B]/10 to-[#0B2B26]/10 flex items-center justify-center">
+                                      <Home className="h-16 w-16 text-[#8EB69B]/50" />
+                                    </div>
+                                  )}
+                                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
 
-                                    {/* Property Type Badge */}
-                                    <div className="absolute top-4 left-4">
-                                      <Badge className="bg-white/90 backdrop-blur-sm text-[#163832] border-0 font-medium capitalize">
-                                        {booking.propertyDetails
-                                          ?.propertyType || "Property"}
+                                  {/* Property Type Badge */}
+                                  <div className="absolute top-4 left-4">
+                                    <Badge className="bg-white/90 backdrop-blur-sm text-[#163832] border-0 font-medium capitalize">
+                                      {booking.propertyDetails
+                                        ?.propertyType || "Property"}
+                                    </Badge>
+                                  </div>
+                                </div>
+                              </div>
+
+                              {/* Booking Details */}
+                              <div className="lg:col-span-3 p-6 lg:p-8">
+                                {/* Header with Status */}
+                                <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6 gap-4">
+                                  <div className="flex-1">
+                                    <h3 className="text-2xl lg:text-3xl font-bold text-[#163832] mb-3 group-hover:text-[#8EB69B] transition-colors duration-300">
+                                      {booking.propertyDetails?.title ||
+                                        "Property Details Loading..."}
+                                    </h3>
+
+                                    {/* Status Badges */}
+                                    <div className="flex flex-wrap items-center gap-3 mb-4">
+                                      <Badge
+                                        className={`${getStatusColor(
+                                          booking.status
+                                        )} border px-3 py-1 text-sm font-medium rounded-full flex items-center gap-2`}
+                                      >
+                                        {getStatusIcon(booking.status)}
+                                        {booking.status
+                                          .charAt(0)
+                                          .toUpperCase() +
+                                          booking.status.slice(1)}
                                       </Badge>
+                                      <Badge
+                                        className={`${getPaymentStatusColor(
+                                          booking.payment.status
+                                        )} border px-3 py-1 text-sm font-medium rounded-full flex items-center gap-2`}
+                                      >
+                                        <DollarSign className="h-4 w-4" />
+                                        {booking.payment.status ===
+                                          "completed"
+                                          ? "Paid"
+                                          : booking.payment.status
+                                            .charAt(0)
+                                            .toUpperCase() +
+                                          booking.payment.status.slice(1)}
+                                      </Badge>
+                                    </div>
+
+                                    {/* Property Details */}
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[#235347]/70">
+                                      <div className="flex items-center gap-2">
+                                        <MapPin className="h-4 w-4 text-[#8EB69B]" />
+                                        <span className="text-sm lg:text-base">
+                                          {
+                                            booking.propertyDetails?.location
+                                              .city
+                                          }
+                                          ,{" "}
+                                          {
+                                            booking.propertyDetails?.location
+                                              .country
+                                          }
+                                        </span>
+                                      </div>
+                                      <div className="flex items-center gap-2">
+                                        <Users className="h-4 w-4 text-[#8EB69B]" />
+                                        <span className="text-sm lg:text-base">
+                                          {booking.guests.total} guest
+                                          {booking.guests.total > 1
+                                            ? "s"
+                                            : ""}
+                                        </span>
+                                      </div>
+                                      <div className="flex items-center gap-2">
+                                        <BedDouble className="h-4 w-4 text-[#8EB69B]" />
+                                        <span className="text-sm lg:text-base">
+                                          {
+                                            booking.propertyDetails?.capacity
+                                              .bedrooms
+                                          }{" "}
+                                          bedroom
+                                          {booking.propertyDetails?.capacity
+                                            .bedrooms !== 1
+                                            ? "s"
+                                            : ""}
+                                        </span>
+                                      </div>
+                                      <div className="flex items-center gap-2">
+                                        <Calendar className="h-4 w-4 text-[#8EB69B]" />
+                                        <span className="text-sm lg:text-base">
+                                          {booking.dates.nights} night
+                                          {booking.dates.nights > 1
+                                            ? "s"
+                                            : ""}
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  {/* Price Section */}
+                                  <div className="text-center lg:text-right">
+                                    <div className="text-3xl lg:text-4xl font-bold text-[#163832] mb-2">
+                                      $
+                                      {booking.pricing.total.toLocaleString()}
+                                    </div>
+                                    <div className="text-sm lg:text-base text-[#235347]/70">
+                                      ${booking.pricing.basePrice}/night ×{" "}
+                                      {booking.dates.nights} nights
+                                    </div>
+                                    <div className="text-xs text-[#235347]/50 mt-1">
+                                      Booking #
+                                      {booking.id.slice(-8).toUpperCase()}
                                     </div>
                                   </div>
                                 </div>
 
-                                {/* Booking Details */}
-                                <div className="lg:col-span-3 p-6 lg:p-8">
-                                  {/* Header with Status */}
-                                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6 gap-4">
-                                    <div className="flex-1">
-                                      <h3 className="text-2xl lg:text-3xl font-bold text-[#163832] mb-3 group-hover:text-[#8EB69B] transition-colors duration-300">
-                                        {booking.propertyDetails?.title ||
-                                          "Property Details Loading..."}
-                                      </h3>
-
-                                      {/* Status Badges */}
-                                      <div className="flex flex-wrap items-center gap-3 mb-4">
-                                        <Badge
-                                          className={`${getStatusColor(
-                                            booking.status
-                                          )} border px-3 py-1 text-sm font-medium rounded-full flex items-center gap-2`}
-                                        >
-                                          {getStatusIcon(booking.status)}
-                                          {booking.status
-                                            .charAt(0)
-                                            .toUpperCase() +
-                                            booking.status.slice(1)}
-                                        </Badge>
-                                        <Badge
-                                          className={`${getPaymentStatusColor(
-                                            booking.payment.status
-                                          )} border px-3 py-1 text-sm font-medium rounded-full flex items-center gap-2`}
-                                        >
-                                          <DollarSign className="h-4 w-4" />
-                                          {booking.payment.status ===
-                                          "completed"
-                                            ? "Paid"
-                                            : booking.payment.status
-                                                .charAt(0)
-                                                .toUpperCase() +
-                                              booking.payment.status.slice(1)}
-                                        </Badge>
+                                {/* Dates Section */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                                  <div className="bg-[#8EB69B]/5 backdrop-blur-sm rounded-2xl p-4 border border-[#8EB69B]/10">
+                                    <div className="flex items-center gap-3">
+                                      <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-xl flex items-center justify-center">
+                                        <Calendar className="h-5 w-5 text-[#8EB69B]" />
                                       </div>
-
-                                      {/* Property Details */}
-                                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-[#235347]/70">
-                                        <div className="flex items-center gap-2">
-                                          <MapPin className="h-4 w-4 text-[#8EB69B]" />
-                                          <span className="text-sm lg:text-base">
-                                            {
-                                              booking.propertyDetails?.location
-                                                .city
-                                            }
-                                            ,{" "}
-                                            {
-                                              booking.propertyDetails?.location
-                                                .country
-                                            }
-                                          </span>
+                                      <div>
+                                        <div className="font-semibold text-[#163832] text-lg">
+                                          Check-in
                                         </div>
-                                        <div className="flex items-center gap-2">
-                                          <Users className="h-4 w-4 text-[#8EB69B]" />
-                                          <span className="text-sm lg:text-base">
-                                            {booking.guests.total} guest
-                                            {booking.guests.total > 1
-                                              ? "s"
-                                              : ""}
-                                          </span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                          <BedDouble className="h-4 w-4 text-[#8EB69B]" />
-                                          <span className="text-sm lg:text-base">
-                                            {
-                                              booking.propertyDetails?.capacity
-                                                .bedrooms
-                                            }{" "}
-                                            bedroom
-                                            {booking.propertyDetails?.capacity
-                                              .bedrooms !== 1
-                                              ? "s"
-                                              : ""}
-                                          </span>
-                                        </div>
-                                        <div className="flex items-center gap-2">
-                                          <Calendar className="h-4 w-4 text-[#8EB69B]" />
-                                          <span className="text-sm lg:text-base">
-                                            {booking.dates.nights} night
-                                            {booking.dates.nights > 1
-                                              ? "s"
-                                              : ""}
-                                          </span>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    {/* Price Section */}
-                                    <div className="text-center lg:text-right">
-                                      <div className="text-3xl lg:text-4xl font-bold text-[#163832] mb-2">
-                                        $
-                                        {booking.pricing.total.toLocaleString()}
-                                      </div>
-                                      <div className="text-sm lg:text-base text-[#235347]/70">
-                                        ${booking.pricing.basePrice}/night ×{" "}
-                                        {booking.dates.nights} nights
-                                      </div>
-                                      <div className="text-xs text-[#235347]/50 mt-1">
-                                        Booking #
-                                        {booking.id.slice(-8).toUpperCase()}
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  {/* Dates Section */}
-                                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                                    <div className="bg-[#8EB69B]/5 backdrop-blur-sm rounded-2xl p-4 border border-[#8EB69B]/10">
-                                      <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-[#8EB69B]/20 rounded-xl flex items-center justify-center">
-                                          <Calendar className="h-5 w-5 text-[#8EB69B]" />
-                                        </div>
-                                        <div>
-                                          <div className="font-semibold text-[#163832] text-lg">
-                                            Check-in
-                                          </div>
-                                          <div className="text-[#235347]/70">
-                                            {formatDate(booking.dates.checkIn)}
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div className="bg-[#0B2B26]/5 backdrop-blur-sm rounded-2xl p-4 border border-[#0B2B26]/10">
-                                      <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-[#0B2B26]/20 rounded-xl flex items-center justify-center">
-                                          <Calendar className="h-5 w-5 text-[#0B2B26]" />
-                                        </div>
-                                        <div>
-                                          <div className="font-semibold text-[#163832] text-lg">
-                                            Check-out
-                                          </div>
-                                          <div className="text-[#235347]/70">
-                                            {formatDate(booking.dates.checkOut)}
-                                          </div>
+                                        <div className="text-[#235347]/70">
+                                          {formatDate(booking.dates.checkIn)}
                                         </div>
                                       </div>
                                     </div>
                                   </div>
-
-                                  {/* Special Requests */}
-                                  {booking.specialRequests && (
-                                    <div className="mb-6 p-4 bg-gradient-to-r from-[#8EB69B]/5 to-[#0B2B26]/5 rounded-2xl border border-[#8EB69B]/10">
-                                      <div className="flex items-center gap-2 mb-2">
-                                        <MessageSquare className="h-4 w-4 text-[#8EB69B]" />
-                                        <span className="font-semibold text-[#163832]">
-                                          Special Requests
-                                        </span>
+                                  <div className="bg-[#0B2B26]/5 backdrop-blur-sm rounded-2xl p-4 border border-[#0B2B26]/10">
+                                    <div className="flex items-center gap-3">
+                                      <div className="w-10 h-10 bg-[#0B2B26]/20 rounded-xl flex items-center justify-center">
+                                        <Calendar className="h-5 w-5 text-[#0B2B26]" />
                                       </div>
-                                      <p className="text-[#235347]/70 text-sm lg:text-base">
-                                        {booking.specialRequests}
-                                      </p>
+                                      <div>
+                                        <div className="font-semibold text-[#163832] text-lg">
+                                          Check-out
+                                        </div>
+                                        <div className="text-[#235347]/70">
+                                          {formatDate(booking.dates.checkOut)}
+                                        </div>
+                                      </div>
                                     </div>
+                                  </div>
+                                </div>
+
+                                {/* Special Requests */}
+                                {booking.specialRequests && (
+                                  <div className="mb-6 p-4 bg-gradient-to-r from-[#8EB69B]/5 to-[#0B2B26]/5 rounded-2xl border border-[#8EB69B]/10">
+                                    <div className="flex items-center gap-2 mb-2">
+                                      <MessageSquare className="h-4 w-4 text-[#8EB69B]" />
+                                      <span className="font-semibold text-[#163832]">
+                                        Special Requests
+                                      </span>
+                                    </div>
+                                    <p className="text-[#235347]/70 text-sm lg:text-base">
+                                      {booking.specialRequests}
+                                    </p>
+                                  </div>
+                                )}
+
+                                {/* Action Buttons */}
+                                <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-[#8EB69B]/10">
+                                  <Button
+                                    variant="outline"
+                                    size="default"
+                                    asChild
+                                    className="border-[#8EB69B]/30 text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white rounded-full transition-all duration-300 group"
+                                  >
+                                    <Link href={`/my-bookings/${booking.id}`}>
+                                      <Eye className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                                      View Details
+                                    </Link>
+                                  </Button>
+
+                                  {booking.status === "confirmed" && (
+                                    <>
+                                      <Button
+                                        variant="outline"
+                                        size="default"
+                                        className="border-[#8EB69B]/30 text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white rounded-full transition-all duration-300 group"
+                                      >
+                                        <Phone className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                                        Contact Host
+                                      </Button>
+                                      <Button
+                                        variant="outline"
+                                        size="default"
+                                        className="border-[#8EB69B]/30 text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white rounded-full transition-all duration-300 group"
+                                      >
+                                        <Download className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                                        Download Receipt
+                                      </Button>
+                                    </>
                                   )}
 
-                                  {/* Action Buttons */}
-                                  <div className="flex flex-wrap items-center gap-3 pt-6 border-t border-[#8EB69B]/10">
-                                    <Button
-                                      variant="outline"
-                                      size="default"
-                                      asChild
-                                      className="border-[#8EB69B]/30 text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white rounded-full transition-all duration-300 group"
-                                    >
-                                      <Link href={`/my-bookings/${booking.id}`}>
-                                        <Eye className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                                        View Details
-                                      </Link>
-                                    </Button>
-
-                                    {booking.status === "confirmed" && (
-                                      <>
-                                        <Button
-                                          variant="outline"
-                                          size="default"
-                                          className="border-[#8EB69B]/30 text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white rounded-full transition-all duration-300 group"
-                                        >
-                                          <Phone className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                                          Contact Host
-                                        </Button>
-                                        <Button
-                                          variant="outline"
-                                          size="default"
-                                          className="border-[#8EB69B]/30 text-[#0B2B26] hover:bg-[#8EB69B] hover:text-white rounded-full transition-all duration-300 group"
-                                        >
-                                          <Download className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                                          Download Receipt
-                                        </Button>
-                                      </>
+                                  {booking.status === "pending" &&
+                                    booking.payment.status === "pending" && (
+                                      <Button
+                                        size="default"
+                                        className="bg-[#8EB69B] hover:bg-[#0B2B26] text-white rounded-full transition-all duration-300 group"
+                                      >
+                                        <CreditCard className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
+                                        Complete Payment
+                                      </Button>
                                     )}
 
-                                    {booking.status === "pending" &&
-                                      booking.payment.status === "pending" && (
-                                        <Button
-                                          size="default"
-                                          className="bg-[#8EB69B] hover:bg-[#0B2B26] text-white rounded-full transition-all duration-300 group"
-                                        >
-                                          <CreditCard className="h-4 w-4 mr-2 group-hover:scale-110 transition-transform duration-300" />
-                                          Complete Payment
-                                        </Button>
-                                      )}
-
-                                    {(booking.status === "pending" ||
-                                      booking.status === "confirmed") && (
+                                  {(booking.status === "pending" ||
+                                    booking.status === "confirmed") && (
                                       <Button
                                         variant="destructive"
                                         size="default"
@@ -704,16 +658,16 @@ export default function MyBookingsPage() {
                                         Cancel Booking
                                       </Button>
                                     )}
-                                  </div>
                                 </div>
                               </div>
-                            </CardContent>
-                          </Card>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </TabsContent>
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </TabsContent>
             </Tabs>
           </div>
         </div>
