@@ -70,7 +70,7 @@ export default function Home() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [guests, setGuests] = useState({ adults: 1, children: 0, infants: 0 });
   const [guestsOpen, setGuestsOpen] = useState(false);
-  const [location, setLocation] = useState("Islamabad");
+  const [location, setLocation] = useState("");
   const router = useRouter();
   const [hoveredDate, setHoveredDate] = useState<Date | undefined>();
   const [calendarOpen, setCalendarOpen] = useState(false);
@@ -692,10 +692,10 @@ export default function Home() {
                 <MapPin className="h-5 w-5 text-brand-primary flex-shrink-0" />
                 <Select value={location} onValueChange={setLocation}>
                   <SelectTrigger
-                    className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium focus:ring-0 focus:border-none h-14"
+                    className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium focus:ring-0 focus:border-none h-14 [&>span]:text-left"
                     aria-label="Select location"
                   >
-                    <SelectValue placeholder="Location" />
+                    <SelectValue placeholder="Where to?" />
                   </SelectTrigger>
                   <SelectContent className="rounded-xl shadow-lg">
                     <SelectItem value="Gulberg Greens">
