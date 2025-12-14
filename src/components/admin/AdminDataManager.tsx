@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { AdminDataService, AdminDataItem } from "@/lib/services/admin-data";
 import {
   Card,
@@ -70,8 +70,8 @@ const adminDataService = AdminDataService.getInstance();
 // Helper to convert Firestore Timestamp to Date
 function toDateSafe(val: unknown): Date {
   if (val instanceof Date) return val;
-  if (val && typeof val.toDate === "function") return val.toDate();
-  return new Date(val || "");
+  if (val && typeof (val as any).toDate === "function") return (val as any).toDate();
+  return new Date((val as string | number | Date) || "");
 }
 
 export function AdminDataManager({ className }: AdminDataManagerProps) {
@@ -80,7 +80,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
   // State management
   const [firestoreData, setFirestoreData] = useState<AdminDataItem[]>([]);
   const [activityFeed, setActivityFeed] = useState<
-    { id: string; [key: string]: unknown }[]
+    AdminDataItem[]
   >([]);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
@@ -347,8 +347,8 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
 
   const handlePopulateDemoData = async () => {
     try {
-      const { populateDemoData } = await import("@/utils/demo-admin-data");
-      await populateDemoData();
+      // const { populateDemoData } = await import("@/utils/demo-admin-data");
+      // await populateDemoData();
       toast({
         title: "Success",
         description: "Admin demo data populated successfully",
@@ -366,10 +366,10 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
 
   const handlePopulatePropertyDemoData = async () => {
     try {
-      const { populatePropertyDemoData } = await import(
-        "@/utils/populate-property-demo-data"
-      );
-      await populatePropertyDemoData();
+      // const { populatePropertyDemoData } = await import(
+      //   "@/utils/populate-property-demo-data"
+      // );
+      // await populatePropertyDemoData();
       toast({
         title: "Success",
         description:
@@ -462,7 +462,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
   };
 
   // Add a stub for handleImageChange to fix missing function error
-  const handleImageChange = () => {};
+  const handleImageChange = () => { };
 
   if (loading) {
     return (
@@ -498,17 +498,15 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
               <div className="flex items-center gap-4">
                 <div className="flex items-center gap-2">
                   <div
-                    className={`w-3 h-3 rounded-full ${
-                      firestoreConnected ? "bg-[#8EB69B]" : "bg-red-500"
-                    }`}
+                    className={`w-3 h-3 rounded-full ${firestoreConnected ? "bg-[#8EB69B]" : "bg-red-500"
+                      }`}
                   />
                   <span className="text-sm text-[#235347]">Firestore</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <div
-                    className={`w-3 h-3 rounded-full ${
-                      realtimeConnected ? "bg-[#8EB69B]" : "bg-red-500"
-                    }`}
+                    className={`w-3 h-3 rounded-full ${realtimeConnected ? "bg-[#8EB69B]" : "bg-red-500"
+                      }`}
                   />
                   <span className="text-sm text-[#235347]">Realtime DB</span>
                 </div>
@@ -520,11 +518,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
 
       {/* Statistics Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
+        <div className="transform transition-all duration-500 hover:scale-105">
           <Card className="bg-white/80 backdrop-blur-sm border-[#8EB69B]/20 hover:shadow-lg transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -544,11 +538,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
           </Card>
         </div>
 
-        <div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1 }}
-        >
+        <div className="transform transition-all duration-500 hover:scale-105">
           <Card className="bg-white/80 backdrop-blur-sm border-[#8EB69B]/20 hover:shadow-lg transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -568,11 +558,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
           </Card>
         </div>
 
-        <div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
+        <div className="transform transition-all duration-500 hover:scale-105">
           <Card className="bg-white/80 backdrop-blur-sm border-[#8EB69B]/20 hover:shadow-lg transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -590,13 +576,9 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
               </div>
             </CardContent>
           </Card>
-        </div>
+        </div >
 
-        <div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
+        <div className="transform transition-all duration-500 hover:scale-105">
           <Card className="bg-white/80 backdrop-blur-sm border-[#8EB69B]/20 hover:shadow-lg transition-all duration-300">
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
@@ -614,11 +596,11 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
               </div>
             </CardContent>
           </Card>
-        </div>
-      </div>
+        </div >
+      </div >
 
       {/* Controls */}
-      <Card className="bg-white/80 backdrop-blur-sm border-[#8EB69B]/20">
+      < Card className="bg-white/80 backdrop-blur-sm border-[#8EB69B]/20" >
         <CardHeader>
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
@@ -642,11 +624,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                   </Button>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[700px] bg-gradient-to-br from-white via-[#FAFAFA] to-[#DAF1DE]/20 border-[#8EB69B]/30 shadow-2xl backdrop-blur-sm">
-                  <div
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
+                  <div className="transform transition-all duration-300">
                     <DialogHeader className="border-b border-[#8EB69B]/20 pb-4 mb-6">
                       <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-[#051F20] to-[#235347] bg-clip-text text-transparent flex items-center gap-3">
                         <div className="h-10 w-10 rounded-full bg-gradient-to-r from-[#8EB69B]/20 to-[#235347]/20 flex items-center justify-center">
@@ -1293,28 +1271,27 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
                 No recent activity
               </p>
             ) : (
-              activityFeed.map(
-                (activity: { id: string; [key: string]: unknown }) => (
-                  <div
-                    key={activity.id}
-                    className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-[#DAF1DE]/20 to-white border border-[#8EB69B]/10"
-                  >
-                    <div className="h-8 w-8 rounded-full bg-[#8EB69B]/10 flex items-center justify-center">
-                      <Activity className="h-4 w-4 text-[#8EB69B]" />
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-[#051F20]">
-                        {activity.title}
-                      </p>
-                      <p className="text-xs text-[#235347]/70">
-                        {activity.description}
-                      </p>
-                    </div>
-                    <div className="text-xs text-[#235347]/50">
-                      {new Date(activity.timestamp).toLocaleTimeString()}
-                    </div>
+              activityFeed.map((activity) => (
+                <div
+                  key={activity.id}
+                  className="flex items-center gap-3 p-3 rounded-lg bg-gradient-to-r from-[#DAF1DE]/20 to-white border border-[#8EB69B]/10"
+                >
+                  <div className="h-8 w-8 rounded-full bg-[#8EB69B]/10 flex items-center justify-center">
+                    <Activity className="h-4 w-4 text-[#8EB69B]" />
                   </div>
-                )
+                  <div className="flex-1">
+                    <p className="text-sm font-medium text-[#051F20]">
+                      {activity.title}
+                    </p>
+                    <p className="text-xs text-[#235347]/70">
+                      {activity.description}
+                    </p>
+                  </div>
+                  <div className="text-xs text-[#235347]/50">
+                    {new Date((activity as any).timestamp || (activity as any).createdAt).toLocaleTimeString()}
+                  </div>
+                </div>
+              )
               )
             )}
           </div>
@@ -1324,11 +1301,7 @@ export function AdminDataManager({ className }: AdminDataManagerProps) {
       {/* Edit Dialog */}
       <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
         <DialogContent className="sm:max-w-[700px] bg-gradient-to-br from-white via-[#FAFAFA] to-[#DAF1DE]/20 border-[#8EB69B]/30 shadow-2xl backdrop-blur-sm">
-          <div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-          >
+          <div className="transform transition-all duration-300">
             <DialogHeader className="border-b border-[#8EB69B]/20 pb-4 mb-6">
               <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-[#051F20] to-[#235347] bg-clip-text text-transparent flex items-center gap-3">
                 <div className="h-10 w-10 rounded-full bg-gradient-to-r from-[#8EB69B]/20 to-[#235347]/20 flex items-center justify-center">

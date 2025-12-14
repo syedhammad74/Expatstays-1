@@ -34,20 +34,20 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
 
     return bookings
       .filter((booking) => {
-        const bookingDate = new Date(booking.createdAt || booking.checkIn);
+        const bookingDate = new Date(booking.createdAt || booking.dates.checkIn);
         return (
           bookingDate.getMonth() === currentMonth &&
           bookingDate.getFullYear() === currentYear
         );
       })
-      .reduce((sum, booking) => sum + (booking.totalAmount || 0), 0);
+      .reduce((sum, booking) => sum + (booking.pricing.total || 0), 0);
   }, [bookings]);
 
   // Calculate average booking value
   const averageBookingValue = React.useMemo(() => {
     if (bookings.length === 0) return 0;
     const totalRevenue = bookings.reduce(
-      (sum, booking) => sum + (booking.totalAmount || 0),
+      (sum, booking) => sum + (booking.pricing.total || 0),
       0
     );
     return totalRevenue / bookings.length;
@@ -61,7 +61,7 @@ export const AdminAnalytics: React.FC<AdminAnalyticsProps> = ({
         acc[propertyId] = { bookings: 0, revenue: 0, property: null };
       }
       acc[propertyId].bookings += 1;
-      acc[propertyId].revenue += booking.totalAmount || 0;
+      acc[propertyId].revenue += booking.pricing.total || 0;
       return acc;
     }, {} as Record<string, { bookings: number; revenue: number; property: Property | null }>);
 

@@ -54,10 +54,10 @@ export const AdminBookingsTable: React.FC<AdminBookingsTableProps> = ({
         filter.status === "all" || booking.status === filter.status;
       const matchesSearch =
         filter.search === "" ||
-        booking.guestName
+        booking.guest.name
           ?.toLowerCase()
           .includes(filter.search.toLowerCase()) ||
-        booking.propertyTitle
+        booking.propertyName
           ?.toLowerCase()
           .includes(filter.search.toLowerCase()) ||
         booking.id.toLowerCase().includes(filter.search.toLowerCase());
@@ -184,24 +184,24 @@ export const AdminBookingsTable: React.FC<AdminBookingsTableProps> = ({
                     <TableCell>
                       <div className="flex items-center space-x-2">
                         <User className="h-4 w-4 text-gray-400" />
-                        <span>{booking.guestName || "Unknown"}</span>
+                        <span>{booking.guest.name || "Unknown"}</span>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="max-w-48">
                         <p className="font-medium truncate">
-                          {booking.propertyTitle || "Unknown Property"}
+                          {booking.propertyName || "Unknown Property"}
                         </p>
                         <p className="text-sm text-gray-500 truncate">
-                          {booking.propertyLocation || "Unknown Location"}
+                          {/* Location not available in Booking type */}
                         </p>
                       </div>
                     </TableCell>
                     <TableCell>
                       <div className="text-sm">
-                        <p>{formatDate(booking.checkIn)}</p>
+                        <p>{formatDate(booking.dates.checkIn)}</p>
                         <p className="text-gray-500">
-                          to {formatDate(booking.checkOut)}
+                          to {formatDate(booking.dates.checkOut)}
                         </p>
                       </div>
                     </TableCell>
@@ -209,7 +209,7 @@ export const AdminBookingsTable: React.FC<AdminBookingsTableProps> = ({
                       <div className="flex items-center space-x-1">
                         <DollarSign className="h-4 w-4 text-gray-400" />
                         <span className="font-medium">
-                          {formatCurrency(booking.totalAmount || 0)}
+                          {formatCurrency(booking.pricing.total || 0)}
                         </span>
                       </div>
                     </TableCell>

@@ -8,7 +8,7 @@ import {
 
 // Initialize Stripe for server-side operations
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "", {
-  apiVersion: "2022-11-15",
+  apiVersion: "2025-06-30.basil",
 } as Stripe.StripeConfig);
 
 export interface PaymentIntent {
@@ -203,9 +203,7 @@ class PaymentService {
           currency: paymentIntent.currency,
           status: "completed",
           paymentMethod: paymentIntent.payment_method as string,
-          receiptUrl:
-            (paymentIntent as Stripe.PaymentIntent).charges?.data?.[0]
-              ?.receipt_url || undefined,
+          receiptUrl: undefined, // Charges property removed in newer Stripe API
         });
       } else if (paymentIntent.status === "canceled") {
         status = "canceled";
@@ -219,8 +217,7 @@ class PaymentService {
         status,
         bookingId,
         amount: paymentIntent.amount / 100,
-        receiptUrl: (paymentIntent as Stripe.PaymentIntent).charges?.data?.[0]
-          ?.receipt_url,
+        receiptUrl: undefined, // Charges property removed in newer Stripe API
       };
     } catch (error) {
       console.error("Error confirming payment:", error);
@@ -352,9 +349,7 @@ class PaymentService {
         currency: paymentIntent.currency,
         status: "completed",
         paymentMethod: paymentIntent.payment_method as string,
-        receiptUrl:
-          (paymentIntent as Stripe.PaymentIntent).charges?.data?.[0]
-            ?.receipt_url || undefined,
+        receiptUrl: undefined, // Charges property removed in newer Stripe API
       });
 
       console.log(`Payment succeeded for booking ${bookingId}`);

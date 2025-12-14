@@ -169,8 +169,6 @@ export function MockPaymentForm({
               >
                 {processing ? (
                   <div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
                     className="flex items-center gap-2"
                   >
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -186,8 +184,6 @@ export function MockPaymentForm({
             </>
           ) : (
             <div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
               className="text-center py-8"
             >
               <CheckCircle className="h-16 w-16 text-green-600 mx-auto mb-4" />

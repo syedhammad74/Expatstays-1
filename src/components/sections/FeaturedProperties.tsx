@@ -1,9 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import PropertyCard, {
-  type PropertyCardProps,
-} from "@/components/molecular/PropertyCard";
+import { PropertyCard, type PropertyCardProps } from "@/components/molecular/PropertyCard";
 import { Button } from "@/components/ui/button";
 import { Property } from "@/lib/types/firebase";
 import { propertyService } from "@/lib/services/properties";
@@ -31,12 +29,11 @@ const FeaturedProperties = () => {
           imageUrl:
             property.images?.[0] ||
             "/media/DSC01806 HDR June 25 2025/DSC01840-HDR.jpg",
-          imageHint: property.title.toLowerCase(),
           title: property.title,
           bedrooms: property.capacity.bedrooms,
           guests: property.capacity.maxGuests,
           location: `${property.location.city}, ${property.location.country}`,
-          price: `$${property.pricing.basePrice}/night`,
+          price: property.pricing.basePrice,
         })
       );
 
@@ -48,32 +45,29 @@ const FeaturedProperties = () => {
         {
           slug: "luxury-villa-marina",
           imageUrl: "/media/DSC01806 HDR June 25 2025/DSC01840-HDR.jpg",
-          imageHint: "luxury villa water",
           title: "Banana Island, Lagos",
           bedrooms: 4,
           guests: 8,
           location: "10×10 m",
-          price: "₦100,000,000",
+          price: 100000000,
         },
         {
           slug: "penthouse-downtown",
           imageUrl: "/media/DSC01806 HDR June 25 2025/DSC01846-HDR.jpg",
-          imageHint: "modern penthouse city",
           title: "Parkview Estate, Lagos",
           bedrooms: 5,
           guests: 10,
           location: "10×10 m",
-          price: "₦200,000,000",
+          price: 200000000,
         },
         {
           slug: "beachfront-mansion-palm",
           imageUrl: "/media/DSC01806 HDR June 25 2025/DSC01856-HDR.jpg",
-          imageHint: "beach mansion palm trees",
           title: "Eko Atlantic, Lagos",
           bedrooms: 3,
           guests: 6,
           location: "10×10 m",
-          price: "₦500,000,000",
+          price: 500000000,
         },
       ]);
     } finally {

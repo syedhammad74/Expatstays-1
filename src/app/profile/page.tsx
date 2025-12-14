@@ -52,6 +52,7 @@ import {
   Bookmark,
   Camera,
   Trash2,
+  Clock,
 } from "lucide-react";
 import { Booking, Property } from "@/lib/types/firebase";
 import { useToast } from "@/hooks/use-toast";
@@ -537,9 +538,8 @@ export default function ProfilePage() {
                               }))
                             }
                             disabled={!editingProfile}
-                            className={`mt-2 rounded-xl border-[#8EB69B]/30 focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 ${
-                              !editingProfile ? "bg-[#FAFAFA]" : ""
-                            }`}
+                            className={`mt-2 rounded-xl border-[#8EB69B]/30 focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 ${!editingProfile ? "bg-[#FAFAFA]" : ""
+                              }`}
                           />
                         </div>
                         <div>
@@ -559,9 +559,8 @@ export default function ProfilePage() {
                               }))
                             }
                             disabled={!editingProfile}
-                            className={`mt-2 rounded-xl border-[#8EB69B]/30 focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 ${
-                              !editingProfile ? "bg-[#FAFAFA]" : ""
-                            }`}
+                            className={`mt-2 rounded-xl border-[#8EB69B]/30 focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 ${!editingProfile ? "bg-[#FAFAFA]" : ""
+                              }`}
                           />
                         </div>
                       </div>
@@ -601,9 +600,8 @@ export default function ProfilePage() {
                             }))
                           }
                           disabled={!editingProfile}
-                          className={`mt-2 rounded-xl border-[#8EB69B]/30 focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 ${
-                            !editingProfile ? "bg-[#FAFAFA]" : ""
-                          }`}
+                          className={`mt-2 rounded-xl border-[#8EB69B]/30 focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 ${!editingProfile ? "bg-[#FAFAFA]" : ""
+                            }`}
                           placeholder="+1 (555) 123-4567"
                         />
                       </div>
@@ -625,9 +623,8 @@ export default function ProfilePage() {
                             }))
                           }
                           disabled={!editingProfile}
-                          className={`mt-2 rounded-xl border-[#8EB69B]/30 focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 ${
-                            !editingProfile ? "bg-[#FAFAFA]" : ""
-                          }`}
+                          className={`mt-2 rounded-xl border-[#8EB69B]/30 focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 ${!editingProfile ? "bg-[#FAFAFA]" : ""
+                            }`}
                           placeholder="City, Country"
                         />
                       </div>
@@ -649,9 +646,8 @@ export default function ProfilePage() {
                             }))
                           }
                           disabled={!editingProfile}
-                          className={`mt-2 rounded-xl border-[#8EB69B]/30 focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 w-full p-2 ${
-                            !editingProfile ? "bg-[#FAFAFA]" : ""
-                          }`}
+                          className={`mt-2 rounded-xl border-[#8EB69B]/30 focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 w-full p-2 ${!editingProfile ? "bg-[#FAFAFA]" : ""
+                            }`}
                           placeholder="Tell us a bit about yourself..."
                           rows={4}
                         />

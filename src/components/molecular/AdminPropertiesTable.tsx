@@ -48,7 +48,8 @@ export const AdminPropertiesTable: React.FC<AdminPropertiesTableProps> = ({
     return properties.filter(
       (property) =>
         property.title?.toLowerCase().includes(search.toLowerCase()) ||
-        property.location?.toLowerCase().includes(search.toLowerCase()) ||
+        (property.location.city?.toLowerCase().includes(search.toLowerCase()) ||
+          property.location.address?.toLowerCase().includes(search.toLowerCase())) ||
         property.id.toLowerCase().includes(search.toLowerCase())
     );
   }, [properties, search]);
@@ -126,7 +127,7 @@ export const AdminPropertiesTable: React.FC<AdminPropertiesTableProps> = ({
                       <div className="flex items-center space-x-1">
                         <MapPin className="h-4 w-4 text-gray-400" />
                         <span className="text-sm truncate max-w-32">
-                          {property.location || "Unknown"}
+                          {property.location.city || "Unknown"}
                         </span>
                       </div>
                     </TableCell>
@@ -134,15 +135,15 @@ export const AdminPropertiesTable: React.FC<AdminPropertiesTableProps> = ({
                       <div className="flex items-center space-x-3 text-sm text-gray-600">
                         <div className="flex items-center space-x-1">
                           <BedDouble className="h-3 w-3" />
-                          <span>{property.bedrooms || 0}</span>
+                          <span>{property.capacity.bedrooms || 0}</span>
                         </div>
                         <div className="flex items-center space-x-1">
                           <Bath className="h-3 w-3" />
-                          <span>{property.bathrooms || 0}</span>
+                          <span>{property.capacity.bathrooms || 0}</span>
                         </div>
                         <div className="flex items-center space-x-1">
                           <Users className="h-3 w-3" />
-                          <span>{property.guests || 0}</span>
+                          <span>{property.capacity.maxGuests || 0}</span>
                         </div>
                       </div>
                     </TableCell>
@@ -150,7 +151,7 @@ export const AdminPropertiesTable: React.FC<AdminPropertiesTableProps> = ({
                       <div className="flex items-center space-x-1">
                         <DollarSign className="h-4 w-4 text-gray-400" />
                         <span className="font-medium">
-                          {formatCurrency(property.price || 0)}
+                          {formatCurrency(property.pricing.basePrice || 0)}
                         </span>
                         <span className="text-sm text-gray-500">/night</span>
                       </div>
@@ -158,15 +159,15 @@ export const AdminPropertiesTable: React.FC<AdminPropertiesTableProps> = ({
                     <TableCell>
                       <Badge
                         variant={
-                          property.isAvailable ? "default" : "destructive"
+                          property.availability.isActive ? "default" : "destructive"
                         }
                         className={
-                          property.isAvailable
+                          property.availability.isActive
                             ? "bg-green-100 text-green-800"
                             : ""
                         }
                       >
-                        {property.isAvailable ? "Available" : "Unavailable"}
+                        {property.availability.isActive ? "Available" : "Unavailable"}
                       </Badge>
                     </TableCell>
                     <TableCell>
@@ -206,10 +207,10 @@ export const AdminPropertiesTable: React.FC<AdminPropertiesTableProps> = ({
         <div className="mt-4 flex flex-wrap gap-4 text-sm text-gray-600">
           <span>Total: {properties.length}</span>
           <span>
-            Available: {properties.filter((p) => p.isAvailable).length}
+            Available: {properties.filter((p) => p.availability.isActive).length}
           </span>
           <span>
-            Unavailable: {properties.filter((p) => !p.isAvailable).length}
+            Unavailable: {properties.filter((p) => !p.availability.isActive).length}
           </span>
         </div>
       </CardContent>

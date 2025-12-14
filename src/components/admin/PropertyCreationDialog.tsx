@@ -357,11 +357,7 @@ export function PropertyCreationDialog({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[900px] max-h-[90vh] overflow-y-auto bg-gradient-to-br from-white via-[#FAFAFA] to-[#DAF1DE]/20 border-[#8EB69B]/30 shadow-2xl backdrop-blur-sm">
-        <div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.3 }}
-        >
+        <div className="transform transition-all duration-300">
           <DialogHeader className="border-b border-[#8EB69B]/20 pb-6 mb-6">
             <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-[#051F20] to-[#235347] bg-clip-text text-transparent flex items-center gap-3">
               <div className="h-12 w-12 rounded-full bg-gradient-to-r from-[#8EB69B]/20 to-[#235347]/20 flex items-center justify-center">
@@ -737,17 +733,15 @@ export function PropertyCreationDialog({
                       key={amenity.id}
                       type="button"
                       onClick={() => toggleAmenity(amenity.id)}
-                      className={`p-4 rounded-lg border-2 transition-all duration-300 hover:scale-105 ${
-                        isSelected
+                      className={`p-4 rounded-lg border-2 transition-all duration-300 hover:scale-105 ${isSelected
                           ? "border-[#8EB69B] bg-[#8EB69B]/10 text-[#235347]"
                           : "border-[#8EB69B]/30 hover:border-[#8EB69B]/50 text-[#235347]/70"
-                      }`}
+                        }`}
                     >
                       <div className="flex flex-col items-center gap-2">
                         <IconComponent
-                          className={`h-6 w-6 ${
-                            isSelected ? "text-[#8EB69B]" : "text-[#235347]/70"
-                          }`}
+                          className={`h-6 w-6 ${isSelected ? "text-[#8EB69B]" : "text-[#235347]/70"
+                            }`}
                         />
                         <span className="text-sm font-medium">
                           {amenity.label}

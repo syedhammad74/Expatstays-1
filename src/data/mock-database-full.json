@@ -834,7 +834,9 @@
         "firstName": "Alice",
         "lastName": "Johnson",
         "phone": "+1234567890",
-        "nationality": "American"
+        "nationality": "American",
+        "location": "",
+        "bio": ""
       },
       "preferences": {
         "currency": "USD",
@@ -854,7 +856,9 @@
         "firstName": "Bob",
         "lastName": "Smith",
         "phone": "+1234567891",
-        "nationality": "British"
+        "nationality": "British",
+        "location": "",
+        "bio": ""
       },
       "preferences": {
         "currency": "USD",
@@ -874,7 +878,9 @@
         "firstName": "Carol",
         "lastName": "Davis",
         "phone": "+1234567892",
-        "nationality": "Canadian"
+        "nationality": "Canadian",
+        "location": "",
+        "bio": ""
       },
       "preferences": {
         "currency": "USD",
@@ -891,6 +897,7 @@
     {
       "id": "booking_001",
       "propertyId": "prop_001",
+      "propertyName": "Luxury Marina Villa with Infinity Pool",
       "guest": {
         "uid": "user1",
         "name": "Alice Johnson",
@@ -935,6 +942,7 @@
     {
       "id": "booking_002",
       "propertyId": "prop_003",
+      "propertyName": "Modern Dubai Downtown Apartment",
       "guest": {
         "uid": "user2",
         "name": "Bob Smith",
@@ -974,6 +982,7 @@
     {
       "id": "booking_003",
       "propertyId": "prop_002",
+      "propertyName": "Beachfront Penthouse in JBR",
       "guest": {
         "uid": "user3",
         "name": "Carol Davis",

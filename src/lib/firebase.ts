@@ -113,7 +113,7 @@ if (false) {
               if (useEmulators) {
                 try {
                   connectDataConnectEmulator(
-                    dataConnect as unknown,
+                    dataConnect as any,
                     "localhost",
                     9399
                   );
@@ -168,12 +168,10 @@ export const firebase = {
     doc: (path: string) => {
       // Use modular Firestore API
       const [collectionPath, docId] = path.split("/");
-      // @ts-expect-error: Firestore modular API type mismatch
       return { collectionPath, docId };
     },
     collection: (path: string) => {
       // Use modular Firestore API
-      // @ts-expect-error: Firestore modular API type mismatch
       return { collectionPath: path };
     },
     serverTimestamp: () => ({ serverTimestamp: true }),
@@ -185,13 +183,13 @@ export const firebase = {
       return dbRef(realtimeDb, path);
     },
     set: async (reference: unknown, value: unknown) => {
-      return dbSet(reference, value);
+      return dbSet(reference as any, value);
     },
     push: async (reference: unknown, value: unknown) => {
-      return dbPush(reference, value);
+      return dbPush(reference as any, value);
     },
     onValue: (reference: unknown, callback: (snapshot: unknown) => void) => {
-      return dbOnValue(reference, callback);
+      return dbOnValue(reference as any, callback);
     },
     serverTimestamp: () => {
       return dbServerTimestamp();
@@ -211,10 +209,10 @@ export const firebase = {
       return storageRef(storage, path);
     },
     uploadBytes: async (storageRef: unknown, file: File) => {
-      return storageUploadBytes(storageRef as unknown, file);
+      return storageUploadBytes(storageRef as any, file);
     },
     getDownloadURL: async (storageRef: unknown) => {
-      return storageGetDownloadURL(storageRef as unknown);
+      return storageGetDownloadURL(storageRef as any);
     },
   },
 };

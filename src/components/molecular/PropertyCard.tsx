@@ -11,7 +11,7 @@ import {
   Share2,
 } from "lucide-react";
 
-export default interface PropertyCardProps {
+export interface PropertyCardProps {
   slug: string;
   imageUrl: string;
   images?: string[];
@@ -43,15 +43,15 @@ export const PropertyCard: React.FC<PropertyCardProps> = React.memo(
     guests,
     location,
     price,
-    rating = 4.8,
+    rating: _rating = 4.8,
     bathrooms = 1,
     propertyType = "apartment",
     amenities: _amenities = [],
     isVerified = true,
     isAvailable = true,
-    views = 0,
+    views: _views = 0,
     isFeatured = false,
-    onViewDetails,
+    onViewDetails: _onViewDetails,
     onToggleFavorite,
     onShare,
   }) => {

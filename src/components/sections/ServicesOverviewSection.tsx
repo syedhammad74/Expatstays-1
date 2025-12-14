@@ -192,12 +192,15 @@ const ServicesOverviewSection: React.FC = () => {
     setTimeout(() => setIsAutoPlaying(true), 2000);
   };
 
+  /*
   const _nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % carouselSlides.length);
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 2000);
   };
+  */
 
+  /*
   const _prevSlide = () => {
     setCurrentSlide(
       (prev) => (prev - 1 + carouselSlides.length) % carouselSlides.length
@@ -205,6 +208,7 @@ const ServicesOverviewSection: React.FC = () => {
     setIsAutoPlaying(false);
     setTimeout(() => setIsAutoPlaying(true), 2000);
   };
+  */
 
   return (
     <section
@@ -241,23 +245,14 @@ const ServicesOverviewSection: React.FC = () => {
       <div className="relative z-10 w-full flex flex-col lg:flex-row items-center justify-evenly px-6 lg:px-12 py-16 lg:py-20 max-w-7xl mx-auto">
         <div
           className="flex-1 space-y-6 text-center lg:text-left lg:pr-12 mb-8 lg:mb-0"
-          initial={{ opacity: 0, x: -60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
         >
           <span
             className="inline-block bg-gradient-to-r from-[#8EB69B] to-[#72a785] text-white font-semibold px-6 py-2 rounded-full uppercase text-sm tracking-wider shadow-lg"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
           >
             Premium Services
           </span>
           <h1
             className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-[#051F20] leading-tight"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
           >
             Elevate Your{" "}
             <span className="bg-gradient-to-r from-[#8EB69B] to-[#72a785] bg-clip-text text-transparent">
@@ -266,18 +261,11 @@ const ServicesOverviewSection: React.FC = () => {
           </h1>
           <p
             className="text-base sm:text-lg lg:text-xl text-[#235347] max-w-lg leading-relaxed"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
           >
             Experience top-tier luxury with our curated offerings built for
             discerning tastes and exceptional living.
           </p>
-          <div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
+          <div>
             <Link href="/services">
               <Button
                 size="lg"
@@ -296,9 +284,6 @@ const ServicesOverviewSection: React.FC = () => {
         {/* Enhanced Carousel Section */}
         <div
           className="flex-1 w-full lg:w-auto"
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.4, ease: "easeOut" }}
         >
           <div className="relative w-full h-[250px] sm:h-[300px] md:h-[350px] lg:h-[500px] max-w-2xl mx-auto">
             {/* Simple Image Display */}
@@ -315,9 +300,8 @@ const ServicesOverviewSection: React.FC = () => {
                 {carouselSlides.map((slide, index) => (
                   <div
                     key={index}
-                    className={`absolute inset-0 transition-opacity duration-500 ${
-                      index === currentSlide ? "opacity-100" : "opacity-0"
-                    }`}
+                    className={`absolute inset-0 transition-opacity duration-500 ${index === currentSlide ? "opacity-100" : "opacity-0"
+                      }`}
                   >
                     <Image
                       src={slide.image}
@@ -348,11 +332,10 @@ const ServicesOverviewSection: React.FC = () => {
                       key={index}
                       onClick={() => goToSlide(index)}
                       className={`rounded-full transition-all duration-500 ease-in-out transform hover:scale-125
-                                ${
-                                  index === currentSlide
-                                    ? "w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 bg-gradient-to-r from-[#8EB69B] to-[#72a785] shadow-lg shadow-[#8EB69B]/30"
-                                    : "w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 bg-[#8EB69B]/40 hover:bg-[#8EB69B]/60"
-                                }
+                                ${index === currentSlide
+                          ? "w-2.5 h-2.5 sm:w-3 sm:h-3 md:w-4 md:h-4 bg-gradient-to-r from-[#8EB69B] to-[#72a785] shadow-lg shadow-[#8EB69B]/30"
+                          : "w-2 h-2 sm:w-2.5 sm:h-2.5 md:w-3 md:h-3 bg-[#8EB69B]/40 hover:bg-[#8EB69B]/60"
+                        }
                               `}
                       aria-label={`Go to slide ${index + 1}`}
                     />
@@ -377,9 +360,6 @@ const ServicesOverviewSection: React.FC = () => {
         </div>
 
         <div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#051F20] mb-6">
@@ -399,10 +379,6 @@ const ServicesOverviewSection: React.FC = () => {
             <div
               key={idx}
               className="group relative"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: idx * 0.1 }}
-              whileHover={{ y: -12, scale: 1.02 }}
             >
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${svc.bgGradient} rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
@@ -411,8 +387,6 @@ const ServicesOverviewSection: React.FC = () => {
                 {/* Animated Icon */}
                 <div
                   className={`inline-flex p-5 rounded-2xl bg-gradient-to-br ${svc.gradient} mb-6 shadow-lg`}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.3 }}
                 >
                   <svc.icon className="w-7 h-7 text-white" aria-hidden />
                 </div>
@@ -454,9 +428,6 @@ const ServicesOverviewSection: React.FC = () => {
         </div>
 
         <div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
           className="text-center mb-16 max-w-7xl mx-auto"
         >
           <h2 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#051F20] mb-6">
@@ -477,10 +448,6 @@ const ServicesOverviewSection: React.FC = () => {
             <div
               key={idx}
               className="group relative"
-              initial={{ opacity: 0, y: 40 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: idx * 0.1 }}
-              whileHover={{ y: -12, scale: 1.02 }}
             >
               <div
                 className={`absolute inset-0 bg-gradient-to-br ${item.bgGradient} rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500`}
@@ -488,8 +455,6 @@ const ServicesOverviewSection: React.FC = () => {
               <div className="relative bg-white/80 backdrop-blur-xl rounded-3xl p-8 text-center shadow-xl group-hover:shadow-2xl transition-all duration-500">
                 <div
                   className={`inline-flex p-5 rounded-2xl bg-gradient-to-br ${item.gradient} mb-6 shadow-lg`}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  transition={{ duration: 0.3 }}
                 >
                   <item.icon className="w-7 h-7 text-white" aria-hidden />
                 </div>
@@ -506,9 +471,9 @@ const ServicesOverviewSection: React.FC = () => {
       </div>
 
       {/* How It Works - Enhanced with modern design */}
-      <div className="relative z-10 w-full px-6 lg:px-12 py-20 max-w-7xl mx-auto">
+      <div className="relative z-10 w-full px-6 lg:px-12 py-20 max-w-7xl mx-auto" >
         {/* Decorative shapes for How It Works section */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none" >
           <div className="absolute top-10 left-10 w-48 h-48 bg-gradient-to-br from-[#8EB69B]/5 to-[#72a785]/3 rounded-full filter blur-3xl animate-[breathing_10s_ease-in-out_infinite]" />
           <div className="absolute bottom-10 right-10 w-44 h-44 bg-gradient-to-br from-[#DAF1DE]/6 to-[#8EB69B]/4 rounded-full filter blur-3xl animate-[breathing_8.5s_ease-in-out_infinite]" />
           <div className="absolute top-1/3 right-1/3 w-20 h-20 bg-gradient-to-br from-[#235347]/4 to-[#163832]/3 rotate-45 animate-[breathing_7s_ease-in-out_infinite]" />
@@ -520,9 +485,6 @@ const ServicesOverviewSection: React.FC = () => {
         </div>
 
         <div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
           className="text-center mb-16"
         >
           <h2 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#051F20] mb-6">
@@ -538,9 +500,6 @@ const ServicesOverviewSection: React.FC = () => {
         </div>
 
         <div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1, delay: 0.2 }}
           className="relative"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-[#8EB69B]/5 to-[#72a785]/5 rounded-3xl blur-2xl" />
@@ -550,9 +509,6 @@ const ServicesOverviewSection: React.FC = () => {
                 {howItWorksSteps.slice(0, 2).map((item, idx) => (
                   <div
                     key={idx}
-                    initial={{ opacity: 0, x: -30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: idx * 0.2 }}
                     className="flex items-start gap-4"
                   >
                     <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#8EB69B] to-[#72a785] rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
@@ -575,9 +531,6 @@ const ServicesOverviewSection: React.FC = () => {
                 {howItWorksSteps.slice(2).map((item, idx) => (
                   <div
                     key={idx + 2}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: (idx + 2) * 0.2 }}
                     className="flex items-start gap-4"
                   >
                     <div className="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-[#8EB69B] to-[#72a785] rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">
@@ -610,9 +563,9 @@ const ServicesOverviewSection: React.FC = () => {
       </div>
 
       {/* FAQ Section - Enhanced with modern design */}
-      <div className="relative z-10 w-full px-6 lg:px-12 py-20 bg-gradient-to-br from-white via-[#FAFDFA] to-[#F3F9F4]">
+      <div className="relative z-10 w-full px-6 lg:px-12 py-20 bg-gradient-to-br from-white via-[#FAFDFA] to-[#F3F9F4]" >
         {/* Decorative shapes for FAQ section */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none" >
           <div className="absolute top-20 right-20 w-36 h-36 bg-gradient-to-br from-[#8EB69B]/7 to-[#72a785]/5 rounded-full filter blur-2xl animate-[breathing_8s_ease-in-out_infinite]" />
           <div className="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-br from-[#DAF1DE]/8 to-[#8EB69B]/6 rounded-full filter blur-2xl animate-[breathing_7s_ease-in-out_infinite]" />
           <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-gradient-to-br from-[#235347]/5 to-[#163832]/4 rotate-45 animate-[breathing_9s_ease-in-out_infinite]" />
@@ -624,9 +577,6 @@ const ServicesOverviewSection: React.FC = () => {
         </div>
 
         <div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
           className="text-center mb-16 max-w-7xl mx-auto"
         >
           <h2 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-[#051F20] mb-6">
@@ -645,9 +595,6 @@ const ServicesOverviewSection: React.FC = () => {
           {faqs.map((faq, idx) => (
             <div
               key={idx}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: idx * 0.1 }}
             >
               <Disclosure>
                 {({ open }) => (

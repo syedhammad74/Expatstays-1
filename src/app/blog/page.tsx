@@ -18,7 +18,7 @@ import Link from "next/link";
 import { getLocalImage } from "@/lib/imageUtils";
 // Removed framer-motion for performance
 import Header from "@/components/layout/Header";
-import React, { useState, useMemo } from "react";
+import { useState, useMemo } from "react";
 
 const blogPosts = [
   {

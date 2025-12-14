@@ -212,8 +212,6 @@ export default function PaymentForm({
   if (paymentSucceeded) {
     return (
       <div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
         className="text-center py-8"
       >
         <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-4" />
@@ -421,18 +419,14 @@ export default function PaymentForm({
             </div>
 
             {/* Error Display */}
-              {paymentError && (
-                <div
-                  initial={{ opacity: 0, y: -10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -10 }}
-                >
-                  <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>{paymentError}</AlertDescription>
-                  </Alert>
-                </div>
-              )}
+            {paymentError && (
+              <div>
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>{paymentError}</AlertDescription>
+                </Alert>
+              </div>
+            )}
 
             {/* Submit Button */}
             <Button

@@ -20,8 +20,9 @@ import Image from "next/image";
 import { getLocalImage } from "@/lib/imageUtils";
 // Removed framer-motion for performance
 import { useRef, useState, useEffect, useCallback, useMemo } from "react";
-import PropertyCardProps, {
+import {
   PropertyCard,
+  PropertyCardProps,
 } from "@/components/molecular/PropertyCard";
 const Header = dynamic(() => import("@/components/layout/Header"), {
   loading: () => <div className="h-16 bg-white border-b border-gray-200" />,

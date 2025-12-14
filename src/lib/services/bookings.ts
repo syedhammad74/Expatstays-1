@@ -129,7 +129,7 @@ export class BookingService {
 
   // Check availability within a transaction
   private async checkAvailabilityInTransaction(
-    transaction: import("firebase/firestore").Transaction,
+    _transaction: import("firebase/firestore").Transaction,
     propertyId: string,
     checkIn: string,
     checkOut: string
@@ -141,7 +141,8 @@ export class BookingService {
       where("date", "<", checkOut)
     );
 
-    const availabilitySnapshot = await transaction.get(availabilityQuery);
+    // Note: Transactions don't support queries, so we use getDocs instead
+    const availabilitySnapshot = await getDocs(availabilityQuery);
 
     // If any dates are blocked, return false
     return availabilitySnapshot.empty;

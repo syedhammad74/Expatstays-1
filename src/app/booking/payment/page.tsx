@@ -57,10 +57,10 @@ function BookingPaymentContent() {
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [_clientSecret, _setClientSecret] = useState<string | null>(null);
-  const [_paymentIntentId, _setPaymentIntentId] = useState<string | null>(null);
-  const [_creatingPaymentIntent, _setCreatingPaymentIntent] = useState(false);
-  const [_paymentMethod, _setPaymentMethod] = useState<
+  const [_clientSecret, setClientSecret] = useState<string | null>(null);
+  const [_paymentIntentId, setPaymentIntentId] = useState<string | null>(null);
+  const [_creatingPaymentIntent, setCreatingPaymentIntent] = useState(false);
+  const [paymentMethod, _setPaymentMethod] = useState<
     "elements" | "checkout" | "mock"
   >(USE_MOCK_DATA ? "mock" : "elements");
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -170,57 +170,59 @@ function BookingPaymentContent() {
     fetchBookingDetails();
   }, [bookingId, paymentMethod, createPaymentIntent]);
 
-  const handleCheckoutSession = async () => {
-    if (!booking || !user) {
-      setShowAuthModal(true);
-      return;
-    }
-
-    setCreatingPaymentIntent(true);
-    try {
-      const response = await fetch("/api/payment/checkout-session", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          bookingId: booking.id,
-          amount: booking.payment.amount,
-          currency: booking.payment.currency,
-          customerEmail: booking.guest.email,
-          customerName: booking.guest.name,
-          metadata: {
-            propertyId: booking.propertyId,
-            checkIn: booking.dates.checkIn,
-            checkOut: booking.dates.checkOut,
-            guests: booking.guests.total.toString(),
-          },
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || "Failed to create checkout session");
+  /*
+    const _handleCheckoutSession = async () => {
+      if (!booking || !user) {
+        setShowAuthModal(true);
+        return;
       }
-
-      // Redirect to Stripe checkout
-      window.location.href = data.checkoutUrl;
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error
-          ? err.message
-          : "Failed to create checkout session";
-      setError(errorMessage);
-      toast({
-        title: "Checkout Failed",
-        description: errorMessage,
-        variant: "destructive",
-      });
-    } finally {
-      setCreatingPaymentIntent(false);
-    }
-  };
+  
+      setCreatingPaymentIntent(true);
+      try {
+        const response = await fetch("/api/payment/checkout-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            bookingId: booking.id,
+            amount: booking.payment.amount,
+            currency: booking.payment.currency,
+            customerEmail: booking.guest.email,
+            customerName: booking.guest.name,
+            metadata: {
+              propertyId: booking.propertyId,
+              checkIn: booking.dates.checkIn,
+              checkOut: booking.dates.checkOut,
+              guests: booking.guests.total.toString(),
+            },
+          }),
+        });
+  
+        const data = await response.json();
+  
+        if (!response.ok) {
+          throw new Error(data.error || "Failed to create checkout session");
+        }
+  
+        // Redirect to Stripe checkout
+        window.location.href = data.checkoutUrl;
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error
+            ? err.message
+            : "Failed to create checkout session";
+        setError(errorMessage);
+        toast({
+          title: "Checkout Failed",
+          description: errorMessage,
+          variant: "destructive",
+        });
+      } finally {
+        setCreatingPaymentIntent(false);
+      }
+    };
+  */
 
   const handlePaymentSuccess = () => {
     toast({

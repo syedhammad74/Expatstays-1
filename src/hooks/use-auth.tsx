@@ -62,14 +62,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     let mounted = true;
     let unsubscribe: (() => void) | undefined;
-    
+
     // Delay auth initialization slightly to allow page to render first
     const timer = setTimeout(() => {
       if (!mounted) return;
-      
+
       unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
         if (!mounted) return;
-        
+
         if (firebaseUser) {
           setUser(firebaseUser);
           await loadUserProfile(firebaseUser.uid);
@@ -97,6 +97,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       profile: {
         firstName: firebaseUser.displayName?.split(" ")[0] || "",
         lastName: firebaseUser.displayName?.split(" ")[1] || "",
+        location: "",
+        bio: "",
       },
       preferences: {
         currency: "USD",

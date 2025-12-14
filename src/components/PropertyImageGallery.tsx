@@ -21,11 +21,11 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
   const containerRef = useRef<HTMLDivElement>(null);
 
   // Ensure currentIndex is within bounds
-  const safeCurrentIndex = useMemo(() => 
+  const safeCurrentIndex = useMemo(() =>
     Math.max(0, Math.min(currentIndex, images.length - 1)),
     [currentIndex, images.length]
   );
-  
+
   const currentImage = useMemo(() => {
     if (!images || images.length === 0) return null;
     return images[safeCurrentIndex] || images[0];
@@ -34,10 +34,10 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
   // Preload adjacent images aggressively
   useEffect(() => {
     if (typeof window === 'undefined' || !images || images.length === 0) return;
-    
+
     const preloadImage = (src: string) => {
       try {
-        const img = new Image();
+        const img = new window.Image();
         img.src = src;
       } catch (error) {
         // Silently fail if image preload fails
@@ -87,7 +87,7 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
     const distance = touchStart - touchEnd;
     const isLeftSwipe = distance > minSwipeDistance;
     const isRightSwipe = distance < -minSwipeDistance;
-    
+
     if (isLeftSwipe) {
       goToNext();
     }
@@ -125,7 +125,7 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
   return (
     <div className="relative" role="region" aria-label="Property image gallery">
       {/* Main Image Container */}
-      <div 
+      <div
         ref={containerRef}
         className="relative aspect-[4/3] w-full overflow-hidden group touch-pan-y"
         onTouchStart={onTouchStart}
@@ -189,8 +189,8 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
       {/* Thumbnail Navigation - Optimized */}
       {images.length > 1 && (
         <div className="mt-4">
-          <div 
-            className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide touch-pan-x" 
+          <div
+            className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide touch-pan-x"
             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}
           >
             {images.map((image, index) => (
@@ -199,11 +199,10 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
                 onClick={() => goToSlide(index)}
                 aria-label={`View image ${index + 1} of ${images.length}`}
                 aria-current={index === safeCurrentIndex ? "true" : "false"}
-                className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 transition-all duration-150 touch-manipulation ${
-                  index === safeCurrentIndex
+                className={`relative flex-shrink-0 w-16 h-16 md:w-20 md:h-20 rounded-lg overflow-hidden border-2 transition-all duration-150 touch-manipulation ${index === safeCurrentIndex
                     ? "border-[#8EB69B] ring-2 ring-[#8EB69B]/20 scale-105"
                     : "border-gray-200 hover:border-gray-300"
-                }`}
+                  }`}
               >
                 <Image
                   src={image.src}
@@ -222,7 +221,7 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
 
       {/* Fullscreen Modal - Optimized */}
       {isFullscreen && (
-        <div 
+        <div
           className="fixed inset-0 z-50 bg-black/98 flex items-center justify-center p-4"
           onClick={() => setIsFullscreen(false)}
           role="dialog"
@@ -242,7 +241,7 @@ const PropertyImageGallery: React.FC<PropertyImageGalleryProps> = memo(({
             <X className="h-6 w-6" />
           </Button>
 
-          <div 
+          <div
             className="relative w-full h-full flex items-center justify-center"
             onClick={(e) => e.stopPropagation()}
             onTouchStart={onTouchStart}

@@ -51,7 +51,7 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [pricing, setPricing] = useState<unknown>(null);
+  const [pricing, setPricing] = useState<any>(null);
   const [isAvailable, setIsAvailable] = useState<boolean | null>(null);
   const [checkingAvailability, setCheckingAvailability] = useState(false);
 
@@ -174,6 +174,7 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
     try {
       const bookingData: Omit<Booking, "id" | "createdAt" | "updatedAt"> = {
         propertyId: property.id,
+        propertyName: property.name,
         guest: {
           uid: user.uid,
           name: user.displayName || "",
@@ -195,8 +196,8 @@ export function BookingForm({ property, onBookingComplete }: BookingFormProps) {
           basePrice: property.pricing.basePrice,
           totalNights:
             typeof pricing === "object" &&
-            pricing !== null &&
-            "nights" in pricing
+              pricing !== null &&
+              "nights" in pricing
               ? (pricing as { nights: number }).nights
               : 0,
           subtotal: (pricing as { subtotal: number }).subtotal,

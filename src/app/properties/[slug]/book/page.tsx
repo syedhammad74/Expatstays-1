@@ -220,6 +220,7 @@ export default function PropertyBookingPage() {
       const totalGuests = numAdults + numChildren + numInfants;
 
       const bookingData: Omit<Booking, "id" | "createdAt" | "updatedAt"> = {
+        propertyName: property!.title,
         propertyId: property!.id,
         guest: {
           uid: user.uid,

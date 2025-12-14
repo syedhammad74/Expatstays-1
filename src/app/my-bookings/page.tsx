@@ -296,7 +296,7 @@ export default function MyBookingsPage() {
                 icon: XCircle,
                 color: "from-red-400 to-red-600",
               },
-            ].map((stat, index) => (
+            ].map((stat) => (
               <div
                 key={stat.label}
                 className="relative group"
@@ -407,7 +407,7 @@ export default function MyBookingsPage() {
                   <div
                     className="space-y-6"
                   >
-                    {filteredBookings.map((booking, index) => (
+                    {filteredBookings.map((booking) => (
                       <div
                         key={booking.id}
                         className="group"

@@ -1,6 +1,6 @@
 "use client";
 
-import PropertyCardProps from "@/components/molecular/PropertyCard";
+import { PropertyCardProps } from "@/components/molecular/PropertyCard";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -25,8 +25,6 @@ import {
   Check,
   Loader2,
   Award,
-  Home,
-  DollarSign,
 } from "lucide-react";
 import { getLocalImage } from "@/lib/imageUtils";
 // Removed framer-motion for better mobile performance
@@ -318,7 +316,7 @@ export default function PropertiesPage() {
   const [properties, setProperties] = useState<Property[]>(initialProperties);
   const [filteredProperties, setFilteredProperties] =
     useState<Property[]>(initialProperties);
-  const [loading, setLoading] = useState(false); // Start with false to show properties immediately
+  const [loading, _setLoading] = useState(false); // Start with false to show properties immediately
   const [searchLoading, setSearchLoading] = useState(false);
   const [useVirtualScrolling, setUseVirtualScrolling] = useState(false);
   const { toast } = useToast();
@@ -453,6 +451,7 @@ export default function PropertiesPage() {
     return filteredProperties.map(convertToPropertyCard);
   }, [filteredProperties, convertToPropertyCard]);
 
+  /*
   // Enhanced loadProperties with caching
   const _loadProperties = useCallback(async () => {
     try {
@@ -721,6 +720,7 @@ export default function PropertiesPage() {
       setLoading(false);
     }
   }, [toast]); // Added dateRange and toast to dependencies
+  */
 
   // Filter properties by availability
   const filterPropertiesByAvailability = useCallback(async () => {
