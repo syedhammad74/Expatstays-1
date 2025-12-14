@@ -17,7 +17,7 @@ const BookingSearchWidget = () => {
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                   <MapPin className="h-4 w-4 text-primary" />
                 </div>
-                <SelectValue placeholder="Where to?" className="flex-1 text-left" />
+                <SelectValue placeholder="Select Location" className="flex-1 text-left" />
               </div>
             </SelectTrigger>
             <SelectContent>

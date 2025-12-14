@@ -695,7 +695,7 @@ export default function Home() {
                     className="w-full bg-transparent border-none outline-none shadow-none px-0 py-0 text-sm font-medium focus:ring-0 focus:border-none h-14 [&>span]:text-left"
                     aria-label="Select location"
                   >
-                    <SelectValue placeholder="Where to?" />
+                    <SelectValue placeholder="Select Location" />
                   </SelectTrigger>
                   <SelectContent className="rounded-xl shadow-lg">
                     <SelectItem value="Gulberg Greens">
