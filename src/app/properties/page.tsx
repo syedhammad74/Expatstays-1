@@ -29,6 +29,7 @@ import {
 import { getLocalImage } from "@/lib/imageUtils";
 // Removed framer-motion for better mobile performance
 import Image from "next/image";
+import Link from "next/link";
 import Header from "@/components/layout/Header";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { format } from "date-fns";
@@ -1121,13 +1122,15 @@ export default function PropertiesPage() {
                 >
                   Browse All Properties
                 </Button>
-                <Button
-                  variant="ghost"
-                  className="border-2 border-[#7AA589] text-[#7AA589] hover:bg-[#7AA589] hover:text-white transition-colors duration-150 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full w-full sm:w-auto"
-                  aria-label="Schedule a consultation"
-                >
-                  Schedule a Consultation
-                </Button>
+                <Link href="/contact" className="w-full sm:w-auto">
+                  <Button
+                    variant="ghost"
+                    className="border-2 border-[#7AA589] text-[#7AA589] hover:bg-[#7AA589] hover:text-white transition-colors duration-150 px-6 lg:px-8 py-3 lg:py-4 text-base lg:text-lg font-semibold rounded-full w-full sm:w-auto"
+                    aria-label="Schedule a consultation"
+                  >
+                    Schedule a Consultation
+                  </Button>
+                </Link>
               </div>
             </div>
 
