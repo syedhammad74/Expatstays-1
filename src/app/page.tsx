@@ -177,9 +177,7 @@ export default function Home() {
 
   // Memoize converted properties
   const memoizedProperties = useMemo(() => {
-    const converted = featuredProperties.map(convertToPropertyCard);
-    console.log('[DEBUG] Featured Properties:', featuredProperties.length, 'Converted:', converted.length);
-    return converted;
+    return featuredProperties.map(convertToPropertyCard);
   }, [featuredProperties, convertToPropertyCard]);
 
   // Carousel data with diverse images
@@ -457,8 +455,6 @@ export default function Home() {
         },
       ];
 
-      // Displaying featured properties on landing page
-      console.log('[DEBUG] Setting featured properties:', hardcodedProperties.length);
       setFeaturedProperties(hardcodedProperties);
     } catch (err) {
       if (process.env.NODE_ENV === "development") {

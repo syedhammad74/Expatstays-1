@@ -167,7 +167,7 @@ export default function InViewVideo({
         // Preload aggressively when nearing viewport for faster start
         try {
           videoEl.preload = "auto";
-        } catch {}
+        } catch { }
         // Only attempt to play if user has interacted or if muted
         if (hasUserInteracted || isMuted) {
           if (process.env.NODE_ENV !== "production") {
@@ -245,7 +245,9 @@ export default function InViewVideo({
       const playPromise = videoEl.play();
       if (playPromise && typeof playPromise.then === "function") {
         playPromise.catch((error) => {
-          console.log("Video play failed after unmute:", error);
+          if (process.env.NODE_ENV !== "production") {
+            console.log("Video play failed after unmute:", error);
+          }
         });
       }
     }
@@ -264,7 +266,11 @@ export default function InViewVideo({
         if (isPlaying) {
           videoEl.pause();
         } else {
-          videoEl.play().catch(console.error);
+          videoEl.play().catch((err) => {
+            if (process.env.NODE_ENV !== "production") {
+              console.error("Video play error:", err);
+            }
+          });
         }
       }
     }
