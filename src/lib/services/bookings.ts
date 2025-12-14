@@ -702,7 +702,7 @@ export class BookingService {
       await emailService.sendBookingConfirmation(booking, property);
 
       // Send admin notification email
-      const adminEmails = ["admin@example.com"]; // Replace with actual admin emails
+      const adminEmails = ["contact@myexpatstays.com"]; // Replace with actual admin emails
       await emailService.sendAdminNotification(booking, property, adminEmails);
 
       console.log(`Confirmation emails sent for booking ${bookingId}`);

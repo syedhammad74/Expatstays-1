@@ -306,7 +306,7 @@ export default function Home() {
           owner: {
             uid: "owner_famhouse_islamabad",
             name: "Isa hussain",
-            email: "ahmed@expatstays.com",
+            email: "contact@myexpatstays.com",
             phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T15:00:00Z",
@@ -380,7 +380,7 @@ export default function Home() {
           owner: {
             uid: "owner_apartment_dam_view",
             name: "Isa hussain",
-            email: "ahmed@expatstays.com",
+            email: "contact@myexpatstays.com",
             phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T15:00:00Z",
@@ -449,7 +449,7 @@ export default function Home() {
           owner: {
             uid: "owner_gulberg_greens",
             name: "Isa hussain",
-            email: "ahmed@expatstays.com",
+            email: "contact@myexpatstays.com",
             phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T16:00:00Z",

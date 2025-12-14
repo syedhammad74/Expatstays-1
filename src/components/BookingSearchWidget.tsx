@@ -13,11 +13,11 @@ const BookingSearchWidget = () => {
           <label className="text-sm font-medium text-foreground ml-1">Location</label>
           <Select>
             <SelectTrigger className="w-full h-14 bg-background border-border hover:border-primary/50 rounded-xl shadow-sm hover:shadow-md transition-all duration-300">
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 w-full">
                 <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
                   <MapPin className="h-4 w-4 text-primary" />
                 </div>
-                <SelectValue placeholder="Select Location" />
+                <SelectValue placeholder="Where to?" className="flex-1 text-left" />
               </div>
             </SelectTrigger>
             <SelectContent>

@@ -162,7 +162,7 @@ export default function PropertiesPage() {
       owner: {
         uid: "owner_famhouse_islamabad",
         name: "Isa hussain",
-        email: "ahmed@expatstays.com",
+        email: "contact@myexpatstays.com",
         phone: "+92 315 5610110",
       },
       createdAt: "2024-09-16T15:00:00Z",
@@ -236,7 +236,7 @@ export default function PropertiesPage() {
       owner: {
         uid: "owner_apartment_dam_view",
         name: "Isa hussain",
-        email: "ahmed@expatstays.com",
+        email: "contact@myexpatstays.com",
         phone: "+92 315 5610110",
       },
       createdAt: "2024-09-16T15:00:00Z",
@@ -305,7 +305,7 @@ export default function PropertiesPage() {
       owner: {
         uid: "owner_gulberg_greens",
         name: "Isa hussain",
-        email: "ahmed@expatstays.com",
+        email: "contact@myexpatstays.com",
         phone: "+92 315 5610110",
       },
       createdAt: "2024-09-16T16:00:00Z",
@@ -546,7 +546,7 @@ export default function PropertiesPage() {
           owner: {
             uid: "owner_famhouse_islamabad",
             name: "Isa hussain",
-            email: "ahmed@expatstays.com",
+            email: "contact@myexpatstays.com",
             phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T15:00:00Z",
@@ -616,7 +616,7 @@ export default function PropertiesPage() {
           owner: {
             uid: "owner_apartment_dam_view",
             name: "Isa hussain",
-            email: "sarah@expatstays.com",
+            email: "contact@myexpatstays.com",
             phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T15:00:00Z",
@@ -685,7 +685,7 @@ export default function PropertiesPage() {
           owner: {
             uid: "owner_gulberg_greens",
             name: "Isa hussain",
-            email: "ahmed@expatstays.com",
+            email: "contact@myexpatstays.com",
             phone: "+92 315 5610110",
           },
           createdAt: "2024-09-16T16:00:00Z",
@@ -834,7 +834,7 @@ export default function PropertiesPage() {
           owner: {
             uid: "fallback_owner",
             name: "Property Owner",
-            email: "owner@expatstays.com",
+            email: "contact@myexpatstays.com",
           },
           createdAt: "2024-09-16T15:00:00Z",
           updatedAt: "2024-09-16T15:00:00Z",

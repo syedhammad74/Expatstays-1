@@ -215,7 +215,7 @@ export function SignUpForm({ onToggleMode, onClose }: SignUpFormProps) {
               type="email"
               value={formData.email}
               onChange={(e) => handleInputChange("email", e.target.value)}
-              placeholder="john@example.com"
+              placeholder="your.email@example.com"
               className="pl-12 h-12 text-base border-[#DAF1DE] focus:border-[#8EB69B] focus:ring-[#8EB69B]/20 rounded-xl bg-white/95 shadow-sm md:pl-9 md:h-10 md:text-sm md:rounded-buttons md:bg-white md:shadow-none"
               required
             />
