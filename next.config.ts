@@ -3,6 +3,13 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
+  // Ensure SWC minification is enabled
+
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production' ? {
+      exclude: ['error', 'warn'],
+    } : false,
+  },
 
   serverExternalPackages: ["sharp"],
   experimental: {
@@ -147,6 +154,15 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/:path*\\.(css|js)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+      {
+        source: "/:all*.(svg|jpg|jpeg|png|gif|webp|avif|ico)",
         headers: [
           {
             key: "Cache-Control",

@@ -120,6 +120,25 @@ export default function RootLayout({
         <link rel="preconnect" href="https://apis.google.com" />
         <link rel="dns-prefetch" href="https://apis.google.com" />
 
+        {/* Preconnect to Firebase Storage (310ms savings from Lighthouse) */}
+        <link
+          rel="preconnect"
+          href="https://firebasestorage-551fb.firebasestorage.app"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="dns-prefetch"
+          href="https://firebasestorage-551fb.firebasestorage.app"
+        />
+
+        {/* Preconnect to Google APIs (300ms savings from Lighthouse) */}
+        <link
+          rel="preconnect"
+          href="https://www.googleapis.com"
+          crossOrigin="anonymous"
+        />
+        <link rel="dns-prefetch" href="https://www.googleapis.com" />
+
         {/* Preload critical resources for LCP optimization */}
         <link rel="preload" href="/logo.png" as="image" />
         {/* Removed preload of large HDR images - they're optimized via Next.js Image */}
